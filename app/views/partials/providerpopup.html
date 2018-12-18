@@ -1,0 +1,57 @@
+﻿<div>
+    <div class="modal-header">
+        <h3>RateFast</h3>
+    </div>
+    <div class="modal-body">	
+        <div class="login-sign" ng-show="popuptype==1">
+            <h3>Provider accounts allow medical professionals to use RateFast for creation of visit notes, including impairment reports.</h3>
+            <h3>Attorney, Claim Administrator, and Other accounts allow the user to check impairment report accuracy using the AMA Guides.</h3>
+        </div>
+        <div class="login-sign" ng-show="popuptype==3">
+            <h3>Joining RateFast is completely free. We're just asking for your credit card information right now in order to validate your identity.</h3>
+        </div>
+        <div class="login-sign" ng-show="popuptype==4">
+            <h3>Selecting On to this option will result in an automatic billing calculation added to the end of the published report based on page length using the DWC Form PR-4 page formatting of 56 lines per page, to include the additional billing elements according to the California Official Medical Fee Schedule (OMFS).</h3>	
+		</div>
+		<div class="login-sign" ng-show="popuptype==6">
+            <h3>This phone number isn't required, but it can make it easier for us to give you excellent customer service. Don't worry-we won't give out your number.</h3>           
+        </div>	
+		<div class="login-sign" ng-show="popuptype==7">
+            <p><h3>Every user has a "Role" in managing the practice account. Admin users can invite new users, change information about existing users, and update the settings for the Practice Account. Normal Non-Admin users can only change information related to their own personal account.</h3></p>		
+			<p><h3>All users can create new work comp reports. The role of Admin only relates to managing users in the Practice Account.</h3></p>			
+        </div>
+		<div class="login-sign" ng-show="popuptype==8">
+            <p><h3>A user's Report Access Level determines how much power a user has to edit and close a report. While all users can create reports and download closed reports, some sections of reports are restricted to certain users.</h3></p><br/>
+			<h3>1 - Staff - Users with this level can only create reports and enter basic information about the injury and the patient. Users with this level are restricted from accessing areas of the report that involve medical details from the examination. Usually, people with this level are front-desk staff.</h3>
+			<h3>2 - Medical Assistant - Users with this level have access to more areas than level 1 users. They can input details about the patient's history and current condition, but they cannot access areas of the report related to medical decision making.  This role could include staff, nurses, and other assistants.</h3>
+			<h3>3 - NP/PA - Users with this level have full access to all areas of the report. They can be assigned as the treating physician for a particular visit. This role is usually assigned to NPs and PAs who examine the patient and make medical decisions, but who do not actually submit and sign the report.</h3>
+			<h3>4 - Physician -  Users with this level can submit and close reports. This role should be assigned to physicians, as well as NPs and PAs who are authorized to sign off on reports. When a user submits a report, his/her digital signature will appear in signature areas, as well as his/her credentials, license number, and other details.</h3>
+        </div> 
+		<div class="login-sign" ng-show="popuptype==9">
+		   <h3> You can send this work status note to any fax number. If there is a fax number associated with the injured workers' employer on file, then, the recipient fax number will display the employer's fax number by default. You can change the fax number that's on file for the employer in the Injury Profile for this injury, or in the Background Information section of any report for this injury.</h3>
+		</div> 
+		<div  ng-show="popuptype==10"  class="login-sign" >		  
+			  <h3>The Practice ID Number uniquely identifies your account in the RateFast system. This cannot be changed.</h3>
+			  <h3>The Practice Account is used to login to RateFast. If you want to change your Practice Account, then <a style="background-color: #ffffff !important; border-radius: 0 !important;  color: blue !important;  display: inline-block !important; font-size: 20px !important;  height: 26px !important; line-height: 26px !important; margin: 0 px !important; padding: 0px !important; width: 98px !important;" href="https://rate-fast.com/contact" target="_blank">contact us.</a></h3>
+			  <h3>The Practice Name is the title of your business. It will appear in the header of your reports and faxes. You can change your Practice Name any time.</h3>	  
+		</div>   
+		<div class="login-sign" ng-show="popuptype==11">
+		  
+		   		<h3>The impairment ratings in your PR-4 reports are calculated in accordance the American Medical Association Guides to Impairment Rating.</h3>
+				<h3>The vast majority of California workers' compensation cases require the 5th edition of the AMA Guides for rating.</h3>		   
+			
+		</div>   
+		<div class="login-sign" ng-show="popuptype==12">
+			
+				<h3>Your invitation has been succesfully sent!</h3>				 
+			    <h3>If the person you are inviting can't find their invitation email, have them check their spam folder, or search their emails for the phrase "invitation to join ratefast"</h3>
+			 
+		</div>
+		<div class="login-sign" ng-show="popuptype==13">
+		   <h3> Your "practice account" is like a username for your medical clinic or organization. You’ll need to type this every time you login, so keep it very short and easy to remember.</h3>
+		</div>  	
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+    </div>
+</div>

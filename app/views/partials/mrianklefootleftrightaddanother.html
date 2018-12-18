@@ -1,0 +1,159 @@
+﻿<div ng-controller="MriAnkleFootLeftRightAddAnotherCtrl">
+    <div class="col-sm-12">
+        <label class="{{labelclass}}">{{label}}</label>
+        <button type="button" ng-click="addControl()" class="btn btn-default btn-circle btn-success">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+    <div ng-repeat="todo in todos.slice().reverse()" class="col-sm-12 checkbox addAnotherBottomBorder" style="padding: 5px;">
+        <input type="hidden" ng-model="todo.indexValue" ng-init="todo.indexValue = todos.length - ($index+1)" />
+        <div class="col-sm-12">
+            <div class="col-sm-1" style="margin-top: 7px; padding-left: 0;">
+                <label>Date:</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="tel" ui-date="dateOptions" my-date ng-model="todo.dateOfSurgery" class="form-control" placeholder="MM/DD/YYYY">
+            </div>
+            <div class="col-sm-1" style="margin-top: 7px;">
+                <button type="button" class="btn btn-info btn-xs" ng-click="clearbodypart($index+1,todos.length)">Clear</button>
+            </div>
+            <div class="col-sm-6" style="margin-top: 7px;">
+                <button type="button" class="btn btn-danger btn-xs" ng-click="deletebodypart($index+1,todos.length)">Delete</button>
+            </div>
+            <!------- Normal ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.normal" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].fracture = false',
+                        '$scope.todos[{{todo.indexValue}}].arthritis = false','$scope.todos[{{todo.indexValue}}].avascular = false',
+                        '$scope.todos[{{todo.indexValue}}].effusion = false','$scope.todos[{{todo.indexValue}}].soft = false',
+                        '$scope.todos[{{todo.indexValue}}].flexortendon = false','$scope.todos[{{todo.indexValue}}].flexorachilles = false','$scope.todos[{{todo.indexValue}}].extensor = false',
+                        '$scope.todos[{{todo.indexValue}}].ligament = false','$scope.todos[{{todo.indexValue}}].cyst = false','$scope.todos[{{todo.indexValue}}].mortise = false'
+                        ,'$scope.todos[{{todo.indexValue}}].osteochondritis = false','$scope.todos[{{todo.indexValue}}].plantar = false','$scope.todos[{{todo.indexValue}}].subtalar = false'
+                        ,'$scope.todos[{{todo.indexValue}}].hallux = false','$scope.todos[{{todo.indexValue}}].calcaneal = false','$scope.todos[{{todo.indexValue}}].neuroma = false'],todo.normal,'$scope.todos[{{todo.indexValue}}].normal',true)" />
+                    &nbsp;Normal</label>
+            </div>
+            <!------- Fracture ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.fracture" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Fracture</label>
+            </div>
+            <!------- Arthritis/degenerative joint changes ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.arthritis" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false','$scope.todos[{{todo.indexValue}}].arthritisopts = false'])" />
+                    &nbsp;Arthritis/degenerative joint changes</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.arthritis">
+                <label>
+                    <input type="radio" value="Mild" ng-model="todo.arthritisopts" />&nbsp;Mild</label><br />
+                <label>
+                    <input type="radio" value="Moderate" ng-model="todo.arthritisopts" />&nbsp;Moderate</label><br />
+                <label>
+                    <input type="radio" value="Severe" ng-model="todo.arthritisopts" />&nbsp;Severe</label>
+            </div>
+            <!------- Effusion ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.effusion" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Effusion</label>
+            </div>
+            <!------- Avascular necrosis ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.avascular" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Avascular necrosis</label>
+            </div>
+            <!------- Soft tissue mass ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.soft" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Soft tissue mass</label>
+            </div>
+            <!------- Flexor tendon injury ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.flexortendon" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Flexor tendon injury</label>
+            </div>
+            <!------- Flexor tendon/Achilles tendon injury ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.flexorachilles" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Flexor tendon/Achilles tendon injury</label>
+            </div>
+            <!------- Extensor tendon injury ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.extensor" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Extensor tendon injury</label>
+            </div>
+            <!------- Ligament tear ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.ligament" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Ligament tear</label>
+            </div>
+            <!------- Cyst/ganglion ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.cyst" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Cyst/ganglion</label>
+            </div>
+            <!------- Mortise widening ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.mortise" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Mortise widening</label>
+            </div>
+            <!------- Osteochondritis dessicans ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.osteochondritis" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Osteochondritis dessicans</label>
+            </div>
+            <!------- Plantar fasciitis ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.plantar" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Plantar fasciitis</label>
+            </div>
+            <!------- Neuroma ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.neuroma" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Neuroma</label>
+            </div>
+            <!------- Subtalar coalition ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.subtalar" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Subtalar coalition</label>
+            </div>
+            <!------- Calcaneal spur ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.calcaneal" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Calcaneal spur</label>
+            </div>
+            <!------- Hallux valgus/bunion ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.hallux" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Hallux valgus/bunion</label>
+            </div>
+            <!------- Other ------->
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-info btn-xs" ng-click="othertexteditorCondition=true">
+                    Text
+                </button>
+                <div class="clearer"></div>
+                <div ng-hide="othertexteditorCondition"><span dynamic="todo.othertexteditor" class="textEditorTextColor col-sm-10"></span></div>
+                <div class="col-sm-10" ng-if="othertexteditorCondition">
+                    <textarea ui-tinymce ng-model="todo.othertexteditor"></textarea>
+                </div>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>

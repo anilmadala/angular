@@ -1,0 +1,63 @@
+<div class="modal-header">
+    <h3>Invite Users</h3>
+</div>
+<div class="modal-body">
+      <table class="table">
+        <thead>
+            <tr>
+                <th>Name
+                </th>
+                <th>Email
+                </th>
+                <th>Role
+                </th>
+                <th>Report Access Level
+                </th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="u in user">
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-control" ng-model="u.name" required>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input type="email" name="emailId" class="form-control" ng-model="u.emailId" required>
+                    </div>
+                </td>
+                <td>
+                    <select ng-model="u.role" class="form-control" name="role" required>
+                        <option value="" selected="selected">-Role-</option>
+                        <option value="admin">Admin</option>
+                        <option value="nonadmin">NonAdmin</option>
+                    </select>
+                </td>
+                <td>
+                    <select ng-model="u.level" class="form-control" name="levels" required>
+                        <option value="" selected="selected">--Report Access Level--</option>
+                        <option value="1">1 - Staff</option>
+                        <option value="2">2 - Medical Assistant</option>
+                        <option value="3">3 - NP/PA</option>
+                        <option value="4">4 - Physician</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <alert ng-hide="alerts.length==0" type="alerts[$index].type">{{alerts[$index].msg}}</alert>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn" ng-click="addinvitation()" ng-show="isSend">Add Another</button>
+    <button class="btn btn-primary" ng-click="ok()" ng-show="isSend">Send</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
+
+
+
+

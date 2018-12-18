@@ -1,0 +1,933 @@
+<!-- Start Diagnoses section -->
+<div ng-if="diagnosesCheck() || report.data['decisionmaking'].mdmq2.length>0">
+    <br>
+    <div><strong>Section 20. </strong><span class="DFRReportHeadingFontSize"><strong>Diagnoses</strong></span></div>
+    <!--Are chemical compounds involved (Medical Decision Making)-->
+    <div ng-if="report.data['decisionmaking'].mdmq2.length>0">
+        <div class="divMain">
+            <div ng-if="report.data['decisionmaking'].mdmq2 == 'Yes'">Chemical or toxic compounds are involved.</div>
+            <div ng-if="report.data['decisionmaking'].mdmq2 == 'No'">Chemical or toxic compounds are not involved.</div>
+            <div ng-bind-html="appendPeriod(report.data['decisionmaking'].mdmq2Text)"></div>
+        </div>
+    </div>
+    <!--Are chemical compounds involved (Medical Decision Making)-->
+
+    <div ng-if="diagnosesCheck()">
+        <!-- Start diagnoses general -->
+        <div ng-if="report.data['diagnoses'].diagnosesObesity.length > 0">{{report.data['diagnoses'].diagnosesObesity[0]}}</div>
+        <div ng-if="report.data['diagnoses'].diagnosesHypertension.length > 0">{{report.data['diagnoses'].diagnosesHypertension[0]}}</div>
+        <div ng-if="report.data['diagnoses'].diagnosesHypertensionNotControlled.length > 0">{{report.data['diagnoses'].diagnosesHypertensionNotControlled[0]}}</div>
+        <div ng-if="report.data['diagnoses'].diagnosesDiabetes.length > 0">{{report.data['diagnoses'].diagnosesDiabetes[0]}}</div>
+        <div ng-if="report.data['diagnoses'].diagnosesDiabeticPolyneuropathy.length > 0">{{report.data['diagnoses'].diagnosesDiabeticPolyneuropathy[0]}}</div>
+        <div ng-if="report.data['diagnoses'].diagnosesTobaccoAbuse.length > 0">{{report.data['diagnoses'].diagnosesTobaccoAbuse[0]}}</div>
+        <div ng-bind-html="appendPeriod(report.data['diagnoses'].diagnosesOther)"></div>
+        <!-- End diagnoses general -->
+        <!-- Start diagnoses bodypart -->
+        <div ng-repeat="item in report.data['selectinjuries'].concatedbodypart | orderBy: 'sequence'">
+            <div ng-if="checkExist(item,'diagnoses')">
+                <br>
+                <span class="DFRReportSubHeadingFontSize"><strong>{{displayBodyPartName(item)}}</strong></span>
+            </div>
+            <div ng-if="item.id=='neck' || item.id=='upperextremity' || item.id=='lowerextremity' || item.id=='trunk' || item.id=='groingenitalia'">
+                <div ng-if="report.data['diagnoses' + item.concateId].neckvesiculobullous[0]=='Vesiculobullous disease'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckherpes.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckherpes[0]}}.
+ <span ng-if="report.data['diagnoses' + item.concateId].neckherpesradio">{{report.data['diagnoses' + item.concateId].neckherpesradio}}.</span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckvaricella.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckvaricella[0]}}.
+ <span ng-if="report.data['diagnoses' + item.concateId].neckvaricellaradio">{{report.data['diagnoses' + item.concateId].neckvaricellaradio}}.</span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckvesicular.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckvesicular[0]}}.
+ <span ng-if="report.data['diagnoses' + item.concateId].neckvesicularradio">{{report.data['diagnoses' + item.concateId].neckvesicularradio}}.</span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckdermatitis.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckdermatitis[0]}}.
+ <span ng-if="report.data['diagnoses' + item.concateId].neckdermatitisradio">{{report.data['diagnoses' + item.concateId].neckdermatitisradio}}.</span>
+                    </div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].Vesiculobulloustexteditor)"></div>
+                </div>
+                <div ng-if="report.data['diagnoses' + item.concateId].neckbullous[0]=='Bullous disease'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckpemphigus.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckpemphigus[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckpemphigusradio">{{report.data['diagnoses' + item.concateId].neckpemphigusradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckpemphigoid.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckpemphigoid[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckpemphigoidradio">{{report.data['diagnoses' + item.concateId].neckpemphigoidradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckerythema.length > 0">
+                        {{report.data['diagnoses' + item.concateId].neckerythema[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckerythemaradio">{{report.data['diagnoses' + item.concateId].neckerythemaradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckpoison.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckpoison[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckpoisonradio">{{report.data['diagnoses' + item.concateId].neckpoisonradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckbullousimpetigo.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckbullousimpetigo[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckbullousinpetigoradio">{{report.data['diagnoses' + item.concateId].neckbullousinpetigoradio}}.
+                        </span>
+                    </div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neclbulloustexteditor)"></div>
+                </div>
+                <div ng-if="report.data['diagnoses' + item.concateId].neckpustular[0]=='Pustular disease'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckacne.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckacne[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckacneradio">{{report.data['diagnoses' + item.concateId].neckacneradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckrosacea.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckrosacea[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckrosacearadio">{{report.data['diagnoses' + item.concateId].neckrosacearadio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckbacterial.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckbacterial[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckbacterialradio">{{report.data['diagnoses' + item.concateId].neckbacterialradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckfungal.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckfungal[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckfungalradio">{{report.data['diagnoses' + item.concateId].neckfungalradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckcandidiasis.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckcandidiasis[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckcandidiasisradio">{{report.data['diagnoses' + item.concateId].neckcandidiasisradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckpustularpsoriasis.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckpustularpsoriasis[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckpustularpsoriasisradio">{{report.data['diagnoses' + item.concateId].neckpustularpsoriasisradio}}.
+                        </span>
+                    </div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neckpustulartexteditor)"></div>
+                </div>
+                <div ng-if="report.data['diagnoses' + item.concateId].neckscars[0]=='Scars'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].necksurgical.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].necksurgical[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].necksurgicalradio">{{report.data['diagnoses' + item.concateId].necksurgicalradio}}.<br>
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckkeloid.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckkeloid[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckkeloidradio">{{report.data['diagnoses' + item.concateId].neckkeloidradio}}.<br>
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckacneicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckacneicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckacneicdradio">{{report.data['diagnoses' + item.concateId].neckacneicdradio}}.<br>
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckatrophic.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckatrophic[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckatrophicradio">{{report.data['diagnoses' + item.concateId].neckatrophicradio}}.<br>
+                        </span>
+                    </div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neckscarstexteditor)" class="print_ref_p_tag1"></div>
+                </div>
+                <div ng-if="report.data['diagnoses' + item.concateId].neckburn[0]=='Burn'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckchemical.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckchemical[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckchemicalradio">{{report.data['diagnoses' + item.concateId].neckchemicalradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckthermal.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckthermal[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckthermalradio">{{report.data['diagnoses' + item.concateId].neckthermalradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckburntexteditor.length > 0">
+                        <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neckburntexteditor)"></div>
+                    </div>
+                </div>
+                <div ng-if="report.data['diagnoses' + item.concateId].neckkeratotic[0]=='Keratotic (Scaly)'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckactinic.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckactinic[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckactinicradio!=false && report.data['diagnoses' + item.concateId].neckactinicradio.length > 0">{{report.data['diagnoses' + item.concateId].neckactinicradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].necksquamous.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].necksquamous[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].necksquamousradio">{{report.data['diagnoses' + item.concateId].necksquamousradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckseborrheickeratotic.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckseborrheickeratotic[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckseborrheicradio">{{report.data['diagnoses' + item.concateId].neckseborrheicradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckcorn.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckcorn[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckcornradio">{{report.data['diagnoses' + item.concateId].neckcornradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckcallus.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckcallus[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckcallusradio">{{report.data['diagnoses' + item.concateId].neckcallusradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckverruca.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckverruca[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckverrucaradio">{{report.data['diagnoses' + item.concateId].neckverrucaradio}}.
+                        </span>
+                    </div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neckkeratotictextarea)"></div>
+                </div>
+                <div ng-if="report.data['diagnoses' + item.concateId].necknonkeratotic[0]=='Nonkeratotic (Smooth lesions)'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckwartsicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckwartsicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckwartsicdradio">{{report.data['diagnoses' + item.concateId].neckwartsicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckgenital.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckgenital[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckgenitalradio">{{report.data['diagnoses' + item.concateId].neckgenitalradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckflatwarts.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckflatwarts[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckflatwartsradio">{{report.data['diagnoses' + item.concateId].neckflatwartsradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckbasalcell.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckbasalcell[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckbasalcellradio">{{report.data['diagnoses' + item.concateId].neckbasalcellradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckepidermoid.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckepidermoid[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckepidermoidradio">{{report.data['diagnoses' + item.concateId].neckepidermoidradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].necklipomaicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].necklipomaicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].necklipomaicdradio">{{report.data['diagnoses' + item.concateId].necklipomaicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckmolluscum.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckmolluscum[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckmolluscumradio">{{report.data['diagnoses' + item.concateId].neckmolluscumradio}}.
+                        </span>
+                    </div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].necknonkeratotictexteditorbtn)"></div>
+                </div>
+                <div ng-if="report.data['diagnoses' + item.concateId].neckwhitelesions[0]=='White lesions'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckpatchesnplaques[0]=='Patches and plaques'">
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckpityriasis.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckpityriasis[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckpityriasisradio">{{report.data['diagnoses' + item.concateId].neckpityriasisradio}}.<br>
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckpityriasistinea.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckpityriasistinea[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckpityriasistinearadio">{{report.data['diagnoses' + item.concateId].neckpityriasistinearadio}}.<br>
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckvitligoicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckvitligoicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckvitiligoradio">{{report.data['diagnoses' + item.concateId].neckvitiligoradio}}.<br>
+                            </span>
+                        </div>
+                        <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neckpatchesnplaquestexteditor)"></div>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckwhitepapules[0]=='White papules'">
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckmiliaicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckmiliaicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckmiliaicdradio">{{report.data['diagnoses' + item.concateId].neckmiliaicdradio}}.<br>
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckkeratosis.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckkeratosis[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckkeratosisradio">{{report.data['diagnoses' + item.concateId].neckkeratosisradio}}.<br>
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckmolluscumconta.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckmolluscumconta[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckmolluscumcontaradio">{{report.data['diagnoses' + item.concateId].neckmolluscumcontaradio}}.<br>
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckwhitepapulestexteditor!=''">
+                            <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neckwhitepapulestexteditor)"></div>
+                        </div>
+                    </div>
+                    <span ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neckwhitelesionstexteditor)"></span>
+                </div>
+                <div ng-if="report.data['diagnoses' + item.concateId].neckbrownblacklesions[0]=='Brown-black lesions'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].necklentiginesicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].necklentiginesicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].necklentiginesicdradio">{{report.data['diagnoses' + item.concateId].necklentiginesicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].necknevi[0]=='Nevi'">
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckjunctionalicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckjunctionalicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckjunctionalicdradio">{{report.data['diagnoses' + item.concateId].neckjunctionalicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckcompoundicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckcompoundicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckcompoundicdradio">{{report.data['diagnoses' + item.concateId].neckcompoundicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckintradermalicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckintradermalicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckintradermalicdradio">{{report.data['diagnoses' + item.concateId].neckintradermalicdradio}}.
+                            </span>
+                        </div>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckdysplasticicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckdysplasticicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckdysplasticicdradio">{{report.data['diagnoses' + item.concateId].neckdysplasticicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckmelanoma[0]=='Melanoma'">
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckamelanoticmelanoma.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckamelanoticmelanoma[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckamelanoticmelanomaradio">{{report.data['diagnoses' + item.concateId].neckamelanoticmelanomaradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckacrallentiginous.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckacrallentiginous[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckacrallentiginousradio">{{report.data['diagnoses' + item.concateId].neckacrallentiginousradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckinsituicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckinsituicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckinsituicdradio">{{report.data['diagnoses' + item.concateId].neckinsituicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].necklentigomaligna.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].necklentigomaligna[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].necklentigomalignaradio">{{report.data['diagnoses' + item.concateId].necklentigomalignaradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckmucosal.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckmucosal[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckmucosalradio">{{report.data['diagnoses' + item.concateId].neckmucosalradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckneurotropic.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckneurotropic[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckneurotropicradio">{{report.data['diagnoses' + item.concateId].neckneurotropicradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].necknodular.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].necknodular[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].necknodularradio">{{report.data['diagnoses' + item.concateId].necknodularradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].necksuperficial.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].necksuperficial[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].necksuperficialradio">{{report.data['diagnoses' + item.concateId].necksuperficialradio}}.
+                            </span>
+                        </div>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckseborrheic.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckseborrheic[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckseborrheicradio">{{report.data['diagnoses' + item.concateId].neckseborrheicradio}}.
+                            </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckseborrheicbrownblack.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckseborrheicbrownblack[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckseborrheicradio">{{report.data['diagnoses' + item.concateId].neckseborrheicradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckdermatofibromaicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckdermatofibromaicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckdermatofibromaicdradio">{{report.data['diagnoses' + item.concateId].neckdermatofibromaicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neckbrownblacklesionstexteditor)"></div>
+                </div>
+                <div ng-if="report.data['diagnoses' + item.concateId].neckbrownpatchesnplaques[0]=='Brown patches and plaques'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckcafeaulaitpatchesicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckcafeaulaitpatchesicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckcafeaulaitpatchesicdradio">{{report.data['diagnoses' + item.concateId].neckcafeaulaitpatchesicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckgiantcongenital.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckgiantcongenital[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckgiantcongenitalradio">{{report.data['diagnoses' + item.concateId].neckgiantcongenitalradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckgeneralized.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckgeneralized[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckgeneralizedradio">{{report.data['diagnoses' + item.concateId].neckgeneralizedradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckbrownpatchesnplaquestextarea!=''">
+                        <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neckbrownpatchesnplaquestextarea)"></div>
+                    </div>
+                </div>
+                <div ng-if="report.data['diagnoses' + item.concateId].neckyellowlesions[0]=='Yellow lesions'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckxanthelasma.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckxanthelasma[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckxanthelasmaradio">{{report.data['diagnoses' + item.concateId].neckxanthelasmaradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].necknecrobiosis.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].necknecrobiosis[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].necknecrobiosisradio">{{report.data['diagnoses' + item.concateId].necknecrobiosisradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckyellowlesionstextarea!=''">
+                        <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neckyellowlesionstextarea)"></div>
+                    </div>
+                </div>
+                <div ng-if="report.data['diagnoses' + item.concateId].neckradpapuleschild[0]=='Red Papules'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckinsectbite.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckinsectbite[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckinsectbiteradio">{{report.data['diagnoses' + item.concateId].neckinsectbiteradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckcherryangiomaicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckcherryangiomaicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckcherryangiomaicdradio">{{report.data['diagnoses' + item.concateId].neckcherryangiomaicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckdelayedhypersensitivity.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckdelayedhypersensitivity[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckdelayedhypersensitivityradio">{{report.data['diagnoses' + item.concateId].neckdelayedhypersensitivityradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckdrugeruptionicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckdrugeruptionicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckdrugeruptionicdradio">{{report.data['diagnoses' + item.concateId].neckdrugeruptionicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckpyogenic.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckpyogenic[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckpyogenicradio">{{report.data['diagnoses' + item.concateId].neckpyogenicradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckgranulomaannulareicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckgranulomaannulareicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckgranulomaannulareicdradio">{{report.data['diagnoses' + item.concateId].neckgranulomaannulareicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckparonychiaicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckparonychiaicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckparonychiaicdradio">{{report.data['diagnoses' + item.concateId].neckparonychiaicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckhemangiomaicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckhemangiomaicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckhemangiomaicdradio">{{report.data['diagnoses' + item.concateId].neckhemangiomaicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckportwinestainicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckportwinestainicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckportwinestainicdradio">{{report.data['diagnoses' + item.concateId].neckportwinestainicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckredpapulestexteditor!=''">
+                        <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neckredpapulestexteditor)"></div>
+                    </div>
+                </div>
+                <div ng-if="report.data['diagnoses' + item.concateId].neckrednodules[0]=='Red nodules'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckfuruncleicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckfuruncleicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckfuruncleicdradio">{{report.data['diagnoses' + item.concateId].neckfuruncleicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckinflamed.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckinflamed[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckinflamedradio">{{report.data['diagnoses' + item.concateId].neckinflamedradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckcellulitisicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckcellulitisicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckcellulitisicdradio">{{report.data['diagnoses' + item.concateId].neckcellulitisicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckhidradenitis.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckhidradenitis[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckhidradenitisradio">{{report.data['diagnoses' + item.concateId].neckhidradenitisradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckrednodulestexteditor!=''">
+                        <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neckrednodulestexteditor)"></div>
+                    </div>
+                </div>
+                <div ng-if="report.data['diagnoses' + item.concateId].neckvascularreactions[0]=='Vascular reactions'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].necktransient[0]=='Transient'">
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckurticariaicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckurticariaicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckurticariaicdradio">{{report.data['diagnoses' + item.concateId].neckurticariaicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckangioedemaicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckangioedemaicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckangioedemaicdradio">{{report.data['diagnoses' + item.concateId].neckangioedemaicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].necktransienttexteditor.length > 0">
+                            <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].necktransienttexteditor)"></div>
+                        </div>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckpersistent[0]=='Persistent'">
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckerythemamultiformeicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckerythemamultiformeicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckerythemamultiformeicdradio">{{report.data['diagnoses' + item.concateId].neckerythemamultiformeicdradio}}.
+                        </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckerythemanodosumicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckerythemanodosumicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckerythemanodosumicdradio">{{report.data['diagnoses' + item.concateId].neckerythemanodosumicdradio}}.
+                        </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckcherryangiomaicd2.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckcherryangiomaicd2[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckcherryangiomaicdradio2">{{report.data['diagnoses' + item.concateId].neckcherryangiomaicdradio2}}.
+                        </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckpyogenicgranulomasicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckpyogenicgranulomasicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckpyogenicgranulomasicdradio">{{report.data['diagnoses' + item.concateId].neckpyogenicgranulomasicdradio}}.
+                        </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckvascularreactionstexteditor!=''">
+                            <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neckvascularreactionstexteditor)"></div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="report.data['diagnoses' + item.concateId].neckplaques[0]=='Plaques'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckpsoriasis[0]=='Psoriasis'">
+                        <div ng-if="report.data['diagnoses' + item.concateId].necklargeplaqueicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].necklargeplaqueicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].necklargeplaqueicdradio">{{report.data['diagnoses' + item.concateId].necklargeplaqueicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].necksmallplaqueicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].necksmallplaqueicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].necksmallplaqueicdradio">{{report.data['diagnoses' + item.concateId].necksmallplaqueicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckguttateicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckguttateicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckguttateicdradio">{{report.data['diagnoses' + item.concateId].neckguttateicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckpustularpsoriasisicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckpustularpsoriasisicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckpustularpsoriasisicdradio">{{report.data['diagnoses' + item.concateId].neckpustularpsoriasisicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckparapsoriasisicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckparapsoriasisicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckparapsoriasisicdradio">{{report.data['diagnoses' + item.concateId].neckparapsoriasisicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckpsoriasistextarea!=''">
+                            <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neckpsoriasistextarea)"></div>
+                        </div>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].necktinea[0]=='Tinea'">
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckcorporisicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckcorporisicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckcorporisicdradio">{{report.data['diagnoses' + item.concateId].neckcorporisicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckcapitisicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckcapitisicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckcapitisicdradio">{{report.data['diagnoses' + item.concateId].neckcapitisicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckpedisicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckpedisicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckpedisicdradio">{{report.data['diagnoses' + item.concateId].neckpedisicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckcrurisicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckcrurisicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckcrurisicdradio">{{report.data['diagnoses' + item.concateId].neckcrurisicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].necktineatexteditor!=''">
+                            <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].necktineatexteditor)"></div>
+                        </div>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].necklupuserythematosus.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].necklupuserythematosus[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].necklupuserythematosusradio">{{report.data['diagnoses' + item.concateId].necklupuserythematosusradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckmycosisfungoidesicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckmycosisfungoidesicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckmycosisfungoidesicdradio">{{report.data['diagnoses' + item.concateId].neckmycosisfungoidesicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckplaquestexteditor.length > 0">
+                        <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neckplaquestexteditor)"></div>
+                    </div>
+                </div>
+                <div ng-if="report.data['diagnoses' + item.concateId].necknonconfluentpapules[0]=='Nonconfluent papules'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckpityriasisroseaicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckpityriasisroseaicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckpityriasisroseaicdradio">{{report.data['diagnoses' + item.concateId].neckpityriasisroseaicdradio}}.<br>
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].necklichenplanusicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].necklichenplanusicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].necklichenplanusicdradio">{{report.data['diagnoses' + item.concateId].necklichenplanusicdradio}}.<br>
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].necksecondarysyphilisicd">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].necksecondarysyphilisicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].necksecondarysyphilisicdradio">{{report.data['diagnoses' + item.concateId].necksecondarysyphilisicdradio}}.<br>
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].necknonconfluenttexteditor!=''">
+                        <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].necknonconfluenttexteditor)"></div>
+                    </div>
+                </div>
+                <div ng-if="report.data['diagnoses' + item.concateId].neckeczematousdisease[0]=='Eczematous disease'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckexcoriationsprominent[0]=='Excoriations prominent'">
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckatopicdermatitisicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckatopicdermatitisicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckatopicdermatitisicdradio">{{report.data['diagnoses' + item.concateId].neckatopicdermatitisicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckneruodermatitisicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckneruodermatitisicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckneruodermatitisicdradio">{{report.data['diagnoses' + item.concateId].neckneruodermatitisicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].necklichensimplex.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].necklichensimplex[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].necklichensimplexradio">{{report.data['diagnoses' + item.concateId].necklichensimplexradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckdyshidroticeczemaicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckdyshidroticeczemaicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckdyshidroticeczemaicdradio">{{report.data['diagnoses' + item.concateId].neckdyshidroticeczemaicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].necknummulareczemaicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].necknummulareczemaicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].necknummulareczemaicdradio">{{report.data['diagnoses' + item.concateId].necknummulareczemaicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckasteatoticeczemaicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckasteatoticeczemaicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckasteatoticeczemaicdradio!=false && report.data['diagnoses' + item.concateId].neckasteatoticeczemaicdradio.length > 0">{{report.data['diagnoses' + item.concateId].neckasteatoticeczemaicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckstasisdermatitisicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckstasisdermatitisicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckstasisdermatitisicdradio!=false && report.data['diagnoses' + item.concateId].neckstasisdermatitisicdradio.length > 0">{{report.data['diagnoses' + item.concateId].neckstasisdermatitisicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckscabiesicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckscabiesicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckscabiesicdradio">{{report.data['diagnoses' + item.concateId].neckscabiesicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckexcoriationstexteditor!=''">
+                            <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neckexcoriationstexteditor)"></div>
+                        </div>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].necklittleornoexcoriations[0]=='Little or no excoriations'">
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckseborrheicdermatitisicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckseborrheicdermatitisicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckseborrheicdermatitisicdradio">{{report.data['diagnoses' + item.concateId].neckseborrheicdermatitisicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckirritantcontact.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckirritantcontact[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckirritantcontactradio">{{report.data['diagnoses' + item.concateId].neckirritantcontactradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckallergiccontact.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckallergiccontact[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckallergiccontactradio">{{report.data['diagnoses' + item.concateId].neckallergiccontactradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].neckxeroticeczemaicd.length > 0">
+                            Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckxeroticeczemaicd[0]}}.
+                            <span ng-if="report.data['diagnoses' + item.concateId].neckxeroticeczemaicdradio">{{report.data['diagnoses' + item.concateId].neckxeroticeczemaicdradio}}.
+                            </span>
+                        </div>
+                        <div ng-if="report.data['diagnoses' + item.concateId].necklittletexteditor!=''">
+                            <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].necklittletexteditor)"></div>
+                        </div>
+                    </div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].Eczematoustexta)"></div>
+                </div>
+                <div ng-if="report.data['diagnoses' + item.concateId].neckphotodamage[0]=='Photodamage'">
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckrhytidesicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckrhytidesicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckrhytidesicdradio">{{report.data['diagnoses' + item.concateId].neckrhytidesicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckpoikilodermaicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckpoikilodermaicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckpoikilodermaicdradio">{{report.data['diagnoses' + item.concateId].neckpoikilodermaicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckmelasmaicd.length > 0">
+                        Skin of the {{item.text}} - {{report.data['diagnoses' + item.concateId].neckmelasmaicd[0]}}.
+                        <span ng-if="report.data['diagnoses' + item.concateId].neckmelasmaicdradio">{{report.data['diagnoses' + item.concateId].neckmelasmaicdradio}}.
+                        </span>
+                    </div>
+                    <div ng-if="report.data['diagnoses' + item.concateId].neckdamagephototexteditor!=''">
+                        <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].neckdamagephototexteditor)"></div>
+                    </div>
+                </div>
+                <span ng-bind-html="appendPeriod(report.data['diagnoses'+item.concateId].diagnosesSkinOtherText)"></span>
+            </div>
+            <div ng-if="item.id=='cervical'">
+                <div ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalDegenerative.length > 0">{{report.data['diagnoses' + item.concateId].cervicalCervicalDegenerative[0]}}</div>
+                <div ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalStrain.length > 0">{{report.data['diagnoses' + item.concateId].cervicalCervicalStrain[0]}} <span ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalStrainRadio">{{report.data['diagnoses' + item.concateId].cervicalCervicalStrainRadio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalStrain2.length > 0">{{report.data['diagnoses' + item.concateId].cervicalCervicalStrain2[0]}} <span ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalStrain2Radio">{{report.data['diagnoses' + item.concateId].cervicalCervicalStrain2Radio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalStrain3.length > 0">{{report.data['diagnoses' + item.concateId].cervicalCervicalStrain3[0]}} <span ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalStrain3Radio">{{report.data['diagnoses' + item.concateId].cervicalCervicalStrain3Radio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalStrain4.length > 0">{{report.data['diagnoses' + item.concateId].cervicalCervicalStrain4[0]}} <span ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalStrain4Radio">{{report.data['diagnoses' + item.concateId].cervicalCervicalStrain4Radio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalSpondylosis.length > 0">{{report.data['diagnoses' + item.concateId].cervicalCervicalSpondylosis[0]}} <span ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalSpondylosisRadio">{{report.data['diagnoses' + item.concateId].cervicalCervicalSpondylosisRadio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalSpondylosis2.length > 0">{{report.data['diagnoses' + item.concateId].cervicalCervicalSpondylosis2[0]}} <span ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalSpondylosis2Radio">{{report.data['diagnoses' + item.concateId].cervicalCervicalSpondylosis2Radio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalDiscDisplacement.length > 0">{{report.data['diagnoses' + item.concateId].cervicalCervicalDiscDisplacement[0]}} <span ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalDiscDisplacementRadio">{{report.data['diagnoses' + item.concateId].cervicalCervicalDiscDisplacementRadio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalDisorder.length > 0">Cervical Disorder, Not Otherwise Specified 723.9. <span ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalDisorderRadio">{{report.data['diagnoses' + item.concateId].cervicalCervicalDisorderRadio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalRootInjury.length > 0">{{report.data['diagnoses' + item.concateId].cervicalCervicalRootInjury[0]}} <span ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalRootInjuryRadio">{{report.data['diagnoses' + item.concateId].cervicalCervicalRootInjuryRadio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalRegionPostlaminectomy.length > 0">{{report.data['diagnoses' + item.concateId].cervicalCervicalRegionPostlaminectomy[0]}} <span ng-if="report.data['diagnoses' + item.concateId].cervicalCervicalRegionPostlaminectomyRdo">{{report.data['diagnoses' + item.concateId].cervicalCervicalRegionPostlaminectomyRdo}}.</span></div>
+                <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].cervicalOtherText)"></div>
+            </div>
+            <div ng-if="item.id=='thoracic'">
+                <div ng-if="report.data['diagnoses' + item.concateId].thoracicThoracicDegenerative.length > 0">{{report.data['diagnoses' + item.concateId].thoracicThoracicDegenerative[0]}}</div>
+                <div ng-if="report.data['diagnoses' + item.concateId].thoracicThoracicStrain.length > 0">{{report.data['diagnoses' + item.concateId].thoracicThoracicStrain[0]}} <span ng-if="report.data['diagnoses' + item.concateId].thoracicThoracicStrainRadio">{{report.data['diagnoses' + item.concateId].thoracicThoracicStrainRadio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].thoracicCostochondritis.length > 0">{{report.data['diagnoses' + item.concateId].thoracicCostochondritis[0]}} <span ng-if="report.data['diagnoses' + item.concateId].thoracicCostochondritisRadio">{{report.data['diagnoses' + item.concateId].thoracicCostochondritisRadio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].thoracicChestContusion.length > 0">{{report.data['diagnoses' + item.concateId].thoracicChestContusion[0]}} <span ng-if="report.data['diagnoses' + item.concateId].thoracicChestContusionRadio">{{report.data['diagnoses' + item.concateId].thoracicChestContusionRadio}}.</span></div>
+                <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].thoracicOtherText)"></div>
+            </div>
+            <div ng-if="item.id=='lumbar'">
+                <div ng-if="report.data['diagnoses' + item.concateId].lumberLumbarDegenerative.length > 0">{{report.data['diagnoses' + item.concateId].lumberLumbarDegenerative[0]}}</div>
+                <div ng-if="report.data['diagnoses' + item.concateId].lumbarLumbarStrain.length > 0">{{report.data['diagnoses' + item.concateId].lumbarLumbarStrain[0]}} <span ng-if="report.data['diagnoses' + item.concateId].lumbarLumbarStrainRadio">{{report.data['diagnoses' + item.concateId].lumbarLumbarStrainRadio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].lumbarLumbarStrain2.length > 0">{{report.data['diagnoses' + item.concateId].lumbarLumbarStrain2[0]}} <span ng-if="report.data['diagnoses' + item.concateId].lumbarLumbarStrain2Radio">{{report.data['diagnoses' + item.concateId].lumbarLumbarStrain2Radio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].lumbarLumbarStrain3.length > 0">{{report.data['diagnoses' + item.concateId].lumbarLumbarStrain3[0]}} <span ng-if="report.data['diagnoses' + item.concateId].lumbarLumbarStrain3Radio">{{report.data['diagnoses' + item.concateId].lumbarLumbarStrain3Radio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].lumbarLumbarStrain4.length > 0">{{report.data['diagnoses' + item.concateId].lumbarLumbarStrain4[0]}} <span ng-if="report.data['diagnoses' + item.concateId].lumbarLumbarStrain4Radio">{{report.data['diagnoses' + item.concateId].lumbarLumbarStrain4Radio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].lumbarLumbarRegion.length > 0">{{report.data['diagnoses' + item.concateId].lumbarLumbarRegion[0]}} <span ng-if="report.data['diagnoses' + item.concateId].lumbarLumbarRegionRadio">{{report.data['diagnoses' + item.concateId].lumbarLumbarRegionRadio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].lumbarLumbarDisc.length > 0">{{report.data['diagnoses' + item.concateId].lumbarLumbarDisc[0]}} <span ng-if="report.data['diagnoses' + item.concateId].lumbarLumbarDiscRadio">{{report.data['diagnoses' + item.concateId].lumbarLumbarDiscRadio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].lumbarLumbarDisc2.length > 0">{{report.data['diagnoses' + item.concateId].lumbarLumbarDisc2[0]}} <span ng-if="report.data['diagnoses' + item.concateId].lumbarLumbarDisc2Radio">{{report.data['diagnoses' + item.concateId].lumbarLumbarDisc2Radio}}.</span></div>
+                <div ng-if="report.data['diagnoses' + item.concateId].lumbarSacroiliitis.length > 0">{{report.data['diagnoses' + item.concateId].lumbarSacroiliitis[0]}} <span ng-if="report.data['diagnoses' + item.concateId].lumbarSacroiliitisRadio">{{report.data['diagnoses' + item.concateId].lumbarSacroiliitisRadio}}.</span></div>
+                <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.concateId].lumbarOtherText)"></div>
+            </div>
+            <div ng-if="item.bdsides=='right'">
+                <div ng-if="item.id=='shoulder'">
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderStrain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderStrain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderStrainRadio">{{report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderStrainRadio}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderImpingement.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderImpingement[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderImpingementRadio">{{report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderImpingementRadio}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderContusion.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderContusion[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderContusionRadio">{{report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderContusionRadio}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderDegen.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderDegen[0]}}</div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderRotator.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderRotator[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderRotatorRadio">{{report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderRotatorRadio}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderRotator2.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderRotator2[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderRotator2Radio">{{report.data['diagnoses' + item.id + item.bdsides].shoulderrightShoulderRotator2Radio}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].shouldeleftShoulderAdhesive.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].shouldeleftShoulderAdhesive[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].shouldeleftShoulderAdhesiveRadio">{{report.data['diagnoses' + item.id + item.bdsides].shouldeleftShoulderAdhesiveRadio}}.</span></div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.id + item.bdsides].shoulderrightOtherText)"></div>
+                </div>
+                <div ng-if="item.id=='elbow'">
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowrightStrain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].elbowrightStrain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowrightStrainRadio">{{report.data['diagnoses' + item.id + item.bdsides].elbowrightStrainRadio}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowrightContusion.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].elbowrightContusion[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowrightContusionRadio">{{report.data['diagnoses' + item.id + item.bdsides].elbowrightContusionRadio}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowrightLateral.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].elbowrightLateral[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowrightLateralRadio">{{report.data['diagnoses' + item.id + item.bdsides].elbowrightLateralRadio}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowrightMedial.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].elbowrightMedial[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowrightMedialRadio">{{report.data['diagnoses' + item.id + item.bdsides].elbowrightMedialRadio}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowrightCubital.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].elbowrightCubital[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowrightCubitalRadio">{{report.data['diagnoses' + item.id + item.bdsides].elbowrightCubitalRadio}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowrightUlnar.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].elbowrightUlnar[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowrightUlnarRadio">{{report.data['diagnoses' + item.id + item.bdsides].elbowrightUlnarRadio}}.</span></div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.id + item.bdsides].elbowrightOther)"></div>
+                </div>
+                <div ng-if="item.id=='wrist'">
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].wristrightWristStrain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].wristrightWristStrain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].wristrightWristStrainRadio">{{report.data['diagnoses' + item.id + item.bdsides].wristrightWristStrainRadio}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].wristrightWristContusion.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].wristrightWristContusion[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].wristrightWristContusionRadio">{{report.data['diagnoses' + item.id + item.bdsides].wristrightWristContusionRadio}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].wristrightCarpal.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].wristrightCarpal[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].wristrightCarpalRadio">{{report.data['diagnoses' + item.id + item.bdsides].wristrightCarpalRadio}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].wristrightRadial.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].wristrightRadial[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].wristrightRadialRadio">{{report.data['diagnoses' + item.id + item.bdsides].wristrightRadialRadio}}.</span></div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.id + item.bdsides].wristrightOther)"></div>
+                </div>
+                <div ng-if="item.id=='pelviship' && item.bdsides=='right'">
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].pelvishiprightHipStrain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].pelvishiprightHipStrain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].pelvishiprightHipStrainRadio">{{report.data['diagnoses' + item.id + item.bdsides].pelvishiprightHipStrainRadio}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].pelvishiprightHipTrochanteric.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].pelvishiprightHipTrochanteric[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].pelvishiprightHipTrochantericRadio">{{report.data['diagnoses' + item.id + item.bdsides].pelvishiprightHipTrochantericRadio}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].pelvishiprightContusion.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].pelvishiprightContusion[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].pelvishiprightContusionRadio">{{report.data['diagnoses' + item.id + item.bdsides].pelvishiprightContusionRadio}}.</span></div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.id + item.bdsides].pelvishiprightOther)"></div>
+                </div>
+                <div ng-if="item.id=='knee'">
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightKneeStrain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneerightKneeStrain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightKneeStrainRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneerightKneeStrainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightContusion.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneerightContusion[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightContusionRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneerightContusionRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightKneePain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneerightKneePain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightKneePainRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneerightKneePainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightKneeArthritis.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneerightKneeArthritis[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightKneeArthritisRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneerightKneeArthritisRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightKneeCrepitus.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneerightKneeCrepitus[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightKneeCrepitusRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneerightKneeCrepitusRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightKneeMeniscus.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneerightKneeMeniscus[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightKneeMeniscusRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneerightKneeMeniscusRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightKneeChondromalacia.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneerightKneeChondromalacia[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightKneeChondromalaciaRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneerightKneeChondromalaciaRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightKneePatellofemoral.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneerightKneePatellofemoral[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightKneePatellofemoralRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneerightKneePatellofemoralRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightKneeMuscle.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneerightKneeMuscle[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightKneeMuscleRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneerightKneeMuscleRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneerightKneeValgus!=''">{{report.data['diagnoses' + item.id + item.bdsides].kneerightKneeValgus[0]}}</div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.id + item.bdsides].kneerightOther)"></div>
+                </div>
+                <div ng-if="item.id=='anklefoot'">
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootrightAnkleStrain.length > 0 || report.data['diagnoses' + item.id + item.bdsides].anklefootrightFootStrain.length > 0 || report.data['diagnoses' + item.id + item.bdsides].anklefootrightFootContusion.length > 0 || report.data['diagnoses' + item.id + item.bdsides].anklefootrightAnklePain.length > 0 || report.data['diagnoses' + item.id + item.bdsides].anklefootrightFootPronation.length > 0 || report.data['diagnoses' + item.id + item.bdsides].anklefootrightOther"></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootrightAnkleStrain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].anklefootrightAnkleStrain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootrightAnkleStrainRadio">{{report.data['diagnoses' + item.id + item.bdsides].anklefootrightAnkleStrainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootrightFootStrain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].anklefootrightFootStrain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootrightFootStrainRadio">{{report.data['diagnoses' + item.id + item.bdsides].anklefootrightFootStrainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootrightFootContusion.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].anklefootrightFootContusion[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootrightFootContusionRadio">{{report.data['diagnoses' + item.id + item.bdsides].anklefootrightFootContusionRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootrightAnkleContusion.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].anklefootrightAnkleContusion[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootrightAnkleContusionRadio">{{report.data['diagnoses' + item.id + item.bdsides].anklefootrightAnkleContusionRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootrightAnklePain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].anklefootrightAnklePain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootrightAnklePainRadio">{{report.data['diagnoses' + item.id + item.bdsides].anklefootrightAnklePainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootrightFootPronation.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].anklefootrightFootPronation[0]}}</div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.id + item.bdsides].anklefootrightOther)"></div>
+                </div>
+                <div ng-if="item.id=='toe'">
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightFootPain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightFootPain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightFootPainRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightFootPainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightContusion.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightContusion[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightContusionRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightContusionRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightSprain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightSprain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightSprainRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightSprainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightClosed.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightClosed[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightClosedRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightClosedRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightFractureOpen.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightFractureOpen[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightFractureOpenRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightFractureOpenRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightFractureClosed.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightFractureClosed[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightFractureClosedRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightFractureClosedRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightFractureOpenWound.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightFractureOpenWound[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightFractureOpenWoundRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightFractureOpenWoundRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightFractureClosedFracture.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightFractureClosedFracture[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightFractureClosedFractureRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightFractureClosedFractureRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightHalluxValgus.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightHalluxValgus[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightHalluxValgusRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightHalluxValgusRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightHalluxRigidus.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightHalluxRigidus[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightHalluxRigidusRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightHalluxRigidusRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightPainInJoint.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightPainInJoint[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightPainInJointRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightPainInJointRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightPainInJoint2.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightPainInJoint2[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightPainInJoint2Radio">{{report.data['diagnoses' + item.id + item.bdsides].toerightPainInJoint2Radio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightArthralgia.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightArthralgia[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightArthralgiaRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightArthralgiaRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightArthralgia2.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightArthralgia2[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightArthralgiaRadio2">{{report.data['diagnoses' + item.id + item.bdsides].toerightArthralgiaRadio2}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightArthropathy.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightArthropathy[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightArthropathyRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightArthropathyRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightInflammation.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightInflammation[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightInflammationRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightInflammationRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightSynovitis.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightSynovitis[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightSynovitisRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightSynovitisRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightSesamoiditis.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightSesamoiditis[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightSesamoiditisRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightSesamoiditisRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightSwelling.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightSwelling[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightSwellingRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightSwellingRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightLesionPlantar.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightLesionPlantar[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightLesionPlantarRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightLesionPlantarRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightClosedDislocation.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightClosedDislocation[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightClosedDislocationRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightClosedDislocationRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightHammerToe.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightHammerToe[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightHammerToeRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightHammerToeRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightStiffness.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightStiffness[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightStiffnessRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightStiffnessRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightIngrowing.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightIngrowing[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightIngrowingRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightIngrowingRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightDifficulty.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toerightDifficulty[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toerightDifficultyRadio">{{report.data['diagnoses' + item.id + item.bdsides].toerightDifficultyRadio.trim()}}.</span></div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.id + item.bdsides].toerightOther)"></div>
+                </div>
+            </div>
+            <div ng-if="item.bdsides=='left'">
+                <div ng-if="item.id=='shoulder'">
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderStrain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderStrain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderStrainRadio">{{report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderStrainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderImpingement.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderImpingement[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderImpingementRadio">{{report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderImpingementRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderContusion.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderContusion[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderContusionRadio">{{report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderContusionRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderDegen.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderDegen[0]}}</div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderRotator.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderRotator[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderRotatorRadio">{{report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderRotatorRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderRotator2.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderRotator2[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderRotator2Radio">{{report.data['diagnoses' + item.id + item.bdsides].shoulderleftShoulderRotator2Radio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].shouldeleftShoulderAdhesive.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].shouldeleftShoulderAdhesive[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].shouldeleftShoulderAdhesiveRadio">{{report.data['diagnoses' + item.id + item.bdsides].shouldeleftShoulderAdhesiveRadio.trim()}}.</span></div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.id + item.bdsides].shoulderleftOtherText)"></div>
+                </div>
+                <div ng-if="item.id=='elbow'">
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowleftStrain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].elbowleftStrain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowleftStrainRadio">{{report.data['diagnoses' + item.id + item.bdsides].elbowleftStrainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowleftContusion.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].elbowleftContusion[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowleftContusionRadio">{{report.data['diagnoses' + item.id + item.bdsides].elbowleftContusionRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowleftLateral.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].elbowleftLateral[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowleftLateralRadio">{{report.data['diagnoses' + item.id + item.bdsides].elbowleftLateralRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowleftMedial.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].elbowleftMedial[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowleftMedialRadio">{{report.data['diagnoses' + item.id + item.bdsides].elbowleftMedialRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowleftCubital.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].elbowleftCubital[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowleftCubitalRadio">{{report.data['diagnoses' + item.id + item.bdsides].elbowleftCubitalRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowleftUlnar.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].elbowleftUlnar[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].elbowleftUlnarRadio">{{report.data['diagnoses' + item.id + item.bdsides].elbowleftUlnarRadio.trim()}}.</span></div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.id + item.bdsides].elbowleftOther)"></div>
+                </div>
+                <div ng-if="item.id=='wrist'">
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].wristleftWristStrain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].wristleftWristStrain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].wristleftWristStrainRadio">{{report.data['diagnoses' + item.id + item.bdsides].wristleftWristStrainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].wristleftWristContusion.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].wristleftWristContusion[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].wristleftWristContusionRadio">{{report.data['diagnoses' + item.id + item.bdsides].wristleftWristContusionRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].wristleftCarpal.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].wristleftCarpal[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].wristleftCarpalRadio">{{report.data['diagnoses' + item.id + item.bdsides].wristleftCarpalRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].wristleftRadial.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].wristleftRadial[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].wristleftRadialRadio">{{report.data['diagnoses' + item.id + item.bdsides].wristleftRadialRadio.trim()}}.</span></div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.id + item.bdsides].wristleftOther)"></div>
+                </div>
+                <div ng-if="item.id=='pelviship'">
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].pelvishipleftHipStrain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].pelvishipleftHipStrain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].pelvishipleftHipStrainRadio">{{report.data['diagnoses' + item.id + item.bdsides].pelvishipleftHipStrainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].pelvishipleftHipTrochanteric.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].pelvishipleftHipTrochanteric[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].pelvishipleftHipTrochantericRadio">{{report.data['diagnoses' + item.id + item.bdsides].pelvishipleftHipTrochantericRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].pelvishipleftContusion.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].pelvishipleftContusion[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].pelvishipleftContusionRadio">{{report.data['diagnoses' + item.id + item.bdsides].pelvishipleftContusionRadio.trim()}}.</span></div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.id + item.bdsides].pelvishipleftOther)"></div>
+                </div>
+                <div ng-if="item.id=='knee'">
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeStrain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeStrain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeStrainRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeStrainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftContusion.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftContusion[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftContusionRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftContusionRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftKneePain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftKneePain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftKneePainRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftKneePainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeArthritis.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeArthritis[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeArthritisRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeArthritisRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeCrepitus.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeCrepitus[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeCrepitusRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeCrepitusRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeMeniscus.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeMeniscus[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeMeniscusRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeMeniscusRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeChondromalacia.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeChondromalacia[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeChondromalaciaRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeChondromalaciaRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftKneePatellofemoral.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftKneePatellofemoral[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftKneePatellofemoralRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftKneePatellofemoralRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeMuscle.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeMuscle[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeMuscleRadio">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeMuscleRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeValgus!=''">{{report.data['diagnoses' + item.id + item.bdsides].kneeleftKneeValgus[0]}}</div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.id + item.bdsides].kneeleftOther)"></div>
+                </div>
+                <div ng-if="item.id=='anklefoot'">
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootleftAnkleStrain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].anklefootleftAnkleStrain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootleftAnkleStrainRadio">{{report.data['diagnoses' + item.id + item.bdsides].anklefootleftAnkleStrainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootleftFootStrain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].anklefootleftFootStrain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootleftFootStrainRadio">{{report.data['diagnoses' + item.id + item.bdsides].anklefootleftFootStrainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootleftFootContusion.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].anklefootleftFootContusion[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootleftFootContusionRadio">{{report.data['diagnoses' + item.id + item.bdsides].anklefootleftFootContusionRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootleftAnkleContusion.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].anklefootleftAnkleContusion[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootleftAnkleContusionRadio">{{report.data['diagnoses' + item.id + item.bdsides].anklefootleftAnkleContusionRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootleftAnklePain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].anklefootleftAnklePain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootleftAnklePainRadio">{{report.data['diagnoses' + item.id + item.bdsides].anklefootleftAnklePainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].anklefootleftFootPronation.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].anklefootleftFootPronation[0]}}</div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.id + item.bdsides].anklefootleftOther)"></div>
+                </div>
+                <div ng-if="item.id=='toe'">
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftFootPain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftFootPain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftFootPainRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftFootPainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftContusion.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftContusion[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftContusionRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftContusionRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftSprain.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftSprain[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftSprainRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftSprainRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftClosed.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftClosed[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftClosedRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftClosedRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftFractureOpen.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftFractureOpen[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftFractureOpenRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftFractureOpenRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftFractureClosed.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftFractureClosed[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftFractureClosedRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftFractureClosedRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftFractureOpenWound.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftFractureOpenWound[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftFractureOpenWoundRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftFractureOpenWoundRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftFractureClosedFracture.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftFractureClosedFracture[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftFractureClosedFractureRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftFractureClosedFractureRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftHalluxValgus.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftHalluxValgus[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftHalluxValgusRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftHalluxValgusRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftHalluxRigidus.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftHalluxRigidus[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftHalluxRigidusRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftHalluxRigidusRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftPainInJoint.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftPainInJoint[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftPainInJointRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftPainInJointRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftPainInJoint2.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftPainInJoint2[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftPainInJoint2Radio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftPainInJoint2Radio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftArthralgia.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftArthralgia[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftArthralgiaRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftArthralgiaRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftArthralgia2.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftArthralgia2[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftArthralgiaRadio2">{{report.data['diagnoses' + item.id + item.bdsides].toeleftArthralgiaRadio2.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftArthropathy.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftArthropathy[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftArthropathyRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftArthropathyRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftInflammation.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftInflammation[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftInflammationRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftInflammationRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftSynovitis.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftSynovitis[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftSynovitisRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftSynovitisRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftSesamoiditis.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftSesamoiditis[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftSesamoiditisRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftSesamoiditisRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftSwelling.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftSwelling[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftSwellingRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftSwellingRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftLesionPlantar.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftLesionPlantar[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftLesionPlantarRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftLesionPlantarRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftClosedDislocation.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftClosedDislocation[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftClosedDislocationRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftClosedDislocationRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftHammerToe.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftHammerToe[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftHammerToeRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftHammerToeRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftStiffness.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftStiffness[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftStiffnessRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftStiffnessRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftIngrowing.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftIngrowing[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftIngrowingRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftIngrowingRadio.trim()}}.</span></div>
+                    <div ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftDifficulty.length > 0">{{report.data['diagnoses' + item.id + item.bdsides].toeleftDifficulty[0]}} <span ng-if="report.data['diagnoses' + item.id + item.bdsides].toeleftDifficultyRadio">{{report.data['diagnoses' + item.id + item.bdsides].toeleftDifficultyRadio.trim()}}.</span></div>
+                    <div ng-bind-html="appendPeriod(report.data['diagnoses' + item.id + item.bdsides].toeleftOther)"></div>
+                </div>
+            </div>
+            <div ng-if="item.id=='other'">
+                <div ng-if="report.data['diagnoses'+item.concateId]">{{report.data['diagnoses'+item.concateId].otherDiangosesName}}<span ng-if="report.data['diagnoses'+item.concateId].otherDiangosesName">.</span> {{report.data['diagnoses'+item.concateId].otherIndustrialRadio}} <span ng-if="report.data['diagnoses'+item.concateId].otherICD9Code">ICD-9:</span> {{report.data['diagnoses'+item.concateId].otherICD9Code}}<span ng-if="report.data['diagnoses'+item.concateId].otherICD10Code"><span ng-if="report.data['diagnoses'+item.concateId].otherICD9Code">/ICD-10:</span><span ng-if="!report.data['diagnoses'+item.concateId].otherICD9Code">ICD-10:</span></span> {{report.data['diagnoses'+item.concateId].otherICD10Code}}</div>
+            </div>
+        </div>
+        <!--End diagnoses bodypart -->
+        <!--Start diagnoses Hand/Finger/Thumb Left subsection -->
+        <div>
+            <div ng-if="diagnosesHandsCheckPr2('left')">
+                <br>
+                <span class="DFRReportSubHeadingFontSize"><strong>Hand/Finger/Thumb Right</strong></span>
+            </div>
+            <div ng-if="report.data['diagnoseshandleft'].handSprains1.length > 0">{{report.data['diagnoseshandleft'].handSprains1|map|capitalize}} <span ng-if="report.data['diagnoseshandleft'].handSprains1Radio">{{report.data['diagnoseshandleft'].handSprains1Radio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandleft'].handSprains2.length > 0">{{report.data['diagnoseshandleft'].handSprains2|map|capitalize}} <span ng-if="report.data['diagnoseshandleft'].handSprains2Radio">{{report.data['diagnoseshandleft'].handSprains2Radio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandleft'].handContusion1.length > 0">{{report.data['diagnoseshandleft'].handContusion1|map|capitalize}} <span ng-if="report.data['diagnoseshandleft'].handContusion1Radio">{{report.data['diagnoseshandleft'].handContusion1Radio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandleft'].handContusion2.length > 0">{{report.data['diagnoseshandleft'].handContusion2|map|capitalize}} <span ng-if="report.data['diagnoseshandleft'].handContusion2Radio">{{report.data['diagnoseshandleft'].handContusion2Radio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandleft'].handSprainsMetacarpophalangeal.length > 0">{{report.data['diagnoseshandleft'].handSprainsMetacarpophalangeal|map|capitalize}} <span ng-if="report.data['diagnoseshandleft'].handSprainsMetacarpophalangealRadio">{{report.data['diagnoseshandleft'].handSprainsMetacarpophalangealRadio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandleft'].handSprainsInterphalangeal.length > 0">{{report.data['diagnoseshandleft'].handSprainsInterphalangeal|map|capitalize}} <span ng-if="report.data['diagnoseshandleft'].handSprainsInterphalangealRadio">{{report.data['diagnoseshandleft'].handSprainsInterphalangealRadio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandleft'].handSynovitis.length > 0">{{report.data['diagnoseshandleft'].handSynovitis|map|capitalize}} <span ng-if="report.data['diagnoseshandleft'].handSynovitisRadio">{{report.data['diagnoseshandleft'].handSynovitisRadio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandleft'].handTrigger.length > 0">{{report.data['diagnoseshandleft'].handTrigger|map|capitalize}} <span ng-if="report.data['diagnoseshandleft'].handTriggerRadio">{{report.data['diagnoseshandleft'].handTriggerRadio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandleft'].handOpenWoundfingers.length > 0">{{report.data['diagnoseshandleft'].handOpenWoundfingers|map|capitalize}} <span ng-if="report.data['diagnoseshandleft'].handOpenWoundfingersRadio">{{report.data['diagnoseshandleft'].handOpenWoundfingersRadio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandleft'].handOpenWoundHand.length > 0">{{report.data['diagnoseshandleft'].handOpenWoundHand|map|capitalize}} <span ng-if="report.data['diagnoseshandleft'].handOpenWoundHandRadio">{{report.data['diagnoseshandleft'].handOpenWoundHandRadio.trim()}}.</span></div>
+            <div ng-bind-html="appendPeriod(report.data['diagnoseshandleft'].handOther)"></div>
+        </div>
+        <!--End diagnoses Hand/Finger/Thumb Left subsection -->
+        <!--Start diagnoses Hand/Finger/Thumb Right subsection -->
+        <div>
+            <div ng-if="diagnosesHandsCheckPr2('right')">
+                <br>
+                <span class="DFRReportSubHeadingFontSize"><strong>Hand/Finger/Thumb Right</strong></span>
+            </div>
+            <div ng-if="report.data['diagnoseshandright'].handSprains1.length > 0">{{report.data['diagnoseshandright'].handSprains1|map|capitalize}} <span ng-if="report.data['diagnoseshandright'].handSprains1Radio">{{report.data['diagnoseshandright'].handSprains1Radio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandright'].handSprains2.length > 0">{{report.data['diagnoseshandright'].handSprains2|map|capitalize}} <span ng-if="report.data['diagnoseshandright'].handSprains2Radio">{{report.data['diagnoseshandright'].handSprains2Radio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandright'].handContusion1.length > 0">{{report.data['diagnoseshandright'].handContusion1|map|capitalize}} <span ng-if="report.data['diagnoseshandright'].handContusion1Radio">{{report.data['diagnoseshandright'].handContusion1Radio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandright'].handContusion2.length > 0">{{report.data['diagnoseshandright'].handContusion2|map|capitalize}} <span ng-if="report.data['diagnoseshandright'].handContusion2Radio">{{report.data['diagnoseshandright'].handContusion2Radio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandright'].handSprainsMetacarpophalangeal.length > 0">{{report.data['diagnoseshandright'].handSprainsMetacarpophalangeal|map|capitalize}} <span ng-if="report.data['diagnoseshandright'].handSprainsMetacarpophalangealRadio">{{report.data['diagnoseshandright'].handSprainsMetacarpophalangealRadio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandright'].handSprainsInterphalangeal.length > 0">{{report.data['diagnoseshandright'].handSprainsInterphalangeal|map|capitalize}} <span ng-if="report.data['diagnoseshandright'].handSprainsInterphalangealRadio">{{report.data['diagnoseshandright'].handSprainsInterphalangealRadio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandright'].handSynovitis.length > 0">{{report.data['diagnoseshandright'].handSynovitis|map|capitalize}} <span ng-if="report.data['diagnoseshandright'].handSynovitisRadio">{{report.data['diagnoseshandright'].handSynovitisRadio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandright'].handTrigger.length > 0">{{report.data['diagnoseshandright'].handTrigger|map|capitalize}} <span ng-if="report.data['diagnoseshandright'].handTriggerRadio">{{report.data['diagnoseshandright'].handTriggerRadio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandright'].handOpenWoundfingers.length > 0">{{report.data['diagnoseshandright'].handOpenWoundfingers|map|capitalize}} <span ng-if="report.data['diagnoseshandright'].handOpenWoundfingersRadio">{{report.data['diagnoseshandright'].handOpenWoundfingersRadio.trim()}}.</span></div>
+            <div ng-if="report.data['diagnoseshandright'].handOpenWoundHand.length > 0">{{report.data['diagnoseshandright'].handOpenWoundHand|map|capitalize}} <span ng-if="report.data['diagnoseshandright'].handOpenWoundHandRadio">{{report.data['diagnoseshandright'].handOpenWoundHandRadio.trim()}}.</span></div>
+            <div ng-bind-html="appendPeriod(report.data['diagnoseshandright'].handOther)"></div>
+        </div>
+        <!--End diagnoses Hand/Finger/Thumb Right subsection -->
+    </div>
+</div>
+<!-- End Diagnoses section -->

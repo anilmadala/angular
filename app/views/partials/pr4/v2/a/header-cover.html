@@ -1,0 +1,38 @@
+<!--Header cover -->
+<!-- <div id="docReportHeading" style="font-size: 14px; text-align: center; display: none;">
+		<span ng-if="report.data['patientcomplaints'].cliniclocationobj.location">{{report.data['patientcomplaints'].cliniclocationobj.location}},</span>
+		<span ng-if="report.data['patientcomplaints'].cliniclocationobj.street">{{report.data['patientcomplaints'].cliniclocationobj.street}},</span>
+		<span ng-if="report.data['patientcomplaints'].cliniclocationobj.city">{{report.data['patientcomplaints'].cliniclocationobj.city}},</span>
+		<span ng-if="report.data['patientcomplaints'].cliniclocationobj.zipcode">{{report.data['patientcomplaints'].cliniclocationobj.zipcode}},</span>
+		<span ng-if="report.data['patientcomplaints'].cliniclocationobj.state">{{report.data['patientcomplaints'].cliniclocationobj.state}},</span>
+		<span ng-if="report.data['patientcomplaints'].cliniclocationobj.country">{{report.data['patientcomplaints'].cliniclocationobj.country}}</span>
+		<div>&nbsp;</div>
+	</div> -->
+<h3 style="text-align: center;">Primary Treating Physician&apos;s Permanent and Stationary&nbsp;Report (PR-4)</h3>
+<!--Start of Background Information-->
+<div>
+    <div><strong>Insurance Name and Address:</strong> <span ng-if="report.data['bginfo'].insurance_claimsadministrator">{{report.data['bginfo'].insurance_claimsadministrator}}</span><span ng-if="report.data['bginfo'].insuranceaddressline1">, {{report.data['bginfo'].insuranceaddressline1}}</span><span ng-if="report.data['bginfo'].insuranceaddressline2">, {{report.data['bginfo'].insuranceaddressline2}}</span><span ng-if="report.data['bginfo'].insurancecity">, {{report.data['bginfo'].insurancecity}}</span><span ng-if="report.data['bginfo'].insurancestate">, {{report.data['bginfo'].insurancestate}}</span><span ng-if="report.data['bginfo'].insurancezipcode"> {{report.data['bginfo'].insurancezipcode}}</span></div>
+    <div><strong>Claim Number:</strong> <span ng-if="report.data['bginfo'].insurance_claimsnumber">{{report.data['bginfo'].insurance_claimsnumber}}</span></div>
+    <div><strong>Employer Name:</strong> {{report.data['bginfo'].company}}</div>
+    <div><strong>Employer Address:</strong> {{report.data.bginfo.emp_address1}}<span ng-if="report.data.bginfo.emp_address2">, {{report.data.bginfo.emp_address2}}</span><span ng-if="report.data.bginfo.emp_city">, {{report.data.bginfo.emp_city}}</span><span ng-if="report.data.bginfo.emp_state">, {{report.data.bginfo.emp_state}}</span><span ng-if="report.data.bginfo.emp_zipcode"> {{report.data.bginfo.emp_zipcode}}</span></div>
+    <div><strong>Nature of Business:</strong> <span ng-if="report.data['bginfo'].natureofbusiness != 'Other'">{{report.data['bginfo'].natureofbusiness}}</span> <span ng-if="report.data['bginfo'].natureofbusiness == 'Other'">{{report.data['bginfo'].othernatureofbusiness}}</span></div>
+    <div><strong>Patient Name:</strong> {{report.data.bginfo.firstname}} {{report.data.bginfo.middlename}} {{report.data.bginfo.lastname}}</div>
+    <div><strong>Sex:</strong> {{report.data.bginfo.gender}}</div>
+    <div><strong>Date of Birth:</strong> {{report.data.bginfo.dateofbirth | date:'MM/dd/yyyy'}}</div>
+    <div><strong>Patient Address:</strong> <span ng-if="report.data.bginfo.addressline1">{{report.data.bginfo.addressline1}}</span><span ng-if="report.data.bginfo.addressline2">, {{report.data.bginfo.addressline2}}</span><span ng-if="report.data.bginfo.city">, {{report.data.bginfo.city}}</span><span ng-if="report.data.bginfo.state">, {{report.data.bginfo.state}}</span><span ng-if="report.data.bginfo.zipcode"> {{report.data.bginfo.zipcode}}</span></div>
+    <div><strong>Patient Telephone number:</strong> <span ng-if="report.data['bginfo'].homephone"><strong>Home:</strong> {{report.data['bginfo'].homephone | phonenumberFormat}}&nbsp;</span><span ng-if="report.data['bginfo'].cellphone"><strong>Cell:</strong> {{report.data['bginfo'].cellphone | phonenumberFormat}}</span><span ng-if="report.data['bginfo'].workphone"> <strong>Work:</strong> {{report.data['bginfo'].workphone | phonenumberFormat}} <span ng-if="report.data['bginfo'].extension">ext. {{report.data['bginfo'].extension}}</span></span></div>
+    <div><strong>Occupation:</strong> {{report.data['bginfo'].currentoccupation=='Other'?report.data['bginfo'].currentoccupationother:report.data['bginfo'].currentoccupation}} {{report.data['bginfo'].jobtitle ? '- '+report.data['bginfo'].jobtitle : ''}}</div>
+    <div><strong>Social Security Number:</strong> {{report.data['bginfo'].socialsecurityno | socialSecurityFormat}}</div>
+    <div><strong>Injured at:</strong> <span ng-if="report.data['bginfo'].location_address1">{{report.data['bginfo'].location_address1}}</span><span ng-if="report.data['bginfo'].location_address2">, {{report.data['bginfo'].location_address2}}</span><span ng-if="report.data['bginfo'].location_city">, {{report.data['bginfo'].location_city}}</span><span ng-if="report.data['bginfo'].location_state">, {{report.data['bginfo'].location_state}}</span><span ng-if="report.data['bginfo'].location_zipcode"> {{report.data['bginfo'].location_zipcode}}</span></div>
+    <div><strong>Date of current exam:</strong>&nbsp;<span ng-if="report.data['patientcomplaints'].currentexamdate">{{report.data['patientcomplaints'].currentexamdate | date:'MM/dd/yyyy'}}</span></div>
+    <div><strong>Date and Hour of Injury or Onset of Illness:</strong> {{report.data.bginfo.dateofinjury | date:'MM/dd/yyyy'}}<span ng-if="report.data['bginfo'].timeofinjury">, </span><span ng-if="report.data['bginfo'].timeofinjury" ng-bind="(report.data['bginfo'].timeofinjury | date:'h:mma').replace('PM',' p.m.').replace('AM',' a.m.')"></span></div>
+    <div><strong>Date Last Worked:</strong> {{report.data.bginfo.dateoflastwork | date:'MM/dd/yyyy'}}</div>
+    <div>
+        <strong>Date and Hour of First Examination or Treatment:</strong>&nbsp;
+            <span ng-if="report.data['selectinjuries'].evaluated_prior=='Yes'">{{report.data['selectinjuries'].dateofpriorevaluation | date:'MM/dd/yyyy'}}<span ng-if="report.data['selectinjuries'].dateofpriorevaluation"><span ng-if="report.data['selectinjuries'].timeofpriorevaluation">, <span ng-if="report.data['selectinjuries'].timeofpriorevaluation" ng-bind="(report.data['selectinjuries'].timeofpriorevaluation | date:'h:mma').replace('PM',' p.m.').replace('AM',' a.m.')"></span></span></span></span>
+        <span ng-if="report.data['selectinjuries'].evaluated_prior=='No'">{{report.data['patientcomplaints'].currentexamdate | date:'MM/dd/yyyy'}}<span ng-if="report.data['patientcomplaints'].currentexamdate"><span ng-if="report.data['patientcomplaints'].currenttimeofexam">, <span ng-if="report.data['patientcomplaints'].currenttimeofexam" ng-bind="(report.data['patientcomplaints'].currenttimeofexam | date:'h:mma').replace('PM',' p.m.').replace('AM',' a.m.')"></span></span></span></span>
+    </div>
+    <!--<div>Have you (or your office) previously treated patient? {{report.data['patientcomplaints'].prevtreatedpatient}}</div>-->
+</div>
+<!--End of Background Information-->
+<!--Header cover -->

@@ -1,0 +1,27 @@
+<!--Signature section -->
+<div style="color: #333333;" ng-init="getDoctordata(report.data['patientcomplaints'].treatphynamedropdown)">
+    <br />
+    <div>
+        e-signed by 
+        	<div ng-if="report.data.signDoctor.level4!== undefined">
+                {{report.data.signDoctor.level4.firstname}} {{report.data.signDoctor.level4.lastname}}<span ng-if="report.data.signDoctor.level4.profession">, <span ng-bind-html="getProfession(report.data.signDoctor.level4.profession,report.data.signDoctor.level4.otherprofessiontext)"></span></span>
+            </div>
+        <div ng-if="report.data.signDoctor.level3!== undefined">
+            {{report.data.signDoctor.level3.firstname}} {{report.data.signDoctor.level3.lastname}}<span ng-if="report.data.signDoctor.level3.profession">, <span ng-bind-html="getProfession(report.data.signDoctor.level3.profession,report.data.signDoctor.level3.otherprofessiontext)"></span></span>
+        </div>
+        <div ng-if="submittedDate">
+            <span ng-bind="(submittedDate | date:'h:mma').replace('PM',' p.m.').replace('AM',' a.m.')"></span>, <span ng-bind="(submittedDate | date:'MMMM d, y')"></span>
+        </div>
+        <div ng-if="report.data.signDoctor.level4!== undefined">
+            <div ng-if="getSpeciality(report.data.signDoctor.level4.speciality)">Specialty: <span ng-bind-html="getSpeciality(report.data.signDoctor.level4.speciality)"></span></div>
+        </div>
+        <div ng-if="report.data.signDoctor.level3!== undefined">
+            <div ng-if="getSpeciality(report.data.signDoctor.level3.speciality)">Specialty: <span ng-bind-html="getSpeciality(report.data.signDoctor.level3.speciality)"></span></div>
+        </div>
+        <div ng-if="report.data.patientcomplaints.treatphynamedropdown"><span ng-if="report.data.signDoctor.level4.id !=report.data.patientcomplaints.treatphynamedropdown">signing for {{doctorInfo.firstname}} {{doctorInfo.lastname}} <span ng-bind-html="getProfession(doctorInfo.profession, doctorInfo.otherprofessiontext)"></span></span></div>
+    </div>
+</div>
+<div class="clearer" ng-init="getDoctordata(report.data['patientcomplaints'].treatphynamedropdown)"></div>
+<div ng-if="getTotalPage()"></div>
+<div ng-include src="getBillingCalPath()"></div>
+<!--Signature section -->

@@ -1,0 +1,30 @@
+﻿<div ng-if="report.data.bc.length > 0">
+    <h4>Invoicing Information</h4>
+    <div class="table-responsive">
+        <table class="table table-bordered" >
+            <thead>
+                <th width="300px"></th>
+                <th width="100px">OMFS Code</th>
+                <th width="100px">Level</th>
+                <th width="100px">Unit(s)</th>
+                <th width="100px">Fee</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in report.data.bc" ng-if="report.data.bc[$index].billing">
+                    <td><b>{{report.data.bc[$index].billing.label}}</b></td>
+                    <td>{{report.data.bc[$index].billing.billingcode}}</td>
+                    <td>{{report.data.bc[$index].billing.level}}</td>
+                    <td>{{report.data.bc[$index].billing.units}}</td>
+                    <td>{{report.data.bc[$index].billing.price ? '$ '+report.data.bc[$index].billing.price : '' }}</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: right;"><b>Total</b></td>
+                    <td>$ <span ng-bind="getTotal()"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="text-align: center;"><b>(*Page calculation is based on DWC Form PR-4 (Rev. 06-05))</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

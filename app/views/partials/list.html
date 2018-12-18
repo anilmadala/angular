@@ -1,0 +1,40 @@
+<div class="blogs">
+  <div class="bright">
+      <div class="row ">
+          <div class="col-sm-10 col-sm-offset-modified">
+              <div class="col-sm-10">
+                <h1>Testimonials</h1>
+              </div> 
+
+   <div class="col-sm-11" data-ng-controller="TestimonialController">
+
+      <ul class="thumbnails"  data-ng-init="findPaged()">
+        <li data-ng-repeat="testimonial in testimonials" class="span9">
+
+            <div class="testimonial-content">
+              <img src="../../images/ratefast/quotes.gif" />
+              {{testimonial.content}} <br>
+              <div style="float:right;">
+               <img src="../../images/ratefast/quotes_inv.png" /></div>
+              <br>
+              <p>&nbsp;</p>
+            </div>
+            <h2 class="testimonialh2">-{{testimonial.author}}</h2>
+        </li>
+      </ul>
+      <h1 data-ng-hide="!testimonials || testimonials.length">No testimonials yet. <br> Please visit next time to view our testimonials.</h1>
+
+      <div class="pagination pagination-centered">
+
+      <pagination num-pages="noOfPages" current-page="currentPage" on-select-page="pageChanged(page)"></pagination>
+
+
+    </div>
+
+
+  </div> 
+
+</div>
+</div>
+</div>
+</div>

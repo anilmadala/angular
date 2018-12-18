@@ -1,0 +1,908 @@
+<!--Start Treatment-->
+<div ng-if="checkWholeBDPartExist('treatment')">
+    <br>
+    <strong>Section 23. </strong><span class="DFRReportHeadingFontSize"><strong>Treatment Rendered</strong></span>
+    <div ng-repeat="item in report.data['selectinjuries'].concatedbodypart | orderBy: 'sequence'" class="divMain">
+        <span class="DFRReportSubHeadingFontSize" ng-if="report.data['treatment' + item.concateId].treatcurrentradio.length>0 || appendPeriod(report.data['treatment' + item.concateId].maintextA)">
+            <br>
+            <strong>{{displayBodyPartName(item)}}</strong><br>
+        </span>
+        <span ng-bind-html="appendPeriod(report.data['treatment' + item.concateId].maintextA)"></span>
+        <div ng-if="report.data['treatment' + item.concateId].treatcurrentradio=='No'">
+            Treatment is not indicated.
+        </div>
+        <div ng-if="report.data['treatment' + item.concateId].treatcurrentradio=='Yes'">
+            Treatment is indicated for the<span ng-if="item.bdsides"> {{(item.bdsides =='left' || item.bdsides =='right')? (item.bdsides|lowercase):''}}</span><span ng-if="item.id != 'other'"> {{item.text|lowercase}}<span ng-if="item.bodysystem=='Spine'">&nbsp;{{item.bodysystem=='Spine'?'spine':''}}</span></span><span ng-if="item.id == 'other'">&nbsp;{{item.bdsystemother | lowercase}} {{item.bdpartother | lowercase}}</span>.
+        </div>
+
+        <div ng-if="item.bdsides=='none'" class="divMain">
+            <div ng-if="report.data['treatment' + item.concateId].treatmentmedications==true">
+                <div ng-repeat="medication in report.data['treatment' + item.concateId].treatmentnsaids">
+                    <div ng-if="medication.selectnsaids!=''">
+                        <div ng-if="medication.selectnsaids=='Other'">
+                            {{medication.selectnsaidstext}} <span ng-if="medication.selectnsaidDosage">({{medication.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                        <div ng-if="medication.selectnsaids!='Other'">
+                            <div ng-if="medication.selectnsaidDosage">
+                                <div ng-if="medication.selectnsaidDosage=='IM' || medication.selectnsaidDosage=='IV'">
+                                    {{medication.selectnsaids}} <span ng-if="medication.selectnsaidDosage">({{medication.selectnsaidDosage}})</span> is prescribed.
+                                </div>
+                                <div ng-if="medication.selectnsaidDosage!='IM' && medication.selectnsaidDosage!='IV'">
+                                    {{medication.selectnsaids}} <span ng-if="medication.selectnsaidDosage">({{medication.selectnsaidDosage}} mg)</span> is prescribed.
+                                </div>
+                            </div>
+                            <div ng-if="!medication.selectnsaidDosage && medication.selectnsaids">{{medication.selectnsaids}} is prescribed.</div>
+                        </div>
+                    </div>
+                    <div ng-if="medication.commondirectionstext">Directions for usage:&nbsp;<span ng-bind-html="appendPeriod(medication.commondirectionstext)"></span></div>
+                    <div ng-if="medication.selectnumberdispensecommon">
+                        <div ng-if="medication.selectnumberdispensecommon!='Other'">
+                            Dispense total number:&nbsp;{{medication.selectnumberdispensecommon}}.
+                        </div>
+                        <div ng-if="medication.selectnumberdispensecommon=='Other'">
+                            <div ng-if="medication.selectnumberdispensecommontext">
+                                Dispense total number:&nbsp;{{medication.selectnumberdispensecommontext}}.
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication.selectcommonrefills=='0' || medication.selectrefills == '0'">No refills.</div>
+                    <div ng-if="medication.selectcommonrefills || medication.selectrefills">
+                        <div ng-if="medication.selectcommonrefills=='1' || medication.selectrefills == '1'">1 refill.</div>
+                        <div ng-if="medication.selectcommonrefills > '1' || medication.selectrefills > '1'">Total number of <span ng-if="medication.selectcommonrefills">{{medication.selectcommonrefills}}</span><span ng-if="medication.selectrefills">{{medication.selectrefills}}</span> refills are provided.</div>
+                    </div>
+                    <div ng-if="medication.othertextfortextarea!=''" ng-bind-html="appendPeriod(medication.othertextfortextarea)"></div>
+                </div>
+                <div ng-repeat="medication2 in report.data['treatment' + item.concateId].treatmentmsrelaxants">
+                    <div ng-if="medication2.selectnsaids">
+                        <div ng-if="medication2.selectnsaids=='Other'">
+                            {{medication2.selectnsaidstext}} <span ng-if="medication2.selectnsaidDosage">({{medication2.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                        <div ng-if="medication2.selectnsaids!='Other'">
+                            {{medication2.selectnsaids}} <span ng-if="medication2.selectnsaidDosage">({{medication2.selectnsaidDosage}} mg)</span> is prescribed. 
+                        </div>
+                    </div>
+                    <div ng-if="medication2.commondirectionstext">Directions for usage:&nbsp;<span ng-bind-html="appendPeriod(medication2.commondirectionstext)"></span></div>
+                    <div ng-if="medication2.selectnumberdispensecommon">
+                        <div ng-if="medication2.selectnumberdispensecommon!='Other'">
+                            Dispense total number:&nbsp;{{medication2.selectnumberdispensecommon}}.
+                        </div>
+                        <div ng-if="medication2.selectnumberdispensecommon=='Other'">
+                            <div ng-if="medication2.selectnumberdispensecommontext">
+                                Dispense total number:&nbsp;{{medication2.selectnumberdispensecommontext}}.
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication2.selectcommonrefills=='0' || medication2.selectrefills == '0'">No refills.</div>
+                    <div ng-if="medication2.selectcommonrefills || medication2.selectrefills">
+                        <div ng-if="medication2.selectcommonrefills=='1' || medication2.selectrefills == '1'">1 refill.</div>
+                        <div ng-if="medication2.selectcommonrefills > '1' || medication2.selectrefills > '1'">Total number of <span ng-if="medication2.selectcommonrefills">{{medication2.selectcommonrefills}}</span><span ng-if="medication2.selectrefills">{{medication2.selectrefills}}</span> refills are provided.</div>
+                    </div>
+                    <div ng-if="medication2.othertextfortextarea!=''" ng-bind-html="appendPeriod(medication2.othertextfortextarea)"></div>
+                </div>
+                <div ng-repeat="medication3 in report.data['treatment' + item.concateId].treatmentopioids">
+                    <div ng-if="medication3.selectnsaids">
+                        <div ng-if="medication3.selectnsaids=='Other'">
+                            {{medication3.selectnsaidstext}} <span ng-if="medication3.selectnsaidDosage">({{medication3.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                        <div ng-if="medication3.selectnsaids!='Other'">
+                            <div ng-if="medication3.selectnsaids=='Norco (hydrocodone + acetaminophen)'">
+                                {{medication3.selectnsaids}} <span ng-if="medication3.selectnsaidDosage">({{medication3.selectnsaidDosage}} mg)</span> is prescribed.
+                            </div>
+                            <div ng-if="medication3.selectnsaids=='Percocet (oxycodone + acetaminophen)'">
+                                {{medication3.selectnsaids}} <span ng-if="medication3.selectnsaidDosage">({{medication3.selectnsaidDosage}} mg)</span> is prescribed.
+                            </div>
+                            <div ng-if="medication3.selectnsaids=='Tylenol with Codeine (acetaminophen + codeine)'">
+                                {{medication3.selectnsaids}} <span ng-if="medication3.selectnsaidDosage">({{medication3.selectnsaidDosage}} mg)</span> is prescribed.
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication3.commondirectionstext">Directions for usage:&nbsp;<span ng-bind-html="appendPeriod(medication3.commondirectionstext)"></span></div>
+                    <div ng-if="medication3.selectnumberdispensecommon">
+                        <div ng-if="medication3.selectnumberdispensecommon!='Other'">
+                            Dispense total number:&nbsp;{{medication3.selectnumberdispensecommon}}.
+                        </div>
+                        <div ng-if="medication3.selectnumberdispensecommon=='Other'">
+                            <div ng-if="medication3.selectnumberdispensecommontext">
+                                Dispense total number:&nbsp;{{medication3.selectnumberdispensecommontext}}.
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication3.selectcommonrefills=='0' || medication3.selectrefills == '0'">No refills.</div>
+                    <div ng-if="medication3.selectcommonrefills || medication3.selectrefills">
+                        <div ng-if="medication3.selectcommonrefills=='1' || medication3.selectrefills == '1'">1 refill.</div>
+                        <div ng-if="medication3.selectcommonrefills > '1' || medication3.selectrefills > '1'">Total number of <span ng-if="medication3.selectcommonrefills">{{medication3.selectcommonrefills}}</span><span ng-if="medication3.selectrefills">{{medication3.selectrefills}}</span> refills are provided.</div>
+                    </div>
+                    <div ng-if="medication3.othertextfortextarea!=''" ng-bind-html="appendPeriod(medication3.othertextfortextarea)"></div>
+                </div>
+                <div ng-repeat="medication33 in report.data['treatment' + item.concateId].treatmentnonopioids">
+                    <div ng-if="medication33.selectnsaids">
+                        <div ng-if="medication33.selectnsaids=='Other'">
+                            {{medication33.selectnsaidstext}} <span ng-if="medication33.selectnsaidDosage">({{medication33.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                        <div ng-if="medication33.selectnsaids!='Other'">
+                            {{medication33.selectnsaids}} <span ng-if="medication33.selectnsaidDosage">({{medication33.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                    </div>
+                    <div ng-if="medication33.commondirectionstext">Directions for usage:&nbsp;<span ng-bind-html="appendPeriod(medication33.commondirectionstext)"></span></div>
+                    <div ng-if="medication33.selectnumberdispensecommon">
+                        <div ng-if="medication33.selectnumberdispensecommon!='Other'">
+                            Dispense total number:&nbsp;{{medication33.selectnumberdispensecommon}}.
+                        </div>
+                        <div ng-if="medication33.selectnumberdispensecommon=='Other'">
+                            <div ng-if="medication33.selectnumberdispensecommontext">
+                                Dispense total number:&nbsp;{{medication33.selectnumberdispensecommontext}}.
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication33.selectcommonrefills=='0' || medication33.selectrefills == '0'">No refills.</div>
+                    <div ng-if="medication33.selectcommonrefills || medication33.selectrefills">
+                        <div ng-if="medication33.selectcommonrefills=='1' || medication33.selectrefills == '1'">1 refill.</div>
+                        <div ng-if="medication33.selectcommonrefills > '1' || medication33.selectrefills > '1'">Total number of <span ng-if="medication33.selectcommonrefills">{{medication33.selectcommonrefills}}</span><span ng-if="medication33.selectrefills">{{medication33.selectrefills}}</span> refills are provided.</div>
+                    </div>
+                    <div ng-if="medication33.othertextfortextarea!=''" ng-bind-html="appendPeriod(medication33.othertextfortextarea)"></div>
+                </div>
+                <div ng-repeat="medication4 in report.data['treatment' + item.concateId].treatmentcortisone">
+                    <div ng-if="medication4.testingtextarea!=''" ng-bind-html="appendPeriod(medication4.nsaidsdirectiontext)"></div>
+                </div>
+                <div ng-repeat="medication5 in report.data['treatment' + item.concateId].treatmentnerve">
+                    <div ng-if="medication5.selectnsaids">
+                        <div ng-if="medication5.selectnsaids=='Other'">
+                            {{medication5.selectnsaidstext}} <span ng-if="medication5.selectnsaidDosage">({{medication5.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                        <div ng-if="medication5.selectnsaids!='Other'">
+                            {{medication5.selectnsaids}} <span ng-if="medication5.selectnsaidDosage">({{medication5.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                    </div>
+                    <div ng-if="medication5.commondirectionstext">Directions for usage:&nbsp;<span ng-bind-html="appendPeriod(medication5.commondirectionstext)"></span></div>
+                    <div ng-if="medication5.selectnumberdispensecommon">
+                        <div ng-if="medication5.selectnumberdispensecommon!='Other'">
+                            Dispense total number:&nbsp;{{medication5.selectnumberdispensecommon}}.
+                        </div>
+                        <div ng-if="medication5.selectnumberdispensecommon=='Other'">
+                            <div ng-if="medication5.selectnumberdispensecommontext">
+                                Dispense total number:&nbsp;{{medication5.selectnumberdispensecommontext}}.
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication5.selectcommonrefills=='0' || medication5.selectrefills == '0'">No refills.</div>
+                    <div ng-if="medication5.selectcommonrefills || medication5.selectrefills">
+                        <div ng-if="medication5.selectcommonrefills=='1' || medication5.selectrefills == '1'">1 refill.</div>
+                        <div ng-if="medication5.selectcommonrefills > '1' || medication5.selectrefills > '1'">Total number of <span ng-if="medication5.selectcommonrefills">{{medication5.selectcommonrefills}}</span><span ng-if="medication5.selectrefills">{{medication5.selectrefills}}</span> refills are provided.</div>
+                    </div>
+                    <div ng-if="medication5.othertextfortextarea!=''" ng-bind-html="appendPeriod(medication5.othertextfortextarea)"></div>
+                </div>
+                <div ng-repeat="medication6 in report.data['treatment' + item.concateId].treatmentantimicrobial">
+                    <div ng-if="medication6.selectnsaids">
+                        <div ng-if="medication6.selectnsaids=='Other' && medication6.selectnsaidstext">
+                            {{medication6.selectnsaidstext}} <span ng-if="medication6.selectnsaidDosage">({{medication6.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                        <div ng-if="medication6.selectnsaids!='Other'">
+                            {{medication6.selectnsaids}} <span ng-if="medication6.selectnsaidDosage">({{medication6.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                    </div>
+                    <div ng-if="medication6.commondirectionstext">Directions for usage:&nbsp;<span ng-bind-html="appendPeriod(medication6.commondirectionstext)"></span></div>
+                    <div ng-if="medication6.selectnumberdispensecommon || medication6.selectnumberdispense">
+
+                        <div ng-if="medication6.selectnumberdispensecommon!='Other'">
+                            Dispense total number:&nbsp;{{medication6.selectnumberdispensecommon}}.
+                        </div>
+                        <div ng-if="medication6.selectnumberdispensecommon=='Other'">
+                            <div ng-if="medication6.selectnumberdispensecommontext">
+                                Dispense total number:&nbsp;{{medication6.selectnumberdispensecommontext}}.
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication6.selectcommonrefills=='0' || medication6.selectrefills == '0'">No refills.</div>
+                    <div ng-if="medication6.selectcommonrefills || medication6.selectrefills">
+                        <div ng-if="medication6.selectcommonrefills=='1' || medication6.selectrefills == '1'">1 refill.</div>
+                        <div ng-if="medication6.selectcommonrefills > '1' || medication6.selectrefills > '1'">Total number of <span ng-if="medication6.selectcommonrefills">{{medication6.selectcommonrefills}}</span><span ng-if="medication6.selectrefills">{{medication6.selectrefills}}</span> refills are provided.</div>
+                    </div>
+                    <div ng-if="medication6.othertextfortextarea!=''" ng-bind-html="appendPeriod(medication6.othertextfortextarea)"></div>
+                </div>
+                <div ng-repeat="medication7 in report.data['treatment' + item.concateId].treatmentimmunizations">
+                    <div ng-if="medication7.selectnsaids">
+                        <div ng-if="medication7.selectnsaids=='Other'">
+                            {{medication7.selectnsaidstext.split('(')[0]|lowercase}} <span ng-if="medication7.selectnsaidDosage">({{medication7.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                        <div ng-if="medication7.selectnsaids!='Other'">
+                            {{medication7.selectnsaids.split('(')[0]}} <span ng-if="medication7.selectnsaidDosage">({{medication7.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                    </div>
+                    <div ng-if="medication7.commondirectionstext">Directions for usage:&nbsp;<span ng-bind-html="appendPeriod(medication7.commondirectionstext)"></span></div>
+                    <div ng-if="medication7.selectnumberdispensecommon">
+                        <div ng-if="medication7.selectnumberdispensecommon!='Other'">
+                            Dispense total number:&nbsp;{{medication7.selectnumberdispensecommon}}.
+                        </div>
+                        <div ng-if="medication7.selectnumberdispensecommon=='Other'">
+                            <div ng-if="medication7.selectnumberdispensecommontext">
+                                Dispense total number:&nbsp;{{medication7.selectnumberdispensecommontext}}.
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication7.selectcommonrefills=='0' || medication7.selectrefills == '0'">No refills.</div>
+                    <div ng-if="medication7.selectcommonrefills || medication7.selectrefills">
+                        <div ng-if="medication7.selectcommonrefills=='1' || medication7.selectrefills == '1'">1 refill.</div>
+                        <div ng-if="medication7.selectcommonrefills > '1' || medication7.selectrefills > '1'">Total number of <span ng-if="medication7.selectcommonrefills">{{medication7.selectcommonrefills}}</span><span ng-if="medication7.selectrefills">{{medication7.selectrefills}}</span> refills are provided.</div>
+                    </div>
+                    <div ng-if="medication7.othertextfortextarea!=''" ng-bind-html="appendPeriod(medication7.othertextfortextarea)"></div>
+                </div>
+                <div ng-bind-html="appendPeriod(report.data['treatment' + item.concateId].treatmenttextareamedications)"></div>
+            </div>
+            <div ng-repeat="medication8 in report.data['treatment' + item.concateId].treatmenttherapy">
+                <div ng-if="medication8.selectnsaids">
+                    <div ng-if="medication8.selectnsaids!='Other'">
+                        <div ng-if="medication8.selectnsaids != '' && (!medication8.selecttimesfortherapy || !medication8.selectweeksfortherapy)">The employee requires {{medication8.selectnsaids}}.</div>
+                        <div ng-if="medication8.selecttimesfortherapy==1 && medication8.selectweeksfortherapy==1">The employee requires one {{medication8.selectnsaids|lowercase}} session.</div>
+                        <div ng-if="medication8.selecttimesfortherapy>1 && medication8.selectweeksfortherapy==1">The employee requires {{medication8.selecttimesfortherapy}} {{medication8.selectnsaids|lowercase}} sessions.</div>
+                        <div ng-if="medication8.selecttimesfortherapy>=1 && medication8.selectweeksfortherapy>1">
+                            The employee requires {{medication8.selectnsaids|lowercase}} therapy {{medication8.selecttimesfortherapy}}
+ <ng-pluralize count="medication8.selecttimesfortherapy" when="{'1': 'time','other': 'times'}"></ng-pluralize>
+                            per week for {{medication8.selectweeksfortherapy}} weeks.
+                        </div>
+                    </div>
+                    <div ng-if="medication8.selectnsaids=='Other'">
+                        <div ng-if="medication8.therapyinputother">
+                            <div ng-if="medication8.therapyinputother && (!medication8.selectweeksfortherapyother || !medication8.selecttimesfortherapyother)">The employee requires {{medication8.therapyinputother|lowercase}}.</div>
+                            <div ng-if="medication8.selecttimesfortherapyother==1 && medication8.selectweeksfortherapyother==1"><span ng-bind-html="appendPeriod(medication8.therapyinputother)"></span>: one session.</div>
+                            <div ng-if="medication8.selecttimesfortherapyother>1 && medication8.selectweeksfortherapyother==1"><span ng-bind-html="appendPeriod(medication8.therapyinputother)"></span>: {{medication8.selecttimesfortherapyother}} sessions in one week.</div>
+                            <div ng-if="medication8.selecttimesfortherapyother>=1 && medication8.selectweeksfortherapyother>1">
+                                <span ng-bind-html="medication8.therapyinputother"></span>: {{medication8.selecttimesfortherapyother}}
+ <ng-pluralize count="medication8.selecttimesfortherapyother" when="{'1': 'time','other': 'times'}"></ng-pluralize>
+                                per week for {{medication8.selectweeksfortherapyother}} weeks.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <span ng-bind-html="appendPeriod(medication8.othertextareaTherapytext)"></span>
+            </div>
+            <div ng-repeat="medication9 in report.data['treatment' + item.concateId].treatmentinjections">
+                <div ng-if="medication9.selectnsaids">
+                    <div ng-if="medication9.selectnsaids!='Other'">
+                        Employee requires a {{medication9.selectnsaids|lowercase}} injection.
+ <div ng-if="medication9.injectionstextinput!=''">{{medication9.injectionstextinput}}.</div>
+                    </div>
+                    <div ng-if="medication9.selectnsaids=='Other'">
+                        <div ng-if="medication9.injectionstextinput">Employee requires injection:&nbsp;<span ng-bind-html="medication9.injectionstextinput"></span>.</div>
+                    </div>
+                </div>
+                <span ng-bind-html="appendPeriod(medication9.othertextareainjectionstext)"></span>
+            </div>
+            <div ng-repeat="medication10 in report.data['treatment' + item.concateId].treatmentreferral">
+                <div ng-if="medication10.selectnsaids">
+                    <div class="divMain" ng-if="medication10.selectnsaids=='Dental' || medication10.selectnsaids=='Dermatology' || medication10.selectnsaids=='Neurology' || medication10.selectnsaids=='Ophthalmology' || medication10.selectnsaids=='Physical medicine' || medication10.selectnsaids=='Psychiatry' || medication10.selectnsaids=='Podiatry'">
+                        Employee requires access to {{medication10.selectnsaids|lowercase}} specialty.
+ <div ng-if="medication10.selectreferraldropdown=='One time consult'">A one time consult is requested for authorization.</div>
+                        <div ng-if="medication10.selectreferraldropdown=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                        <div ng-if="medication10.selectreferraldropdown=='Other'">
+                            <div ng-bind-html="appendPeriod(medication10.selectreferraldropdownforother)"></div>
+                        </div>
+                    </div>
+                    <div ng-if="medication10.selectnsaids=='Internal medicine specialty'" class="divMain">
+                        <span ng-if="medication10.treatmentinternalmedicineselectoption!='' && medication10.treatmentinternalmedicineselectoption!='Choose' && medication10.treatmentinternalmedicineselectoption!='Other'">Referral to internal medicine specialty is indicated.
+ Employee requires access to {{medication10.treatmentinternalmedicineselectoption|lowercase}} specialty. 
+                        </span>
+                        <span ng-if="medication10.treatmentinternalmedicineselectoption=='Other'">Referral to internal medicine specialty is indicated.
+ <span ng-bind-html="appendPeriod(medication10.internalmedicineselectedoptionothertext)"></span>
+                        </span>
+                        <span ng-if="medication10.internalmedicineselectedoption=='One time consult'">A one time consult is requested for authorization.</span>
+                        <span ng-if="medication10.internalmedicineselectedoption=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</span>
+                        <span ng-if="medication10.internalmedicineselectedoption=='Other'">
+                            <span ng-bind-html="appendPeriod(medication10.internalmedicineselectedoptionothertext)"></span>
+                        </span>
+                    </div>
+                    <div ng-if="medication10.selectnsaids=='Pain management'" class="divMain">
+                        <span ng-if="!medication10.selectpainmanagmentradio || medication10.selectpainmanagmentradio==false">Employee requires access to pain management specialty. </span><span ng-if="medication10.selectpainmanagmentradio.length>0">Employee requires access to pain management specialty for {{medication10.selectpainmanagmentradio|lowercase}}. </span>
+                        <div ng-if="medication10.selectpainmanagmentoptions=='One time consult'">A one time consult is requested for authorization.</div>
+                        <div ng-if="medication10.selectpainmanagmentoptions=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                        <div ng-if="medication10.selectpainmanagmentoptions=='Other'">
+                            <div ng-bind-html="appendPeriod(medication10.selectpainmanagmentoptionstext)"></div>
+                        </div>
+                    </div>
+                    <div ng-if="medication10.selectnsaids=='Surgery'" class="divMain">
+                        <div ng-if="!medication10.surgeryselectoptions">
+                            Surgery consultation is indicated.
+                        </div>
+                        <div ng-if="medication10.surgeryselectoptions">
+                            <div ng-if="medication10.surgeryselectoptions!='' && medication10.surgeryselectoptions!='Other' && medication10.surgeryselectoptions!='Choose'">
+                                <div ng-if="medication10.surgeryselectoptions!='Orthopedics'">
+                                    Employee requires consultation with {{medication10.surgeryselectoptions|lowercase}}.                                    
+                                </div>
+                                <div ng-if="medication10.surgeryselectoptions=='Orthopedics'">
+                                    <div ng-if="medication10.surgeryorthopedicselectoptions">
+                                        <div ng-if="medication10.surgeryorthopedicselectoptions!='' && medication10.surgeryorthopedicselectoptions!='Other' && medication10.surgeryorthopedicselectoptions!='Choose'">
+                                            <div ng-if="medication10.surgeryorthopedicselectoptions=='General'">
+                                                Employee requires consultation with orthopedics.
+                                            </div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptions=='Upper extremity/hand'">
+                                                Employee requires consultation with orthopedics for the upper extremity.
+                                            </div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptions=='Major joint (shoulder, hip, knee)'">
+                                                Employee requires consultation with orthopedics for a major joint.
+                                            </div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptions=='Spine'">
+                                                Employee requires access to orthopedics for the spine.
+                                            </div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptionselection=='One time consult'">A one time consult is requested for authorization.</div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptionselection=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptionselection=='Other'">
+                                                <div ng-if="medication10.surgeryorthopedicselectoptionselectionothertext.length>0">{{medication10.surgeryorthopedicselectoptionselectionothertext|capitalize}} is requested for authorization.</div>
+                                            </div>
+                                        </div>
+                                        <div ng-if="medication10.surgeryorthopedicselectoptions=='Other'">
+                                            <div ng-if="medication10.surgeryorthopedicselectoptionstext.length>0">
+                                                Employee requires consultation with orthopedics. <span ng-bind-html="appendPeriod(medication10.surgeryorthopedicselectoptionstext)"></span>
+                                            </div>
+                                            <div ng-if="!medication10.surgeryorthopedicselectoptionstext.length>0">Employee requires consultation with orthopedics.</div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptionsselectionoption=='One time consult'">A one time consult is requested for authorization.</div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptionsselectionoption=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptionsselectionoption=='Other'">
+                                                <div ng-if="medication10.surgeryorthopedicselectoptionsselectionoptionothertext.length>0">{{medication10.surgeryorthopedicselectoptionsselectionoptionothertext|capitalize}} is requested for authorization.</div>
+                                            </div>
+                                        </div>
+                                        <div ng-if="!medication10.surgeryorthopedicselectoptions">
+                                            Employee requires consultation with orthopedics.
+                                        </div>
+                                    </div>
+                                    <div ng-if="medication10.surgeryselectoptions!='Orthopedics'">
+                                        <div ng-if="medication10.surgeryselectoptionsselection=='One time consult'">A one time consult is requested for authorization.</div>
+                                        <div ng-if="medication10.surgeryselectoptionsselection=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                        <div ng-if="medication10.surgeryselectoptionsselection=='Other'">
+                                            <div ng-bind-html="appendPeriod(medication10.surgeryselectoptionsselectionothertext)"></div>
+                                        </div>
+                                    </div>
+                                    <div ng-if="medication10.surgeryselectoptions!='' && medication10.surgeryselectoptions!='Choose' && medication10.surgeryselectoptions=='Other'">
+                                        <div ng-if="medication10.surgeryselectoptionsothertext.length>0">
+                                            Employee requires consultation with {{medication10.surgeryselectoptionsothertext|lowercase}}.
+                                                <div ng-if="medication10.surgeryselectoptionsotherselectionoptions">
+                                                    <div ng-if="medication10.surgeryselectoptionsotherselectionoptions=='One time consult'">A one time consult is requested for authorization.</div>
+                                                    <div ng-if="medication10.surgeryselectoptionsotherselectionoptions=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                                    <div ng-if="medication10.surgeryselectoptionsotherselectionoptions=='Other'">
+                                                        <div ng-if="medication10.surgeryselectoptionsotherselectionoptionsothertext.length>0">{{medication10.surgeryselectoptionsotherselectionoptionsothertext|capitalize}} is requested for authorization.</div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="medication10.surgeryselectoptions=='Other'">
+                                    <div ng-bind-html="appendPeriod(medication10.surgeryselectoptionsothertext)"></div>
+                                </div>
+                                <div ng-if="medication10.surgeryselectoptionsotherselectionoptions=='One time consult'">A one time consult is requested for authorization.</div>
+                                <div ng-if="medication10.surgeryselectoptionsotherselectionoptions=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                <div ng-if="medication10.surgeryselectoptionsotherselectionoptions=='Other'">
+                                    <div ng-bind-html="appendPeriod(medication10.surgeryselectoptionsotherselectionoptionsothertext)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication10.selectnsaids=='Other'" class="divMain">
+                        <div ng-bind-html="appendPeriod(medication10.referralinputother)"></div>
+                        <div ng-if="medication10.selectreferralforreferralother=='One time consult'">A one time consult is requested for authorization.</div>
+                        <div ng-if="medication10.selectreferralforreferralother=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                        <div ng-if="medication10.selectreferralforreferralother=='Other'">
+                            <div ng-bind-html="appendPeriod(medication10.othertextforreferralother)"></div>
+                        </div>
+                    </div>
+                </div>
+                <span ng-bind-html="appendPeriod(medication10.othertextfortextarea)"></span>
+            </div>
+            <div ng-repeat="medication11 in report.data['treatment' + item.concateId].treatmentdiagnostic">
+                <div ng-if="medication11.selectnsaids || medication11.othertextfortextarea">
+                    <div class="divMain">
+                        <div ng-if="medication11.selectnsaids!='Other' && medication11.selectnsaids!=''">
+                            {{medication11.selectnsaids}} is required.
+                        </div>
+                        <div ng-if="medication11.selectnsaids=='Other' && medication11.diagnosticinputother.length>0">
+                            {{medication11.diagnosticinputother|capitalize}} is required.
+                        </div>
+                        <div ng-bind-html="appendPeriod(medication11.othertextfortextarea)"></div>
+                    </div>
+                </div>
+            </div>
+            <div ng-repeat="medication12 in report.data['treatment' + item.concateId].treatmentother">
+                <div class="divMain">
+                    <div ng-if="medication12.selectnsaids">
+                        {{medication12.selectnsaids|capitalize}} is required.
+                    </div>
+                    <div ng-bind-html="appendPeriod(medication12.othertextfortextarea)"></div>
+                </div>
+
+            </div>
+            <div ng-if="report.data['treatment' + item.concateId].durablemedicalbtn==true">
+                <div ng-if="item.bodysystem!='Skin'">
+                    <div ng-if="item.id=='cervical' || item.id=='thoracic'">
+                        <div ng-if="report.data['treatment' + item.concateId].durabletensunit.length>0 || report.data['treatment' + item.concateId].durablehwaveunit.length>0 || report.data['treatment' + item.concateId].durablewheelchair.length>0 || report.data['treatment' + item.concateId].durablesplints.length>0">
+                            Durable medical equipment is indicated. Employee requires access to:
+ <span ng-bind-html="makeSentence(report.data['treatment' + item.concateId].durabletensunit[0] + '~' + report.data['treatment' + item.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + item.concateId].durablewheelchair[0] + '~' + report.data['treatment' + item.concateId].durablesplints[0])"></span>
+                        </div>
+                    </div>
+                    <div ng-if="item.id=='other'">
+                        <div ng-if="report.data['treatment' + item.concateId].durabletensunit.length>0 || report.data['treatment' + item.concateId].durablehwaveunit.length>0 || report.data['treatment' + item.concateId].durablewheelchair.length>0 || report.data['treatment' + item.concateId].durablesplints.length>0">
+                            Durable medical equipment is indicated. Employee requires access to:
+ <span ng-bind-html="makeSentence(report.data['treatment' + item.concateId].durabletensunit[0] + '~' + report.data['treatment' + item.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + item.concateId].durablewheelchair[0] + '~' + report.data['treatment' + item.concateId].durablesplints[0])"></span>
+                        </div>
+                    </div>
+                    <div ng-if="item.id=='lumbar'">
+                        <div ng-if="report.data['treatment' + item.concateId].durabletensunit.length>0 || report.data['treatment' + item.concateId].durablehwaveunit.length>0 || report.data['treatment' + item.concateId].durablewheelchair.length>0 || report.data['treatment' + item.concateId].durablelumbarsupport.length>0 || report.data['treatment' + item.concateId].durablesplints.length>0">
+                            Durable medical equipment is indicated. Employee requires access to:
+ <span ng-bind-html="makeSentence(report.data['treatment' + item.concateId].durabletensunit[0] + '~' + report.data['treatment' + item.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + item.concateId].durablewheelchair[0] + '~' + report.data['treatment' + item.concateId].durablelumbarsupport[0] + '~' + report.data['treatment' + item.concateId].durablesplints[0])"></span>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="item.bodysystem=='Skin'">
+                    <div ng-if="item.id=='neck' || item.id=='groingenitalia' || item.id=='trunk'">
+                        <div ng-if="report.data['treatment' + item.concateId].durabletensunit.length>0 || report.data['treatment' + item.concateId].durablehwaveunit.length>0 || report.data['treatment' + item.concateId].durablewheelchair.length>0">
+                            Durable medical equipment is indicated. Employee requires access to:
+ <span ng-bind-html="makeSentence(report.data['treatment' + item.concateId].durabletensunit[0] + '~' + report.data['treatment' + item.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + item.concateId].durablewheelchair[0])"></span>
+                        </div>
+                    </div>
+                </div>
+                <span ng-bind-html="appendPeriod(report.data['treatment' + item.concateId].durabletextarea)"></span>
+            </div>
+        </div>
+
+        <div ng-if="item.bdsides!='none'" class="divMain">
+            <div ng-if="report.data['treatment' + item.concateId].treatmentmedications==true">
+                <div ng-repeat="medication in report.data['treatment' + item.concateId].treatmentnsaids">
+                    <div ng-if="medication.selectnsaids!=''">
+                        <div ng-if="medication.selectnsaids=='Other'">
+                            {{medication.selectnsaidstext}}<span ng-if="medication.selectnsaidDosage">({{medication.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                        <div ng-if="medication.selectnsaids!='Other'">
+                            <div ng-if="medication.selectnsaidDosage">
+                                <div ng-if="medication.selectnsaidDosage=='IM' || medication.selectnsaidDosage=='IV'">
+                                    {{medication.selectnsaids}}<span ng-if="medication.selectnsaidDosage">({{medication.selectnsaidDosage}})</span> is prescribed.
+                                </div>
+                                <div ng-if="medication.selectnsaidDosage!='IM' && medication.selectnsaidDosage!='IV'">
+                                    {{medication.selectnsaids}} <span ng-if="medication.selectnsaidDosage">({{medication.selectnsaidDosage}} mg)</span> is prescribed.
+                                </div>
+                            </div>
+                            <div ng-if="!medication.selectnsaidDosage && medication.selectnsaids">I prescribe {{medication.selectnsaids}} is prescribed.</div>
+                        </div>
+                    </div>
+                    <div ng-if="medication.commondirectionstext">Directions for usage:&nbsp;<span ng-bind-html="appendPeriod(medication.commondirectionstext)"></span></div>
+                    <div ng-if="medication.selectnumberdispensecommon">
+                        <div ng-if="medication.selectnumberdispensecommon!='Other'">
+                            Dispense total number:&nbsp;{{medication.selectnumberdispensecommon}}.
+                        </div>
+                        <div ng-if="medication.selectnumberdispensecommon=='Other'">
+                            <div ng-if="medication.selectnumberdispensecommontext">
+                                Dispense total number:&nbsp;{{medication.selectnumberdispensecommontext}}.
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication.selectcommonrefills=='0' || medication.selectrefills == '0'">No refills.</div>
+                    <div ng-if="medication.selectcommonrefills || medication.selectrefills">
+                        <div ng-if="medication.selectcommonrefills=='1' || medication.selectrefills == '1'">1 refill.</div>
+                        <div ng-if="medication.selectcommonrefills > '1' || medication.selectrefills > '1'">Total number of <span ng-if="medication.selectcommonrefills">{{medication.selectcommonrefills}}</span><span ng-if="medication.selectrefills">{{medication.selectrefills}}</span> refills are provided.</div>
+                    </div>
+                    <div ng-if="medication.othertextfortextarea!=''" ng-bind-html="appendPeriod(medication.othertextfortextarea)"></div>
+                </div>
+                <div ng-repeat="medication2 in report.data['treatment' + item.concateId].treatmentmsrelaxants">
+                    <div ng-if="medication2.selectnsaids">
+                        <div ng-if="medication2.selectnsaids=='Other'">
+                            {{medication2.selectnsaidstext}} <span ng-if="medication.selectnsaidDosage">({{medication.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                        <div ng-if="medication2.selectnsaids!='Other'">
+                            {{medication2.selectnsaids}} <span ng-if="medication2.selectnsaidDosage">({{medication2.selectnsaidDosage}} mg)</span> is prescribed. 
+                        </div>
+                    </div>
+                    <div ng-if="medication2.commondirectionstext">Directions for usage:&nbsp;<span ng-bind-html="appendPeriod(medication2.commondirectionstext)"></span></div>
+                    <div ng-if="medication2.selectnumberdispensecommon">
+                        <div ng-if="medication2.selectnumberdispensecommon!='Other'">
+                            Dispense total number:&nbsp;{{medication2.selectnumberdispensecommon}}.
+                        </div>
+                        <div ng-if="medication2.selectnumberdispensecommon=='Other'">
+                            <div ng-if="medication2.selectnumberdispensecommontext">
+                                Dispense total number:&nbsp;{{medication2.selectnumberdispensecommontext}}.
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication2.selectcommonrefills=='0' || medication2.selectrefills == '0'">No refills.</div>
+                    <div ng-if="medication2.selectcommonrefills || medication2.selectrefills">
+                        <div ng-if="medication2.selectcommonrefills=='1' || medication2.selectrefills == '1'">1 refill.</div>
+                        <div ng-if="medication2.selectcommonrefills > '1' || medication2.selectrefills > '1'">Total number of <span ng-if="medication2.selectcommonrefills">{{medication2.selectcommonrefills}}</span><span ng-if="medication2.selectrefills">{{medication2.selectrefills}}</span> refills are provided.</div>
+                    </div>
+                    <div ng-if="medication2.othertextfortextarea!=''" ng-bind-html="appendPeriod(medication2.othertextfortextarea)"></div>
+                </div>
+                <div ng-repeat="medication3 in report.data['treatment' + item.concateId].treatmentopioids">
+                    <div ng-if="medication3.selectnsaids">
+                        <div ng-if="medication3.selectnsaids=='Other'">
+                            {{medication3.selectnsaidstext}} <span ng-if="medication3.selectnsaidDosage">({{medication3.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                        <div ng-if="medication3.selectnsaids!='Other'">
+                            <div ng-if="medication3.selectnsaids=='Norco (hydrocodone + acetaminophen)'">
+                                {{medication3.selectnsaids}} <span ng-if="medication3.selectnsaidDosage">({{medication3.selectnsaidDosage}} mg)</span> is prescribed.
+                            </div>
+                            <div ng-if="medication3.selectnsaids=='Percocet (oxycodone + acetaminophen)'">
+                                {{medication3.selectnsaids}} <span ng-if="medication3.selectnsaidDosage">({{medication3.selectnsaidDosage}} mg)</span> is prescribed.
+                            </div>
+                            <div ng-if="medication3.selectnsaids=='Tylenol with Codeine (acetaminophen + codeine)'">
+                                {{medication3.selectnsaids}} <span ng-if="medication3.selectnsaidDosage">({{medication3.selectnsaidDosage}} mg)</span> is prescribed.
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication3.commondirectionstext">Directions for usage:&nbsp;<span ng-bind-html="appendPeriod(medication3.commondirectionstext)"></span></div>
+                    <div ng-if="medication3.selectnumberdispensecommon">
+                        <div ng-if="medication3.selectnumberdispensecommon!='Other'">
+                            Dispense total number:&nbsp;{{medication3.selectnumberdispensecommon}}.
+                        </div>
+                        <div ng-if="medication3.selectnumberdispensecommon=='Other'">
+                            <div ng-if="medication3.selectnumberdispensecommontext">
+                                Dispense total number:&nbsp;{{medication3.selectnumberdispensecommontext}}.
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication3.selectcommonrefills=='0' || medication3.selectrefills == '0'">No refills.</div>
+                    <div ng-if="medication3.selectcommonrefills || medication3.selectrefills">
+                        <div ng-if="medication3.selectcommonrefills=='1' || medication3.selectrefills == '1'">1 refill.</div>
+                        <div ng-if="medication3.selectcommonrefills > '1' || medication3.selectrefills > '1'">Total number of <span ng-if="medication3.selectcommonrefills">{{medication3.selectcommonrefills}}</span><span ng-if="medication3.selectrefills">{{medication3.selectrefills}}</span> refills are provided.</div>
+                    </div>
+                    <div ng-if="medication3.othertextfortextarea!=''" ng-bind-html="appendPeriod(medication3.othertextfortextarea)"></div>
+                </div>
+                <div ng-repeat="medication33 in report.data['treatment' + item.concateId].treatmentnonopioids">
+                    <div ng-if="medication33.selectnsaids">
+                        <div ng-if="medication33.selectnsaids=='Other'">
+                            {{medication33.selectnsaidstext}} <span ng-if="medication33.selectnsaidDosage">({{medication33.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                        <div ng-if="medication33.selectnsaids!='Other'">
+                            {{medication33.selectnsaids}} <span ng-if="medication33.selectnsaidDosage">({{medication33.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                    </div>
+                    <div ng-if="medication33.commondirectionstext">Directions for usage:&nbsp;<span ng-bind-html="appendPeriod(medication33.commondirectionstext)"></span></div>
+                    <div ng-if="medication33.selectnumberdispensecommon">
+                        <div ng-if="medication33.selectnumberdispensecommon!='Other'">
+                            Dispense total number:&nbsp;{{medication33.selectnumberdispensecommon}}.
+                        </div>
+                        <div ng-if="medication33.selectnumberdispensecommon=='Other'">
+                            <div ng-if="medication33.selectnumberdispensecommontext">
+                                Dispense total number:&nbsp;{{medication33.selectnumberdispensecommontext}}.
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication33.selectcommonrefills=='0' || medication33.selectrefills == '0'">No refills.</div>
+                    <div ng-if="medication33.selectcommonrefills || medication33.selectrefills">
+                        <div ng-if="medication33.selectcommonrefills=='1' || medication33.selectrefills == '1'">1 refill.</div>
+                        <div ng-if="medication33.selectcommonrefills > '1' || medication33.selectrefills > '1'">Total number of <span ng-if="medication33.selectcommonrefills">{{medication33.selectcommonrefills}}</span><span ng-if="medication33.selectrefills">{{medication33.selectrefills}}</span> refills are provided.</div>
+                    </div>
+                    <div ng-if="medication33.othertextfortextarea!=''" ng-bind-html="appendPeriod(medication33.othertextfortextarea)"></div>
+                </div>
+                <div ng-repeat="medication4 in report.data['treatment' + item.concateId].treatmentcortisone">
+                    <div ng-if="medication4.testingtextarea!=''" ng-bind-html="appendPeriod(medication4.nsaidsdirectiontext)"></div>
+                </div>
+                <div ng-repeat="medication5 in report.data['treatment' + item.concateId].treatmentnerve">
+                    <div ng-if="medication5.selectnsaids">
+                        <div ng-if="medication5.selectnsaids=='Other'">
+                            {{medication5.selectnsaidstext}} <span ng-if="medication5.selectnsaidDosage">({{medication5.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                        <div ng-if="medication5.selectnsaids!='Other'">
+                            {{medication5.selectnsaids}} <span ng-if="medication5.selectnsaidDosage">({{medication5.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                    </div>
+                    <div ng-if="medication5.commondirectionstext">Directions for usage:&nbsp;<span ng-bind-html="appendPeriod(medication5.commondirectionstext)"></span></div>
+                    <div ng-if="medication5.selectnumberdispensecommon">
+                        <div ng-if="medication5.selectnumberdispensecommon!='Other'">
+                            Dispense total number:&nbsp;{{medication5.selectnumberdispensecommon}}.
+                        </div>
+                        <div ng-if="medication5.selectnumberdispensecommon=='Other'">
+                            <div ng-if="medication5.selectnumberdispensecommontext">
+                                Dispense total number:&nbsp;{{medication5.selectnumberdispensecommontext}}.
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication5.selectcommonrefills=='0' || medication5.selectrefills == '0'">No refills.</div>
+                    <div ng-if="medication5.selectcommonrefills || medication5.selectrefills">
+                        <div ng-if="medication5.selectcommonrefills=='1' || medication5.selectrefills == '1'">1 refill.</div>
+                        <div ng-if="medication5.selectcommonrefills > '1' || medication5.selectrefills > '1'">Total number of <span ng-if="medication5.selectcommonrefills">{{medication5.selectcommonrefills}}</span><span ng-if="medication5.selectrefills">{{medication5.selectrefills}}</span> refills are provided.</div>
+                    </div>
+                    <div ng-if="medication5.othertextfortextarea!=''" ng-bind-html="appendPeriod(medication5.othertextfortextarea)"></div>
+                </div>
+                <div ng-repeat="medication6 in report.data['treatment' + item.concateId].treatmentantimicrobial">
+                    <div ng-if="medication6.selectnsaids">
+                        <div ng-if="medication6.selectnsaids=='Other' && medication6.selectnsaidstext">
+                            {{medication6.selectnsaidstext}} <span ng-if="medication6.selectnsaidDosage">({{medication6.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                        <div ng-if="medication6.selectnsaids!='Other'">
+                            {{medication6.selectnsaids}} <span ng-if="medication6.selectnsaidDosage">({{medication6.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                    </div>
+                    <div ng-if="medication6.commondirectionstext">Directions for usage:&nbsp;<span ng-bind-html="appendPeriod(medication6.commondirectionstext)"></span></div>
+                    <div ng-if="medication6.selectnumberdispensecommon || medication6.selectnumberdispense">
+                        <div ng-if="medication6.selectnsaids!='Other'">
+                            Dispense total number:&nbsp;{{medication6.selectnumberdispensecommon}}.
+                        </div>
+                        <div ng-if="medication6.selectnsaids=='Other'">
+                            <div ng-if="medication6.selectnumberdispense">
+                                Dispense total number:&nbsp;{{medication6.selectnumberdispense}}.
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication6.selectcommonrefills=='0' || medication6.selectrefills == '0'">No refills.</div>
+                    <div ng-if="medication6.selectcommonrefills || medication6.selectrefills">
+                        <div ng-if="medication6.selectcommonrefills=='1' || medication6.selectrefills == '1'">1 refill.</div>
+                        <div ng-if="medication6.selectcommonrefills > '1' || medication6.selectrefills > '1'">Total number of <span ng-if="medication6.selectcommonrefills">{{medication6.selectcommonrefills}}</span><span ng-if="medication6.selectrefills">{{medication6.selectrefills}}</span> refills are provided.</div>
+                    </div>
+                    <div ng-if="medication6.othertextfortextarea!=''" ng-bind-html="appendPeriod(medication6.othertextfortextarea)"></div>
+                </div>
+                <div ng-repeat="medication7 in report.data['treatment' + item.concateId].treatmentimmunizations">
+                    <div ng-if="medication7.selectnsaids">
+                        <div ng-if="medication7.selectnsaids=='Other'">
+                            {{medication7.selectnsaidstext}} <span ng-if="medication7.selectnsaidDosage">({{medication7.selectnsaidDosage}} mg)</span> is prescribed.
+                        </div>
+                        <div ng-if="medication7.selectnsaids!='Other'">
+                            {{medication7.selectnsaids}} is prescribed.
+                        </div>
+                    </div>
+                    <div ng-if="medication7.commondirectionstext">Directions for usage:&nbsp;<span ng-bind-html="medication7.commondirectionstext"></span></div>
+                    <div ng-if="medication7.selectnumberdispensecommon">
+                        <div ng-if="medication7.selectnumberdispensecommon!='Other'">
+                            Dispense total number:&nbsp;{{medication7.selectnumberdispensecommon}}.
+                        </div>
+                        <div ng-if="medication7.selectnumberdispensecommon=='Other'">
+                            <div ng-if="medication7.selectnumberdispensecommontext">
+                                Dispense total number:&nbsp;{{medication7.selectnumberdispensecommontext}}.
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication7.selectcommonrefills=='0' || medication7.selectrefills == '0'">No refills.</div>
+                    <div ng-if="medication7.selectcommonrefills || medication7.selectrefills">
+                        <div ng-if="medication7.selectcommonrefills=='1' || medication7.selectrefills == '1'">1 refill.</div>
+                        <div ng-if="medication7.selectcommonrefills > '1' || medication7.selectrefills > '1'">Total number of <span ng-if="medication7.selectcommonrefills">{{medication7.selectcommonrefills}}</span><span ng-if="medication7.selectrefills">{{medication7.selectrefills}}</span> refills are provided.</div>
+                    </div>
+                    <span ng-bind-html="appendPeriod(medication7.othertextfortextarea)"></span>
+                </div>
+                <div ng-bind-html="appendPeriod(report.data['treatment' + item.concateId].treatmenttextareamedications)"></div>
+            </div>
+            <div ng-repeat="medication8 in report.data['treatment' + item.concateId].treatmenttherapy">
+                <div ng-if="medication8.selectnsaids">
+                    <div ng-if="medication8.selectnsaids!='Other'">
+                        <div ng-if="medication8.selectnsaids != '' && (!medication8.selectweeksfortherapy || !medication8.selecttimesfortherapy)">The employee requires {{medication8.selectnsaids}}.</div>
+                        <div ng-if="medication8.selecttimesfortherapy==1 && medication8.selectweeksfortherapy==1">The employee requires one {{medication8.selectnsaids|lowercase}} session.</div>
+                        <div ng-if="medication8.selecttimesfortherapy>1 && medication8.selectweeksfortherapy==1">The employee requires {{medication8.selecttimesfortherapy}} {{medication8.selectnsaids|lowercase}} sessions.</div>
+                        <div ng-if="medication8.selecttimesfortherapy>=1 && medication8.selectweeksfortherapy>1">
+                            The employee requires {{medication8.selectnsaids|lowercase}} therapy {{medication8.selecttimesfortherapy}}
+ <ng-pluralize count="medication8.selecttimesfortherapy" when="{'1': 'time','other': 'times'}"></ng-pluralize>
+                            per week for {{medication8.selectweeksfortherapy}} weeks.
+                        </div>
+                    </div>
+                    <div ng-if="medication8.selectnsaids=='Other'">
+                        <div ng-if="medication8.therapyinputother">
+                            <div ng-if="medication8.therapyinputother != '' && (!medication8.selecttimesfortherapyother || !medication8.selectweeksfortherapyother)">The employee requires {{medication8.therapyinputother}}.</div>
+                            <div ng-if="medication8.selecttimesfortherapyother==1 && medication8.selectweeksfortherapyother==1"><span ng-bind-html="medication8.therapyinputother"></span>: one session.</div>
+                            <div ng-if="medication8.selecttimesfortherapyother>1 && medication8.selectweeksfortherapyother==1"><span ng-bind-html="medication8.therapyinputother"></span>: {{medication8.selecttimesfortherapyother}} sessions in one week.</div>
+                            <div ng-if="medication8.selecttimesfortherapyother>=1 && medication8.selectweeksfortherapyother>1">
+                                <span ng-bind-html="medication8.therapyinputother"></span>: {{medication8.selecttimesfortherapyother}}
+ <ng-pluralize count="medication8.selecttimesfortherapyother" when="{'1': 'time','other': 'times'}"></ng-pluralize>
+                                per week for {{medication8.selectweeksfortherapyother}} weeks.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <span ng-bind-html="appendPeriod(medication8.othertextareaTherapytext)"></span>
+            </div>
+            <div ng-repeat="medication9 in report.data['treatment' + item.concateId].treatmentinjections">
+                <div ng-if="medication9.selectnsaids">
+                    <div ng-if="medication9.selectnsaids!='Other'">
+                        Employee requires a {{medication9.selectnsaids|lowercase}} injection.
+ <div ng-if="medication9.injectionstextinput!=''">{{medication9.injectionstextinput}}.</div>
+                    </div>
+                    <div ng-if="medication9.selectnsaids=='Other'">
+                        <div ng-if="medication9.injectionstextinput">Employee requires injection:&nbsp;<span ng-bind-html="medication9.injectionstextinput"></span>.</div>
+                    </div>
+                </div>
+                <span ng-bind-html="appendPeriod(medication9.othertextareainjectionstext)"></span>
+            </div>
+            <div ng-repeat="medication10 in report.data['treatment' + item.concateId].treatmentreferral">
+                <div ng-if="medication10.selectnsaids">
+                    <div class="divMain" ng-if="medication10.selectnsaids=='Dental' || medication10.selectnsaids=='Dermatology' || medication10.selectnsaids=='Neurology' || medication10.selectnsaids=='Ophthalmology' || medication10.selectnsaids=='Physical medicine' || medication10.selectnsaids=='Psychiatry' || medication10.selectnsaids=='Podiatry'">
+                        Employee requires access to {{medication10.selectnsaids|lowercase}} specialty.
+ <div ng-if="medication10.selectreferraldropdown=='One time consult'">A one time consult is requested for authorization.</div>
+                        <div ng-if="medication10.selectreferraldropdown=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                        <div ng-if="medication10.selectreferraldropdown=='Other'">
+                            <div ng-bind-html="appendPeriod(medication10.selectreferraldropdownforother)"></div>
+                        </div>
+                    </div>
+                    <div ng-if="medication10.selectnsaids=='Internal medicine specialty'" class="divMain">
+
+                        <span ng-if="medication10.treatmentinternalmedicineselectoption!='' && medication10.treatmentinternalmedicineselectoption!='Choose' && medication10.treatmentinternalmedicineselectoption!='Other'">Referral to internal medicine specialty is indicated.
+ Employee requires access to {{medication10.treatmentinternalmedicineselectoption|lowercase}} specialty. 
+                        </span>
+
+                        <span ng-if="medication10.treatmentinternalmedicineselectoption=='Other'">Referral to internal medicine specialty is indicated.
+ <span ng-bind-html="appendPeriod(medication10.internalmedicineselectedoptionothertext)"></span>
+                        </span>
+
+                        <span ng-if="medication10.internalmedicineselectedoption=='One time consult'">A one time consult is requested for authorization.</span>
+                        <span ng-if="medication10.internalmedicineselectedoption=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</span>
+                        <span ng-if="medication10.internalmedicineselectedoption=='Other'">
+                            <span ng-bind-html="appendPeriod(medication10.internalmedicineselectedoptionothertext)"></span>
+                        </span>
+                    </div>
+                    <div ng-if="medication10.selectnsaids=='Pain management'" class="divMain">
+                        <span ng-if="!medication10.selectpainmanagmentradio || medication10.selectpainmanagmentradio==false">Employee requires access to pain management specialty. </span><span ng-if="medication10.selectpainmanagmentradio.length>0">Employee requires access to pain management specialty for {{medication10.selectpainmanagmentradio|lowercase}}. </span>
+                        <div ng-if="medication10.selectpainmanagmentoptions=='One time consult'">A one time consult is requested for authorization.</div>
+                        <div ng-if="medication10.selectpainmanagmentoptions=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                        <div ng-if="medication10.selectpainmanagmentoptions=='Other'">
+                            <div ng-bind-html="appendPeriod(medication10.selectpainmanagmentoptionstext)"></div>
+                        </div>
+                    </div>
+                    <div ng-if="medication10.selectnsaids=='Surgery'" class="divMain">
+                        <div ng-if="!medication10.surgeryselectoptions">
+                            Surgery consultation is indicated.
+                        </div>
+                        <div ng-if="medication10.surgeryselectoptions">
+                            <div ng-if="medication10.surgeryselectoptions!='' && medication10.surgeryselectoptions!='Other' && medication10.surgeryselectoptions!='Choose'">
+                                <div ng-if="medication10.surgeryselectoptions!='Orthopedics'">
+                                    Employee requires consultation with {{medication10.surgeryselectoptions|lowercase}}.                                    
+                                </div>
+                                <div ng-if="medication10.surgeryselectoptions=='Orthopedics'">
+                                    <div ng-if="medication10.surgeryorthopedicselectoptions">
+                                        <div ng-if="medication10.surgeryorthopedicselectoptions!='' && medication10.surgeryorthopedicselectoptions!='Other' && medication10.surgeryorthopedicselectoptions!='Choose'">
+                                            <div ng-if="medication10.surgeryorthopedicselectoptions=='General'">
+                                                Employee requires consultation with orthopedics.
+                                            </div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptions=='Upper extremity/hand'">
+                                                Employee requires consultation with orthopedics for the upper extremity.
+                                            </div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptions=='Major joint (shoulder, hip, knee)'">
+                                                Employee requires consultation with orthopedics for a major joint.
+                                            </div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptions=='Spine'">
+                                                Employee requires access to orthopedics for the spine.
+                                            </div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptionselection=='One time consult'">A one time consult is requested for authorization.</div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptionselection=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptionselection=='Other'">
+                                                <div ng-if="medication10.surgeryorthopedicselectoptionselectionothertext.length>0">{{medication10.surgeryorthopedicselectoptionselectionothertext|capitalize}} is requested for authorization.</div>
+                                            </div>
+                                        </div>
+                                        <div ng-if="medication10.surgeryorthopedicselectoptions=='Other'">
+                                            <div ng-if="medication10.surgeryorthopedicselectoptionstext.length>0">
+                                                Employee requires consultation with orthopedics. <span ng-bind-html="appendPeriod(medication10.surgeryorthopedicselectoptionstext)"></span>
+                                                .
+                                            </div>
+                                            <div ng-if="!medication10.surgeryorthopedicselectoptionstext.length>0">Employee requires consultation with orthopedics.</div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptionsselectionoption=='One time consult'">A one time consult is requested for authorization.</div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptionsselectionoption=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                            <div ng-if="medication10.surgeryorthopedicselectoptionsselectionoption=='Other'">
+                                                <div ng-if="medication10.surgeryorthopedicselectoptionsselectionoptionothertext.length>0">{{medication10.surgeryorthopedicselectoptionsselectionoptionothertext|capitalize}} is requested for authorization.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-if="!medication10.surgeryorthopedicselectoptions">
+                                        Employee requires consultation with orthopedics.
+                                    </div>
+                                </div>
+                                <div ng-if="medication10.surgeryselectoptions!='Orthopedics'">
+                                    <div ng-if="medication10.surgeryselectoptionsselection=='One time consult'">A one time consult is requested for authorization.</div>
+                                    <div ng-if="medication10.surgeryselectoptionsselection=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                    <div ng-if="medication10.surgeryselectoptionsselection=='Other'">
+                                        <div ng-bind-html="appendPeriod(medication10.surgeryselectoptionsselectionothertext)"></div>
+                                    </div>
+                                </div>
+                                <div ng-if="medication10.surgeryselectoptions!='' && medication10.surgeryselectoptions!='Choose' && medication10.surgeryselectoptions=='Other'">
+                                    <div ng-if="medication10.surgeryselectoptionsothertext.length>0">
+                                        Employee requires consultation with {{medication10.surgeryselectoptionsothertext|lowercase}}.
+                                            <div ng-if="medication10.surgeryselectoptionsotherselectionoptions">
+                                                <div ng-if="medication10.surgeryselectoptionsotherselectionoptions=='One time consult'">A one time consult is requested for authorization.</div>
+                                                <div ng-if="medication10.surgeryselectoptionsotherselectionoptions=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                                <div ng-if="medication10.surgeryselectoptionsotherselectionoptions=='Other'">
+                                                    <div ng-if="medication10.surgeryselectoptionsotherselectionoptionsothertext.length>0">{{medication10.surgeryselectoptionsotherselectionoptionsothertext|capitalize}} is requested for authorization.</div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="medication10.surgeryselectoptions=='Other'">
+                                <div ng-bind-html="appendPeriod(medication10.surgeryselectoptionsothertext)"></div>
+                                <div ng-if="medication10.surgeryselectoptionsotherselectionoptions=='One time consult'">A one time consult is requested for authorization.</div>
+                                <div ng-if="medication10.surgeryselectoptionsotherselectionoptions=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                <div ng-if="medication10.surgeryselectoptionsotherselectionoptions=='Other'">
+                                    <div ng-bind-html="appendPeriod(medication10.surgeryselectoptionsotherselectionoptionsothertext)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="medication10.selectnsaids=='Other'" class="divMain">
+                        <div ng-bind-html="appendPeriod(medication10.referralinputother)"></div>
+                        <div ng-if="medication10.selectreferralforreferralother=='One time consult'">A one time consult is requested for authorization.</div>
+                        <div ng-if="medication10.selectreferralforreferralother=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                        <div ng-if="medication10.selectreferralforreferralother=='Other'">
+                            <div ng-bind-html="appendPeriod(medication10.othertextforreferralother)"></div>
+                        </div>
+                    </div>
+                </div>
+                <span ng-bind-html="appendPeriod(medication10.othertextfortextarea)"></span>
+            </div>
+            <div ng-repeat="medication11 in report.data['treatment' + item.concateId].treatmentdiagnostic">
+                <div ng-if="medication11.selectnsaids || medication11.othertextfortextarea">
+                    <div class="divMain">
+                        <div ng-if="medication11.selectnsaids!='Other' && medication11.selectnsaids!=''">
+                            {{medication11.selectnsaids}} is required.
+                        </div>
+                        <div ng-if="medication11.selectnsaids=='Other' && medication11.diagnosticinputother.length>0">
+                            {{medication11.diagnosticinputother|capitalize}} is required.
+                        </div>
+                        <div ng-bind-html="appendPeriod(medication11.othertextfortextarea)"></div>
+                    </div>
+                </div>
+            </div>
+            <div ng-repeat="medication12 in report.data['treatment' + item.concateId].treatmentother">
+                <div class="divMain">
+                    <div ng-if="medication12.selectnsaids">
+                        {{medication12.selectnsaids|capitalize}} is required.
+                    </div>
+                    <div ng-bind-html="appendPeriod(medication12.othertextfortextarea)"></div>
+                </div>
+
+            </div>
+            <div ng-if="report.data['treatment' + item.concateId].durablemedicalbtn==true">
+                <div ng-if="item.bodysystem!='Skin'">
+                    <div ng-if="item.id=='other'">
+                        <div ng-if="report.data['treatment' + item.concateId].durabletensunit.length>0 || report.data['treatment' + item.concateId].durablehwaveunit.length>0 || report.data['treatment' + item.concateId].durablewheelchair.length>0 || report.data['treatment' + item.concateId].durablesplints.length>0">
+                            Durable medical equipment is indicated. Employee requires access to:
+ <span ng-bind-html="makeSentence(report.data['treatment' + item.concateId].durabletensunit[0] + '~' + report.data['treatment' + item.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + item.concateId].durablewheelchair[0] + '~' + report.data['treatment' + item.concateId].durablesplints[0])"></span>
+                        </div>
+                    </div>
+                    <div ng-if="item.id=='shoulder' || item.id=='thumb' || item.id=='fingerindex' || item.id=='fingermiddle' || item.id=='fingerring' || item.id=='fingerlittle'">
+                        <div ng-if="report.data['treatment' + item.concateId].durabletensunit.length>0 || report.data['treatment' + item.concateId].durablehwaveunit.length>0 || report.data['treatment' + item.concateId].durablesplints.length>0">
+                            Durable medical equipment is indicated. Employee requires access to:
+ <span ng-bind-html="makeSentence(report.data['treatment' + item.concateId].durabletensunit[0] + '~' + report.data['treatment' + item.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + item.concateId].durablesplints[0])"></span>
+                        </div>
+                    </div>
+                    <div ng-if="item.id=='elbow'">
+                        <div ng-if="report.data['treatment' + item.concateId].durabletensunit.length>0 || report.data['treatment' + item.concateId].durablehwaveunit.length>0 || report.data['treatment' + item.concateId].durabletenniselbowstrap.length>0 || report.data['treatment' + item.concateId].durableneoprenesleeve.length>0 || report.data['treatment' + item.concateId].durablesplints.length>0">
+                            Durable medical equipment is indicated. Employee requires access to:
+ <span ng-bind-html="makeSentence(report.data['treatment' + item.concateId].durabletensunit[0] + '~' + report.data['treatment' + item.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + item.concateId].durabletenniselbowstrap[0] + '~' + report.data['treatment' + item.concateId].durableneoprenesleeve[0] + '~' + report.data['treatment' + item.concateId].durablesplints[0])"></span>
+                        </div>
+                    </div>
+                    <div ng-if="item.id=='wrist'">
+                        <div ng-if="report.data['treatment' + item.concateId].durabletensunit.length>0 || report.data['treatment' + item.concateId].durablehwaveunit.length>0 || report.data['treatment' + item.concateId].durablewristsupport.length>0 || report.data['treatment' + item.concateId].durableneoprenesleeve.length>0 || report.data['treatment' + item.concateId].durablesplints.length>0">
+                            Durable medical equipment is indicated. Employee requires access to:
+ <span ng-bind-html="makeSentence(report.data['treatment' + item.concateId].durabletensunit[0] + '~' + report.data['treatment' + item.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + item.concateId].durablewristsupport[0] + '~' + report.data['treatment' + item.concateId].durableneoprenesleeve[0] + '~' + report.data['treatment' + item.concateId].durablesplints[0])"></span>
+                        </div>
+                    </div>
+                    <div ng-if="item.id=='pelviship' || item.id=='knee' || item.id=='anklefoot' || item.id=='toe'">
+                        <div ng-if="report.data['treatment' + item.concateId].durabletensunit.length>0 || report.data['treatment' + item.concateId].durablehwaveunit.length>0 || report.data['treatment' + item.concateId].durablewheelchair.length>0 || report.data['treatment' + item.concateId].durablecane.length>0 || report.data['treatment' + item.concateId].durableCrutch.length>0 || report.data['treatment' + item.concateId].durableAFO.length>0 || report.data['treatment' + item.concateId].durableKAFO.length>0 || report.data['treatment' + item.concateId].durablesplints.length>0">
+                            Durable medical equipment is indicated. Employee requires access to:
+ <span ng-bind-html="makeSentence(report.data['treatment' + item.concateId].durabletensunit[0] + '~' + report.data['treatment' + item.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + item.concateId].durablewheelchair[0] + '~' + report.data['treatment' + item.concateId].durablecane[0] + '~' + report.data['treatment' + item.concateId].durableCrutch[0] + '~' + report.data['treatment' + item.concateId].durableAFO[0] + '~' + report.data['treatment' + item.concateId].durableKAFO[0] + '~' + report.data['treatment' + item.concateId].durablesplints[0])"></span>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="item.bodysystem=='Skin'">
+                    <div ng-if="item.id=='upperextremity' || item.id=='lowerextremity'">
+                        <div ng-if="report.data['treatment' + item.concateId].durabletensunit.length>0 || report.data['treatment' + item.concateId].durablehwaveunit.length>0 || report.data['treatment' + item.concateId].durablewheelchair.length>0">
+                            Durable medical equipment is indicated. Employee requires access to:
+ <span ng-bind-html="makeSentence(report.data['treatment' + item.concateId].durabletensunit[0] + '~' + report.data['treatment' + item.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + item.concateId].durablewheelchair[0])"></span>
+                        </div>
+                    </div>
+                </div>
+                <div ng-bind-html="appendPeriod(report.data['treatment' + item.concateId].durabletextarea)"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="report.data['decisionmaking'].mdmq4.length>0">
+    <br>
+    <strong>Section 24. </strong><span class="DFRReportHeadingFontSize"><strong>Further Treatment</strong></span>
+    <div ng-if="report.data['decisionmaking'].mdmq4 == 'No'">{{report.data['bginfo'].gender=='Male'? 'Mr.' : 'Ms.'}} {{report.data['bginfo'].lastname}} requires no further treatment.</div>
+    <div ng-if="report.data['decisionmaking'].mdmq4 == 'Yes'">
+        The patient does require further treatment. 
+            <span ng-if="report.data['decisionmaking'].mdmq4yesopt1!='Other' && report.data['decisionmaking'].mdmq4yesopt1 || (report.data['decisionmaking'].mdmq4yesoptother && report.data['decisionmaking'].mdmq4yesopt1=='Other') ">
+                <span ng-if="report.data['decisionmaking'].mdmq4yesopt1!='Other'">It is my estimation this treatment will take {{report.data['decisionmaking'].mdmq4yesopt1|lowercase}}.</span>
+                <span ng-if="report.data['decisionmaking'].mdmq4yesopt1=='Other'"><span ng-if="report.data['decisionmaking'].mdmq4yesoptother">It is my estimation this treatment will take {{report.data['decisionmaking'].mdmq4yesoptother|lowercase}}.</span></span>
+            </span>
+    </div>
+</div>
+
+<!--End Treatment-->
+
+<div ng-if="report.data['decisionmaking'].mdmq3.length>0">
+	<br>
+	<strong>Section 25. </strong><span class="DFRReportHeadingFontSize"><strong>Hospitalization</strong></span>
+	<div ng-if="report.data['decisionmaking'].mdmq3 == 'No'">The patient does not require hospitalization.</div>
+	<div ng-if="report.data['decisionmaking'].mdmq3 == 'Yes'">
+		<div ng-if="report.data['decisionmaking'].mdHospitalLocation != ''">Hospital Name:&nbsp;<span ng-bind-html="report.data['decisionmaking'].mdHospitalLocation"></span></div>
+		<div ng-if="report.data['decisionmaking'].mdmq4yesdate != ''">Date admitted:&nbsp;{{report.data['decisionmaking'].mdmq4yesdate|date:'MM/dd/yyyy' }}</div>
+		<div ng-if="report.data['decisionmaking'].mdmq3yesstay != ''">Estimated stay:&nbsp;{{report.data['decisionmaking'].mdmq3yesstay}}</div>
+	</div>
+</div>

@@ -1,0 +1,463 @@
+﻿<div ng-controller="CtscanShoulderAddAnotherCtrl">
+    <div class="col-sm-12">
+        <label class="{{labelclass}}">{{label}}</label>
+        <button type="button" ng-click="addControl()" class="btn btn-default btn-circle btn-success">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+    <div ng-repeat="todo in todos.slice().reverse()" class="col-sm-12 checkbox addAnotherBottomBorder" style="padding: 5px;">
+        <input type="hidden" ng-model="todo.indexValue" ng-init="todo.indexValue = todos.length - ($index+1)" />
+        <div class="col-sm-12">
+            <div class="col-sm-1" style="margin-top: 7px; padding-left: 0;">
+                <label>Date:</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="tel" ui-date="dateOptions" my-date ng-model="todo.dateOfSurgery" class="form-control" placeholder="MM/DD/YYYY">
+            </div>
+            <div class="col-sm-1" style="margin-top: 7px;">
+                <button type="button" class="btn btn-info btn-xs" ng-click="clearbodypart($index+1,todos.length)"> Clear</button>
+            </div>
+            <div class="col-sm-6" style="margin-top: 7px;">
+                <button type="button" class="btn btn-danger btn-xs" ng-click="deletebodypart($index+1,todos.length)"> Delete</button>
+            </div>
+            <!------- Normal ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.normal" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].fracture = false','$scope.todos[{{todo.indexValue}}].arth = false','$scope.todos[{{todo.indexValue}}].postsurgical = false','$scope.todos[{{todo.indexValue}}].calcificTendinitis = false','$scope.todos[{{todo.indexValue}}].subdeltoidFluid = false','$scope.todos[{{todo.indexValue}}].labrumInjury = false','$scope.todos[{{todo.indexValue}}].rotatorCuffInjury = false','$scope.todos[{{todo.indexValue}}].subluxationDislocation = false'],todo.normal,'$scope.todos[{{todo.indexValue}}].normal',true)"/>
+                    &nbsp;Normal</label>
+            </div>
+            <!------- Fracture ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.fracture" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Fracture</label>
+            </div>
+            <!------- Arthritis/degenerative joint changes ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.arth" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false','$scope.todos[{{todo.indexValue}}].acromioclavicular = false','$scope.todos[{{todo.indexValue}}].glenohumeral = false','$scope.todos[{{todo.indexValue}}].acromioclavicularradio = false','$scope.todos[{{todo.indexValue}}].glenohumeralradio = false'],todo.arth,'$scope.todos[{{todo.indexValue}}].arth')" />
+                    &nbsp;Arthritis/degenerative joint changes</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.arth" >
+                <div class="col-sm-12">
+                    <div class="margin-left-1">
+                        <label>
+                            <input type="checkbox" ng-model="todo.glenohumeral" value="Glenohumeral" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].glenohumeralradio = false'])" />
+                            &nbsp;Glenohumeral</label>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.glenohumeral">
+                        <div class="col-sm-12">
+                            <div class="margin-left-1">
+                                <label>
+                                    <input type="radio" ng-model="todo.glenohumeralradio" value="Mild" />
+                                    &nbsp;Mild</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="margin-left-1">
+                                <label>
+                                    <input type="radio" ng-model="todo.glenohumeralradio"  value="Moderate" />
+                                    &nbsp;Moderate</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="margin-left-1">
+                                <label>
+                                    <input type="radio" ng-model="todo.glenohumeralradio"  value="Severe" />
+                                    &nbsp;Severe</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="margin-left-1">
+                        <label>
+                            <input type="checkbox" ng-model="todo.acromioclavicular" value="Acromioclavicular" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].acromioclavicularradio = false'])" />
+                            &nbsp;Acromioclavicular</label>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.acromioclavicular">
+                        <div class="col-sm-12">
+                            <div class="margin-left-1">
+                                <label>
+                                    <input type="radio" ng-model="todo.acromioclavicularradio" value="Mild" />
+                                    &nbsp;Mild</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="margin-left-1">
+                                <label>
+                                    <input type="radio" ng-model="todo.acromioclavicularradio"  value="Moderate" />
+                                    &nbsp;Moderate</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="margin-left-1">
+                                <label>
+                                    <input type="radio" ng-model="todo.acromioclavicularradio"  value="Severe" />
+                                    &nbsp;Severe</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!------- Post surgical changes ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.postsurgical" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Post surgical changes</label>
+            </div>
+            <!------- Calcific tendinitis ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.calcificTendinitis" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Calcific tendinitis</label>
+            </div>
+            <!------- Subdeltoid fluid  ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.subdeltoidFluid" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Subdeltoid fluid</label>
+            </div>
+            <!------- Labrum injury  ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.labrumInjury" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false','$scope.todos[{{todo.indexValue}}].slapradio = false','$scope.todos[{{todo.indexValue}}].anteriorradio = false'])" />
+                    &nbsp;Labrum injury</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.labrumInjury">
+                <div class="col-sm-12">
+                    <div class="margin-left-1">
+                        <label>
+                            <input type="checkbox" ng-model="todo.slapradio" value="SLAP" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].slapradio = false'])" />
+                            &nbsp;SLAP</label>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="margin-left-1">
+                        <label>
+                            <input type="checkbox" ng-model="todo.anteriorradio" value="Anterior-posterior" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].anteriorradio = false'])" />
+                            &nbsp;Anterior-posterior</label>
+                    </div>
+                </div>
+            </div>
+            <!------- Rotator cuff injury------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.rotatorCuffInjury" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false','$scope.todos[{{todo.indexValue}}].supraspinatus = false','$scope.todos[{{todo.indexValue}}].supraspinatusTendinosis = false','$scope.todos[{{todo.indexValue}}].supraspinatusTendinitis = false',
+'$scope.todos[{{todo.indexValue}}].supraspinatusTear = false','$scope.todos[{{todo.indexValue}}].supraspinatusTearPartialComplete = false',
+'$scope.todos[{{todo.indexValue}}].supraspinatusTearPartialCompleteAtrophy = false','$scope.todos[{{todo.indexValue}}].supraspinatusTearPartialCompleteRetracted = false','$scope.todos[{{todo.indexValue}}].infraspinatus = false','$scope.todos[{{todo.indexValue}}].infraspinatusTendinosis = false','$scope.todos[{{todo.indexValue}}].infraspinatusTendinitis = false',
+'$scope.todos[{{todo.indexValue}}].infraspinatusTear = false','$scope.todos[{{todo.indexValue}}].infraspinatusTearPartialComplete = false',
+'$scope.todos[{{todo.indexValue}}].infraspinatusTearPartialCompleteAtrophy = false','$scope.todos[{{todo.indexValue}}].infraspinatusTearPartialCompleteRetracted = false','$scope.todos[{{todo.indexValue}}].subscapularis = false','$scope.todos[{{todo.indexValue}}].subscapularisTendinosis = false','$scope.todos[{{todo.indexValue}}].subscapularisTendinitis = false',
+'$scope.todos[{{todo.indexValue}}].subscapularisTear = false','$scope.todos[{{todo.indexValue}}].subscapularisTearPartialComplete = false',
+'$scope.todos[{{todo.indexValue}}].subscapularisTearPartialCompleteAtrophy = false','$scope.todos[{{todo.indexValue}}].subscapularisTearPartialCompleteRetracted = false','$scope.todos[{{todo.indexValue}}].teresMinor = false','$scope.todos[{{todo.indexValue}}].teresMinorTendinosis = false','$scope.todos[{{todo.indexValue}}].teresMinorTendinitis = false',
+'$scope.todos[{{todo.indexValue}}].teresMinorTear = false', '$scope.todos[{{todo.indexValue}}].teresMinorTearPartialComplete = false',
+'$scope.todos[{{todo.indexValue}}].teresMinorTearPartialCompleteAtrophy = false','$scope.todos[{{todo.indexValue}}].teresMinorTearPartialCompleteRetracted = false'],todo.rotatorCuffInjury,'$scope.todos[{{todo.indexValue}}].rotatorCuffInjury')" />
+                    &nbsp;Rotator cuff injury</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.rotatorCuffInjury" >
+                <!------ Start supraspinatus ------->
+                <div class="col-sm-12">
+                    <div class="margin-left-1">
+                        <label>
+                            <input type="checkbox" ng-model="todo.supraspinatus" value="Supraspinatus" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].supraspinatusTendinosis = false','$scope.todos[{{todo.indexValue}}].supraspinatusTendinitis = false','$scope.todos[{{todo.indexValue}}].supraspinatusTear = false','$scope.todos[{{todo.indexValue}}].supraspinatusTearPartialComplete = false','$scope.todos[{{todo.indexValue}}].supraspinatusTearPartialCompleteAtrophy = false','$scope.todos[{{todo.indexValue}}].supraspinatusTearPartialCompleteRetracted = false'])" />
+                            &nbsp;Supraspinatus</label>
+                    </div>
+                </div>
+                <!------ Start supraspinatus Inner Elements ------->
+                <div class="col-sm-12" ng-if="todo.supraspinatus">
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.supraspinatusTendinosis" value="Tendinosis" />
+                                &nbsp;Tendinosis</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.supraspinatusTendinitis"  value="Tendinitis" />
+                                &nbsp;Tendinitis</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.supraspinatusTear"  value="Tear" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].supraspinatusTearPartialComplete = false','$scope.todos[{{todo.indexValue}}].supraspinatusTearPartialCompleteAtrophy = false','$scope.todos[{{todo.indexValue}}].supraspinatusTearPartialCompleteRetracted = false'])" />
+                                &nbsp;Tear</label>
+                        </div>
+                    </div>
+                    <!------ Start supraspinatusTear ------->
+                    <div class="col-sm-12" ng-if="todo.supraspinatusTear">
+                        <div class="col-sm-12" >
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="radio" ng-model="todo.supraspinatusTearPartialComplete"  value="Partial" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].supraspinatusTearPartialCompleteAtrophy = false','$scope.todos[{{todo.indexValue}}].supraspinatusTearPartialCompleteRetracted = false'])"  />
+                                    &nbsp;Partial</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" >
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="radio" ng-model="todo.supraspinatusTearPartialComplete"  value="Complete" />
+                                    &nbsp;Complete</label>
+                            </div>
+                            <!------ Start supraspinatusTearPartialComplete ------->
+                            <div class="col-sm-12" ng-if="todo.supraspinatusTearPartialComplete == 'Complete'">    
+                                <div class="col-sm-12" >
+                                    <div class="margin-left-3">
+                                        <label>
+                                            <input type="checkbox" ng-model="todo.supraspinatusTearPartialCompleteAtrophy"  value="Atrophy" />
+                                            &nbsp;Atrophy</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12" >
+                                    <div class="margin-left-3">
+                                        <label>
+                                            <input type="checkbox" ng-model="todo.supraspinatusTearPartialCompleteRetracted"  value="Retracted" />
+                                            &nbsp;Retracted</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!------ End supraspinatusTearPartialComplete ------->
+                        </div>
+                    </div>
+                    <!------ End supraspinatusTear ------->
+                </div>
+                <!------ End supraspinatus Inner Elements ------->
+                <!------ End supraspinatus ------->
+                <!------ Start Infraspinatus ------->
+                <div class="col-sm-12">
+                    <div class="margin-left-1">
+                        <label>
+                            <input type="checkbox" ng-model="todo.infraspinatus" value="Infraspinatus" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].infraspinatusTendinosis = false','$scope.todos[{{todo.indexValue}}].infraspinatusTendinitis = false',
+'$scope.todos[{{todo.indexValue}}].infraspinatusTear = false','$scope.todos[{{todo.indexValue}}].infraspinatusTearPartialComplete = false',
+'$scope.todos[{{todo.indexValue}}].infraspinatusTearPartialCompleteAtrophy = false','$scope.todos[{{todo.indexValue}}].infraspinatusTearPartialCompleteRetracted = false'])" />
+                            &nbsp;Infraspinatus</label>
+                    </div>
+                </div>
+                <!------ Start infraspinatus Inner Elements ------->
+                <div class="col-sm-12" ng-if="todo.infraspinatus">
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.infraspinatusTendinosis" value="Tendinosis" />
+                                &nbsp;Tendinosis</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.infraspinatusTendinitis"  value="Tendinitis" />
+                                &nbsp;Tendinitis</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.infraspinatusTear"  value="Tear" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].infraspinatusTearPartialComplete = false','$scope.todos[{{todo.indexValue}}].infraspinatusTearPartialCompleteAtrophy = false','$scope.todos[{{todo.indexValue}}].infraspinatusTearPartialCompleteRetracted = false'])" />
+                                &nbsp;Tear</label>
+                        </div>
+                    </div>
+                    <!------ Start infraspinatusTear ------->
+                    <div class="col-sm-12" ng-if="todo.infraspinatusTear">
+                        <div class="col-sm-12" >
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="radio" ng-model="todo.infraspinatusTearPartialComplete"  value="Partial" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].infraspinatusTearPartialCompleteAtrophy = false','$scope.todos[{{todo.indexValue}}].infraspinatusTearPartialCompleteRetracted = false'])"  />
+                                    &nbsp;Partial</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" >
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="radio" ng-model="todo.infraspinatusTearPartialComplete"  value="Complete" />
+                                    &nbsp;Complete</label>
+                            </div>
+                            <!------ Start infraspinatusTearPartialComplete ------->
+                            <div class="col-sm-12" ng-if="todo.infraspinatusTearPartialComplete == 'Complete'">    
+                                <div class="col-sm-12" >
+                                    <div class="margin-left-3">
+                                        <label>
+                                            <input type="checkbox" ng-model="todo.infraspinatusTearPartialCompleteAtrophy"  value="Atrophy" />
+                                            &nbsp;Atrophy</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12" >
+                                    <div class="margin-left-3">
+                                        <label>
+                                            <input type="checkbox" ng-model="todo.infraspinatusTearPartialCompleteRetracted"  value="Retracted" />
+                                            &nbsp;Retracted</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!------ End supraspinatusTearPartialComplete ------->
+                        </div>
+                    </div>
+                    <!------ End supraspinatusTear ------->
+                </div>
+                <!------ End supraspinatus Inner Elements ------->
+                <!------ End Infraspinatus ------->
+                <!------ Start subscapularis ------->
+                <div class="col-sm-12">
+                    <div class="margin-left-1">
+                        <label>
+                            <input type="checkbox" ng-model="todo.subscapularis" value="Subscapularis" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].subscapularisTendinosis = false','$scope.todos[{{todo.indexValue}}].subscapularisTendinitis = false',
+'$scope.todos[{{todo.indexValue}}].subscapularisTear = false','$scope.todos[{{todo.indexValue}}].subscapularisTearPartialComplete = false',
+'$scope.todos[{{todo.indexValue}}].subscapularisTearPartialCompleteAtrophy = false','$scope.todos[{{todo.indexValue}}].subscapularisTearPartialCompleteRetracted = false'])" />
+                            &nbsp;Subscapularis</label>
+                    </div>
+                </div>
+                <!------ Start subscapularis Inner Elements ------->
+                <div class="col-sm-12" ng-if="todo.subscapularis">
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.subscapularisTendinosis" value="Tendinosis" />
+                                &nbsp;Tendinosis</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.subscapularisTendinitis"  value="Tendinitis" />
+                                &nbsp;Tendinitis</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.subscapularisTear"  value="Tear" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].subscapularisTearPartialComplete = false','$scope.todos[{{todo.indexValue}}].subscapularisTearPartialCompleteAtrophy = false','$scope.todos[{{todo.indexValue}}].subscapularisTearPartialCompleteRetracted = false'])" />
+                                &nbsp;Tear</label>
+                        </div>
+                    </div>
+                    <!------ Start subscapularisTear ------->
+                    <div class="col-sm-12" ng-if="todo.subscapularisTear">
+                        <div class="col-sm-12" >
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="radio" ng-model="todo.subscapularisTearPartialComplete"  value="Partial" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].subscapularisTearPartialCompleteAtrophy = false','$scope.todos[{{todo.indexValue}}].subscapularisTearPartialCompleteRetracted = false'])"  />
+                                    &nbsp;Partial</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" >
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="radio" ng-model="todo.subscapularisTearPartialComplete"  value="Complete" />
+                                    &nbsp;Complete</label>
+                            </div>
+                            <!------ Start subscapularisTearPartialComplete ------->
+                            <div class="col-sm-12" ng-if="todo.subscapularisTearPartialComplete == 'Complete'">    
+                                <div class="col-sm-12" >
+                                    <div class="margin-left-3">
+                                        <label>
+                                            <input type="checkbox" ng-model="todo.subscapularisTearPartialCompleteAtrophy"  value="Atrophy" />
+                                            &nbsp;Atrophy</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12" >
+                                    <div class="margin-left-3">
+                                        <label>
+                                            <input type="checkbox" ng-model="todo.subscapularisTearPartialCompleteRetracted"  value="Retracted" />
+                                            &nbsp;Retracted</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!------ End supraspinatusTearPartialComplete ------->
+                        </div>
+                    </div>
+                    <!------ End supraspinatusTear ------->
+                </div>
+                <!------ End supraspinatus Inner Elements ------->
+                <!------ End subscapularis ------->
+                <!------ Start Infraspinatus ------->
+                <div class="col-sm-12">
+                    <div class="margin-left-1">
+                        <label>
+                            <input type="checkbox" ng-model="todo.teresMinor" value="Teres Minor" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].teresMinorTendinosis = false','$scope.todos[{{todo.indexValue}}].teresMinorTendinitis = false',
+'$scope.todos[{{todo.indexValue}}].teresMinorTear = false','$scope.todos[{{todo.indexValue}}].teresMinorTearPartialComplete = false','$scope.todos[{{todo.indexValue}}].teresMinorTearPartialCompleteAtrophy = false','$scope.todos[{{todo.indexValue}}].teresMinorTearPartialCompleteRetracted = false'])" />
+                            &nbsp;Teres Minor</label>
+                    </div>
+                </div>
+                <!------ Start teresMinor Inner Elements ------->
+                <div class="col-sm-12" ng-if="todo.teresMinor">
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.teresMinorTendinosis" value="Tendinosis" />
+                                &nbsp;Tendinosis</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.teresMinorTendinitis"  value="Tendinitis" />
+                                &nbsp;Tendinitis</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.teresMinorTear"  value="Tear" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].teresMinorTearPartialComplete = false','$scope.todos[{{todo.indexValue}}].teresMinorTearPartialCompleteAtrophy = false','$scope.todos[{{todo.indexValue}}].teresMinorTearPartialCompleteRetracted = false'])" />
+                                &nbsp;Tear</label>
+                        </div>
+                    </div>
+                    <!------ Start subscapularisTear ------->
+                    <div class="col-sm-12" ng-if="todo.teresMinorTear">
+                        <div class="col-sm-12" >
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="radio" ng-model="todo.teresMinorTearPartialComplete"  value="Partial" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].teresMinorTearPartialCompleteAtrophy = false','$scope.todos[{{todo.indexValue}}].teresMinorTearPartialCompleteRetracted = false'])"  />
+                                    &nbsp;Partial</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" >
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="radio" ng-model="todo.teresMinorTearPartialComplete"  value="Complete" />
+                                    &nbsp;Complete</label>
+                            </div>
+                            <!------ Start subscapularisTearPartialComplete ------->
+                            <div class="col-sm-12" ng-if="todo.teresMinorTearPartialComplete == 'Complete'">    
+                                <div class="col-sm-12" >
+                                    <div class="margin-left-3">
+                                        <label>
+                                            <input type="checkbox" ng-model="todo.teresMinorTearPartialCompleteAtrophy"  value="Atrophy" />
+                                            &nbsp;Atrophy</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12" >
+                                    <div class="margin-left-3">
+                                        <label>
+                                            <input type="checkbox" ng-model="todo.teresMinorTearPartialCompleteRetracted"  value="Retracted" />
+                                            &nbsp;Retracted</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!------ End supraspinatusTearPartialComplete ------->
+                        </div>
+                    </div>
+                    <!------ End supraspinatusTear ------->
+                </div>
+                <!------ End supraspinatus Inner Elements ------->
+                <!------ End teresMinor ------->
+            </div>
+            <!------- Subluxation/dislocation ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.subluxationDislocation" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Subluxation/dislocation</label>
+            </div>
+            <!------- Other ------->
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-info btn-xs" ng-click="othertexteditorCondition=true">
+                    Text
+                </button>
+                <div class="clearer"></div>
+                <div ng-hide="othertexteditorCondition"><span dynamic="todo.othertexteditor" class="textEditorTextColor col-sm-10"></span></div>
+                <div class="col-sm-10" ng-if="othertexteditorCondition">
+                    <textarea ui-tinymce ng-model="todo.othertexteditor"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

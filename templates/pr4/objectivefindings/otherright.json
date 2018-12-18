@@ -1,0 +1,163 @@
+{     
+    "formdata" : {
+        "sections" : [     
+			 {
+                "type" : "section", 
+                "visiblity" : true, 
+                "class" : "", 
+                "index" : NumberInt(54), 
+                "sectionid" : "", 
+                "sectiondataid" : "otherright", 
+                "sectionname" : "Other Right"
+            }
+        ], 
+        "forms" : {
+            "otherright" : [
+                {
+                    "id" : NumberInt(0), 
+                    "component" : "TextEditorButton", 
+                    "editable" : true, 
+                    "index" : NumberInt(0), 
+                    "label" : "Text Editor Button", 
+                    "description" : "", 
+                    "placeholder" : "", 
+                    "options" : [
+
+                    ], 
+                    "required" : false, 
+                    "inline" : false, 
+                    "inputclass" : "", 
+                    "condition" : "", 
+                    "maxlength" : "", 
+                    "validation" : "/.*/", 
+                    "uniqueid" : "otherTextA", 
+                    "disablecondition" : "", 
+                    "validatorcondition" : "", 
+                    "validatorset" : "", 
+                    "blurvalidatorcondition" : "", 
+                    "blurvalidatorset" : "", 
+                    "watchvalidatorcondition" : "", 
+                    "watchvalidatorset" : "", 
+                    "isblur" : false, 
+                    "iswatch" : false, 
+                    "labelclass" : "", 
+                    "onkeypress" : "", 
+                    "textareatext" : "", 
+                    "ispopup" : "", 
+                    "checkboxclass" : "", 
+                    "popuplable" : "", 
+                    "uimasking" : "", 
+                    "futuredate" : ""
+                }
+            ]
+        }, 
+        "data" : {
+            "neck" : {
+
+            }, 
+            "midback" : {
+
+            }, 
+            "wristleft" : {
+
+            }, 
+            "neckleft" : [
+
+            ], 
+            "upperextremityleft" : {
+
+            }, 
+            "trunkleft" : {
+
+            }, 
+            "upperextremityright" : {
+
+            }, 
+            "trunkright" : {
+
+            }, 
+            "groingenitalialeft" : {
+
+            }, 
+            "cervical" : {
+
+            }, 
+            "thoracic" : {
+
+            }, 
+            "lumbar" : {
+
+            }, 
+            "neckright" : {
+
+            }, 
+            "trunk" : {
+
+            }, 
+            "groingenitaliaright" : {
+
+            }, 
+            "groingenitalia" : {
+
+            }, 
+            "skinother" : {
+
+            }, 
+            "skinotherleft" : {
+
+            }, 
+            "skinotherright" : {
+
+            }, 
+            "thumbright" : {
+
+            }, 
+            "upperextremityother" : {
+
+            }, 
+            "upperextremityotherleft" : {
+
+            }, 
+            "upperextremityotherright" : {
+
+            }, 
+            "lowerextremityother" : {
+
+            }, 
+            "lowerextremityotherleft" : {
+
+            }, 
+            "lowerextremityotherright" : {
+
+            }, 
+            "other" : {
+
+            }, 
+            "otherleft" : {
+
+            }, 
+            "otherright" : {
+
+            }, 
+            "shoulderleft" : {
+
+            }, 
+            "elbowleft" : {
+
+            }, 
+            "lowerextremityright" : {
+
+            }, 
+            "lowerextremityleft" : {
+
+            }, 
+            "toeleft" : {
+
+            }
+        }
+    }, 
+    "formname" : "PR-4 Objective Findings Version 1", 
+    "formtype" : "pr4", 
+    "status" : "draft", 
+    "type" : "template"
+}

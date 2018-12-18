@@ -1,0 +1,632 @@
+<div ng-include="" src="strTemplate" class="ng-scope"><div class="reportStandard ng-scope" id="rptHtmlData" style="line-height: 20px;">
+	<div ng-init="loader_handler(true)">
+    </div>
+    <!-- ngIf: reportisLoad -->
+    <div ng-show="!reportisLoad" class="">
+	
+    <!--Include Header and Cover html-->
+    <!-- ngInclude: 'partials/dfr/v4/a/header-cover.html' --><div ng-include="'partials/dfr/v4/a/header-cover.html'" class="ng-scope">	<div class="ng-scope">
+		<!-- <div id="docReportHeading" style="font-size: 14px; text-align: center; display: none;">
+				<span ng-if="report.data['patientcomplaints'].cliniclocationobj.location">{{report.data['patientcomplaints'].cliniclocationobj.location}},</span>
+				<span ng-if="report.data['patientcomplaints'].cliniclocationobj.street">{{report.data['patientcomplaints'].cliniclocationobj.street}},</span>
+				<span ng-if="report.data['patientcomplaints'].cliniclocationobj.city">{{report.data['patientcomplaints'].cliniclocationobj.city}},</span>
+				<span ng-if="report.data['patientcomplaints'].cliniclocationobj.zipcode">{{report.data['patientcomplaints'].cliniclocationobj.zipcode}},</span>
+				<span ng-if="report.data['patientcomplaints'].cliniclocationobj.state">{{report.data['patientcomplaints'].cliniclocationobj.state}},</span>
+				<span ng-if="report.data['patientcomplaints'].cliniclocationobj.country">{{report.data['patientcomplaints'].cliniclocationobj.country}}</span>
+				<div>&nbsp;</div>
+		</div> -->		
+        <div style="font-size: 10px; font-weight: bold; text-align: center;">STATE OF CALIFORNIA</div>
+        <div style="font-size: 14px; text-align: center;" class="clearer"><strong>DOCTOR'S FIRST REPORT OF OCCUPATIONAL INJURY OR ILLNESS </strong></div>
+    </div>
+    <table border="1" cellpadding="2" cellspacing="0" style="font-size: 11px" class="ng-scope">
+        <tbody>
+            <tr>
+                <th colspan="3" style="font-weight: bold; font-size: 10px; text-align: left;">Within 5 days of your initial examination, for every occupational injury or illness, send two copies of this report to the employer's workers' compensation insurance carrier or the insured employer. Failure to file a timely doctor's report
+ may result in assessment of a civil penalty. In the case of diagnosed or suspected pesticide poisoning, send a copy of the report to Division of Labor Statistics and Research, P.O. Box 420603, San Francisco, CA 94142-0603, and notify your local health officer by telephone within 24 hours.</th>
+            </tr>
+            <tr>
+                <td style="width: 80%; padding-top: 2px; vertical-align: top; font-size: 11px;" colspan="2">1.<span style="font-size: 11px;"><strong>&nbsp;INSURER NAME AND ADDRESS:&nbsp;</strong></span><!-- ngIf: report.data['bginfo'].insurance_claimsadministrator --><!-- ngIf: report.data['bginfo'].insuranceaddressline1 --><!-- ngIf: report.data['bginfo'].insuranceaddressline2 --><!-- ngIf: report.data['bginfo'].insurancecity --><!-- ngIf: report.data['bginfo'].insurancestate --><!-- ngIf: report.data['bginfo'].insurancezipcode --><!-- ngIf: report.data['bginfo'].insurance_claimsnumber --><!-- ngIf: report.data['bginfo'].insurance_claimsadministrator || report.data['bginfo'].insuranceaddressline1 || report.data['bginfo'].insuranceaddressline2 || report.data['bginfo'].insurancecity || report.data['bginfo'].insurancestate || report.data['bginfo'].insurancezipcode || report.data['bginfo'].insurance_claimsnumber -->
+					<!-- ngIf: report.data['bginfo'].claimsadjuster_firstname || report.data['bginfo'].claimsadjuster_lastname --><!-- ngIf: report.data['bginfo'].claimsadjuster_telephoneno --><!-- ngIf: report.data['bginfo'].claimsadjuster_email --><!-- ngIf: report.data['bginfo'].claimsadjuster_fax -->
+				</td>
+                <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 2px;">
+                    <strong>PLEASE DO NOT USE THIS COLUMN</strong>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="width: 80%; padding-top: 2px; padding-bottom: 0px; font-size: 11px;" class="ng-binding">2. <span style="font-size: 11px;"><strong>EMPLOYER NAME:</strong></span>&nbsp;h<strong><br>
+                </strong></td>
+                <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 2px; padding-bottom: 5px;"><strong>Case No.</strong></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding-top: 0px;">
+                    <table style="width: 100%; font-size: 11px;" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td class="ng-binding">3. Address:&nbsp;</td>
+                                <td class="ng-binding">No. and Street: </td>
+                                <td class="ng-binding">City: &nbsp;<!-- ngIf: report.data['bginfo'].emp_city && report.data['bginfo'].emp_state --></td>
+                                <td class="ng-binding">Zip: &nbsp;</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td border="1" style="width: 20%; text-align: center; font-size: 9px; padding-top: 0px; padding-bottom: 5px;"><strong>Industry</strong></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding-top: 0px; font-size: 11px;">4. Nature of business (e.g., food manufacturing, building construction, retailer of women's clothes.): &nbsp;<!-- ngIf: report.data['bginfo'].natureofbusiness != 'Other' --><span ng-if="report.data['bginfo'].natureofbusiness != 'Other'" class="ng-scope ng-binding"></span><!-- end ngIf: report.data['bginfo'].natureofbusiness != 'Other' --> <!-- ngIf: report.data['bginfo'].natureofbusiness == 'Other' --></td>
+                <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 0px; padding-bottom: 5px;"><strong>Country</strong></td>
+            </tr>
+            <tr border="0">
+                <td border="0" style="padding-top: 0px; padding-bottom: 0px;">
+                    <table style="width: 100%; font-size: 11px;" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td style="border-right: solid 1px gray; width: 75%; padding-top: 2px; padding-bottom: 0px;" class="ng-binding">5. <strong>PATIENT NAME</strong> (first name, middle initial, last name): samantha&nbsp;&nbsp;prabhu</td>
+                                <td style="vertical-align: top; padding-top: 2px; padding-bottom: 0px;" class="ng-binding">&nbsp;6. Sex: Female</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td style="padding-top: 0px; padding-bottom: 0px; vertical-align: top;"><span style="padding-top: 2px;" class="ng-binding">7. Date of Birth: 04/14/1999</span></td>
+                <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 0px; padding-bottom: 0px; vertical-align: top;"><span style="padding-top: 2px;"><strong>Age</strong></span></td>
+            </tr>
+            <tr>
+                <td colspan="1" style="vertical-align: top; padding-top: 0px;">
+                    <table style="width: 100%; font-size: 11px;" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr style="padding-top: 2px;">
+                                <td class="ng-binding">8. Address: s&nbsp;&nbsp;</td>
+                                <td class="ng-binding">No. and Street: &nbsp;</td>
+                                <td class="ng-binding">City:&nbsp;s</td>
+                                <td class="vl ng-binding" style="">Zip:&nbsp;</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td style="padding-top: 0px;">9. Telephone number: <!-- ngIf: report.data['bginfo'].homephone --><!-- ngIf: report.data['bginfo'].cellphone && !report.data['bginfo'].homephone --><!-- ngIf: report.data['bginfo'].workphone && !report.data['bginfo'].homephone && !report.data['bginfo'].cellphone --> <!-- ngIf: report.data['bginfo'].extension && !report.data['bginfo'].homephone && !report.data['bginfo'].cellphone --></td>
+                <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 0px; padding-bottom: 5px; vertical-align: top;"><strong>Hazard</strong></td>
+            </tr>
+            <tr>
+                <td class="vl ng-binding" style="width: 65%; padding-top: 0px;">10. Occupation (Specific job title):&nbsp;Construction </td>
+                <td style="padding-top: 0px;" class="ng-binding">11. Social Security Number: 222-22-2222</td>
+                <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 0px; padding-bottom: 5px;"><strong>Disease</strong></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding-top: 0px;">12. Injured at: <!-- ngIf: report.data['bginfo'].location_address1 --><!-- ngIf: report.data['bginfo'].location_address2 --><!-- ngIf: report.data['bginfo'].location_city --><!-- ngIf: report.data['bginfo'].location_state --><!-- ngIf: report.data['bginfo'].location_zipcode --></td>
+                <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 0px; padding-bottom: 5px;"><strong>Hospitalization</strong></td>
+            </tr>
+            <tr>
+                <td class="vl ng-binding" style="padding-top: 0px;">13. Date and hour of injury or onset of illness: 06/01/2017<!-- ngIf: report.data['bginfo'].timeofinjury --><span ng-if="report.data['bginfo'].timeofinjury" class="ng-scope">, </span><!-- end ngIf: report.data['bginfo'].timeofinjury --><!-- ngIf: report.data['bginfo'].timeofinjury --><span ng-if="report.data['bginfo'].timeofinjury" ng-bind="(report.data['bginfo'].timeofinjury | date:'h:mma').replace('PM',' p.m.').replace('AM',' a.m.')" class="ng-scope ng-binding">12:01 p.m.</span><!-- end ngIf: report.data['bginfo'].timeofinjury --></td>
+                <td style="width: 35%; height: 31px; padding-top: 0px;" class="ng-binding">14. Date last worked:&nbsp;</td>
+                <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 0px; padding-bottom: 5px; vertical-align: top;">
+                    <strong>Occupation</strong><strong>&nbsp;</strong>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-top: 0px;">15. Date and hour of first examination or treatment:&nbsp;
+					 <!-- ngIf: report.data['selectinjuries'].evaluated_prior=='Yes' -->
+                    <!-- ngIf: report.data['selectinjuries'].evaluated_prior=='No' -->
+                </td>
+                <td style="width: 35%; padding-top: 0px;">
+                    <p class="ng-binding">16. Have you (or your office) previously treated patient? </p>
+                </td>
+                <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 0px; padding-bottom: 5px; vertical-align: top;"><strong>Return Date/Code</strong></td>
+            </tr>
+            <tr>
+                <td colspan="3"><strong>Patient please complete this portion, if able to do so. </strong><span>Otherwise, doctor please complete immediately, inability or failure of a patient to complete this portion <span>shall not affect his/her rights to workers' compensation under the California Labor Code.</span> </span>
+                    <br>
+                    17. <strong>DESCRIBE HOW THE ACCIDENT OR EXPOSURE HAPPENED. </strong>(Give specific object, machinery or chemical. Use reverse side if more space is required.) <!-- ngIf: report.data['patientcomplaints'].textareaforpatientwords --></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="ng-binding">18. <strong>SUBJECTIVE COMPLAINTS </strong>(Describe fully. Use reverse side if more space is required.) Ms. prabhu and I discuss her current complaints. (See next page)</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding-top: 0px;">
+                    <table style="width: 100%; padding-top: 0px; font-size: 11px;">
+                        <tbody>
+                            <tr>
+                                <td style="padding-top: 0px;">19. <strong>OBJECTIVE FINDINGS </strong>(Use reverse side if more space is required.)</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top: 0px;"><!-- ngIf: objectivefindingsCoverpage() -->A. Physical examination: <!-- ngIf: ofValue --></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top: 0px;" class="ng-binding">B. X-ray and laboratory results (State if none or pending.) <!-- ngIf: DTSValue --> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding-top: 0px;" class="ng-binding">20. <strong>DIAGNOSIS </strong>(if occupational illness specify etiologic agent and duration of exposure.) Chemical/toxic compounds are NOT involved.
+ (See next page)
+ 
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="3" class="ng-binding">21. Are your findings and diagnosis consistent with patient's account of injury or onset of illness?  <!-- ngIf: report.data['decisionmaking'].mdmq1optYesText -->				
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">22. Is there any other current condition that will impede or delay patient's recovery?&nbsp; 
+					<!-- ngIf: report.data['decisionmaking'].mdmq5 == 'No' -->
+                    <!-- ngIf: report.data['decisionmaking'].mdmq5 == 'Yes' -->
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">23. <strong>TREATMENT RENDERED</strong> (Use reverse side if more space is required.)
+					<!-- ngIf: treatmentCoverPage() -->
+                    <!-- ngIf: NoCount -->
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" class="ng-binding">24. If further treatment required, specify treatment plan/estimated duration. 
+					<!-- ngIf: report.data['decisionmaking'].mdmq4 == 'No' -->
+                    <!-- ngIf: report.data['decisionmaking'].mdmq4 == 'Yes' && report.data['decisionmaking'].mdmq4yesopt1 == '' -->
+                    <!-- ngIf: report.data['decisionmaking'].mdmq4 == 'Yes' && report.data['decisionmaking'].mdmq4yesopt1.length>0 && report.data['decisionmaking'].mdmq4yesopt1 != 'Other' -->
+                    <!-- ngIf: report.data['decisionmaking'].mdmq4 == 'Yes' && report.data['decisionmaking'].mdmq4yesopt1.length>0 && report.data['decisionmaking'].mdmq4yesopt1 == 'Other' --></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <table style="width: 100%; font-size: 11px;">
+                        <tbody>
+                            <tr>
+                                <td>25. If hospitalized as inpatient, give hospital name and location.
+									<!-- ngIf: report.data['decisionmaking'].mdmq3== 'No' -->
+                                    <!-- ngIf: report.data['decisionmaking'].mdHospitalLocation -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" class="ng-binding">26. WORK STATUS -- Is patient able to perform usual work? 
+ 
+					<!-- ngIf: report.data['workrestriction'].WRpatientReturnOptions&nbsp; == 'Yes' -->
+                    <!-- ngIf: report.data['workrestriction'].WRpatientReturnOptions &nbsp;== 'Yes with modifications' -->
+                    <!-- ngIf: report.data['workrestriction'].WRpatientReturnOptions == 'No' -->
+                    <!-- ngIf: workRestrictionCoverPage() --><span ng-if="workRestrictionCoverPage()" class="ng-scope">(See next page)</span><!-- end ngIf: workRestrictionCoverPage() -->
+                    <div class="pull-right">
+                        <!-- ngIf: report.data['workrestriction'].WRindicatedRadio == 'Yes' -->
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <table style="width: 100%; font-size: 11px; vertical-align:top;">
+                        <tbody>
+                            <tr style=" vertical-align:top;">
+                                <td style="width: 50%;">Doctor's Signature:&nbsp;
+									<!-- ngIf: report.data.signDoctor.level4!== undefined --><span ng-if="report.data.signDoctor.level4!== undefined" class="ng-scope ng-binding">
+											 e-signed by        shridhar gadhave<!-- ngIf: report.data.signDoctor.level4.profession --><span ng-if="report.data.signDoctor.level4.profession" class="ng-scope">, <span ng-bind-html="getProfession(report.data.signDoctor.level4.profession,report.data.signDoctor.level4.otherprofessiontext)" class="ng-binding">LAC</span></span><!-- end ngIf: report.data.signDoctor.level4.profession -->&nbsp;12:43 PM June 29, 2017 
+									</span><!-- end ngIf: report.data.signDoctor.level4!== undefined -->
+									<!--<span ng-if="report.data.signDoctor.level3!== undefined">
+											   e-signed by      {{report.data.signDoctor.level3.firstname}} {{report.data.signDoctor.level3.lastname}}<span ng-if="report.data.signDoctor.level3.profession">, <span ng-bind-html="getProfession(report.data.signDoctor.level3.profession,report.data.signDoctor.level3.otherprofessiontext)"></span></span>
+									</span>-->									
+								</td>
+                                <td class="ng-binding">CA License Number: s222222222</td>
+                            </tr>
+                            <tr style=" vertical-align:top;">
+                                <td class="ng-binding">Doctor Name and Degree (please type): shridhar gadhave<!-- ngIf: report.data.signDoctor.level4.profession --><span ng-if="report.data.signDoctor.level4.profession" class="ng-scope">, <span ng-bind-html="getProfession(report.data.signDoctor.level4.profession, report.data.signDoctor.level4.otherprofessiontext)" class="ng-binding">LAC</span></span><!-- end ngIf: report.data.signDoctor.level4.profession --></td>
+                                <td class="ng-binding">IRS Number:&nbsp;900000000000001</td>
+                            </tr>
+                            <tr style=" vertical-align:top;">
+                                <td class="ng-binding">Address: loc1,  Stree1,  City1,  2342324,  CA,  US</td>
+                                <!--<td>Telephone Number: {{report.data['selectinjuries']['phonenumber'] | phonenumberFormat}}</td>-->
+								<td class="ng-binding">Telephone Number: (544) 444-4441&nbsp;<!-- ngIf: report.data['patientcomplaints'].subjectivecomplaints_extension && report.data['patientcomplaints'].subjectivecomplaints_contactphonenumber --><span ng-if="report.data['patientcomplaints'].subjectivecomplaints_extension &amp;&amp; report.data['patientcomplaints'].subjectivecomplaints_contactphonenumber" class="ng-scope ng-binding">ext. 4444441</span><!-- end ngIf: report.data['patientcomplaints'].subjectivecomplaints_extension && report.data['patientcomplaints'].subjectivecomplaints_contactphonenumber --></td>		
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p style="font-size: 9px;" class="ng-scope">
+        <strong>FORM 5021 (Rev. 4)
+		<br>
+            1992</strong><strong>&nbsp;</strong>
+    </p>
+    <table style="width: 90%; font-size: 11px;" align="center" class="ng-scope">
+        <tbody>
+            <tr style="background-color: black; color: #ffffff;">
+                <td style="text-align: center;">Any person who makes or causes to be made any knowingly false or fraudulent material statement or material representation<br>
+                    for the purpose of obtaining or denying workers' compensation benefits or payments is guilty of a felony.</td>
+            </tr>
+        </tbody>
+    </table></div>
+    <!--Include Header and Cover html-->
+
+    <p>&nbsp;</p>
+    
+    <!--Include Basic info html-->
+    <!-- ngInclude: 'partials/dfr/v4/a/basic-info.html' --><div ng-include="'partials/dfr/v4/a/basic-info.html'" class="ng-scope">	<div class="ng-scope">		
+        <div class="DFRReportHeadingFontSize"><strong>Doctor's First Report of Occupational Injury or Illness</strong></div>
+        <div><strong>Section 1.</strong>&nbsp;Insurance name and address: <!-- ngIf: report.data['bginfo'].insurance_claimsadministrator --><!-- ngIf: report.data['bginfo'].insuranceaddressline1 --><!-- ngIf: report.data['bginfo'].insuranceaddressline2 --><!-- ngIf: report.data['bginfo'].insurancecity --><!-- ngIf: report.data['bginfo'].insurancestate --><!-- ngIf: report.data['bginfo'].insurancezipcode --><!-- ngIf: report.data['bginfo'].insurance_claimsadministrator || report.data['bginfo'].insuranceaddressline1 || report.data['bginfo'].insuranceaddressline2 || report.data['bginfo'].insurancecity || report.data['bginfo'].insurancestate || report.data['bginfo'].insurancezipcode || report.data['bginfo'].insurance_claimsnumber -->
+					<!-- ngIf: report.data['bginfo'].claimsadjuster_firstname || report.data['bginfo'].claimsadjuster_lastname --><!-- ngIf: report.data['bginfo'].claimsadjuster_telephoneno --><!-- ngIf: report.data['bginfo'].claimsadjuster_email --><!-- ngIf: report.data['bginfo'].claimsadjuster_fax --></div>
+        <div class="ng-binding"><strong>Section 2.</strong>&nbsp;Employer Name: h</div>
+        <div class="ng-binding"><strong>Section 3.</strong>&nbsp;Employer Address: <!-- ngIf: report.data.bginfo.emp_address2 --><!-- ngIf: report.data.bginfo.emp_city --><!-- ngIf: report.data.bginfo.emp_state --><!-- ngIf: report.data.bginfo.emp_zipcode --></div>
+        <div><strong>Section 4.</strong>&nbsp;Nature of business: <!-- ngIf: report.data['bginfo'].natureofbusiness != 'Other' --><span ng-if="report.data['bginfo'].natureofbusiness != 'Other'" class="ng-scope ng-binding"></span><!-- end ngIf: report.data['bginfo'].natureofbusiness != 'Other' --> <!-- ngIf: report.data['bginfo'].natureofbusiness == 'Other' --></div>
+        <div class="ng-binding"><strong>Section 5.</strong>&nbsp;Patient Name: samantha  prabhu</div>
+        <div class="ng-binding"><strong>Section 6.</strong>&nbsp;Sex: Female</div>
+        <div class="ng-binding"><strong>Section 7.</strong>&nbsp;Date of Birth: 04/14/1999</div>
+        <div><strong>Section 8.</strong>&nbsp;Patient Address: <!-- ngIf: report.data.bginfo.addressline1 --><span ng-if="report.data.bginfo.addressline1" class="ng-scope ng-binding">s</span><!-- end ngIf: report.data.bginfo.addressline1 --><!-- ngIf: report.data.bginfo.addressline2 --><!-- ngIf: report.data.bginfo.city --><span ng-if="report.data.bginfo.city" class="ng-scope ng-binding">, s</span><!-- end ngIf: report.data.bginfo.city --><!-- ngIf: report.data.bginfo.state --><span ng-if="report.data.bginfo.state" class="ng-scope ng-binding">, CA</span><!-- end ngIf: report.data.bginfo.state --><!-- ngIf: report.data.bginfo.zipcode --></div>
+        <div><strong>Section 9.</strong>&nbsp;Patient Telephone number: <!-- ngIf: report.data['bginfo'].homephone --><!-- ngIf: report.data['bginfo'].cellphone --><!-- ngIf: report.data['bginfo'].workphone --></div>
+        <div class="ng-binding"><strong>Section 10.</strong>&nbsp;Occupation: Construction </div>
+        <div class="ng-binding"><strong>Section 11.</strong>&nbsp;Social Security Number: 222-22-2222</div>
+        <div><strong>Section 12.</strong>&nbsp;Injured at: <!-- ngIf: report.data['bginfo'].location_address1 --><!-- ngIf: report.data['bginfo'].location_address2 --><!-- ngIf: report.data['bginfo'].location_city --><!-- ngIf: report.data['bginfo'].location_state --><!-- ngIf: report.data['bginfo'].location_zipcode --></div>
+        <div class="ng-binding"><strong>Section 13.</strong>&nbsp;Date and hour of injury or onset of illness: 06/01/2017<!-- ngIf: report.data['bginfo'].timeofinjury --><span ng-if="report.data['bginfo'].timeofinjury" class="ng-scope">, </span><!-- end ngIf: report.data['bginfo'].timeofinjury --><!-- ngIf: report.data['bginfo'].timeofinjury --><span ng-if="report.data['bginfo'].timeofinjury" ng-bind="(report.data['bginfo'].timeofinjury | date:'h:mma').replace('PM',' p.m.').replace('AM',' a.m.')" class="ng-scope ng-binding">12:01 p.m.</span><!-- end ngIf: report.data['bginfo'].timeofinjury --></div>
+        <div class="ng-binding"><strong>Section 14.</strong>&nbsp;Date last worked: </div>
+        <div>
+            <strong>Section 15.</strong>&nbsp;Date and hour of first examination or treatment: <!-- ngIf: report.data['selectinjuries'].evaluated_prior=='Yes' -->
+            <!-- ngIf: report.data['selectinjuries'].evaluated_prior=='No' -->
+        </div>
+        <div class="ng-binding"><strong>Section 16.</strong>&nbsp;Have you (or your office) previously treated patient? </div>
+        <div><strong>Section 17.</strong>&nbsp;Describe how the accident or exposure happened: <!-- ngIf: report.data['patientcomplaints'].textareaforpatientwords --></div>
+    </div></div>    
+    <!--Include Basic info html-->
+    <br>
+
+    <!--Include History of injury html-->
+    <!-- ngInclude: 'partials/dfr/v4/a/history-of-injury.html' --><div ng-include="'partials/dfr/v4/a/history-of-injury.html'" class="ng-scope">	<div class="DFRReportHeadingFontSize ng-scope"><strong>History of Injury/Illness:</strong></div>
+    <div class="divMain ng-scope">
+        <div class="ng-binding">Ms.&nbsp;samantha&nbsp;prabhu&nbsp;is <!-- ngIf: report.data['selectinjuries'].employeehandedness --><span ng-if="report.data['selectinjuries'].employeehandedness" class="ng-scope ng-binding">a left-handed</span><!-- end ngIf: report.data['selectinjuries'].employeehandedness --><!-- ngIf: !report.data['selectinjuries'].employeehandedness --> 18 year-old female&nbsp;who worked at h&nbsp;at the time of her injury.</div>
+        <div class="ng-binding">Her industrial injury occurred on&nbsp;06/01/2017.</div>
+        <!-- ngIf: report.data['bginfo'].durationofemployement && report.data['bginfo'].durationtype -->
+
+        <!--Where did the injury occur?-->
+        <!-- ngIf: report.data['selectinjuries'].injuryplace -->
+        <!--Where did the injury occur?-->
+
+
+        <!-- ngRepeat: item in report.data['selectinjuries'].sibodypart --><div ng-repeat="item in report.data['selectinjuries'].sibodypart" class="ng-scope">
+            <!-- ngIf: item.bdmechanism!='Other' --><div ng-if="item.bdmechanism!='Other'" class="ng-scope ng-binding">
+                Her  cervical spine was injured due to lifting.
+            </div><!-- end ngIf: item.bdmechanism!='Other' -->
+            <!-- ngIf: item.bdmechanism=='Other' -->
+        </div><!-- end ngRepeat: item in report.data['selectinjuries'].sibodypart -->
+        <div ng-bind-html="appendPeriod(report.data['selectinjuries'].historyreviewtext)" class="ng-binding"></div>
+
+        <!--Were there witnesses to the injury?-->
+        <!-- ngIf: report.data['selectinjuries'].isinjurywitnes -->
+        <!--Were there witnesses to the injury?-->
+
+        <!-- Was first aid provided on site? -->
+        <!-- ngIf: report.data['selectinjuries'].firstaid -->
+        <!-- Was first aid provided on site? -->
+
+        <!--Was the injury reported to the employer?-->
+        <!-- ngIf: report.data['selectinjuries'].reportedemployer=='No' -->
+        <!-- ngIf: report.data['selectinjuries'].reportedemployer=='Yes' && report.data['selectinjuries'].reportedemploye.length == 0 -->
+        <!-- ngIf: report.data['selectinjuries'].reportedemployer=='Yes' && report.data['selectinjuries'].reportedemploye.length > 0 -->
+        <!-- ngIf: report.data['selectinjuries'].reportedEmployerOtherText -->
+        <!--Was the injury reported to the employer?-->
+
+        <!--Where did the patient go after the injury occurred?-->
+        <!-- ngIf: report.data['selectinjuries'].afterworking -->
+        <!--Where did the patient go after the injury occurred?-->
+        <!-- ngIf: report.data['selectinjuries'].siadditional=='Yes' -->
+
+        <!-- ngIf: report.data['patientcomplaints'].interpreterused == 'Yes' -->
+    </div></div>    
+    <!--Include History of injury html-->
+
+    <br>
+    
+    <!--Include Subjective Complaints html-->
+    <!-- ngInclude: 'partials/dfr/v4/a/subjective-complaints.html' --><div ng-include="'partials/dfr/v4/a/subjective-complaints.html'" class="ng-scope"><div class="ng-scope"><strong>Section 18. </strong><span class="DFRReportHeadingFontSize"><strong>Subjective Complaints</strong></span></div>
+<!-- ngIf: report.data['patientcomplaints'].disableradio!=1 && report.data['patientcomplaints'].disableradio!='No' --><div ng-if="report.data['patientcomplaints'].disableradio!=1 &amp;&amp; report.data['patientcomplaints'].disableradio!='No'" class="divMain ng-scope">
+    <div class="ng-binding">Ms. prabhu and I discuss her current complaints.</div>
+</div><!-- end ngIf: report.data['patientcomplaints'].disableradio!=1 && report.data['patientcomplaints'].disableradio!='No' -->
+
+<!-- Start Patient Complaints body part-->
+<!-- ngRepeat: item in report.data['selectinjuries'].concatedbodypart | orderBy : 'sequence' | lowercase --><div ng-repeat="item in report.data['selectinjuries'].concatedbodypart | orderBy : 'sequence' | lowercase " class="divMain ng-scope">
+    <!-- ngIf: checkExist(item,'patientcomplaints') && (report.data['patientcomplaints' + item.concateId].disableradio!=1 && report.data['patientcomplaints' + item.concateId].disableradio!='No') -->
+</div><!-- end ngRepeat: item in report.data['selectinjuries'].concatedbodypart | orderBy : 'sequence' | lowercase -->
+<!-- End Patient Complaints body part-->
+</div>  
+    <!--Include Subjective Complaints html-->
+
+    <!--Include ADL html-->
+    <!-- ngInclude: 'partials/dfr/v4/a/adl.html' --><div ng-include="'partials/dfr/v4/a/adl.html'" class="ng-scope">	<!-- Start ADL Section-->
+	<!-- ngIf: report.data['ActivitiesofDailyLiving'].disableradio!=1 && report.data['ActivitiesofDailyLiving'].disableradio!='No' --><div class="divMain ng-scope" ng-if="report.data['ActivitiesofDailyLiving'].disableradio!=1 &amp;&amp; report.data['ActivitiesofDailyLiving'].disableradio!='No'">
+    <!-- ngIf: report.data['ActivitiesofDailyLiving'].ADLrootbtn=='Normal' || report.data['ActivitiesofDailyLiving'].ADLrootbtn=='Comment' -->
+</div><!-- end ngIf: report.data['ActivitiesofDailyLiving'].disableradio!=1 && report.data['ActivitiesofDailyLiving'].disableradio!='No' -->
+    <!-- End ADL Section--></div>  
+    <!--Include ADL html-->
+
+    <!--Include Medical History html-->
+    <!-- ngInclude: 'partials/dfr/v4/a/medical-history.html' --><div ng-include="'partials/dfr/v4/a/medical-history.html'" class="ng-scope">	<!-- Start Relevant Medical History Section-->
+    <!-- ngIf: checkOnlySectionExist('relevantmedicalsocialhistory') || checkWholeBDPartExist('relevantmedicalsocialhistory') -->
+    <!-- End Relevant Medical History Section--></div>  
+    <!--Include Medical History html-->
+    
+    <!--Include Social History html-->
+    <!-- ngInclude: 'partials/dfr/v4/a/social-history.html' --><div ng-include="'partials/dfr/v4/a/social-history.html'" class="ng-scope">	<!-- Start Social History Section-->
+    <!-- ngIf: checkOnlySectionExist('sh') && (report.data['sh'].disableradio!=1 && report.data['sh'].disableradio!='No') -->
+
+    <div class="divMain ng-scope">
+        <!-- ngIf: report.data.sh.SHhistHikingText -->
+
+        <!-- ngIf: report.data.sh.SHhistFishing[0]=='Fishing' -->
+        <!-- ngIf: report.data.sh.SHhistFishingText -->
+
+        <!-- ngIf: report.data.sh.SHhistGardening[0]=='Gardening' -->
+        <!-- ngIf: report.data.sh.SHhistGardeningText -->
+        <!-- ngIf: report.data.sh.SHhistGardeningTextarea -->
+
+
+        <!-- ngIf: report.data.sh.SHprotectiveClothing=='No' -->
+        <!-- ngIf: report.data.sh.SHprotectiveClothing=='Yes' -->
+
+        <!-- ngIf: report.data.sh.SHsunBlock=='No' -->
+        <!-- ngIf: report.data.sh.SHsunBlock=='Yes' -->
+
+
+        <!-- ngIf: report.data.sh.SHoccupSwimming[0]=='Swimming instructor' -->
+        <!-- ngIf: report.data.sh.SHoccupSwimmingText -->
+
+        <!-- ngIf: report.data.sh.SHoccupSnow[0]=='Snow sport instructor' -->
+        <!-- ngIf: report.data.sh.SHoccupWaterText -->
+
+        <!-- ngIf: report.data.sh.SHoccupLaw[0]=='Law enforcement/Peace officer' -->
+        <!-- ngIf: report.data.sh.SHoccupLawText -->
+
+        <!-- ngIf: report.data.sh.SHoccupFire[0]=='Firefighter' -->
+        <!-- ngIf: report.data.sh.SHoccupFireText -->
+
+        <!-- ngIf: report.data.sh.SHoccupPark[0]=='Park or Forest Ranger' -->
+        <!-- ngIf: report.data.sh.SHoccupParkText -->
+
+        <!-- ngIf: report.data.sh.SHoccupConstruction[0]=='Construction' -->
+        <!-- ngIf: report.data.sh.SHoccupConstructionText -->
+
+        <!-- ngIf: report.data.sh.SHoccupLandscaping[0]=='Landscaping' -->
+        <!-- ngIf: report.data.sh.SHoccupLandscapingText -->
+
+        <!-- ngIf: report.data.sh.SHoccupSeaman[0]=='Seaman' -->
+        <!-- ngIf: report.data.sh.SHoccupSeamanText -->
+
+        <!-- ngIf: report.data.sh.SHoccupAquaculture[0]=='Aquaculture' -->
+        <!-- ngIf: report.data.sh.SHoccupAquacultureText -->
+
+        <!-- ngIf: report.data.sh.SHoccupAgriculture[0]=='Agriculture' -->
+
+        <!-- ngIf: report.data.sh.SHoccupRetail[0]=='Retail tour guide' -->
+        <!-- ngIf: report.data.sh.SHoccupAgricultureText -->
+        <!-- ngIf: report.data.sh.chkHobbiesNone=='None' -->
+        <!-- ngIf: report.data.sh.chkHobbies.length>0 -->
+        <span class="spanInline ng-binding" ng-bind-html="appendPeriod(report.data.sh.chkHobbiesOtherTextarea)"></span>
+
+    </div>
+
+    <!-- End Social History Section--></div>  
+    <!--Include Social History html-->    
+
+    <!--Include Objective Findings html-->
+    <!-- ngInclude: 'partials/dfr/v4/a/objective-findings.html' --><div ng-include="'partials/dfr/v4/a/objective-findings.html'" class="ng-scope"><!-- Start Obj Findings Section-->
+
+<!-- Start Obj Findings General -->
+<!-- ngIf: objectivefindingsCoverpagePr2V4() -->
+
+<!-- ngIf: (report.data.objectivefindingslimb.disableradio!=1 && report.data.objectivefindingslimb.disableradio != 'No') --><div ng-if="(report.data.objectivefindingslimb.disableradio!=1 &amp;&amp; report.data.objectivefindingslimb.disableradio != 'No')" class="ng-scope">
+    <!-- ngIf: findbodypart('Cervical') || findbodysystem('Upper Extremity') --><div ng-if="findbodypart('Cervical') || findbodysystem('Upper Extremity')" class="ng-scope">
+        <!-- ngIf: report.data['objectivefindingslimb'].ofRightMidBicep || report.data['objectivefindingslimb'].ofLeftMidBicep || report.data['objectivefindingslimb'].ofRightMidForearm || report.data['objectivefindingslimb'].ofLeftMidForearm -->
+        <!-- ngIf: report.data['objectivefindingslimb'].ofRightMidBicep || report.data['objectivefindingslimb'].ofLeftMidBicep -->
+        <!-- ngIf: report.data['objectivefindingslimb'].ofRightMidForearm || report.data['objectivefindingslimb'].ofLeftMidForearm -->
+        <!-- ngIf: report.data['objectivefindingslimb'].ofRightWrist || report.data['objectivefindingslimb'].ofLeftWrist || report.data['objectivefindingslimb'].ofRightElbow || report.data['objectivefindingslimb'].ofLeftElbow -->
+        <!-- ngIf: report.data['objectivefindingslimb'].ofRightElbow || report.data['objectivefindingslimb'].ofLeftElbow -->
+        <!-- ngIf: report.data['objectivefindingslimb'].ofRightWrist || report.data['objectivefindingslimb'].ofLeftWrist -->
+    </div><!-- end ngIf: findbodypart('Cervical') || findbodysystem('Upper Extremity') -->
+    <!-- ngIf: findbodypart('thoracic') || findbodypart('lumbar') || findbodysystem('Lower Extremity') -->
+    <!-- ngIf: findbodypart('Cervical') || findbodysystem('Upper Extremity') || report.data['objectivefindingslimb'].ofRightThigh || report.data['objectivefindingslimb'].ofLeftThigh || report.data['objectivefindingslimb'].ofRightKnee || report.data['objectivefindingslimb'].ofLeftKnee || report.data['objectivefindingslimb'].ofRightCalf || report.data['objectivefindingslimb'].ofLeftCalf || report.data['objectivefindingslimb'].ofRightAnkle || report.data['objectivefindingslimb'].ofLeftAnkle --><div ng-if="findbodypart('Cervical') || findbodysystem('Upper Extremity') || report.data['objectivefindingslimb'].ofRightThigh || report.data['objectivefindingslimb'].ofLeftThigh || report.data['objectivefindingslimb'].ofRightKnee || report.data['objectivefindingslimb'].ofLeftKnee || report.data['objectivefindingslimb'].ofRightCalf || report.data['objectivefindingslimb'].ofLeftCalf || report.data['objectivefindingslimb'].ofRightAnkle || report.data['objectivefindingslimb'].ofLeftAnkle" class="ng-scope">
+        <!-- ngIf: report.data['objectivefindingslimb'].ofRightThigh || report.data['objectivefindingslimb'].ofLeftThigh || report.data['objectivefindingslimb'].ofRightCalf || report.data['objectivefindingslimb'].ofLeftCalf -->
+        <!-- ngIf: report.data['objectivefindingslimb'].ofRightThigh || report.data['objectivefindingslimb'].ofLeftThigh -->
+        <!-- ngIf: report.data['objectivefindingslimb'].ofRightCalf || report.data['objectivefindingslimb'].ofLeftCalf -->
+
+        <!-- ngIf: report.data['objectivefindingslimb'].ofRightKnee || report.data['objectivefindingslimb'].ofLeftKnee || report.data['objectivefindingslimb'].ofRightAnkle || report.data['objectivefindingslimb'].ofLeftAnkle -->
+        <!-- ngIf: report.data['objectivefindingslimb'].ofRightKnee || report.data['objectivefindingslimb'].ofLeftKnee -->
+        <!-- ngIf: report.data['objectivefindingslimb'].ofRightAnkle || report.data['objectivefindingslimb'].ofLeftAnkle -->
+    </div><!-- end ngIf: findbodypart('Cervical') || findbodysystem('Upper Extremity') || report.data['objectivefindingslimb'].ofRightThigh || report.data['objectivefindingslimb'].ofLeftThigh || report.data['objectivefindingslimb'].ofRightKnee || report.data['objectivefindingslimb'].ofLeftKnee || report.data['objectivefindingslimb'].ofRightCalf || report.data['objectivefindingslimb'].ofLeftCalf || report.data['objectivefindingslimb'].ofRightAnkle || report.data['objectivefindingslimb'].ofLeftAnkle -->
+</div><!-- end ngIf: (report.data.objectivefindingslimb.disableradio!=1 && report.data.objectivefindingslimb.disableradio != 'No') -->
+<!-- End Obj Findings General -->
+<!-- Start Obj Findings Non Skin Body part -->
+<!-- ngRepeat: item in report.data['selectinjuries'].concatedbodypart | orderBy: 'sequence' --><div ng-repeat="item in report.data['selectinjuries'].concatedbodypart | orderBy: 'sequence'" class="ng-scope">
+    <!-- ngIf: checkExist(item,'objectivefindings') && (report.data['objectivefindings' + item.concateId].disableradio!=1 && report.data['objectivefindings' + item.concateId].disableradio != 'No') -->
+</div><!-- end ngRepeat: item in report.data['selectinjuries'].concatedbodypart | orderBy: 'sequence' -->
+<!-- End Obj Findings Non Skin Body part -->
+
+<!-- Start Obj Findings Skin Body part -->
+<!-- ngRepeat: item in report.data['selectinjuries'].concatedbodypart | orderBy: 'sequence' --><div ng-repeat="item in report.data['selectinjuries'].concatedbodypart | orderBy: 'sequence'" class="ng-scope">
+    <!-- ngIf: checkExistSkin(item,'objectivefindings') -->
+</div><!-- end ngRepeat: item in report.data['selectinjuries'].concatedbodypart | orderBy: 'sequence' -->
+<!-- ngRepeat: item in report.data['selectinjuries'].concatedbodypart | orderBy: 'sequence' --><div ng-repeat="item in report.data['selectinjuries'].concatedbodypart | orderBy: 'sequence'" class="ng-scope">
+    <!-- ngIf: checkExistSkin(item,'objectivefindings') -->
+</div><!-- end ngRepeat: item in report.data['selectinjuries'].concatedbodypart | orderBy: 'sequence' -->
+<!-- ngRepeat: item in report.data['selectinjuries'].concatedbodypart | orderBy: 'sequence' --><div ng-repeat="item in report.data['selectinjuries'].concatedbodypart | orderBy: 'sequence'" class="ng-scope">
+    <!-- ngIf: checkExistSkin(item,'objectivefindings') -->
+</div><!-- end ngRepeat: item in report.data['selectinjuries'].concatedbodypart | orderBy: 'sequence' -->
+<!-- ngRepeat: item in report.data['selectinjuries'].concatedbodypart | orderBy: 'sequence' --><div ng-repeat="item in report.data['selectinjuries'].concatedbodypart | orderBy: 'sequence'" class="ng-scope">
+    <!-- ngIf: checkExistSkin(item,'objectivefindings') -->
+</div><!-- end ngRepeat: item in report.data['selectinjuries'].concatedbodypart | orderBy: 'sequence' -->
+<!-- End Obj Findings Skin Body part -->
+
+<!-- ngIf: findbodypart('Lumbar') || findbodysystem('Lower Extremity') -->
+<!-- End Obj Findings Section -->
+</div>  
+    <!--Include Objective Findings html-->
+
+    <!--Include DTR html-->
+    <!-- ngInclude: 'partials/dfr/v4/a/dtr.html' --><div ng-include="'partials/dfr/v4/a/dtr.html'" class="ng-scope"><!-- Start DTR -->
+<!--<div ng-if="diagnosticFullCheck()">-->
+<!-- ngIf: diagnosticBodyPartCheckPr2('xray') || diagnosticBodyPartCheckPr2('mri') || diagnosticBodyPartCheckPr2('ctscan') || diagnosticBodyPartCheckPr2('pathology') || diagnosticBodyPartCheckPr2('officebased') || diagnosticFullCheckPr2() -->
+<!-- End DTR -->
+</div>  
+    <!--Include DTR html-->
+    
+    <!--Include Diagnoses html-->
+    <!-- ngInclude: 'partials/dfr/v4/a/diagnoses.html' --><div ng-include="'partials/dfr/v4/a/diagnoses.html'" class="ng-scope">	<!-- Start Diagnoses section -->
+    <!-- ngIf: diagnosesCheckPr2() || report.data['decisionmaking'].mdmq2.length>0 -->
+    <!-- End Diagnoses section --></div>  
+    <!--Include Diagnoses html-->
+    
+    <!--Include Medical Decision Making html-->
+    <!-- ngInclude: 'partials/dfr/v4/a/medical-decision-making.html' --><div ng-include="'partials/dfr/v4/a/medical-decision-making.html'" class="ng-scope">	<!--Start Medical Decision Making-->
+    <!-- ngIf: report.data['decisionmaking'].mdmq1opt.length>0 || report.data['decisionmaking'].mdmq1optYesText || report.data['decisionmaking'].mdmq5.length>0 -->
+    <!--End Medical Decision Making--></div>  
+    <!--Include Medical Decision Making html-->       
+
+    <!--Include Treatment html-->
+    <!-- ngInclude: 'partials/dfr/v4/a/treatment.html' --><div ng-include="'partials/dfr/v4/a/treatment.html'" class="ng-scope">	<!--Start Treatment-->
+    <!-- ngIf: checkWholeBDPartExist('treatment') -->
+    <!-- ngIf: report.data['decisionmaking'].mdmq4.length>0 -->
+
+    <!--End Treatment-->
+	
+	<!-- ngIf: report.data['decisionmaking'].mdmq3.length>0 --></div>  
+    <!--Include Treatment html-->        
+
+    <!--Include Work status html-->
+    <!-- ngInclude: 'partials/dfr/v4/a/work-status.html' --><div ng-include="'partials/dfr/v4/a/work-status.html'" class="ng-scope">    <!--Start Work Status-->
+    <!-- ngIf: (report.data.workrestriction.WRfollowupckbox.length>0 || report.data.workrestriction.WRpatientReturnOptions.length>0 || report.data['workrestriction'].WRisreturnckcheckTextA) && (report.data['workrestriction'].disableradio!=1 && report.data['workrestriction'].disableradio!='No') -->
+    <!--End Work Status--></div>  
+     <!--Include Work status html-->    
+    <br>
+
+    <!--Include Documentation html-->
+    <!-- ngInclude: 'partials/dfr/v4/a/documentation.html' --><div ng-include="'partials/dfr/v4/a/documentation.html'" class="ng-scope">	<!--Start Documentation-->	
+    <div class="DFRReportHeadingFontSize ng-scope"><strong>Documentation</strong></div>
+    <!-- ngIf: report.data['documentation'].docmedicalrecordchkbx.length>0 || report.data['documentation'].medicalrecordsOtherText -->
+    <div class="ng-scope">
+        <br>
+	I declare under penalty of perjury that this report is true and correct to the best of my knowledge and that I have not violated Labor Code 139.3. This report was composed, in part, using RateFast. RateFast is owned and operated by Alchemy Logic Systems, Inc. and was developed in part by John W. Alchemy M.D., President of Alchemy Logic Systems, Inc.
+		<br>
+    </div>
+    <!-- ngIf: report.data['documentation'].doctdreview || report.data['documentation'].doctdface || report.data['documentation'].doctdprepare -->
+    <div class="ng-scope">
+        I verify under penalty of perjury that the total time I spend on the following activities is true and correct:
+    </div>
+    <!--<div ng-if="report.data['documentation'].doctdreview">It took me <span ng-if="report.data['documentation'].doctdreview>1">{{getAbsValue(report.data['documentation'].doctdreview)}}&nbsp;minutes&nbsp;</span><span ng-if="report.data['documentation'].doctdreview==1">{{getAbsValue(report.data['documentation'].doctdreview)}}&nbsp;minute&nbsp;</span>to review the medical records.</div>-->
+	<!-- ngIf: report.data['documentation'].doctdreview -->
+    <!-- ngIf: report.data['documentation'].doctdface -->
+    <!-- ngIf: report.data['documentation'].doctdprepare -->
+    <!--End Documentation--></div>  
+    <!--Include Documentation html-->
+        
+    <br>
+
+    <!--Include Signature html-->
+    <!-- ngInclude: 'partials/dfr/v4/a/signature.html' --><div ng-include="'partials/dfr/v4/a/signature.html'" class="ng-scope">	<!--Signature section -->
+	<div style="color: #333333;" ng-init="getDoctordata(report.data['patientcomplaints'].treatphynamedropdown)" class="ng-scope">
+        <div>e-signed by 
+        	<!-- ngIf: report.data.signDoctor.level4!== undefined --><div ng-if="report.data.signDoctor.level4!== undefined" class="ng-scope ng-binding">
+        		shridhar gadhave<!-- ngIf: report.data.signDoctor.level4.profession --><span ng-if="report.data.signDoctor.level4.profession" class="ng-scope">, <span ng-bind-html="getProfession(report.data.signDoctor.level4.profession,report.data.signDoctor.level4.otherprofessiontext)" class="ng-binding">LAC</span></span><!-- end ngIf: report.data.signDoctor.level4.profession -->
+        	</div><!-- end ngIf: report.data.signDoctor.level4!== undefined -->
+        	<!-- ngIf: report.data.signDoctor.level3!== undefined -->
+			<!-- ngIf: submittedDate -->
+			<!-- ngIf: report.data.signDoctor.level4!== undefined --><div ng-if="report.data.signDoctor.level4!== undefined" class="ng-scope">
+					<!-- ngIf: getSpeciality(report.data.signDoctor.level4.speciality) --><div ng-if="getSpeciality(report.data.signDoctor.level4.speciality)" class="ng-scope">Specialty: <span ng-bind-html="getSpeciality(report.data.signDoctor.level4.speciality)" class="ng-binding">Allergy and Immunology.</span></div><!-- end ngIf: getSpeciality(report.data.signDoctor.level4.speciality) -->
+			</div><!-- end ngIf: report.data.signDoctor.level4!== undefined -->
+			<!-- ngIf: report.data.signDoctor.level3!== undefined -->
+			<!-- ngIf: report.data.patientcomplaints.treatphynamedropdown --><div ng-if="report.data.patientcomplaints.treatphynamedropdown" class="ng-scope">
+				<!-- ngIf: report.data.signDoctor.level4!== undefined --><span ng-if="report.data.signDoctor.level4!== undefined" class="ng-scope">
+						<!-- ngIf: report.data.signDoctor.level4.id !=report.data.patientcomplaints.treatphynamedropdown --><span ng-if="report.data.signDoctor.level4.id !=report.data.patientcomplaints.treatphynamedropdown" class="ng-scope ng-binding">signing for akshay kumar <span ng-bind-html="getProfession(doctorInfo.profession, doctorInfo.otherprofessiontext)" class="ng-binding"></span></span><!-- end ngIf: report.data.signDoctor.level4.id !=report.data.patientcomplaints.treatphynamedropdown -->
+				</span><!-- end ngIf: report.data.signDoctor.level4!== undefined -->
+				<!-- ngIf: report.data.signDoctor.level3!== undefined -->
+        </div><!-- end ngIf: report.data.patientcomplaints.treatphynamedropdown -->
+		</div>
+    </div>
+    <!-- ngIf: getTotalPage() -->
+	<!--Signature section --></div>  
+    <!--Include Signature html-->
+	
+	<!--Include Addendum html-->
+    <!-- ngInclude: 'partials/dfr/v4/a/addendum.html' --><div ng-include="'partials/dfr/v4/a/addendum.html'" class="ng-scope"><br clear="all" style="page-break-before:always" class="ng-scope">
+<!-- ngRepeat: addendum in report.data.addendum -->
+</div>  
+    <!--Include Addendum html-->
+	
+	<!--Include RFA html-->
+    <!-- ngInclude: 'partials/dfr/v4/a/rfa.html' --><div ng-include="'partials/dfr/v4/a/rfa.html'" class="ng-scope"><!-- ########################################*****RFA*****######################################################### -->
+<!-- RFA new code starts -->
+<!--<div ng-include src="getRfaFilePath(version,formtype)"></div>-->
+<!--<ng-include src="'partials/reports/' + formtype + '/v' + version + '/rfa.html'"></ng-include>-->
+<!-- RFA new code ends -->
+
+<!-- ########################################*****RFA*****######################################################### -->
+<!-- RFA new code starts -->
+<div class="ng-scope"><!--  ng-if="currentReportStatus=='open' || currentReportStatus=='closed' || currentReportStatus=='level1' || currentReportStatus=='level2'"> -->
+    <!-- ngRepeat: (concatKey, concatValue) in report.data['selectinjuries'].concatedbodypart track by concatKey --><div ng-repeat="(concatKey, concatValue) in report.data['selectinjuries'].concatedbodypart track by concatKey" class="ng-scope">
+        <!-- ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] --><div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']" class="ng-scope">
+            <!-- ngRepeat: (medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue] -->			
+        </div><!-- end ngRepeat: (medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother'] -->
+    </div><!-- end ngRepeat: (concatKey, concatValue) in report.data['selectinjuries'].concatedbodypart track by concatKey -->
+</div>
+<!-- RFA new code ends --></div>  
+	<!--Include RFA html-->
+
+	<!--Include Work status note html-->
+    <!-- ngInclude: 'partials/dfr/v4/common/workstatus-note.html' --><div ng-include="'partials/dfr/v4/common/workstatus-note.html'" class="ng-scope"><!-- Work status note starts here -->
+<!-- ngRepeat: workStatusData in report.data.workStatusNote -->
+<div ng-init="loader_handler(false)" class="ng-scope"></div>
+<!-- Work status note ends here --></div>  
+	<!--Include Work status note html-->
+	
+	</div>
+</div>
+
+
+
+
+</div>

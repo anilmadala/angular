@@ -1,0 +1,147 @@
+<!-- History of Injury -->
+<tr>
+            <td style="width: 100%">
+                <br />
+                <div class="DFRReportHeadingFontSize"><strong>History of Injury/Illness:</strong></div>
+                <div class="divMain">
+                    <div>{{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}}&nbsp;{{report.data['bginfo'].firstname}}&nbsp;{{report.data['bginfo'].lastname}}&nbsp;is <span ng-if="report.data['selectinjuries'].employeehandedness">{{report.data ['selectinjuries'].employeehandedness == 'Ambidextrous' ? 'an' : 'a'}} {{report.data['selectinjuries'].employeehandedness|lowercase}}{{report.data['selectinjuries'].employeehandedness == 'Ambidextrous' ? '' : '-handed'}}</span><span ng-if="!report.data['selectinjuries'].employeehandedness">a</span> {{getAge(report.data['bginfo'].dateofbirth)}} year-old {{report.data['bginfo'].gender|lowercase}}&nbsp;who worked at {{report.data['bginfo'].company}}&nbsp;at the time of {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} injury.</div>
+                    <div>{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} industrial injury occurred on&nbsp;{{report.data['bginfo'].dateofinjury | date:'MM/dd/yyyy'}}.</div>
+                    <div ng-if="report.data['bginfo'].durationofemployement && report.data['bginfo'].durationtype">At the time of {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} injury, patient had worked {{report.data['bginfo'].durationofemployement}} {{report.data['bginfo'].durationtype | lowercase}} at {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} job.</div>
+                    <!--Where did the injury occur?-->
+                    <div ng-if="report.data['selectinjuries'].injuryplace">
+                        <div ng-if="report.data['selectinjuries'].injuryplace=='Office'">
+                            The location of the injury/condition was the office.
+                        </div>
+                        <div ng-if="report.data['selectinjuries'].injuryplace=='Field'">
+                            The employee was in the field when the injury occurred.
+                        </div>
+                        <div ng-if="report.data['selectinjuries'].injuryplace=='Motor vehicle'">
+                            {{report.data['bginfo'].gender=='Male'? 'He': 'She'}} was in a motor vehicle when the injury/condition occurred.
+                        </div>
+                        <div ng-if="report.data['selectinjuries'].injuryplace=='Other'">
+                            <div ng-if="report.data['selectinjuries'].other_injuryplace">
+                                <div ng-if="report.data['selectinjuries'].other_injuryplace!=''">
+                                    Location of the injury/condition: {{report.data['selectinjuries'].other_injuryplace}}.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Where did the injury occur?-->
+
+                    <div ng-repeat="item in report.data['selectinjuries'].sibodypart">
+                        <div ng-if="item.bdmechanism!='Other'">
+                            {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} {{item.bdsides == 'none'||item.bdsides=='n/a' ? '' : item.bdsides|lowercase}} {{item.bodysystem == 'Other' ? item.bdpartother : item.text | lowercase}} {{item.bodysystem=='Spine'?'spine':''}} was injured due to {{item.bdmechanism | lowercase}}.
+                        </div>
+                        <div ng-if="item.bdmechanism=='Other'">
+                            <div ng-if="item.bdmechanismother!=''">
+                                {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} {{item.bdsides == 'none'||item.bdsides=='n/a' ? '' : item.bdsides|lowercase}} {{item.bodysystem == 'Other' ? item.bdpartother : item.text | lowercase}} {{item.bodysystem=='Spine'?'spine':''}} was injured. Mechanism of injury: <span ng-bind-html="appendPeriod(item.bdmechanismother)"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-bind-html="appendPeriod(report.data['selectinjuries'].historyreviewtext)"></div>
+
+                    <!--Were there witnesses to the injury?-->
+                    <div ng-if="report.data['selectinjuries'].isinjurywitnes">
+                        <div ng-if="report.data['selectinjuries'].isinjurywitnes=='No'">
+                            There were no witnesses to the injury.
+                        </div>
+                        <div ng-if="report.data['selectinjuries'].isinjurywitnes=='Other'">
+                            <div ng-if="report.data['selectinjuries'].other_isinjurywitnes">
+                                <div ng-if="report.data['selectinjuries'].other_isinjurywitnes!=''">
+                                    Witness to the injury/condition: {{report.data['selectinjuries'].other_isinjurywitnes}}.
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="report.data['selectinjuries'].isinjurywitnes=='Yes'">
+                            <div ng-if="!report.data['selectinjuries'].witnes">
+                                Witness was present at time of injury.
+                            </div>
+                            <div ng-if="report.data['selectinjuries'].witnes">
+                                <div ng-if="report.data['selectinjuries'].witnes.length>0">
+                                    Injury was witnessed by:&nbsp;{{report.data['selectinjuries'].witnes|map}}.
+                                </div>
+                            </div>
+                            <div ng-if="report.data['selectinjuries'].witnesothercheck">
+                                <div ng-if="report.data['selectinjuries'].witnesothercheck.length>0">
+                                    <div ng-if="report.data['selectinjuries'].otherwitnes">
+                                        <div ng-if="report.data['selectinjuries'].otherwitnes!=''">
+                                            {{report.data['selectinjuries'].otherwitnes|capitalize}}.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span ng-bind-html="appendPeriod(report.data['selectinjuries'].selectwitnessTextA)"></span>
+                        </div>
+                    </div>
+                    <!--Were there witnesses to the injury?-->
+
+                    <!-- Was first aid provided on site? -->
+                    <div ng-if="report.data['selectinjuries'].firstaid">
+                        <div ng-if="report.data['selectinjuries'].firstaid=='Yes' && report.data['selectinjuries'].firstaid_measure.length == 0">
+                            First aid was provided on site.
+                        </div>
+                        <div ng-if="report.data['selectinjuries'].firstaid=='Yes' && report.data['selectinjuries'].firstaid_measure.length > 0">
+                            First aid was provided on site: {{report.data['selectinjuries'].firstaid_measure | map}}.
+                        </div>
+                        <div ng-if="report.data['selectinjuries'].other_measure_text" ng-bind-html="appendPeriod(report.data['selectinjuries'].other_measure_text)"></div>
+                    </div>
+                    <!-- Was first aid provided on site? -->
+
+                    <!--Was the injury reported to the employer?-->
+                    <div ng-if="report.data['selectinjuries'].reportedemployer=='No'">
+                        The injury/condition was not reported to the employer.
+                    </div>
+                    <div ng-if="report.data['selectinjuries'].reportedemployer=='Yes' && report.data['selectinjuries'].reportedemploye.length == 0">
+                        The injury/condition was reported to the employer.
+                    </div>
+                    <div ng-if="report.data['selectinjuries'].reportedemployer=='Yes' && report.data['selectinjuries'].reportedemploye.length > 0">
+                        The injury/condition was reported to:&nbsp;{{report.data['selectinjuries'].reportedemploye|map}}.
+                    </div>
+                    <div ng-if="report.data['selectinjuries'].reportedEmployerOtherText" ng-bind-html="appendPeriod(report.data['selectinjuries'].reportedEmployerOtherText)"></div>
+                    <!--Was the injury reported to the employer?-->
+
+                    <!--Where did the patient go after the injury occurred?-->
+                    <div ng-if="report.data['selectinjuries'].afterworking">
+                        <div ng-if="report.data['selectinjuries'].afterworking=='Continued working'">
+                            After the injury occurred, {{report.data['bginfo'].gender=='Male'? 'he': 'she'}} continued working.
+                        </div>
+                        <div ng-if="report.data['selectinjuries'].afterworking=='Home'">
+                            After the injury occurred, {{report.data['bginfo'].gender=='Male'? 'he': 'she'}} went home.
+                        </div>
+                        <div ng-if="report.data['selectinjuries'].afterworking=='Emergency room'">
+                            After the injury occurred, {{report.data['bginfo'].gender=='Male'? 'he': 'she'}} went to the emergency room.
+                        </div>
+                        <div ng-if="report.data['selectinjuries'].afterworking=='Medical clinic'">
+                            After the injury occurred, {{report.data['bginfo'].gender=='Male'? 'he': 'she'}} went to a medical clinic.
+                        </div>
+                        <div ng-if="report.data['selectinjuries'].afterworking=='Other'">
+                            <div ng-if="report.data['selectinjuries'].other_afterworking">
+                                <div ng-if="report.data['selectinjuries'].other_afterworking!=''">
+                                    After the injury occurred, {{report.data['bginfo'].gender=='Male'? 'he': 'she'}} went:&nbsp;{{report.data['selectinjuries'].other_afterworking}}.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Where did the patient go after the injury occurred?-->
+                    <div ng-if="report.data['selectinjuries'].siadditional=='Yes'" ng-bind-html="appendPeriod(report.data['selectinjuries'].additionaldetail)"></div>
+
+                    <div ng-if="report.data['patientcomplaints'].interpreterused == 'Yes'">
+                        {{report.data['patientcomplaints'].interpreterused == 'Yes' ? 'We are with an interpreter. ' : ''}}{{report.data['patientcomplaints'].interpreterage == 'No' ? 'Interpreter is less than 18 years old. ' : ''}}{{report.data['patientcomplaints'].interpreterage == 'Yes' ? 'Interpreter is 18 or older. ' : ''}}{{(report.data['patientcomplaints'].interpreterfirstname || report.data['patientcomplaints'].interpreterlastname)?'Interpreter name: '+report.data['patientcomplaints'].interpreterfirstname +' '+report.data['patientcomplaints'].interpreterlastname:''}}{{report.data['patientcomplaints'].interpreterfirstname || report.data['patientcomplaints'].interpreterlastname?'.':''}}
+ {{report.data['patientcomplaints'].interpreterrelationship=='Interpreter service'?"The interpreter&apos;s relationship to the employee is an interpreter service.":""}}
+ {{report.data['patientcomplaints'].interpreterrelationship=='Family'?"The interpreter is a member of the employee&apos;s family.":""}}
+ {{report.data['patientcomplaints'].interpreterrelationship=="Friend"?"The interpreter is the employee&apos;s friend.":""}}
+ <span ng-if="report.data['patientcomplaints'].interpreterrelationship=='Other' && report.data['patientcomplaints'].interpreterrelationshipother">Interpreter&apos;s relationship to the employee: {{report.data['patientcomplaints'].interpreterrelationshipother}}.</span>
+                        <span ng-if="report.data['patientcomplaints'].interpretercertno && report.data['patientcomplaints'].interpreterrelationship=='Interpreter service'">The interpreter&apos;s certification number is {{report.data['patientcomplaints'].interpretercertno}}.</span>
+                        <span ng-if="report.data['patientcomplaints'].languageused">
+                            <span ng-if="report.data['patientcomplaints'].languageused!='Other'">The interpreter speaks to the employee in {{report.data['patientcomplaints'].languageused}}.
+                            </span>
+                            <span ng-if="report.data['patientcomplaints'].languageused=='Other'">
+                                <span ng-if="report.data['patientcomplaints'].languageusedothertext!=''">The interpreter speaks to the employee in {{report.data['patientcomplaints'].languageusedothertext}}.
+                                </span>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+<!-- History of Injury -->

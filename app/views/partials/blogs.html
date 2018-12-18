@@ -1,0 +1,76 @@
+<div class="blogs" data-ng-controller="BlogsController" data-ng-init="listBlogs(1)">
+    <div class="bright">
+        <section id="header-title">
+            <div class="container">
+                <div class="row">
+                    <h2>Blogs</h2>
+                </div>
+            </div>
+        </section>
+        <div class="container">
+            <div class="row ">
+                <section>
+                    <div class="col-sm-8">
+                        <div class="col-sm-12 col-sm-offset alert alert-dismissable alert-danger text-center" ng-show="Emptyblogs">Blog does not exists!</div>
+                        <article class=" article" data-ng-repeat="blog in blogs">
+                            <div ng-hide="fullBlog" class="post-row">
+                                <h4>
+                                    <a ng-click="singleBlog(blog)">{{blog.title}}</a>
+                                    <span class="small-date">on {{blog.created | date: 'medium'}}</span>
+                                </h4>
+                                <span ng-bind-html="blog.content | limitTo : 300"></span>
+                                <div class="small-read-more">
+                                    <div class="row">
+                                        <div class="col-sm-8 text-left author-name">by {{blog.author}}</div>
+                                        <div class="col-sm-4 text-right">
+                                            <a ng-click="singleBlog(blog)" class="btn btn-primary">Read more...</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <div ng-show="fullBlog" class="blog-open">
+                            <h4>
+                                <a>{{blog.title}}</a>
+                                <span class="small-date">by {{blog.author}} on {{blog.created | date: 'medium'}}</span>
+                            </h4>
+                            <span ng-bind-html="blog.content"></span>
+                            <a ng-click='fullBlog = false' class="btn btn-default">Back</a>
+                        </div>
+                        <div ng-hide="fullBlog || Emptyblogs">
+                            <pagination total-items="totalItems" page="currentPage" items-per-page="itemsperpage" max-size="maxsize" on-select-page="listBlogs(page)" class="pagination-sm" boundary-links="true"></pagination>
+                        </div>
+                    </div>
+                </section>
+                <div class="col-sm-4 blog-right">
+                    <div>
+                        <div class="input-append">
+                            <input type="text" name="search" ng-model="search" class="form-control" placeholder="search blogs" style="width: 80%; display: inline;" required />
+                            <a ng-click="filterBlogs()" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search"></span></a>
+                        </div>
+
+                        <div style="clear: both;"></div>
+                        <h5 class="blog-titles"><span class="glyphicon glyphicon-star"></span>&nbsp;RECENT POSTS</h5>
+
+                        <ul style="list-style: none; padding: 5px 15px; background-color: #fafafa;">
+                            <li data-ng-repeat="blog in recentBlogs | limitTo:3" style="padding-bottom: 8px;">
+                                <a ng-click="singleBlog(blog)">
+                                    <h5 style="margin-bottom: 6px;">{{blog.title}}</h5>
+                                </a>
+                                <span class="small-date">- {{blog.author}} on {{blog.created | date: 'medium'}}</span>
+                            </li>
+                        </ul>
+                        <h5 class="blog-titles"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>&nbsp;CATEGORIZED</h5>
+                        <ul style="padding: 15px 0 0 0;">
+                            <select ng-change="filterBlogs()" ng-model="catId" class="form-control">
+                                <option value="" selected="selected">-- All --</option>
+                                <option value="Uncategorised">Uncategorised</option>
+                            </select>
+                        </ul>
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

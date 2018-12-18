@@ -1,0 +1,261 @@
+<div class="pricing" ng-init="populatePricing()"> <!-- data-ng-controller="PricingCtrl" -->
+    <div class="bright">
+        <section id="header-title">
+            <div class="container">
+                <div class="row">
+                    <h2 style="text-align: left;">Pricing<span ng-if="step!=1"> {{selectedState.state ? '- ' + selectedState.state: ''}}</span><span ng-if="step==3"> - Provider</span><span ng-if="step==4"> - Attorney / Claims Administrator</span></h2>
+                </div>
+            </div>
+        </section>
+        <!-------------------- Map ------------------------>
+        <div ng-show="step == 1">
+            <div class="container">
+                <div class="row">
+                    <div class="gt-map-default">
+                        <gt-map ng-model="selectedState" ng-click="mapClick()"></gt-map>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-------------------- Get Price ------------------------>
+        <div ng-show="step == 2" >
+            <div class="container getPrice">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-md-offset-2 pricing-table belize-hole bordered">
+                        <ul>
+                            <li class="title">Provider
+                            </li>
+                            <li class="price">
+                                Streamline work comp claims in your office.<br />
+                                            Give insurers the information they need.<br />
+                                            Give your clients the accuracy they deserve.
+                                
+                            </li>
+                            <li class="button">
+                                <a class="btn btn-lg btn-primary btn-block" ng-click="step=3">Get Price &raquo;</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-4 pricing-table belize-hole bordered">
+                        <ul>
+                            <li class="title">Attorney/Claims Administrator
+                            </li>
+                            <li class="price">Use RateFast to check the accuracy of QME and PR-4 reports.<br />
+                                                No need to become an AMA Guides expert.<br />
+                                                We guarantee accuracy.
+                               
+                            </li>
+                            <li class="button">
+                                <a class="btn btn-lg btn-primary btn-block" ng-click="step=4">Get Price &raquo;</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-8 col-sm-offset-2 pricing-details">
+                        <ul class="centered alt">
+                            <li>Two free reports. Kick our tires.
+                            </li>
+                            <li>Customer support available by phone OR email 24/7
+                            </li>
+                            <li>Ratings based on AMA Guides 5th Edition
+                            </li>
+                            <li>Reports are complete in 3-5 business days
+                            </li>
+                            <li>Pay only when you use it
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <input type="button" class="btn btn-default" value="Back" ng-click="backToMain()" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-------------------- Provider ------------------------>
+        <div ng-show="step == 3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading text-center">
+                                <h4 class="titles">Doctor's First [5021]</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="text-center">
+                                    <div class="priceBox" ng-show="provider1">
+                                        <img src="/images/Logo.jpg" style="width: 30%;" />
+                                        <div class="priceReport">
+                                            <span>$ {{pricing.dfr}}/report</span>
+                                        </div>
+                                    </div>
+                                    <div class="learnmore" ng-hide="provider1">
+                                        RateFast (Doctor's First 5021) is an online web based application designed to help primary treating physicians (medical providers) correctly organize and publish their California Workers' Compensation Doctor's First Report of Occupational Injury of Illness. Report information is gathered using a simple, systematic and easy to use data collection method in the exam room with a hand held mobile device, such as the iPad. The history and exam findings are securely entered and submitted at the time of the patient visit.
+                                        Reports submitted on RateFast (Doctor's First 5021) are instantly organized.
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <a class="btn btn-md btn-primary" ng-show="provider1" ng-click="provider1=false">Learn More</a>
+                                    <a class="btn btn-md btn-primary" ng-hide="provider1" ng-click="provider1=true">Price  &raquo;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading text-center">
+                                <h4 class="titles">PR-2 Report</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="text-center">
+                                    <div class="priceBox" ng-show="provider2">
+                                        <img src="/images/Logo.jpg" style="width: 30%;" />
+                                        <div class="priceReport">
+                                            <span>$ {{pricing.pr2}}/report</span>
+                                        </div>
+                                    </div>
+                                    <div class="learnmore" ng-hide="provider2">
+                                        RateFast(PR2) is an online web based application designed to help doctors correctly organize and publish their California Workers' Compensation supplemental reports(PR2 Report).
+                                        Report information is gathered using a simple, systematic and easy to use data collection method in the exam room with a hand held mobile device, such as the iPad.The history and exam findings are securely entered and submitted at the time of the patient visit.
+                                        Reports submitted on RateFast (PR2) are instantly organized and immediately available for download when submitted.
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <a class="btn btn-md btn-primary" ng-show="provider2" ng-click="provider2=false">Learn More</a>
+                                    <a class="btn btn-md btn-primary" ng-hide="provider2" ng-click="provider2=true">Price  &raquo;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading text-center">
+                                <h4 class="titles">PR-4 Report</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="text-center">
+                                    <div class="priceBox" ng-show="provider3">
+                                        <img src="/images/Logo.jpg" style="width: 30%;" />
+                                        <div class="priceReport">
+                                            <span>$ {{pricing.pr4}}/report</span>
+                                        </div>
+                                    </div>
+                                    <div class="learnmore" ng-hide="provider3">
+                                        RateFast (PR4) is an online web based application designed to help primary treating physicians(medical providers) correctly organize and publish their California Workers' Compensation final rating reports(PR4 Report). Report information is gathered using a simple, systematic and easy to use data collection method in the exam room with a hand held mobile device, such as the iPad. The history and exam findings are securely entered and submitted at the time of the patient visit. Reports submitted on RateFast(PR4) are independently reviewed by an AMA Certified Independent Medical Examiner and California Workers' Comp Qualified Medical Examiner(QME).
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <a class="btn btn-md btn-primary" ng-show="provider3" ng-click="provider3=false">Learn More</a>
+                                    <a class="btn btn-md btn-primary" ng-hide="provider3" ng-click="provider3=true">Price  &raquo;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="alert alert-dismissable alert-warning text-left" ng-hide="providertrial">
+                        <button type="button" class="close" ng-click="providertrial=true">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                        <h4>Reasons To Try</h4>
+                        <table>
+                            <tr>
+                                <td style="width: 50%">
+                                    <ul>
+                                        <li>No software to download.</li>
+                                        <li>No hidden fees.</li>
+                                        <li>Fast results.</li>
+                                        <li>AMA Impairment Rating.</li>
+                                        <li>Great support.</li>
+                                        <li>It's free.</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        <li>Cloud based.</li>
+                                        <li>Pay only when you use it.</li>
+                                        <li>Reports are complete in 3-5 business days.</li>
+                                        <li>Ratings based on AMA Guides 5th Edition.</li>
+                                        <li>Customer support available by email and phone, 24/7.</li>
+                                        <li>Two free reports. Kick our tires.</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="text-center">
+                        <input type="button" class="btn btn-info" value="Free Trial" ng-click="providertrial=false" />
+                        <a href="/signup" class="btn btn-success">Start Today</a>
+                        <input type="button" class="btn btn-default" value="Back" ng-click="step=2" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-------------------- Attorney ------------------------>
+        <div ng-show="step == 4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading text-center">
+                                <h4 class="titles">AMA Guides Rating Review</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="text-center">
+                                    <div class="priceBox" ng-show="attorney">
+                                        <img src="/images/Logo.jpg" style="width: 30%;" />
+                                        <div class="priceReport">
+                                            <span>$ 49.99/report</span>
+                                        </div>
+                                    </div>
+                                    <div class="learnmore" ng-hide="attorney">
+                                        RateFast (PR4) is an online web based application designed to help primary treating physicians(medical providers) correctly organize and publish their California Workers' Compensation final rating reports(PR4 Report). Report information is gathered using a simple, systematic and easy to use data collection method in the exam room with a hand held mobile device, such as the iPad. The history and exam findings are securely entered and submitted at the time of the patient visit. Reports submitted on RateFast(PR4) are independently reviewed by an AMA Certified Independent Medical Examiner and California Workers' Comp Qualified Medical Examiner(QME).
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <a class="btn btn-md btn-primary" ng-show="attorney" ng-click="attorney=false">Learn More</a>
+                                    <a class="btn btn-md btn-primary" ng-hide="attorney" ng-click="attorney=true">Price  &raquo;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-dismissable alert-warning text-left" ng-hide="attorneytrial">
+                    <button type="button" class="close" ng-click="attorneytrial=true">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <h4>Reasons To Try</h4>
+                    <table>
+                        <tr>
+                            <td style="width: 50%">
+                                <ul>
+                                    <li>No software to download.</li>
+                                    <li>No hidden fees.</li>
+                                    <li>Fast results.</li>
+                                    <li>AMA Impairment Rating.</li>
+                                    <li>Great support.</li>
+                                    <li>It's free.</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>Cloud based.</li>
+                                    <li>Pay only when you use it.</li>
+                                    <li>Reports are complete in 3-5 business days.</li>
+                                    <li>Ratings based on AMA Guides 5th Edition.</li>
+                                    <li>Customer support available by email and phone, 24/7.</li>
+                                    <li>Two free reports. Kick our tires.</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="text-center">
+                        <input type="button" class="btn btn-info" value="Free Trial" ng-click="attorneytrial=false" />
+                        <a href="/signup" class="btn btn-success">Start Today</a>
+                        <input type="button" class="btn btn-default" value="Back" ng-click="step=2" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

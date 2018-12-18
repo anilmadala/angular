@@ -1,0 +1,567 @@
+<!-- Start Relevant Medical History Section-->
+<div ng-if="checkOnlySectionExist('relevantmedicalsocialhistory') || checkWholeBDPartExist('relevantmedicalsocialhistory')">
+    <br>
+    <div class="DFRReportHeadingFontSize"><strong>Relevant Medical History</strong></div>
+    <!--Start Medical History General Section-->
+    <!--Start Med Trials to Date-->
+    <div ng-if="report.data['relevantmedicalsocialhistory'].medtrialsToDateRadio == 'Yes' && (report.data['relevantmedicalsocialhistory'].medtrialsToDateCheckbox.length > 0 || report.data['relevantmedicalsocialhistory'].medtrialsToDateTextData)">
+        <div class="DFRReportSubHeadingFontSize"><strong>Med Trials to Date</strong></div>
+        <div class="divMain">
+            <div ng-if="report.data['relevantmedicalsocialhistory'].medtrialsToDateCheckbox.length > 0">{{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}} {{report.data['bginfo'].lastname}}'s medical trials to date include {{report.data['relevantmedicalsocialhistory'].medtrialsToDateCheckbox | map}}.</div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].medtrialsToDateTextData)"></div>
+        </div>
+    </div>
+    <!--End Med Trials to Date-->
+
+    <!--Therapy/Ancillary Treatments to Date-->
+    <div ng-if="(report.data['relevantmedicalsocialhistory'].physicalTherayNumberOfTreatment > 0 ) || (report.data['relevantmedicalsocialhistory'].chiropracticNumberOfTreatment > 0 ) || (report.data['relevantmedicalsocialhistory'].acupunctureNumberOfTreatments > 0 || report.data['relevantmedicalsocialhistory'].durableMedicalEquipmentRadio=='Yes' )">
+        <br>
+        <div class="DFRReportSubHeadingFontSize"><strong>Therapy/Ancillary Treatments to Date</strong></div>
+    </div>
+    <span ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].therapydateTextA)"></span>
+    <div class="divMain">
+        <div ng-if="(report.data['relevantmedicalsocialhistory'].physicalTherayNumberOfTreatment == 0 || report.data['relevantmedicalsocialhistory'].physicalTherayNumberOfTreatment == '') && (report.data['relevantmedicalsocialhistory'].chiropracticNumberOfTreatment == 0 || report.data['relevantmedicalsocialhistory'].chiropracticNumberOfTreatment == '') && (report.data['relevantmedicalsocialhistory'].acupunctureNumberOfTreatments == 0 || report.data['relevantmedicalsocialhistory'].acupunctureNumberOfTreatments == '') && report.data['relevantmedicalsocialhistory'].acupunctureNumberOfTreatments.length>0">
+            {{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}} {{report.data['bginfo'].lastname}} has not had any physical therapy treatments, chiropractic treatments, nor acupuncture treatments. 
+        </div>
+        <div ng-if="(report.data['relevantmedicalsocialhistory'].physicalTherayNumberOfTreatment > 0 ) || (report.data['relevantmedicalsocialhistory'].chiropracticNumberOfTreatment > 0 ) || (report.data['relevantmedicalsocialhistory'].acupunctureNumberOfTreatments > 0 )">
+            <!--{{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}} {{report.data['bginfo'].lastname}} has had <span ng-if="report.data['relevantmedicalsocialhistory'].physicalTherayNumberOfTreatment">{{report.data['relevantmedicalsocialhistory'].physicalTherayNumberOfTreatment}} physical therapy treatments</span><span ng-if="report.data['relevantmedicalsocialhistory'].chiropracticNumberOfTreatment && report.data['relevantmedicalsocialhistory'].physicalTherayNumberOfTreatment">, </span><span ng-if="report.data['relevantmedicalsocialhistory'].chiropracticNumberOfTreatment">{{report.data['relevantmedicalsocialhistory'].chiropracticNumberOfTreatment}} chiropractic treatment</span><span ng-if="report.data['relevantmedicalsocialhistory'].chiropracticNumberOfTreatment && report.data['relevantmedicalsocialhistory'].acupunctureNumberOfTreatments">, </span><span ng-if="report.data['relevantmedicalsocialhistory'].acupunctureNumberOfTreatments">{{report.data['relevantmedicalsocialhistory'].acupunctureNumberOfTreatments}} acupuncture treatments</span>.-->
+            {{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}} {{report.data['bginfo'].lastname}} has had <span ng-if="report.data['relevantmedicalsocialhistory'].physicalTherayNumberOfTreatment">{{report.data['relevantmedicalsocialhistory'].physicalTherayNumberOfTreatment}} physical therapy&nbsp;<ng-pluralize count="report.data['relevantmedicalsocialhistory'].physicalTherayNumberOfTreatment" when="{'one': 'treatment', 'other': 'treatments'}"></ng-pluralize></span><span ng-if="report.data['relevantmedicalsocialhistory'].chiropracticNumberOfTreatment && report.data['relevantmedicalsocialhistory'].physicalTherayNumberOfTreatment">, </span><span ng-if="report.data['relevantmedicalsocialhistory'].chiropracticNumberOfTreatment">{{report.data['relevantmedicalsocialhistory'].chiropracticNumberOfTreatment}} chiropractic&nbsp;<ng-pluralize count="report.data['relevantmedicalsocialhistory'].chiropracticNumberOfTreatment" when="{'one': 'treatment', 'other': 'treatments'}"></ng-pluralize></span><span ng-if="report.data['relevantmedicalsocialhistory'].chiropracticNumberOfTreatment && report.data['relevantmedicalsocialhistory'].acupunctureNumberOfTreatments">, </span><span ng-if="report.data['relevantmedicalsocialhistory'].acupunctureNumberOfTreatments">{{report.data['relevantmedicalsocialhistory'].acupunctureNumberOfTreatments}} acupuncture&nbsp;<ng-pluralize count="report.data['relevantmedicalsocialhistory'].acupunctureNumberOfTreatments" when="{'one': 'treatment', 'other': 'treatments'}"></ng-pluralize></span>.                                
+        </div>
+        <span ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].therapydateTextA)"></span>
+
+        <div ng-if="report.data['relevantmedicalsocialhistory'].durableMedicalEquipmentRadio == 'Yes' && !getCommmaStringCheck([report.data['relevantmedicalsocialhistory'].durableMedicalWrist,report.data['relevantmedicalsocialhistory'].durableMedicalTennisElbow,report.data['relevantmedicalsocialhistory'].durableMedicalNeoprene,report.data['relevantmedicalsocialhistory'].durableMedicalLumbar, report.data['relevantmedicalsocialhistory'].durableMedicalCane,report.data['relevantmedicalsocialhistory'].durableMedicalCrutch,report.data['relevantmedicalsocialhistory'].durableMedicalAFO,report.data['relevantmedicalsocialhistory'].durableMedicalKAFO,report.data['relevantmedicalsocialhistory'].durableMedicalTENS,report.data['relevantmedicalsocialhistory'].durableMedicalHwave,report.data['relevantmedicalsocialhistory'].durableMedicalWheelchair])">
+            The claim has involved durable medical equipment.
+        </div>
+        <div ng-if="getCommmaStringCheck([report.data['relevantmedicalsocialhistory'].durableMedicalWrist,report.data['relevantmedicalsocialhistory'].durableMedicalTennisElbow,report.data['relevantmedicalsocialhistory'].durableMedicalNeoprene,report.data['relevantmedicalsocialhistory'].durableMedicalLumbar, report.data['relevantmedicalsocialhistory'].durableMedicalCane,report.data['relevantmedicalsocialhistory'].durableMedicalCrutch,report.data['relevantmedicalsocialhistory'].durableMedicalAFO,report.data['relevantmedicalsocialhistory'].durableMedicalKAFO,report.data['relevantmedicalsocialhistory'].durableMedicalTENS,report.data['relevantmedicalsocialhistory'].durableMedicalHwave,report.data['relevantmedicalsocialhistory'].durableMedicalWheelchair])">
+            Medical equipment used includes: <span ng-bind-html="getCommmaStringCheck([report.data['relevantmedicalsocialhistory'].durableMedicalWrist,report.data['relevantmedicalsocialhistory'].durableMedicalTennisElbow,report.data['relevantmedicalsocialhistory'].durableMedicalNeoprene,report.data['relevantmedicalsocialhistory'].durableMedicalLumbar, report.data['relevantmedicalsocialhistory'].durableMedicalCane,report.data['relevantmedicalsocialhistory'].durableMedicalCrutch,report.data['relevantmedicalsocialhistory'].durableMedicalAFO,report.data['relevantmedicalsocialhistory'].durableMedicalKAFO,report.data['relevantmedicalsocialhistory'].durableMedicalTENS,report.data['relevantmedicalsocialhistory'].durableMedicalHwave,report.data['relevantmedicalsocialhistory'].durableMedicalWheelchair])"></span>.
+        </div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].durableMedicalTextData" ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].durableMedicalTextData)"></div>
+
+    </div>
+    <!--End Therapy/Ancillary Treatments to Date-->
+
+    <!--Prior Care Facility/Case Consult Providers-->
+    <div ng-if="report.data['relevantmedicalsocialhistory'].shpriorcarefacilitycheck.length > 0 || report.data['relevantmedicalsocialhistory'].shcarepriorfacilitytextother">
+        <br>
+        <strong>Prior Care Facility/Case Consult Providers</strong><br>
+        <div class="divMain">
+            <div ng-if="report.data['relevantmedicalsocialhistory'].shpriorcarefacilitycheck.length > 0 ">{{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}} {{report.data ['bginfo'].lastname}}'s prior care facility/case consult providers include {{report.data['relevantmedicalsocialhistory'].shpriorcarefacilitycheck | map}}.</div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shcarepriorfacilitytextother)"></div>
+        </div>
+    </div>
+    <!--End Prior Care Facility/Case Consult Providers-->
+
+    <!--Prior Health Conditions-->
+    <div ng-if="report.data['relevantmedicalsocialhistory'].shgeneralpriorhealthradio.length>0 || report.data['relevantmedicalsocialhistory'].shgeneralhealthpriorsurgeryradio.length>0 || report.data['relevantmedicalsocialhistory'].shcurrentmedicationradio.length>0 || report.data['relevantmedicalsocialhistory'].shknownallergiesNonecheck.length>0 || report.data['relevantmedicalsocialhistory'].shknownallergiescheck.length>0">
+        <br>
+        <strong>General Health Conditions/Past Medical History</strong>
+        <div class="divMain">
+            <div ng-if="report.data['relevantmedicalsocialhistory'].shgeneralpriorhealthradio">We discuss {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} general health conditions and past medical history.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].shgeneralpriorhealthradio=='Non-Contributory'">Patient has had non-contributory prior illness.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].shgeneralpriorhealthradio=='Contributory' && report.data['relevantmedicalsocialhistory'].shgeneralhealthcontricheck.length == 0 ">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has remarkable prior illness.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].shgeneralpriorhealthradio=='Contributory' && report.data['relevantmedicalsocialhistory'].shgeneralhealthcontricheck">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has remarkable prior illness of {{report.data['relevantmedicalsocialhistory'].shgeneralhealthcontricheck | map}}.</div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shgeneralhealthontritextother)"></div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].shgeneralhealthpriorsurgeryradio=='Non-Contributory'">Patient has had non-contributory prior surgery.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].shgeneralhealthpriorsurgeryradio=='Contributory'">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of prior surgery.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].shgeneralhealthpriorsurgeryradio=='Contributory' && report.data['relevantmedicalsocialhistory'].shgeneralhealthpriorsugeycheck">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} prior surgery history includes {{report.data['relevantmedicalsocialhistory'].shgeneralhealthpriorsugeycheck | map}}.</div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shgeneralhealthpriorsurgerytextother)"></div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].shcurrentmedicationradio=='Non-Contributory'">Patient has had non-contributory medications.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].shcurrentmedicationradio=='Contributory' && report.data['relevantmedicalsocialhistory'].shcurrentmedications.length == 0 ">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} currently takes medication for a contributory condition.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].shcurrentmedicationradio=='Contributory' && report.data['relevantmedicalsocialhistory'].shcurrentmedications">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} currently takes medication for {{report.data['relevantmedicalsocialhistory'].shcurrentmedications | map}}.</div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shcurrentmedicationsothertext)"></div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].shknownallergiesNonecheck">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has no known allergies.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].shknownallergiescheck">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} is allergic to {{report.data['relevantmedicalsocialhistory'].shknownallergiescheck|map}}.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].shknownallergiesOthercheck">
+                <div ng-if="report.data['relevantmedicalsocialhistory'].shknownallergiesOthercheckTextarea!=''">Other allergies:&nbsp;<span ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shknownallergiesOthercheckTextarea)"></span></div>
+            </div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shknownallergiesothertext)"></div>
+        </div>
+    </div>
+    <!--End Prior Health Conditions-->
+
+    <!--Start General Review of Systems-->
+    <div ng-if="report.data['relevantmedicalsocialhistory'].shpriorillnessradio">
+        <br>
+        <strong>General Review of Systems</strong>
+        <br>
+        <b>Constitutional:</b> <span ng-if="report.data['relevantmedicalsocialhistory'].negativeshgeneralconstitutionalcheck!='Negative'"><span ng-bind="report.data['relevantmedicalsocialhistory'].shgeneralconstitutionalcheck.length>0?report.data['relevantmedicalsocialhistory'].shgeneralconstitutionalcheck:report.data['relevantmedicalsocialhistory'].shgeneralreviewpriorcheck.length>0?['Positive']:['Negative'] | map | capitalize"></span></span><span ng-if="report.data['relevantmedicalsocialhistory'].negativeshgeneralconstitutionalcheck=='Negative'">Negative</span>. <span ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shgeneralreviewpriorothertext)"></span>
+        <br>
+        <b>Eyes/vision:</b> <span ng-bind="report.data['relevantmedicalsocialhistory'].shgeneraleyescheck.length>0?'Positive':'Negative'"></span>. <span ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shgeneraleyesothertext)"></span>
+        <br>
+        <b>Ears/Nose/Throat:</b> <span ng-bind="report.data['relevantmedicalsocialhistory'].shgeneralthroatcheck.length>0?'Positive':'Negative'"></span>. <span ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shgeneralthroatothertext)"></span>
+        <br>
+        <b>Cardiovascular/Heart/Circulation:</b> <span ng-bind="report.data['relevantmedicalsocialhistory'].shgeneralcardiovascularcheck.length>0?'Positive':'Negative'"></span>. <span ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shgeneralcardiovascularothertext)"></span>
+        <br>
+        <b>Respiratory/Breathing:</b> <span ng-bind="report.data['relevantmedicalsocialhistory'].shgeneralrespiratorycheck.length>0?'Positive':'Negative'"></span>. <span ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shgeneralrespiratoryothertext)"></span>
+        <br>
+        <b>Gastrointestinal/Digestive:</b> <span ng-bind="report.data['relevantmedicalsocialhistory'].shgeneralgastrointestinalcheck.length>0?'Positive':'Negative'"></span>. <span ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shgeneralgastrointestinalothertext)"></span>
+        <br>
+        <b>Genitourinary/Urinary or Reproductive:</b> <span ng-bind="report.data['relevantmedicalsocialhistory'].shgeneralgenitourinary.length>0?'Positive':'Negative'"></span>. <span ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shgeneralgenitourinaryothertext)"></span>
+        <br>
+        <b>Musculoskeletal/Joints:</b> <span ng-bind="report.data['relevantmedicalsocialhistory'].shgeneralmusculoskeletalcheck.length>0?'Positive':'Negative'"></span>. <span ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shgeneralmusculoskeletalothertext)"></span>
+        <br>
+        <b>Skin:</b> <span ng-bind="report.data['relevantmedicalsocialhistory'].shgeneralskincheck.length>0?'Positive':'Negative'"></span>. <span ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shgeneralskinothertext)"></span>
+        <br>
+        <b>Neurological/Dizziness/Weakness/Sensory:</b> <span ng-bind="report.data['relevantmedicalsocialhistory'].shgeneralneurologicalcheck.length>0?'Positive':'Negative'"></span>. <span ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shgeneralneurologicalothertext)"></span>
+        <br>
+        <b>Psychiatric/Depression/Anxiety/History of Suicidal Thoughts/Addictions:</b> <span ng-bind="report.data['relevantmedicalsocialhistory'].shgeneralpsychiatric.length>0?'Positive':'Negative'"></span>. <span ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shgeneralpsychiatricothertext)"></span>
+        <br>
+        <b>Endocrine/Diabetes or Thyroid:</b> <span ng-bind="report.data['relevantmedicalsocialhistory'].shgeneralendocrinecheck.length>0?'Positive':'Negative'"></span>. <span ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shgeneralendocrineothertext)"></span>
+        <br>
+        <b>Hematological/Lymphatic/Bruising/Bleeding or Swollen Areas:</b> <span ng-bind="report.data['relevantmedicalsocialhistory'].shgeneralhematologicalcheck.length>0?'Positive':'Negative'"></span>. <span ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shgeneralhematologicalothertext)"></span>
+        <br>
+        <b>Allergic/Immunologic/Drug Intolerance etc:</b> <span ng-bind="report.data['relevantmedicalsocialhistory'].shgeneralallergiccheck.length>0?'Positive':'Negative'"></span>. <span ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].shgeneralallergicothertext)"></span>
+        <br>
+    </div>
+    <!--End General Review of Systems-->
+
+    <div class="divMain" ng-if="report.data['relevantmedicalsocialhistory'].MhHistoryburnRadio.length>0 || report.data['relevantmedicalsocialhistory'].MhTanningRadio.length>0 || report.data['relevantmedicalsocialhistory'].MhMolesRadio.length>0 || report.data['relevantmedicalsocialhistory'].MhPriorskinRadio.length>0 || report.data['relevantmedicalsocialhistory'].MhFamilyHistorySelect.length>0">
+        <br>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhHistoryburnRadio == 'No'">{{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}} {{report.data ['bginfo'].lastname}} does not have a history of sunburns.</div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhHistoryburnRadio == 'Yes'">{{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}} {{report.data ['bginfo'].lastname}} has a history of sunburns.</div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].Mhischild1to12 == 'Childhood (age 1-12 years)' && report.data['relevantmedicalsocialhistory'].Mhischild1to12Blistering != 'Blistering'">
+            <div ng-if="report.data['relevantmedicalsocialhistory'].Mhischild1to12Select.length==0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} experienced sunburns during childhood (ages 1 - 12).
+            </div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].Mhischild1to12Select.length>0 && report.data['relevantmedicalsocialhistory'].Mhischild1to12Select[0]!=''">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} experienced {{report.data['relevantmedicalsocialhistory'].Mhischild1to12Select}} sunburns during childhood (ages 1 - 12).
+            </div>
+        </div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].Mhischild1to12 == 'Childhood (age 1-12 years)' && report.data['relevantmedicalsocialhistory'].Mhischild1to12Blistering == 'Blistering'">
+            <div ng-if="report.data['relevantmedicalsocialhistory'].Mhischild1to12Select.length==0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} experienced sunburns with blistering during childhood (ages 1 - 12).
+            </div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].Mhischild1to12Select.length>0 && report.data['relevantmedicalsocialhistory'].Mhischild1to12Select[0]!=''">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} experienced {{report.data['relevantmedicalsocialhistory'].Mhischild1to12Select}} sunburns with blistering during childhood (ages 1 - 12).
+            </div>
+        </div>
+        <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].Mhischild1to12TextA)"></div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhisAdolescence13to17 == 'Adolescence (age 13-17 years)' && report.data['relevantmedicalsocialhistory'].MhisAdolescence13to17Blistering != 'Blistering'">
+            <div ng-if="report.data['relevantmedicalsocialhistory'].MhisAdolescence13to17Select.length==0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} experienced sunburns during adolescence (age 13-17 years).
+            </div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].MhisAdolescence13to17Select.length>0 && report.data['relevantmedicalsocialhistory'].MhisAdolescence13to17Select[0]!=''">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} experienced {{report.data['relevantmedicalsocialhistory'].MhisAdolescence13to17Select}} sunburns during adolescence (age 13-17 years).
+            </div>
+        </div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhisAdolescence13to17 == 'Adolescence (age 13-17 years)' && report.data['relevantmedicalsocialhistory'].MhisAdolescence13to17Blistering == 'Blistering'">
+            <div ng-if="report.data['relevantmedicalsocialhistory'].MhisAdolescence13to17Select.length==0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} experienced sunburns with blistering during adolescence (age 13-17 years).
+            </div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].MhisAdolescence13to17Select.length>0 && report.data['relevantmedicalsocialhistory'].MhisAdolescence13to17Select[0]!=''">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} experienced {{report.data['relevantmedicalsocialhistory'].MhisAdolescence13to17Select}} sunburns with blistering during adolescence (age 13-17 years).
+            </div>
+        </div>
+        <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].MhisAdolescence13to17TextA)"></div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhisAdulthood18 == 'Adulthood 18+' && report.data['relevantmedicalsocialhistory'].MhisAdulthood18Blistering != 'Blistering'">
+            <div ng-if="report.data['relevantmedicalsocialhistory'].MhisAdulthood18Select.length==0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} experienced sunburns during adulthood (age 18+).
+            </div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].MhisAdulthood18Select.length>0 && report.data['relevantmedicalsocialhistory'].MhisAdulthood18Select[0]!=''">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} experienced {{report.data['relevantmedicalsocialhistory'].MhisAdulthood18Select}} sunburns during adulthood (age 18+).
+            </div>
+        </div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhisAdulthood18 == 'Adulthood 18+' && report.data['relevantmedicalsocialhistory'].MhisAdulthood18Blistering == 'Blistering'">
+            <div ng-if="report.data['relevantmedicalsocialhistory'].MhisAdulthood18Select.length==0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} experienced sunburns with blistering during adulthood (age 18+).
+            </div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].MhisAdulthood18Select.length>0 && report.data['relevantmedicalsocialhistory'].MhisAdulthood18Select[0]!=''">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} experienced {{report.data['relevantmedicalsocialhistory'].MhisAdulthood18Select}} sunburns with blistering during adulthood (age 18+).
+            </div>
+        </div>
+        <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].MhisAdulthood18TextA)"></div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhTanningRadio== 'No'">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} does not have a history of using tanning beds.</div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhTanningRadio== 'Yes'">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of using tanning beds.</div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhTanningRadio== 'Yes' && report.data['relevantmedicalsocialhistory'].MhTanningageofuse.length>0 && report.data['relevantmedicalsocialhistory'].MhTanningageofuse !='Teen'">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} began using tanning beds between the ages of {{report.data ['relevantmedicalsocialhistory'].MhTanningageofuse}}.</div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhTanningRadio== 'Yes' && report.data['relevantmedicalsocialhistory'].MhTanningageofuse == 'Teen'">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} began using tanning beds as a teen.</div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhtanningFreqofuse.length>0 && report.data['relevantmedicalsocialhistory'].MhtanningFreqsession ==''">Tanning beds were used on a {{report.data['relevantmedicalsocialhistory'].MhtanningFreqofuse | lowercase}} basis.</div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhtanningFreqsession.length>0 && report.data['relevantmedicalsocialhistory'].MhtanningFreqsession.length>0 && report.data['relevantmedicalsocialhistory'].MhTanningRadio=='Yes'">Tanning beds were used {{report.data['relevantmedicalsocialhistory'].MhtanningFreqsession | lowercase}} sessions per <span ng-if="!report.data ['relevantmedicalsocialhistory'].MhtanningFreqofuse">on a {{report.data ['relevantmedicalsocialhistory'].MhtanningFreqofuse|lowercase}}</span> <span ng-if="report.data ['relevantmedicalsocialhistory'].MhtanningFreqofuse">{{report.data ['relevantmedicalsocialhistory'].MhtanningFreqofuse.replace('ly','')|lowercase}}.</span> <span ng-if="!report.data ['relevantmedicalsocialhistory'].MhtanningFreqofuse">basis</span></div>
+        <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].MhtanningTextA)"></div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhMolesRadio == 'No'">No history of nevi (moles).</div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhMolesRadio == 'Yes'">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} reports a history of nevi (moles).</div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhMolesRadio == 'Yes' && report.data['relevantmedicalsocialhistory'].MhMolesNumber">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of nevi numbering {{report.data['relevantmedicalsocialhistory'].MhMolesNumber}}.</div>
+        <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].MhmolesTextA)"></div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorskinRadio == 'No'">No history of prior skin cancer.</div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorskinRadio == 'Yes'">
+            {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a prior history of skin cancer.
+ <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerBasalcell == 'Basal cell'">
+     {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} had basal cell cancer.
+ <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerAge.length>0 && report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerAge !='70+'">The initial onset occurred during {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} {{report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerAge|lowercase}}.</div>
+     <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerAge == '70+'">The initial onset occurred after the age of 70.</div>
+     <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerNumbercancer.length>0">
+         There
+ <ng-pluralize count="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerNumbercancer" when="{'1': 'was','other': 'were'}"></ng-pluralize>
+         {{report.data ['relevantmedicalsocialhistory'].MhPriorSkinCancerNumbercancer}}
+ <ng-pluralize count="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerNumbercancer" when="{'1': 'cancer', 'other':'cancers'}"></ng-pluralize>
+         of this type.
+     </div>
+     <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerComplicationradio == 'No'">There were no complications from the cancer.</div>
+     <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerComplicationradio == 'Yes'">The cancer resulted in complications.</div>
+     <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].mhSkincancercomplicationTextA)"></div>
+     <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].MhbasecelltwxtA)"></div>
+ </div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerSquamouscell == 'Squamous cell'">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} had squamous cell cancer.
+ <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerSquamousAge.length>0 && report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerSquamousAge != '70+'">The initial onset occurred during {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} {{report.data ['relevantmedicalsocialhistory'].MhPriorSkinCancerSquamousAge|lowercase}}.</div>
+                <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerSquamousAge == '70+'">The initial onset occurred after the age of 70.</div>
+                <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerNumbercancerSquamous.length>0">
+                    There 
+ <ng-pluralize count="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerNumbercancerSquamous" when="{'1': 'was', 'other':'were'}"></ng-pluralize>
+                    {{report.data ['relevantmedicalsocialhistory'].MhPriorSkinCancerNumbercancerSquamous}}
+ <ng-pluralize count="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerNumbercancerSquamous" when="{'1': 'cancer', 'other':'cancers'}"></ng-pluralize>
+                    of this type.
+                </div>
+                <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerComplicationradioSquamouscell == 'No'">There were no complications from the cancer.</div>
+                <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerComplicationradioSquamouscell == 'Yes'">The cancer resulted in complications.</div>
+                <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].mhSkincancercomplicationradioSquamouscellTextA)"></div>
+                <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].MhbasecelltwxtASquamous)"></div>
+            </div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerMelanoma == 'Melanoma'">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} had melanoma cancer.
+ <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerMelanomaAge.length>0 && report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerMelanomaAge != '70+'">The initial onset occurred during {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} {{report.data ['relevantmedicalsocialhistory'].MhPriorSkinCancerMelanomaAge}}.</div>
+                <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerMelanomaAge == '70+'">The initial onset occurred after the age of 70.</div>
+                <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerNumbercancerMelanoma.length>0">
+                    There
+ <ng-pluralize count="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerNumbercancerMelanoma" when="{'1': 'was', 'other':'were'}"></ng-pluralize>
+                    {{report.data ['relevantmedicalsocialhistory'].MhPriorSkinCancerNumbercancerMelanoma}}
+ <ng-pluralize count="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerNumbercancerMelanoma" when="{'1': 'cancer', 'other':'cancers'}"></ng-pluralize>
+                    of this type.
+                </div>
+                <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerComplicationradioMelanoma == 'No'">There were no complications from the cancer.</div>
+                <div ng-if="report.data['relevantmedicalsocialhistory'].MhPriorSkinCancerComplicationradioMelanoma == 'Yes'">The cancer resulted in complications.</div>
+                <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].mhSkincancercomplicationradioMelanomaTextA)"></div>
+                <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].MhbasecelltwxtAMelanoma)"></div>
+            </div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].MhSkincancerTextA)"></div>
+        </div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhFamilyHistorySelect == 'Unknown'">Family history of skin cancer is unknown.</div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhFamilyHistorySelect == 'No'">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} family does not have a history of skin cancer.</div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhFamilyHistorySelect == 'Yes'">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} family has a history of skin cancer.</div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].Mhbiofatherckbox == 'Biological Father' && report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerBasalcell == 'Basal cell'">
+            {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} father had basal cell cancer.
+ <div ng-if="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerAge.length>0 && report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerAge!='Choose' && report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerAge && report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerAge!='70+'">The initial onset occurred during his {{report.data ['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerAge|lowercase}}.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerAge == '70+'">The initial onset occurred after the age of 70.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerNumbercancer.length>0">
+                {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} father had {{report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerNumbercancer}}
+ <ng-pluralize count="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerNumbercancer" when="{'1': 'cancer', 'other':'cancers'}"></ng-pluralize>
+                of this type.
+            </div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerComplicationradio == 'No'">There were no complications from the cancer.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerComplicationradio == 'Yes'">The cancer resulted in complications.</div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].BiofathermhSkincancercomplicationTextA1)"></div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].BiofatherMhbasecelltwxtA)"></div>
+        </div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].Mhbiofatherckbox == 'Biological Father' && report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerSquamouscell == 'Squamous cell'">
+            {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} father had squamous cell cancer.
+ <div ng-if="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerSquamousAge.length>0 && report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerSquamousAge!='Choose' && report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerSquamousAge && report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerSquamousAge!='70+'">The initial onset occurred during his {{report.data ['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerSquamousAge|lowercase}}.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerSquamousAge == '70+'">The initial onset occurred after the age of 70.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerNumbercancerSquamous.length>0">
+                {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} father had {{report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerNumbercancerSquamous}}
+ <ng-pluralize count="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerNumbercancerSquamous" when="{'1': 'cancer', 'other':'cancers'}"></ng-pluralize>
+                of this type.
+            </div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerComplicationradioSquamouscell == 'No'">There were no complications from the cancer.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerComplicationradioSquamouscell == 'Yes'">The cancer resulted in complications.</div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].BiofathermhSkincancercomplicationTextA2)"></div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].BiofatherMhbasecelltwxtASquamous)"></div>
+        </div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].Mhbiofatherckbox == 'Biological Father' && report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerMelanoma == 'Melanoma'">
+            {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} father had melanoma cancer.
+ <div ng-if="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerMelanomaAge.length>0 && report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerMelanomaAge!='Choose' && report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerMelanomaAge && report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerMelanomaAge!='70+'">
+     The initial onset occurred during his {{report.data ['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerMelanomaAge|lowercase}}.
+ </div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerMelanomaAge == '70+'">The initial onset occurred after the age of 70.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerNumbercancerMelanoma.length>0">
+                {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} father had {{report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerNumbercancerMelanoma}}
+ <ng-pluralize count="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerNumbercancerMelanoma" when="{'1': 'cancer', 'other':'cancers'}"></ng-pluralize>
+                of this type.
+            </div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerComplicationradioMelanoma == 'No'">There were no complications from the cancer.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].BiofatherMhPriorSkinCancerComplicationradioMelanoma == 'Yes'">The cancer resulted in complications.</div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].BiofathermhSkincancercomplicationTextA)"></div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].BiofatherMhbasecelltwxtAMelanoma)"></div>
+        </div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].Mhbiomotherckbox == 'Biological Mother' && report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerBasalcell == 'Basal cell'">
+            {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} mother had basal cell cancer.
+ <div ng-if="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerAge.length>0 && report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerAge!='Choose' && report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerAge!='70+'">The initial onset occurred during her {{report.data ['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerAge|lowercase}}.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerAge == '70+'">The initial onset occurred after the age of 70.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerNumbercancer.length>0">
+                {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} mother had {{report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerNumbercancer}}
+ <ng-pluralize count="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerNumbercancer" when="{'1': 'cancer', 'other':'cancers'}"></ng-pluralize>
+                of this type.
+            </div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerComplicationradio == 'No'">There were no complications from the cancer.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerComplicationradio == 'Yes'">The cancer resulted in complications.</div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].biomothermhSkincancercomplicationTextA1)"></div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].biomotherMhbasecelltwxtA)"></div>
+        </div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].Mhbiomotherckbox == 'Biological Mother' && report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerSquamouscell == 'Squamous cell'">
+            {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} mother had squamous cell cancer.
+ <div ng-if="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerSquamousAge.length>0 && report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerSquamousAge!='Choose' && report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerSquamousAge!='70+'">The initial onset occurred during her {{report.data ['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerSquamousAge|lowercase}}.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerSquamousAge == '70+'">The initial onset occurred after the age of 70.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerNumbercancerSquamous.length>0">
+                {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} mother had {{report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerNumbercancerSquamous}}
+ <ng-pluralize count="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerNumbercancerSquamous" when="{'1': 'cancer', 'other':'cancers'}"></ng-pluralize>
+                of this type.
+            </div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerComplicationradioSquamouscell == 'No'">There were no complications from the cancer.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerComplicationradioSquamouscell == 'Yes'">The cancer resulted in complications.</div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].biomothermhSkincancercomplicationTextA2)"></div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].biomotherMhbasecelltwxtASquamous)"></div>
+        </div>
+        <div ng-if="report.data['relevantmedicalsocialhistory'].Mhbiomotherckbox == 'Biological Mother' && report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerMelanoma == 'Melanoma'">
+            {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} mother had melanoma cancer.
+ <div ng-if="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerMelanomaAge.length>0 && report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerMelanomaAge!='Choose' && report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerMelanomaAge!='70+'">The initial onset occurred during her {{report.data ['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerMelanomaAge|lowercase}}.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerMelanomaAge == '70+'">The initial onset occurred after the age of 70.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerNumbercancerMelanoma.length>0">
+                {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} mother had {{report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerNumbercancerMelanoma}}
+ <ng-pluralize count="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerNumbercancerMelanoma" when="{'1': 'cancer', 'other':'cancers'}"></ng-pluralize>
+                of this type.
+            </div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerComplicationradioMelanoma == 'No'">There were no complications from the cancer.</div>
+            <div ng-if="report.data['relevantmedicalsocialhistory'].biomotherMhPriorSkinCancerComplicationradioMelanoma == 'Yes'">The cancer resulted in complications.</div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].biomothermhSkincancercomplicationTextA)"></div>
+            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory'].biomotherMhbasecelltwxtAMelanoma)"></div>
+        </div>
+
+        <div ng-if="report.data['relevantmedicalsocialhistory'].MhBiologycalsibling == 'Biological Sibling(s)'">
+
+            <div ng-if="report.data['relevantmedicalsocialhistory'].MhbrotherAddanother.length>0">
+                <div ng-repeat="item in report.data['relevantmedicalsocialhistory'].MhbrotherAddanother | orderBy:indexValue:reverse">
+
+                    <div ng-if="item.baselcell == true && item.indexValue == 0">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} biological brother had basal cell cancer.</div>
+                    <div ng-if="item.baselcell == true && item.indexValue != 0">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has another brother with a history of basal cell cancer.</div>
+                    <div ng-if="item.baselcellageoffirstcancer">
+                        <div ng-if="item.baselcellageoffirstcancer != '' && item.baselcellageoffirstcancer != '70+' && item.baselcellageoffirstcancer !=''">The initial onset occurred during his {{item.baselcellageoffirstcancer|lowercase}}.</div>
+                        <div ng-if="item.baselcellageoffirstcancer != '' && item.baselcellageoffirstcancer == '70+'">The initial onset occurred after the age of 70.</div>
+                    </div>
+                    <div ng-if="item.baselcellnoofcancers">
+                        <div ng-if="item.baselcellnoofcancers != ''">
+                            {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} brother had {{item.baselcellnoofcancers}}
+ <ng-pluralize count="item.baselcellnoofcancers" when="{'1': 'cancer', 'other':'cancers'}"></ng-pluralize>
+                            of this type.
+                        </div>
+                    </div>
+                    <div ng-if="item.baelcellcomplication == 'No'">There were no complications from the cancer.</div>
+                    <div ng-if="item.baelcellcomplication == 'Yes'">The cancer resulted in complications.</div>
+                    <div ng-bind-html="appendPeriod(item.baselcellTextA)"></div>
+
+
+                    <div ng-if="item.Squamouscell == true && item.indexValue == 0">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} biological brother had squamous cell cancer.</div>
+                    <div ng-if="item.Squamouscell == true && item.indexValue != 0">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has another brother with a history of squamous cell cancer.</div>
+                    <div ng-if="item.Squamouscellageoffirstcancer">
+                        <div ng-if="item.Squamouscellageoffirstcancer != '' && item.Squamouscellageoffirstcancer != '70+' && item.Squamouscellageoffirstcancer !=''">The initial onset occurred during his {{item.Squamouscellageoffirstcancer|lowercase}}.</div>
+                        <div ng-if="item.Squamouscellageoffirstcancer != '' && item.Squamouscellageoffirstcancer == '70+'">The initial onset occurred after the age of 70.</div>
+                    </div>
+                    <div ng-if="item.Squamouscellnoofcancers">
+                        <div ng-if="item.Squamouscellnoofcancers != ''">
+                            {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} brother had {{item.Squamouscellnoofcancers}}
+ <ng-pluralize count="item.Squamouscellnoofcancers" when="{'1': 'cancer', 'other':'cancers'}"></ng-pluralize>
+                            of this type.
+                        </div>
+                    </div>
+                    <div ng-if="item.Squamouscellcomplication == 'No'">There were no complications from the cancer.</div>
+                    <div ng-if="item.Squamouscellcomplication == 'Yes'">The cancer resulted in complications.</div>
+                    <div ng-bind-html="appendPeriod(item.SquamouscellTextA)"></div>
+
+
+                    <div ng-if="item.Melanoma == true && item.indexValue == 0">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} biological brother had melanoma cancer.</div>
+                    <div ng-if="item.Melanoma == true && item.indexValue != 0">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has another brother with a history of melanoma cancer.</div>
+                    <div ng-if="item.Melanomaageoffirstcancer">
+                        <div ng-if="item.Melanomaageoffirstcancer != '' && item.Melanomaageoffirstcancer != '70+' && item.Melanomaageoffirstcancer !=''">The initial onset occurred during his {{item.Melanomaageoffirstcancer|lowercase}}.</div>
+                        <div ng-if="item.Melanomaageoffirstcancer != '' && item.Melanomaageoffirstcancer == '70+'">The initial onset occurred after the age of 70.</div>
+                    </div>
+                    <div ng-if="item.Melanomanoofcancers">
+                        <div ng-if="item.Melanomanoofcancers != ''">
+                            {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} brother had {{item.Melanomanoofcancers}}
+ <ng-pluralize count="item.Melanomanoofcancers" when="{'1': 'cancer', 'other':'cancers'}"></ng-pluralize>
+                            of this type.
+                        </div>
+                    </div>
+                    <div ng-if="item.Melanomacomplication == 'No'">There were no complications from the cancer.</div>
+                    <div ng-if="item.Melanomacomplication == 'Yes'">The cancer resulted in complications.</div>
+                    <span ng-bind-html="appendPeriod(item.MelanomaTextA)"></span>
+
+                    <span ng-bind-html="appendPeriod(item.siblingTextA)"></span>
+                </div>
+            </div>
+
+            <div ng-if="report.data['relevantmedicalsocialhistory'].MhsisterAddanother.length>0">
+                <div ng-repeat="item in report.data['relevantmedicalsocialhistory'].MhsisterAddanother | orderBy:indexValue:reverse">
+
+                    <div ng-if="item.baselcell == true && item.indexValue == 0">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} biological sister had basal cell cancer.</div>
+                    <div ng-if="item.baselcell == true && item.indexValue != 0">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has another sister with a history of basel cell cancer.</div>
+                    <div ng-if="item.baselcellageoffirstcancer">
+                        <div ng-if="item.baselcellageoffirstcancer != '' && item.baselcellageoffirstcancer != '70+' && item.baselcellageoffirstcancer!=''">The initial onset occurred during her {{item.baselcellageoffirstcancer|lowercase}}.</div>
+                        <div ng-if="item.baselcellageoffirstcancer != '' && item.baselcellageoffirstcancer == '70+'">The initial onset occurred after the age of 70.</div>
+                    </div>
+                    <div ng-if="item.baselcellnoofcancers">
+                        <div ng-if="item.baselcellnoofcancers != ''">
+                            {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} sister had {{item.baselcellnoofcancers}}
+ <ng-pluralize count="item.baselcellnoofcancers" when="{'1': 'cancer', 'other':'cancers'}"></ng-pluralize>
+                            of this type.
+                        </div>
+                    </div>
+                    <div ng-if="item.baelcellcomplication == 'No'">There were no complications from the cancer.</div>
+                    <div ng-if="item.baelcellcomplication == 'Yes'">The cancer resulted in complications.</div>
+                    <div ng-bind-html="appendPeriod(item.baselcellTextA)"></div>
+
+
+                    <div ng-if="item.Squamouscell == true && item.indexValue == 0">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} biological sister had squamous cell cancer.</div>
+                    <div ng-if="item.Squamouscell == true && item.indexValue != 0">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has another sister with a history of squamous cell cancer.</div>
+                    <div ng-if="item.Squamouscellageoffirstcancer">
+                        <div ng-if="item.Squamouscellageoffirstcancer != '' && item.Squamouscellageoffirstcancer != '70+' && item.Squamouscellageoffirstcancer!=''">The initial onset occurred during her {{item.Squamouscellageoffirstcancer|lowercase}}.</div>
+                        <div ng-if="item.Squamouscellageoffirstcancer != '' && item.Squamouscellageoffirstcancer == '70+'">The initial onset occurred after the age of 70.</div>
+                    </div>
+                    <div ng-if="item.Squamouscellnoofcancers">
+                        <div ng-if="item.Squamouscellnoofcancers != ''">
+                            {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} sister had {{item.Squamouscellnoofcancers}}
+ <ng-pluralize count="item.Squamouscellnoofcancers" when="{'1': 'cancer', 'other':'cancers'}"></ng-pluralize>
+                            of this type.
+                        </div>
+                    </div>
+                    <div ng-if="item.Squamouscellcomplication == 'No'">There were no complications from the cancer.</div>
+                    <div ng-if="item.Squamouscellcomplication == 'Yes'">The cancer resulted in complications.</div>
+                    <div ng-bind-html="appendPeriod(item.SquamouscellTextA)"></div>
+
+
+                    <div ng-if="item.Melanoma == true && item.indexValue == 0">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} biological sister had melanoma cancer.</div>
+                    <div ng-if="item.Melanoma == true && item.indexValue != 0">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has another sister with a history of melanoma cancer.</div>
+                    <div ng-if="item.Melanomaageoffirstcancer">
+                        <div ng-if="item.Melanomaageoffirstcancer != '' && item.Melanomaageoffirstcancer != '70+' && item.Melanomaageoffirstcancer!=''">The initial onset occurred during her {{item.Melanomaageoffirstcancer|lowercase}}.</div>
+                        <div ng-if="item.Melanomaageoffirstcancer != '' && item.Melanomaageoffirstcancer == '70+'">The initial onset occurred after the age of 70.</div>
+                    </div>
+                    <div ng-if="item.Melanomanoofcancers">
+                        <div ng-if="item.Melanomanoofcancers != ''">
+                            {{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} sister had {{item.Melanomanoofcancers}}
+ <ng-pluralize count="item.Melanomanoofcancers" when="{'1': 'cancer', 'other':'cancers'}"></ng-pluralize>
+                            of this type.
+                        </div>
+                    </div>
+                    <div ng-if="item.Melanomacomplication == 'No'">There were no complications from the cancer.</div>
+                    <div ng-if="item.Melanomacomplication == 'Yes'">The cancer resulted in complications.</div>
+                    <div ng-bind-html="appendPeriod(item.MelanomaTextA)"></div>
+
+                    <div ng-bind-html="appendPeriod(item.siblingTextA)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End of Medical History General Section-->
+
+    <!--Start of Medical History Body Part-->
+
+    <!--Prior Injury-->
+    <div ng-repeat="item in report.data['selectinjuries'].concatedbodypart|orderBy:'sequence'">
+        <div ng-if="checkExistById(item,'relevantmedicalsocialhistory','btnPriorInjuryAddAnother')">
+            <strong>
+                <br>
+                Prior Injury - {{displayBodyPartName(item)}}
+            </strong>
+            <div ng-repeat="arrayitem in report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother">
+                <div class="divMain">
+                    <div>The patient <span ng-bind="$index>0?'had another prior injury in ':'has previously injured '"></span>{{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} {{item.bdsides!='none'?item.bdsides:''}} {{item.text=='Other'?item.bdpartother:item.text | lowercase}}{{item.bodysystem=='Spine'?' spine':''}}<span ng-bind="$index>0 && (report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].dateOfPriorInjury)?'':'.'"></span></div>
+                    <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].dateOfPriorInjury"><span ng-bind="$index>0?'on the date of ':'The date of the prior injury was '"></span>{{report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].dateOfPriorInjury | date:'MM/dd/yyyy'}}.</div>
+
+                    <span ng-if="!report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].dateOfPriorInjury">The injury occured at an unknown date.</span>
+                    <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].residualProblemsRadio == 'No'">{{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}} {{report.data['bginfo'].lastname}} has no residual problems due to this prior injury.</div>
+                    <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].residualProblemsRadio == 'Yes'">{{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}} {{report.data['bginfo'].lastname}} reports that this prior injury caused residual problems.</div>
+                    <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].residualProblemsRadio == 'Yes'">
+                        <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].residualProblemsBaseline">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} rates the baseline pain caused by the prior injury as {{report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].residualProblemsBaseline}} out of 10.</div>
+                    </div>
+                    <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].priorSurgeryHistoryRadio == 'No'">{{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}} {{report.data['bginfo'].lastname}} has no prior surgery history.</div>
+                    <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].priorSurgeryHistoryRadio == 'Yes'">{{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}} {{report.data['bginfo'].lastname}} has had surgery for this prior injury.</div>
+                    <div ng-if="item.id == 'shoulder'">
+                        <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].priorSurgeryHistoryRadio=='Yes'">
+                            <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].dateOfPriorSurgery!=0 && report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].dateOfPriorSurgery">The year of the prior surgery was {{getAbsValue(report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].dateOfPriorSurgery)}}.</div>
+                            <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].arthoscopicOpenRadio == 'Arthroscopic'">Arthroscopic surgery was performed.</div>
+                            <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].arthoscopicOpenRadio == 'Open'">A non-arthroscopic open procedure was performed.</div>
+                            <span ng-bind-html="makeSentence(report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].subacromialDecompression + '~' + report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].labralDebridement + '~' + report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].claviculoplasty + '~' + report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].totalShoulderPlasty + '~' + report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].capsularRelease + '~' + report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].rotatorCuffRepair + '~' + report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].rotatorCuffDebridement) | capitalize"></span>
+                            <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].hardwarePlacementProsthesis">Hardware placement/prosthesis was inserted.</div>
+                            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].hardwarePlacementProsthesisText)"></div>
+                            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].arthopenOtherText)"></div>
+                        </div>
+                    </div>
+                    <div ng-if="item.id == 'knee'">
+                        <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].priorSurgeryHistoryRadio=='Yes'">
+                            <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].dateOfPriorSurgery!=0 && report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].dateOfPriorSurgery">The year of the prior surgery was {{getAbsValue(report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].dateOfPriorSurgery)}}.</div>
+                            <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].arthoscopicOpenRadio == 'Arthroscopic'">Arthroscopic surgery was performed.</div>
+                            <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].arthoscopicOpenRadio == 'Open'">A non-arthroscopic open procedure was performed.</div>
+                            <span ng-bind-html="makeKneeSentence2([{'section':report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].medialMeniscus,'subsection':report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].medialMeniscusRadio},{'section':report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].lateralMeniscus,'subsection':report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].lateralMeniscusRadio},{'section':report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].chondroplasty,'subsection':report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].chondroplastyRadio},{'section':report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].aclRepair,'subsection':report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].aclRepairRadio},{'section':report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].pclRepair,'subsection':report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].pclRepairRadio}])"></span>
+                            <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].hardwarePlacementProsthesis">Hardware placement/prosthesis was inserted.</div>
+                            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].hardwarePlacementProsthesisText)"></div>
+                            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].arthopenOtherText)"></div>
+                        </div>
+                    </div>
+                    <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].priorSurgeryHistoryRadio=='Yes'">
+                        <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].priorSurgeryHistoryText)"></div>
+                    </div>
+                    <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory' + item.concateId].btnPriorInjuryAddAnother[$index].TextA)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Prior Injury-->
+
+    <!--Surgery For This Injury-->
+    <div ng-repeat="item in report.data['selectinjuries'].concatedbodypart | orderBy:'sequence'">
+        <div ng-if="checkExistById(item,'relevantmedicalsocialhistory','btnSurgeryForInjuryAddAnother')">
+            <div ng-if="item.id !='other'">
+                <br>
+                <strong>Surgery for this injury -</strong> <span class="DFRReportSubHeadingFontSize"><strong>{{displayBodyPartName(item)}}</strong></span><br>
+                <div ng-repeat="arrayitem in report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother && item.bdsides != 'none' && item.bdsides!='n/a' ? report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother : report.data['relevantmedicalsocialhistory' + item.id].btnSurgeryForInjuryAddAnother">
+                    <div ng-if="item.bdsides != 'none' && item.bdsides != 'n/a' ? report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother.length > 0 : report.data['relevantmedicalsocialhistory' + item.id].btnSurgeryForInjuryAddAnother.length > 0 ">
+                        <div ng-if="item.bdsides != 'none' && item.bdsides != 'n/a'">
+                            <div class="divMain">
+                                <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].dateOfSurgery">Surgery for this injury was performed on {{report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].dateOfSurgery | date:'MM/dd/yyyy'}}.</div>
+                                <div ng-if="!report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].dateOfSurgery">There was a surgery for this injury at an unknown date.</div>
+                                <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].surgeonName)"></div>
+                                <div ng-if="item.id == 'shoulder'">
+                                    <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].arthoscopicOpenRadio == 'Arthroscopic'">Arthroscopic surgery was performed.</div>
+                                    <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].arthoscopicOpenRadio == 'Open'">A non-arthroscopic open procedure was performed.</div>
+                                    <span ng-bind-html="makeSentence(report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].subacromialDecompression + '~' + report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].labralDebridement + '~' + report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].claviculoplasty + '~' + report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].totalShoulderPlasty + '~' + report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].capsularRelease + '~' + report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].rotatorCuffRepair + '~' + report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].rotatorCuffDebridement) | capitalize"></span>
+                                    <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].hardwarePlacementProsthesis">Hardware placement/prosthesis was inserted.</div>
+                                    <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].hardwarePlacementProsthesisText)"></div>
+                                    <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].arthopenOtherText)"></div>
+                                </div>
+                                <div ng-if="item.id == 'knee'">
+                                    <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].dateOfPriorSurgery">The year of the prior surgery was {{report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].dateOfPriorSurgery}}.</div>
+                                    <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].arthoscopicOpenRadio == 'Arthroscopic'">Arthroscopic surgery was performed.</div>
+                                    <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].arthoscopicOpenRadio == 'Open'">A non-arthroscopic open procedure was performed.</div>
+                                    <span ng-bind-html="makeKneeSentence2([{'section':report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].medialMeniscus,'subsection':report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].medialMeniscusRadio},{'section':report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].lateralMeniscus,'subsection':report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].lateralMeniscusRadio},{'section':report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].chondroplasty,'subsection':report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].chondroplastyRadio},{'section':report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].aclRepair,'subsection':report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].aclRepairRadio},{'section':report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].pclRepair,'subsection':report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].pclRepairRadio}])"></span>
+                                    <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].hardwarePlacementProsthesis">Hardware placement/prosthesis was inserted.</div>
+                                    <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].hardwarePlacementProsthesisText)"></div>
+                                    <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].arthopenOtherText)"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="item.bdsides == 'none' || item.bdsides == 'n/a'">
+                            <div class="divMain">
+                                <div ng-if="report.data['relevantmedicalsocialhistory' + item.id].btnSurgeryForInjuryAddAnother[$index].dateOfSurgery">Surgery for this injury was performed on {{report.data['relevantmedicalsocialhistory' + item.id].btnSurgeryForInjuryAddAnother[$index].dateOfSurgery | date:'MM/dd/yyyy'}}.</div>
+                                <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory' + item.id].btnSurgeryForInjuryAddAnother[$index].surgeonName)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="item.id =='other'">
+                <strong>
+                    <br>
+                    Surgery for this injury - {{item.text=='Other'?item.bdpartother:item.text | capitalize}} {{item.bodysystem=='Spine'?'spine':''}} {{item.bdsides != 'none' && item.bdsides != 'n/a' ? '- '+(item.bdsides| capitalize ) : '' }}<br>
+                </strong>
+                <div ng-repeat="arrayitem in report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother">
+                    <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother.length > 0">
+                        <div class="divMain">
+                            <div ng-if="report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].dateOfSurgery">Surgery for this injury was performed on {{report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].dateOfSurgery | date:'MM/dd/yyyy'}}.</div>
+                            <div ng-if="!report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].dateOfSurgery">There was a surgery for this injury at an unknown date.</div>
+                            <div ng-bind-html="appendPeriod(report.data['relevantmedicalsocialhistory' + item.concateId].btnSurgeryForInjuryAddAnother[$index].surgeonName)"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Surgery For This Injury-->
+    <!--End of Medical History Body Part-->
+</div>
+<!-- End Relevant Medical History Section-->

@@ -1,0 +1,2023 @@
+<div ng-show="step==1">
+    <div class="aboutus">
+        <div class="bright">
+            <section id="header-title">
+                <div class="container">
+                    <div class="row">
+                        <h2>{{kickstart_page.title!=''?kickstart_page.title:"Welcome to Dr. John Alchemy's RateFast Injury Launch
+                            Page"}}
+                        </h2>
+                    </div>
+                </div>
+            </section>
+
+            <div class="row" ng-if="verifiedURL=='NO'">
+                <div class="col-sm-12 text-center" style="height: 350px; margin-top: 50px;">
+                    <h1>404 Not Found
+                    </h1>
+                </div>
+                <div style="clear: both"></div>
+            </div>
+
+            <div class="section" ng-if="verifiedURL=='YES'" style="font-size: 16px; line-height: 1.428571429; min-height: 450px">
+                <form name="kickstartform" ng-submit="kickstartform.$valid && btnSubmit.submit()">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p style="color: red; font-weight: bold;">If this is a medical emergency call 911 now.</p>
+                                <span data-ng-bind-html="kickstart_page.sub_title"></span>
+
+                                <span ng-show="kickstart_page.sub_title==''">
+                                    <p>
+                                        If this is <em>not</em> an emergency, and you would like to start a work injury claim with Dr. John Alchemy, then simply enter your work injury information below.                           
+                                    </p>
+                                    <p>Please note that this service is <em>only</em> for California work injuries.</p>
+                                    <p>To get started, first tell us a little bit about who you are:</p>
+                                </span>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12" style="margin: 10px 0;">
+                                <label style="margin-right: 7px; font-size: 20px;">I am a: </label>
+                                <br />
+                                <label class="normalLabel">
+                                    <input type="radio" name="empType" ng-model="type" ng-value="'InjuredWorker'" value="InjuredWorker" />
+                                    <span class="typeSelection">Injured worker</span>
+                                </label>
+                                <br />
+                                <label class="normalLabel">
+                                    <input type="radio" name="empType" ng-model="type" ng-value="'Employer'" value="Employer" />
+                                    <span class="typeSelection">Employer</span>
+                                </label>
+                                <br />
+                                <label class="normalLabel">
+                                    <input type="radio" name="empType" ng-model="type" ng-value="'Insurance'" value="Insurance" />
+                                    <span class="typeSelection">Insurance carrier</span>
+                                </label>
+                                <br />
+                                <label class="normalLabel">
+                                    <input type="radio" name="empType" ng-model="type" ng-value="'Nurse'" value="Nurse" />
+                                    <span class="typeSelection">Nurse case manager</span>
+                                </label>
+                                <br />
+                                <label class="normalLabel">
+                                    <input type="radio" name="empType" ng-model="type" ng-value="'Attorney'" value="Attorney" />
+                                    <span class="typeSelection">Attorney</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12" ng-show="status == 'true'">
+                                <p>
+                                    Thanks! Now please, please provide us with as much information as you can about the claim.
+                                    When you're ready, click the Submit button at the very bottom.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Patient / Injured Worker Information-->
+                    <div ng-show="type!=''" class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3>Patient / Injured Worker Information</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.firstname1.$invalid && submitted }">
+                                    <label>Patient first name:<span class="error">*</span></label>
+                                    <span class="error" ng-show="kickstartform.firstname1.$invalid && submitted">Field is required.
+                                    </span>
+                                    <input type="text" class="form-control" name="firstname1" ng-model="patientModel.basicinformation[0].firstname" ng-required="true">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.lastname1.$invalid && submitted }">
+                                    <label>Patient last name:<span class="error">*</span></label>
+                                    <span class="error" ng-show="kickstartform.lastname1.$invalid && submitted">Field is required.
+                                    </span>
+                                    <input type="text" class="form-control" name="lastname1" ng-model="patientModel.basicinformation[0].lastname" ng-required="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.dateofbirth1.$invalid && submitted }">
+                                    <label>Patient date of birth:<span class="error">*</span></label>
+                                    <span class="error" ng-show="kickstartform.dateofbirth1.$invalid && submitted">Field is required.
+                                    </span>
+                                    <input name="dateofbirth1" date-options="dateOptions" birth-datepicker ng-model="patientModel.basicinformation[0].dateofbirth"
+                                        class="form-control" date-format="MM-dd-yy" maxlength="10" placeholder="mm/dd/yyyy" ng-required="true">
+                                </div>
+                            </div>
+                            <div class="col-sm-6" style="height: 72px;">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.gender.$invalid && submitted }">
+                                    <div>
+                                        <label>Patient biological gender:<span class="error">*</span></label>
+                                        <span class="error" ng-show="kickstartform.gender.$invalid && submitted">Field is required.
+                                        </span>
+                                    </div>
+                                    <label class="normalLabel">
+                                        <input type="radio" name="gender" ng-value="'Male'" ng-model="patientModel.basicinformation[0].gender" ng-required="true" />
+                                        <span class="typeSelection">Male</span>
+                                    </label>
+                                    <label class="normalLabel">
+                                        <input type="radio" name="gender" ng-value="'Female'" ng-model="patientModel.basicinformation[0].gender" ng-required="true" />
+                                        <span class="typeSelection">Female</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Patient preferred language:<span class="error">*</span> </label>
+                                    <select class="form-control" ng-model="patientModel.demographics[0].preferredlanguage">
+                                        <option value="English" ng-selected="true">English</option>
+                                        <option value="Spanish">Spanish</option>
+                                        <!-- <option value="Mandarin">Mandarin</option> -->
+                                        <option value="Cantonese">Cantonese</option>
+                                        <!-- <option value="Vietnamese">Vietnamese</option>
+                                    <option value="Korean">Korean</option> -->
+                                        <option value="Other">Other Language</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-show="patientModel.demographics[0].preferredlanguage=='Other'" ng-class="{'has-error': kickstartform.preferredlanguageother.$invalid && submitted }">
+                                    <label>Other language:<span class="error" ng-show="patientModel.demographics[0].preferredlanguage=='Other'">*</span> </label>
+                                    <span class="error" ng-show="kickstartform.preferredlanguageother.$invalid && submitted">Field is required.
+                                    </span>
+                                    <input type="text" name="preferredlanguageother" class="form-control" ng-required="patientModel.demographics[0].preferredlanguage=='Other'"
+                                        ng-model="patientModel.demographics[0].preferredlanguageother">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.patientPhone.$invalid && submitted }">
+                                    <label>Patient phone number:<span class="error">*</span></label>
+                                    <span class="error" ng-show="kickstartform.patientPhone.$invalid && submitted">Field is required.
+                                    </span>
+                                    <!-- <input name="patientPhone" pattern="[0-9]*" type="text" class="form-control" ng-model="patientModel.contactinformation[0][patientModel.contactinformation[0].phonenumberselect]"
+                                    maxlength="10"
+                                    numbers-only="numbers-only" ui-mask="(999) 999-9999" ng-required="true" /> -->
+                                    <input type="tel" name="patientPhone" ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" ng-model="patientModel.contactinformation[0][patientModel.contactinformation[0].phonenumberselect]"
+                                        class="form-control" numbers-only="numbers-only" maxlength="10" ng-required="true">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-show="patientModel.contactinformation[0].phonenumberselect==patientModel.contactinformation[0].phonenumberselect &&  patientModel.contactinformation[0][patientModel.contactinformation[0].phonenumberselect].length>=10">
+                                    <label>Phone number extension: </label>
+                                    <input type="tel" class="form-control" name="" ng-model="patientModel.contactinformation[0].extension" maxlength="7" numbers-only="numbers-only" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- 	<div class="col-sm-12" style="height: 72px;"> -->
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div>
+                                        <label>Phone number type:<span class="error">*</span>&nbsp;</label>
+                                    </div>
+                                    <div style="padding-top: 5px; padding-bottom: 5px;" ng-show="type!='InjuredWorker'">
+                                        If you don't know the type, then select "Home."
+                                    </div>
+                                    <label class="normalLabel">
+                                        <input type="radio" name="phoneType" ng-change="resetPreferredPhone('homephone')" ng-value="'homephone'" ng-model="patientModel.contactinformation[0].phonenumberselect" selected />
+                                        <span class="typeSelection">Home</span>
+                                    </label>
+                                    <label class="normalLabel">
+                                        <input type="radio" name="phoneType" ng-value="'cellphone'" ng-change="resetPreferredPhone('cellphone')" ng-model="patientModel.contactinformation[0].phonenumberselect" />
+                                        <span class="typeSelection">Cell</span>
+                                    </label>
+                                    <label class="normalLabel">
+                                        <input type="radio" name="phoneType" ng-value="'workphone'" ng-change="resetPreferredPhone('workphone')" ng-model="patientModel.contactinformation[0].phonenumberselect" />
+                                        <span class="typeSelection">Work</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- <div class="col-sm-12" style="height: 72px;padding-top:10px;"> -->
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div>
+                                        <label>Can we leave a voicemail related to the injury at this phone number?</label>
+                                    </div>
+                                    <label class="normalLabel">
+                                        <input type="radio" ng-value="'Yes'" ng-change="resetLeaveVoiceMail('homephone')" ng-model="patientModel.contactinformation[0].voicemailradio" ng-show="patientModel.contactinformation[0].phonenumberselect=='homephone'" />
+                                        <input type="radio" ng-value="'Yes'" ng-change="resetLeaveVoiceMail('cellphone')" ng-model="patientModel.contactinformation[0].voicemailsecondradio" ng-show="patientModel.contactinformation[0].phonenumberselect=='cellphone'" />
+                                        <input type="radio" ng-value="'Yes'" ng-change="resetLeaveVoiceMail('workphone')" ng-model="patientModel.contactinformation[0].voicemailthirdradio" ng-show="patientModel.contactinformation[0].phonenumberselect=='workphone'" />
+                                        <span class="typeSelection">Yes</span>
+                                    </label>
+                                    <label class="normalLabel">
+                                        <input type="radio" ng-value="'No'" ng-change="resetLeaveVoiceMail('homephone')" ng-model="patientModel.contactinformation[0].voicemailradio" ng-show="patientModel.contactinformation[0].phonenumberselect=='homephone'" ng-checked="true" selected />
+                                        <input type="radio" ng-value="'No'" ng-change="resetLeaveVoiceMail('cellphone')" ng-model="patientModel.contactinformation[0].voicemailsecondradio" ng-show="patientModel.contactinformation[0].phonenumberselect=='cellphone'" ng-checked="true" selected />
+                                        <input type="radio" ng-value="'No'" ng-change="resetLeaveVoiceMail('workphone')" ng-model="patientModel.contactinformation[0].voicemailthirdradio" ng-show="patientModel.contactinformation[0].phonenumberselect=='workphone'" ng-checked="true" selected />
+                                        <span class="typeSelection">No</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.email1.$invalid && submitted}">
+                                    <label>Email:<span class="error" ng-show="type=='InjuredWorker'">*</span></label>
+                                    <span class="error" ng-show="kickstartform.email1.$invalid && submitted">Field is required.
+                                    </span>
+                                    <span class="error" ng-show="kickstartform.email1.$invalid && !kickstartform.email1.$pristine">Enter a valid email.
+                                    </span>
+                                    <input type="email" name="email1" class="form-control" ng-model="patientModel.contactinformation[0].email" ng-model-options="{ updateOn: 'blur' }"
+                                        ng-required="type=='InjuredWorker'">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Job title at time of injury:</label>
+                                    <input type="text" name="jobtitle" class="form-control" ng-model="patientModel.injury[0].injurydata.employment[0].jobtitle"
+                                        ng-model-options="{ updateOn: 'blur' }">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearer"></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3>Injury Information</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6" ng-show="type=='InjuredWorker' ">
+                                <div class="form-group">
+                                    <label>Briefly describe the injury or condition. For example, "I fell at the office and hurt my right knee."</label>
+                                    <br />
+                                    <textarea rows="5" class="form-control" name="injuryinformationdetail" ng-maxlength="2000" ng-model="patientModel.injury[0].injurydata.injuryinformation[0].injuryinformationdetail"></textarea>
+                                    <span class="error" ng-show="kickstartform.injuryinformationdetail.$invalid && !kickstartform.injuryinformationdetail.$pristine">Please limit your response to 2,000 characters.
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.dateofinjury1.$invalid && submitted }">
+                                    <label>Date of injury:<span class="error">*</span></label>
+                                    <span class="error" ng-show="kickstartform.dateofinjury1.$invalid && submitted">Field is required.
+                                    </span>
+                                    <br />
+                                    If you are not sure of the exact date, please provide the nearest approximate
+                                    date.
+                                    <br />
+                                    <br />
+                                    <input name="dateofinjury1" date-options="dateOptionsInjury" ng-model="patientModel.injury[0].injurydata.injuryinformation[0].dateofinjury"
+                                        custom-datepicker class="form-control" date-format="MM-dd-yy" maxlength="10" placeholder="mm/dd/yyyy"
+                                        ng-required="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearer"></div>
+
+                    <!--Employer-->
+                    <div ng-show="type!=''" class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3>Employer Information</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.companyname1.$invalid && submitted }">
+                                    <label>Employer Company Name:<span class="error">*</span></label>
+                                    <span class="error" ng-show="kickstartform.companyname1.$invalid && submitted">Field is required.
+                                    </span>
+                                    <input type="text" class="form-control" name="companyname1" ng-model="patientModel.injury[0].injurydata.employer[0].company"
+                                        ng-required="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.employercontact_firstname.$invalid && submitted }">
+                                    <label>Employer contact first name:<span class="error" ng-show="type=='Employer'">*</span> </label>
+                                    <span class="error" ng-show="kickstartform.employercontact_firstname.$invalid && submitted && type=='Employer'">Field is required.</span>
+                                    <input type="text" class="form-control" name="employercontact_firstname" ng-model="patientModel.injury[0].injurydata.employercontact[0].employercontact_firstname"
+                                        ng-required="type=='Employer'">
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.employercontact_lastname.$invalid && submitted }">
+                                    <label>Employer contact last name:<span class="error" ng-show="type=='Employer'">*</span></label>
+                                    <span class="error" ng-show="kickstartform.employercontact_lastname.$invalid && submitted && type=='Employer'">Field is required.</span>
+                                    <input type="text" class="form-control" name="employercontact_lastname" ng-model="patientModel.injury[0].injurydata.employercontact[0].employercontact_lastname"
+                                        ng-required="type=='Employer'">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.employerPhone.$invalid && submitted }">
+                                    <label>Employer phone number:<span class="error">*</span></label>
+                                    <span class="error" ng-show="kickstartform.employerPhone.$invalid && submitted">Field is required.
+                                    </span>
+                                    <!--<input pattern="[0-9]*" type="tel" class="form-control" ng-model="patientModel.injury[0].injurydata.employercontact[0].employercontact_telephoneno"
+                                        name="employerPhone" ng-required="true" maxlength="10" numbers-only="numbers-only" ui-mask="(999) 999-9999" />-->
+
+                                    <input type="tel" name="employerPhone" ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" ng-model="patientModel.injury[0].injurydata.employercontact[0].employercontact_telephoneno"
+                                        class="form-control" numbers-only="numbers-only" maxlength="10" ng-required="true">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-show="patientModel.injury[0].injurydata.employercontact[0].employercontact_telephoneno!='' && patientModel.injury[0].injurydata.employercontact[0].employercontact_telephoneno.length>=10">
+                                    <label>Employer phone number extension: </label>
+                                    <input type="tel" class="form-control" name="" ng-model="patientModel.injury[0].injurydata.employercontact[0].employercontact_extension"
+                                        maxlength="7" numbers-only="numbers-only" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.employercontact_email.$invalid && (!kickstartform.employercontact_email.$pristine || submitted) }">
+                                    <label>Email:<span class="error" ng-show="type=='Employer'">*</span></label>
+									<span class="error" ng-show="kickstartform.employercontact_email.$invalid && submitted && type=='Employer'">Field is required.</span>
+                                    <span class="error" ng-show="kickstartform.employercontact_email.$invalid && !kickstartform.employercontact_email.$pristine">Enter a valid email.
+                                    </span>
+
+                                    <input type="email" name="employercontact_email" class="form-control" ng-model="patientModel.injury[0].injurydata.employercontact[0].employercontact_email" ng-required="type=='Employer'">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Nature of Business: </label>
+                                    <select class="form-control" ng-model="patientModel.injury[0].injurydata.employer[0].natureofbusiness">
+                                        <option value="" ng-selected="true">-- Select --</option>
+                                        <option value="Agriculture">Agriculture</option>
+                                        <option value="Computer/Tech">Computer/Tech</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Healthcare">Healthcare</option>
+                                        <option value="Retail">Retail</option>
+                                        <option value="Hospitality/Restaurant">Hospitality/Restaurant</option>
+                                        <option value="Manufacturing">Manufacturing</option>
+                                        <option value="Mechanic/Automotive">Mechanic/Automotive</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-show="patientModel.injury[0].injurydata.employer[0].natureofbusiness=='Other'" ng-class="{'has-error': kickstartform.othernatureofbusiness.$invalid && submitted }">
+                                    <label>Describe the nature of business:<span class="error" ng-show="patientModel.injury[0].injurydata.employer[0].natureofbusiness=='Other'">*</span> </label>
+                                    <span class="error" ng-show="kickstartform.othernatureofbusiness.$invalid && submitted">Field is required.
+                                    </span>
+                                    <input type="text" name="othernatureofbusiness" class="form-control" ng-required="patientModel.injury[0].injurydata.employer[0].natureofbusiness=='Other'"
+                                        ng-model="patientModel.demographics[0].othernatureofbusiness">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="clearer"></div>
+                    <!--Insurance carrier ng-show="isShown('Insurance')"-->
+                    <div ng-show="type!=''" class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3>Insurance Information</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.carriername1.$invalid && submitted }">
+                                    <label>Insurance Carrier Name:<span class="error" ng-show="type=='Insurance' || type=='Nurse' || type=='Attorney'">*</span></label>
+                                    <span class="error" ng-show="kickstartform.carriername1.$invalid && submitted && (type=='Insurance' || type=='Nurse' || type=='Attorney')">Field is required.</span>
+                                    <input type="text" class="form-control" name="carriername1" ng-model="patientModel.injury[0].injurydata.insurance[0].insurance_claimsadministrator"
+                                        ng-required="type=='Insurance' || type=='Nurse' || type=='Attorney'">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.claimnumber1.$invalid && submitted }">
+                                    <label>Insurance Claim Number:<span class="error" ng-show="type=='Insurance' || type=='Nurse' || type=='Attorney'">*</span></label>
+                                    <span class="error" ng-show="kickstartform.carriername1.$invalid && submitted && (type=='Insurance' || type=='Nurse' || type=='Attorney')">Field is required.</span>
+                                    <input type="text" class="form-control" name="claimnumber1" ng-model="patientModel.injury[0].injurydata.insurance[0].insurance_claimsnumber"
+                                        ng-required="type=='Insurance' || type=='Nurse' || type=='Attorney'">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.contactfirstname1.$invalid && submitted }">
+                                    <label>Insurance contact first name:<span class="error" ng-show="type=='Insurance'">*</span></label>
+                                    <span class="error" ng-show="kickstartform.contactfirstname1.$invalid && submitted && type=='Insurance'">Field is required.</span>
+                                    <input type="text" class="form-control" name="contactfirstname1" ng-model="patientModel.injury[0].injurydata.claimsadjuster[0].claimsadjuster_firstname"
+                                        ng-required="type=='Insurance'">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.carrierlastname1.$invalid && submitted }">
+                                    <label>Insurance contact last name:<span class="error" ng-show="type=='Insurance'">*</span></label>
+                                    <span class="error" ng-show="kickstartform.carrierlastname1.$invalid && submitted && type=='Insurance'">Field is required.</span>
+                                    <input type="text" class="form-control" name="carrierlastname1" ng-model="patientModel.injury[0].injurydata.claimsadjuster[0].claimsadjuster_lastname"
+                                        ng-required="type=='Insurance'">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.phoneIns.$invalid && submitted && type=='Insurance' }">
+                                    <label>Insurance contact phone number:<!--<span class="error" ng-show="type=='Insurance'">*</span>--></label>
+                                    <!--<span class="error" ng-show="kickstartform.phoneIns.$invalid && submitted && type=='Insurance'">Field is required.</span>-->
+                                    <!--<input pattern="[0-9]*" type="tel" class="form-control" ng-model="patientModel.injury[0].injurydata.claimsadjuster[0].claimsadjuster_telephoneno"
+                                        name="phoneIns" maxlength="10" numbers-only="numbers-only" ui-mask="(999) 999-9999" ng-required="type=='Insurance'" />-->
+									<input pattern="[0-9]*" type="tel" class="form-control" ng-model="patientModel.injury[0].injurydata.claimsadjuster[0].claimsadjuster_telephoneno"
+                                        name="phoneIns" maxlength="10" numbers-only="numbers-only" ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" /><!--ng-required="type=='Insurance'"-->
+										
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-show="patientModel.injury[0].injurydata.claimsadjuster[0].claimsadjuster_telephoneno!='' && patientModel.injury[0].injurydata.claimsadjuster[0].claimsadjuster_telephoneno.length>=10">
+                                    <label>Insurance contact phone number extension:</label>
+                                    <input type="tel" class="form-control" name="" ng-model="patientModel.injury[0].injurydata.claimsadjuster[0].claimsadjuster_extension"
+                                        maxlength="7" numbers-only="numbers-only" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.fax1.$invalid && submitted && type=='Insurance' }">
+                                    <label>Insurance fax<!--<span class="error" ng-show="type=='Insurance'">*</span>-->:</label>
+                                    <!--<span class="error" ng-show="kickstartform.fax1.$invalid && submitted && type=='Insurance'">Field is required.</span>-->
+                                    <!--<input pattern="[0-9]*" type="tel" class="form-control" ng-model="patientModel.injury[0].injurydata.claimsadjuster[0].claimsadjuster_fax"
+                                        name="fax1" maxlength="10" numbers-only="numbers-only" ui-mask="(999) 999-9999" ng-required="type=='Insurance'" />-->
+									<input pattern="[0-9]*" type="tel" class="form-control" ng-model="patientModel.injury[0].injurydata.claimsadjuster[0].claimsadjuster_fax"
+                                        name="fax1" maxlength="10" numbers-only="numbers-only" ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" /><!--ng-required="type=='Insurance'"-->											
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.emailIns.$invalid && (!kickstartform.emailIns.$pristine || submitted) }">
+                                    <label>Email:<span class="error" ng-show="type=='Insurance'">*</span></label>
+                                    <span class="error" ng-show="kickstartform.emailIns.$invalid && !kickstartform.emailIns.$pristine">Enter a valid email.
+                                    </span>
+                                    <span class="error" ng-show="kickstartform.emailIns.$invalid && submitted && type=='Insurance'">Field is required.</span>
+                                    <input type="email" class="form-control" name="emailIns" ng-model="patientModel.injury[0].injurydata.claimsadjuster[0].claimsadjuster_email"
+                                        ng-required="type=='Insurance'">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearer"></div>
+
+                    <!--Nurse case manager ng-show="isShown('Nurse')"-->
+                    <div class="container" ng-show="type=='Nurse'">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3>Nurse case manager</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.organisation1.$invalid && submitted }">
+                                    <label>Nurse case manager organization:<span class="error">*</span></label>
+                                    <span class="error" ng-show="kickstartform.organisation1.$invalid && submitted">Field is required.
+                                    </span>
+                                    <input type="text" class="form-control" name="organisation1" ng-model="patientModel.injury[0].injurydata.rncasemanager[0].rncasemanager_company"
+                                        ng-required="type=='Nurse'">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.nurseFirstname.$invalid && submitted }">
+                                    <label>Nurse case manager first name:<span class="error">*</span></label>
+                                    <span class="error" ng-show="kickstartform.nurseFirstname.$invalid && submitted">Field is required.
+                                    </span>
+                                    <input type="text" class="form-control" name="nurseFirstname" ng-model="patientModel.injury[0].injurydata.rncasemanager[0].rncasemanager_firstname"
+                                        ng-required="type=='Nurse'">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.nurseLastname.$invalid && submitted }">
+                                    <label>Nurse case manager last name:<span class="error">*</span></label>
+                                    <span class="error" ng-show="kickstartform.nurseLastname.$invalid && submitted">Field is required.
+                                    </span>
+                                    <input type="text" class="form-control" name="nurseLastname" ng-model="patientModel.injury[0].injurydata.rncasemanager[0].rncasemanager_lastname"
+                                        ng-required="type=='Nurse'">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.nursePhone.$invalid && submitted }">
+                                    <label>Nurse case manager phone number:<!--<span class="error">*</span>--></label>
+                                    <span class="error" ng-show="kickstartform.nursePhone.$invalid && submitted">Field is required.
+                                    </span>
+                                    <!--<input pattern="[0-9]*" type="tel" class="form-control" name="nursePhone" ng-model="patientModel.injury[0].injurydata.rncasemanager[0].rncasemanager_telephoneno"
+                                        maxlength="10" numbers-only="numbers-only" ui-mask="(999) 999-9999" ng-required="type=='Nurse'" />-->
+									<input pattern="[0-9]*" type="tel" class="form-control" name="nursePhone" ng-model="patientModel.injury[0].injurydata.rncasemanager[0].rncasemanager_telephoneno"
+                                        maxlength="10" numbers-only="numbers-only" ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" /><!--ng-required="type=='Nurse'"-->	
+										
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-show="patientModel.injury[0].injurydata.rncasemanager[0].rncasemanager_telephoneno!='' && patientModel.injury[0].injurydata.rncasemanager[0].rncasemanager_telephoneno.length>=10">
+                                    <label>Nurse case manager phone number extension:</label>
+                                    <input type="tel" class="form-control" name="nurseExtension" ng-model="patientModel.injury[0].injurydata.rncasemanager[0].rncasemanager_extension"
+                                        maxlength="7" numbers-only="numbers-only" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.emailNurse.$invalid && (!kickstartform.emailNurse.$pristine || submitted) }">
+                                    <label>Email:<span class="error">*</span></label>
+                                    <span class="error" ng-show="kickstartform.emailNurse.$invalid && !kickstartform.emailNurse.$pristine">Enter a valid email.
+                                    </span>
+                                    <span class="error" ng-show="kickstartform.emailNurse.$invalid && submitted">Field is required.
+                                    </span>
+                                    <input type="email" class="form-control" name="emailNurse" ng-model="patientModel.injury[0].injurydata.rncasemanager[0].rncasemanager_email"
+                                        ng-required="type=='Nurse'">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearer"></div>
+
+                    <!--Attorney ng-show="isShown('Attorney')"-->
+                    <div class="container" ng-show="type=='Attorney'">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3>Attorney</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div>
+                                        <label>What is your involvement with the claim?<span class="error">*</span></label>
+                                    </div>
+                                    <label class="normalLabel">
+                                        <input type="radio" name="involvement" ng-value="'applicantattorney'" ng-change="restinvolvementOb('defenseattorney','applicantattorney')" ng-model="patientModel.injury[0].injurydata.involvementradio" />
+                                        <span class="typeSelection">Applicant attorney</span>
+                                    </label>
+                                    <label class="normalLabel">
+                                        <input type="radio" name="involvement" ng-value="'defenseattorney'" ng-change="restinvolvementOb('applicantattorney','defenseattorney')" ng-model="patientModel.injury[0].injurydata.involvementradio" />
+                                        <span class="typeSelection">Defense attorney</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.attorneryLawFirm1.$invalid && submitted }">
+                                    <label>Name of Law Firm:<span class="error">*</span></label>
+                                    <span class="error" ng-show="kickstartform.attorneryLawFirm1.$invalid && submitted">Field is required.
+                                    </span>
+                                    <input type="text" class="form-control" name="attorneryLawFirm1" ng-model="patientModel.injury[0].injurydata[patientModel.injury[0].injurydata.involvementradio][0][patientModel.injury[0].injurydata.involvementradio +'_company']"
+                                        ng-required="type=='Attorney'">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.attorneyFirstname1.$invalid && submitted }">
+                                    <label>Attorney contact first name:<span class="error">*</span></label><span class="error"
+                                        ng-show="kickstartform.attorneyFirstname1.$invalid && submitted"> Field is required.
+                                    </span>
+                                    <input type="text" class="form-control" name="attorneyFirstname1" ng-model="patientModel.injury[0].injurydata[patientModel.injury[0].injurydata.involvementradio][0][patientModel.injury[0].injurydata.involvementradio +'_firstname']"
+                                        ng-required="type=='Attorney'">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.attorneyLastname1.$invalid && submitted }">
+                                    <label>Attorney contact last name:<span class="error">*</span></label><span class="error"
+                                        ng-show="kickstartform.attorneyLastname1.$invalid && submitted"> Field is required.
+                                    </span>
+                                    <input type="text" class="form-control" name="attorneyLastname1" ng-model="patientModel.injury[0].injurydata[patientModel.injury[0].injurydata.involvementradio][0][patientModel.injury[0].injurydata.involvementradio +'_lastname']"
+                                        ng-required="type=='Attorney'">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.attorneyPhone.$invalid && submitted }">
+                                    <label>Attorney contact phone number:<span class="error">*</span></label><span class="error"
+                                        ng-show="kickstartform.attorneyPhone.$invalid && submitted"> Field is required.
+                                    </span>
+                                    <!--<input pattern="[0-9]*" type="tel" class="form-control" name="attorneyPhone" ng-model="patientModel.injury[0].injurydata[patientModel.injury[0].injurydata.involvementradio][0][patientModel.injury[0].injurydata.involvementradio +'_telephoneno']"
+                                        maxlength="10" numbers-only="numbers-only" ui-mask="(999) 999-9999" ng-required="type=='Attorney'" />-->
+									<input pattern="[0-9]*" type="tel" class="form-control" name="attorneyPhone" ng-model="patientModel.injury[0].injurydata[patientModel.injury[0].injurydata.involvementradio][0][patientModel.injury[0].injurydata.involvementradio +'_telephoneno']"
+                                        maxlength="10" numbers-only="numbers-only" ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" ng-required="type=='Attorney'" />
+										
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-show="patientModel.injury[0].injurydata[patientModel.injury[0].injurydata.involvementradio][0][patientModel.injury[0].injurydata.involvementradio +'_telephoneno']!='' && patientModel.injury[0].injurydata[patientModel.injury[0].injurydata.involvementradio][0][patientModel.injury[0].injurydata.involvementradio +'_telephoneno'].length>=10">
+                                    <label>Attorney contact phone number extension:</label>
+                                    <input type="tel" class="form-control" name="" ng-model="patientModel.injury[0].injurydata[patientModel.injury[0].injurydata.involvementradio][0][patientModel.injury[0].injurydata.involvementradio +'_extension']"
+                                        maxlength="7" numbers-only="numbers-only" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.attorneryEmail1.$invalid && (!kickstartform.attorneryEmail1.$pristine || submitted) }">
+                                    <label>Email:<span class="error">*</span></label><span class="error" ng-show="kickstartform.attorneryEmail1.$invalid && submitted"> Field is required.
+                                    </span>
+                                    <span class="error" ng-show="kickstartform.attorneryEmail1.$invalid && !kickstartform.attorneryEmail1.$pristine">Enter a valid email.
+                                    </span>
+                                    <input type="email" class="form-control" name="attorneryEmail1" ng-model="patientModel.injury[0].injurydata[patientModel.injury[0].injurydata.involvementradio][0][patientModel.injury[0].injurydata.involvementradio +'_email']"
+                                        ng-required="type=='Attorney'">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container" ng-show="type=='Insurance' || type=='Attorney' || type=='Nurse'">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                Fax authorization and medical records to {{formatFax(faxnumber)}}
+                            </div>
+                        </div>
+                    </div>
+                    <!--Footer ng-show="status == 'true'" -->
+                    <div class="container" ng-show="type!=''">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="txtEmpName">
+                                        <h3>Additional Comments</h3>
+                                    </label>
+                                    <br />
+                                    <span ng-show="type=='InjuredWorker'">Please describe how the injury occurred. Include all body parts that have been affected. Then, for each body part, rate the severity of the pain on a scale of 0 to 10 (where 10 is the most painful), and list any activities that are restricted by the body part. For example: "Lower back; 4/10 pain; cannot stand for more than 15 minutes.
+                                    </span>
+									<span ng-show="type=='Employer' ">Please describe how the injury occurred. Include all body parts that have been affected.
+                                    </span>
+                                    <span ng-show="type=='Insurance' || type=='Nurse' || type=='Attorney'">Please include accepted body parts and the scope of treatment being requested (E.g., PTP services, request for one time consultation impairment rating, etc).
+                                    </span>
+                                    <br />
+                                    <br />
+                                    <textarea rows="5" class="form-control" style="resize: none" name="othernotes" ng-model="patientModel.injury[0].injurydata.communication.othernotes"
+                                        id="txtAdditionalComments" ng-maxlength="2000"></textarea>
+                                    <span class="error" ng-show="kickstartform.othernotes.$invalid && !kickstartform.othernotes.$pristine">Please limit your response to 2,000 characters.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group" ng-class="{'has-error': kickstartform.agreeChk.$invalid && (!kickstartform.agreeChk.$pristine || submitted) }">
+                                    <input type="checkbox" id="chkAccept" class="with-font" ng-model="terms" name="agreeChk" ng-required="true" />
+                                    <label for="chkAccept" class="labelAccept">
+                                        I agree to the <a href="/files/Ratefast_Injury_Launch_Terms_of_Use.pdf" target="_blank">Terms of Use</a>.<span class="error">*</span></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div vc-recaptcha key="captchaPublicKey" class="col-sm-12"></div>
+                        </div>
+                        <br />
+                        <div class="row">
+
+                            <div class="col-sm-12">
+                                <em>Note:</em> This form does not replace the <a href="/files/dwcform1.pdf" target="_blank">DWC1 form</a>                                which is required to be submitted to the insurance carrier.
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 text-left" style="margin-top: 20px;">
+                                <input type="submit" class="btn" style="background-color: black; border-radius: 0; color: white; font-size: 16px; height: 56px; margin-bottom: 20px; width: 135px; padding-top: 10px;"
+                                    ng-click="validateForm(kickstartform)" id="btnSubmit" name="btnSubmit" value="Submit Form" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 text-left" style="margin-top: 20px;">
+                                <span data-ng-bind-html="kickstart_page.footer"><span>
+                                    <span ng-show="kickstartform.footer==''">
+                                        <p>old: After you submit your information, our staff will contact you within three business days!</p>
+                                        <p>Working hours are Monday through Friday, 8:00 am to 5:00 pm Pacific Time.</p>
+                                        <p>Questions? Call 707-483-4346</p>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-show="step==2">
+    <section id="header-title">
+        <div class="container">
+            <div class="row">
+                <h2>{{kickstart_page.medical_page.title}}
+                </h2>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-left">
+                <div class="col-sm-12">
+                    <p>{{kickstart_page.medical_page.subtitle}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 clearer">
+            &nbsp;
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <form name="medicalhistoryform" ng-submit="medicalhistoryform.$valid && btnMedicalFormSubmit.submit()" class="form-group">
+                    <div class="row">
+                        <!-- Prior illness start -->
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <label>Do you have any chronic health conditions?&nbsp;</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                            <input type="radio" id="priorillnesscontributory" value="Contributory" ng-model="patientModel.medicalhistory[0].shgeneralpriorhealthradio" />
+                            <label for="priorillnesscontributory" class="labelnormalfont">Yes &nbsp;&nbsp;</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                            <input type="radio" id="priorillnessnoncontributory" value="Non-Contributory" ng-model="patientModel.medicalhistory[0].shgeneralpriorhealthradio"
+                                ng-change="patientModel.medicalhistory[0].shgeneralhealthcontricheck=[]; patientModel.medicalhistory[0].shgeneralhealthontritextother=null" />
+                            <label for="priorillnessnoncontributory" class="labelnormalfont">No &nbsp;&nbsp;</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div ng-if="patientModel.medicalhistory[0].shgeneralpriorhealthradio=='Contributory'">
+                                <p>Please check the conditions below that you are affected by.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shgeneralpriorhealthradio=='Contributory'">
+                            <input type="checkbox" id="priorillnessoption_Hypertension" checklist-model="patientModel.medicalhistory[0].shgeneralhealthcontricheck"
+                                value="Hypertension" />
+                            <label for="priorillnessoption_Hypertension" class="labelnormalfont">Hypertension</label>
+                            <br />
+                            <input type="checkbox" id="priorillnessoption_Diabetes" checklist-model="patientModel.medicalhistory[0].shgeneralhealthcontricheck"
+                                value="Diabetes" />
+                            <label for="priorillnessoption_Diabetes" class="labelnormalfont">Diabetes</label>
+                            <br />
+                            <input type="checkbox" id="priorillnessoption_Asthma" checklist-model="patientModel.medicalhistory[0].shgeneralhealthcontricheck"
+                                value="Asthma" />
+                            <label for="priorillnessoption_Asthma" class="labelnormalfont">Asthma</label>
+                            <br />
+                            <input type="checkbox" id="priorillnessoption_Depression" checklist-model="patientModel.medicalhistory[0].shgeneralhealthcontricheck"
+                                value="Depression" />
+                            <label for="priorillnessoption_Depression" class="labelnormalfont">Depression</label>
+                            <br />
+                            <input type="checkbox" id="priorillnessoption_HighCholesterol" checklist-model="patientModel.medicalhistory[0].shgeneralhealthcontricheck"
+                                value="High Cholesterol" />
+                            <label for="priorillnessoption_HighCholesterol" class="labelnormalfont">High Cholesterol</label>
+                            <br />
+                            <input type="checkbox" id="priorillnessoption_CardiovascularDisease" checklist-model="patientModel.medicalhistory[0].shgeneralhealthcontricheck"
+                                value="Cardiovascular Disease" />
+                            <label for="priorillnessoption_CardiovascularDisease" class="labelnormalfont">Cardiovascular Disease</label>
+                            <br />
+
+
+                            <p>
+                                If you have a condition that is not on the above list, then please click the
+                                <br />
+                                blue text button and describe your condition in the comment box.
+                            </p>
+
+                            <button type="button" class="btn btn-info btn-xs" ng-click="IspriorillnessText=true">Text</button>
+
+                            <div ng-hide="IspriorillnessText" class="col-sm-12">
+
+                                <span dynamic="patientModel.medicalhistory[0].shgeneralhealthontritextother" class="textEditorTextColor col-sm-12"></span>
+                            </div>
+                            <div class="" ng-if="IspriorillnessText">
+
+                                <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shgeneralhealthontritextother"></textarea>
+                            </div>
+                            <br />
+                        </div>
+                        <!-- Prior illness end -->
+                    </div>
+
+                    <div class="col-sm-12 clearer">
+                        &nbsp;
+                    </div>
+                    <!-- Prior surgery start -->
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <label>Have you  previously had any surgeries?</label>
+                        </div>
+                        <br />
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                            <input type="radio" id="priorsurgerycontributory" value="Contributory" ng-model="patientModel.medicalhistory[0].shgeneralhealthpriorsurgeryradio" />
+                            <label for="priorsurgerycontributory" class="labelnormalfont">Yes &nbsp;&nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                            <input type="radio" id="priorsurgerynoncontributory" value="Non-Contributory" ng-model="patientModel.medicalhistory[0].shgeneralhealthpriorsurgeryradio"
+                                ng-change="patientModel.medicalhistory[0].shgeneralhealthpriorsugeycheck=[]; patientModel.medicalhistory[0].shgeneralhealthpriorsurgerytextother=null" />
+                            <label for="priorsurgerynoncontributory" class="labelnormalfont">No &nbsp;&nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shgeneralhealthpriorsurgeryradio=='Contributory'">
+                            <p>Please check the surgeries that you have had.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shgeneralhealthpriorsurgeryradio=='Contributory'">
+
+                            <input type="checkbox" id="priorsurgeryoption_Appendectomy" checklist-model="patientModel.medicalhistory[0].shgeneralhealthpriorsugeycheck"
+                                value="Appendectomy" />
+                            <label for="priorsurgeryoption_Appendectomy" class="labelnormalfont">Appendectomy</label>
+                            <br />
+                            <input type="checkbox" id="priorsurgeryoption_Breastbiopsy" checklist-model="patientModel.medicalhistory[0].shgeneralhealthpriorsugeycheck"
+                                value="Breast biopsy" />
+                            <label for="priorsurgeryoption_Breastbiopsy" class="labelnormalfont">Breast biopsy</label>
+                            <br />
+                            <input type="checkbox" id="priorsurgeryoption_Cesareansection" checklist-model="patientModel.medicalhistory[0].shgeneralhealthpriorsugeycheck"
+                                value="Cesarean section" />
+                            <label for="priorsurgeryoption_Cesareansection" class="labelnormalfont">Cesarean section</label>
+                            <br />
+                            <input type="checkbox" id="priorsurgeryoption_Cholecystectomy" checklist-model="patientModel.medicalhistory[0].shgeneralhealthpriorsugeycheck"
+                                value="Cholecystectomy" />
+                            <label for="priorsurgeryoption_Cholecystectomy" class="labelnormalfont">Cholecystectomy</label>
+                            <br />
+                            <input type="checkbox" id="priorsurgeryoption_Hysterectomy" checklist-model="patientModel.medicalhistory[0].shgeneralhealthpriorsugeycheck"
+                                value="Hysterectomy" />
+                            <label for="priorsurgeryoption_Hysterectomy" class="labelnormalfont">Hysterectomy</label>
+                            <br />
+                            <input type="checkbox" id="priorsurgeryoption_Inguinalherniarepair" checklist-model="patientModel.medicalhistory[0].shgeneralhealthpriorsugeycheck"
+                                value="Inguinal hernia repair" />
+                            <label for="priorsurgeryoption_Inguinalherniarepair" class="labelnormalfont">Inguinal hernia repair</label>
+                            <br />
+                            <input type="checkbox" id="priorsurgeryoption_Tonsillectomy" checklist-model="patientModel.medicalhistory[0].shgeneralhealthpriorsugeycheck"
+                                value="Tonsillectomy" />
+                            <label for="priorsurgeryoption_Tonsillectomy" class="labelnormalfont">Tonsillectomy</label>
+                            <br />
+                            <input type="checkbox" id="priorsurgeryoption_Sinussurgery" checklist-model="patientModel.medicalhistory[0].shgeneralhealthpriorsugeycheck"
+                                value="Sinus surgery" />
+                            <label for="priorsurgeryoption_Sinussurgery" class="labelnormalfont">Sinus surgery</label>
+                            <br />
+                            <input type="checkbox" id="priorsurgeryoption_Wisdomteethoralsurgery" checklist-model="patientModel.medicalhistory[0].shgeneralhealthpriorsugeycheck"
+                                value="Wisdom teeth/oral surgery" />
+                            <label for="priorsurgeryoption_Wisdomteethoralsurgery" class="labelnormalfont">Wisdom teeth/oral surgery</label>
+                            <br />
+                            <input type="checkbox" id="priorsurgeryoption_Gastricbypass" checklist-model="patientModel.medicalhistory[0].shgeneralhealthpriorsugeycheck"
+                                value="Gastric bypass" />
+                            <label for="priorsurgeryoption_Gastricbypass" class="labelnormalfont">Gastric bypass</label>
+                            <br />
+                            <input type="checkbox" id="priorsurgeryoption_Orthopedic" checklist-model="patientModel.medicalhistory[0].shgeneralhealthpriorsugeycheck"
+                                value="Orthopedic" />
+                            <label for="priorsurgeryoption_Orthopedic" class="labelnormalfont">Orthopedic</label>
+                            <br />
+
+
+                            <p>
+                                If you have had surgeries that are not on the list above, then please click<br />
+                                the text button below and describe your surgeries in the comment box.
+                            </p>
+
+                            <button type="button" class="btn btn-info btn-xs" ng-click="Ispriorsurgery=true">Text</button>
+
+                            <div ng-hide="Ispriorsurgery" class="col-sm-12">
+
+                                <span dynamic="patientModel.medicalhistory[0].shgeneralhealthpriorsurgerytextother" class="textEditorTextColor col-sm-12"></span>
+                            </div>
+                            <div class="" ng-if="Ispriorsurgery">
+
+                                <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shgeneralhealthpriorsurgerytextother"></textarea>
+                            </div>
+                            <br />
+                        </div>
+                        <!-- Prior surgery end -->
+                    </div>
+
+                    <div class="col-sm-12 clearer">
+                        &nbsp;
+                    </div>
+                    <!-- Prior Current (all) medications start -->
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <label>Are you taking any medications for other health conditions?</label>
+                        </div>
+                        <br />
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                            <input type="radio" id="currentmedicationscontributory" value="Contributory" ng-model="patientModel.medicalhistory[0].shcurrentmedicationradio"
+                                ng-change="" />
+                            <label for="currentmedicationscontributory" class="labelnormalfont">Yes &nbsp;&nbsp;</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                            <input type="radio" id="currentmedicationsnoncontributory" value="Non-Contributory" ng-model="patientModel.medicalhistory[0].shcurrentmedicationradio"
+                                ng-change="patientModel.medicalhistory[0].shcurrentmedications=[]; patientModel.medicalhistory[0].shcurrentmedicationsothertext=''" />
+                            <label for="currentmedicationsnoncontributory" class="labelnormalfont">No &nbsp;&nbsp;</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shcurrentmedicationradio=='Contributory'">
+                            <p>Please check the types of medication that you are taking.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shcurrentmedicationradio=='Contributory'">
+
+                            <input type="checkbox" id="currentmedicationsoption_Hypertension" checklist-model="patientModel.medicalhistory[0].shcurrentmedications"
+                                value="Hypertension" />
+                            <label for="currentmedicationsoption_Hypertension" class="labelnormalfont">Hypertension</label>
+                            <br />
+                            <input type="checkbox" id="currentmedicationsoption_Diabetes" checklist-model="patientModel.medicalhistory[0].shcurrentmedications"
+                                value="Diabetes" />
+                            <label for="currentmedicationsoption_Diabetes" class="labelnormalfont">Diabetes</label>
+                            <br />
+                            <input type="checkbox" id="currentmedicationsoption_Asthma" checklist-model="patientModel.medicalhistory[0].shcurrentmedications"
+                                value="Asthma" />
+                            <label for="currentmedicationsoption_Asthma" class="labelnormalfont">Asthma</label>
+                            <br />
+                            <input type="checkbox" id="currentmedicationsoption_Depression" checklist-model="patientModel.medicalhistory[0].shcurrentmedications"
+                                value="Depression" />
+                            <label for="currentmedicationsoption_Depression" class="labelnormalfont">Depression</label>
+                            <br />
+                            <input type="checkbox" id="currentmedicationsoption_HighCholesterol" checklist-model="patientModel.medicalhistory[0].shcurrentmedications"
+                                value="High Cholesterol" />
+                            <label for="currentmedicationsoption_HighCholesterol" class="labelnormalfont">High Cholesterol</label>
+                            <br />
+                            <input type="checkbox" id="currentmedicationsoption_CardiovascularDisease" checklist-model="patientModel.medicalhistory[0].shcurrentmedications"
+                                value="Cardiovascular Disease" />
+                            <label for="currentmedicationsoption_CardiovascularDisease" class="labelnormalfont">Cardiovascular Disease</label>
+                            <br />
+
+
+                            <p>
+                                If you are taking other medications, please click the text button below<br />
+                                and describe your medications in the comment box.
+                            </p>
+
+                            <button type="button" class="btn btn-info btn-xs" ng-click="Iscurrentmedications=true">Text</button>
+
+                            <div ng-hide="Iscurrentmedications" class="col-sm-12">
+
+                                <span dynamic="patientModel.medicalhistory[0].shcurrentmedicationsothertext" class="textEditorTextColor col-sm-12"></span>
+                            </div>
+                            <div class="" ng-if="Iscurrentmedications">
+
+                                <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shcurrentmedicationsothertext"></textarea>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+                    <!-- Prior Current (all) medications end -->
+
+                    <!-- Prior Known allergies start -->
+                    <div class="col-sm-12 clearer">
+                        &nbsp;
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <label>Please indicate your allergies.&nbsp;</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <input type="checkbox" id="knownallergies_none" checklist-model="patientModel.medicalhistory[0].shknownallergiesNonecheck"
+                                value="None" ng-change="patientModel.medicalhistory[0].shknownallergiescheck=[]" />
+                            <label for="knownallergies_none" class="labelnormalfont">None</label>
+                            <br />
+                            <input type="checkbox" id="knownallergiesoption_Sulfa" checklist-model="patientModel.medicalhistory[0].shknownallergiescheck"
+                                value="Sulfa" ng-change="patientModel.medicalhistory[0].shknownallergiesNonecheck=[]" />
+                            <label for="knownallergiesoption_Sulfa" class="labelnormalfont">Sulfa</label>
+                            <br />
+                            <input type="checkbox" id="knownallergiesoption_Penicillin" checklist-model="patientModel.medicalhistory[0].shknownallergiescheck"
+                                value="Penicillin" ng-change="patientModel.medicalhistory[0].shknownallergiesNonecheck=[]" />
+                            <label for="knownallergiesoption_Penicillin" class="labelnormalfont">Penicillin</label>
+                            <br />
+                            <input type="checkbox" id="knownallergiesoption_Aspirin" checklist-model="patientModel.medicalhistory[0].shknownallergiescheck"
+                                value="Aspirin" ng-change="patientModel.medicalhistory[0].shknownallergiesNonecheck=[]" />
+                            <label for="knownallergiesoption_Aspirin" class="labelnormalfont">Aspirin</label>
+                            <br />
+                            <input type="checkbox" id="knownallergiesoption_Other" checklist-model="patientModel.medicalhistory[0].shknownallergiesOthercheck"
+                                value="Other" ng-change="patientModel.medicalhistory[0].shknownallergiesOthercheckTextarea=''" />
+                            <label for="knownallergiesoption_Other" class="labelnormalfont">Other</label>
+
+                            <div ng-if="patientModel.medicalhistory[0].shknownallergiesOthercheck.indexOf('Other')!=-1">
+
+                                <button type="button" class="btn btn-info btn-xs" ng-click="Isknownallergiesother=true">Text</button>
+
+                                <div ng-hide="Isknownallergiesother" class="col-sm-12">
+
+                                    <span dynamic="patientModel.medicalhistory[0].shknownallergiesOthercheckTextarea" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div class="" ng-if="Isknownallergiesother">
+
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shknownallergiesOthercheckTextarea"></textarea>
+                                </div>
+                                <br />
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Prior Known allergies end -->
+
+                    <!-- Prior general review start -->
+
+                    <div class="col-sm-12 clearer">
+                        &nbsp;
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <label>Aside from your work injury, are you having any other problems with your health?</label>
+
+                            <br />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                            <input type="radio" id="generalpriorcontributory" value="Contributory" ng-model="patientModel.medicalhistory[0].shpriorillnessradio"
+                                ng-change="clearCheckBoxGeneralPrior()" />
+                            <label for="generalpriorcontributory" class="labelnormalfont">Yes &nbsp;&nbsp;</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                            <input type="radio" id="generalpriornoncontributory" value="Non-Contributory" ng-model="patientModel.medicalhistory[0].shpriorillnessradio"
+                                ng-change="clearCheckBoxGeneralPrior()" />
+                            <label for="generalpriornoncontributory" class="labelnormalfont">No &nbsp;&nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shpriorillnessradio=='Contributory'">
+                            <p>Please check the areas that are giving you problems.</p>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shpriorillnessradio=='Contributory'">
+                            <!-- Constitutional Checkbox -->
+                            <input type="checkbox" id="generalprior_Constitutional" checklist-model="patientModel.medicalhistory[0].shgeneralreviewpriorcheck"
+                                value="Constitutional" ng-change="patientModel.medicalhistory[0].shgeneralreviewpriorothertext=''; patientModel.medicalhistory[0].shgeneralconstitutionalcheck=[]; patientModel.medicalhistory[0].negativeshgeneralconstitutionalcheck=[]" />
+                            <label for="generalprior_Constitutional" class="labelnormalfont">Constitutional</label>
+                            <br />
+                            <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shgeneralreviewpriorcheck.indexOf('Constitutional')!=-1">
+                                <div>
+                                    <input type="checkbox" id="generalprior_Negative" checklist-model="patientModel.medicalhistory[0].negativeshgeneralconstitutionalcheck"
+                                        value="Negative" ng-change="patientModel.medicalhistory[0].shgeneralconstitutionalcheck=[]" />
+                                    <label for="generalprior_Negative" class="labelnormalfont">Negative</label>
+                                    <br />
+                                    <input type="checkbox" id="generalprior_Weight" checklist-model="patientModel.medicalhistory[0].shgeneralconstitutionalcheck"
+                                        value="Weight Change" ng-change="patientModel.medicalhistory[0].negativeshgeneralconstitutionalcheck=[]" />
+                                    <label for="generalprior_Weight" class="labelnormalfont">Weight Change</label>
+                                    <br />
+                                    <input type="checkbox" id="generalprior_Fever" checklist-model="patientModel.medicalhistory[0].shgeneralconstitutionalcheck"
+                                        value="Fever" ng-change="patientModel.medicalhistory[0].negativeshgeneralconstitutionalcheck=[]" />
+                                    <label for="generalprior_Fever" class="labelnormalfont">Fever</label>
+                                    <br />
+                                    <input type="checkbox" id="generalprior_Fatigue" checklist-model="patientModel.medicalhistory[0].shgeneralconstitutionalcheck"
+                                        value="Fatigue" ng-change="patientModel.medicalhistory[0].negativeshgeneralconstitutionalcheck=[]" />
+                                    <label for="generalprior_Fatigue" class="labelnormalfont">Fatigue</label>
+                                    <br />
+                                </div>
+
+
+                                <button type="button" class="btn btn-info btn-xs" ng-click="Isgeneralprior_Constitutional=true">Text</button>
+
+                                <div ng-hide="Isgeneralprior_Constitutional" class="col-sm-12">
+
+                                    <span dynamic="patientModel.medicalhistory[0].shgeneralreviewpriorothertext" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div class="" ng-if="Isgeneralprior_Constitutional">
+
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shgeneralreviewpriorothertext"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Eyes Checkbox -->
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shpriorillnessradio=='Contributory'">
+                            <input type="checkbox" id="generalprior_Eyes" checklist-model="patientModel.medicalhistory[0].shgeneraleyescheck" value="Eyes/vision"
+                                ng-change="patientModel.medicalhistory[0].shgeneraleyesothertext=''" />
+                            <label for="generalprior_Eyes" class="labelnormalfont">Eyes / Vision</label>
+
+
+                            <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shgeneraleyescheck.indexOf('Eyes/vision')!=-1">
+
+                                <button type="button" class="btn btn-info btn-xs" ng-click="Isgeneralprior_Eyes=true">Text</button>
+
+                                <div ng-hide="Isgeneralprior_Eyes" class="col-sm-12">
+
+                                    <span dynamic="patientModel.medicalhistory[0].shgeneraleyesothertext" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div class="" ng-if="Isgeneralprior_Eyes">
+
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shgeneraleyesothertext"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Ears Throt  Checkbox -->
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shpriorillnessradio=='Contributory'">
+                            <input type="checkbox" id="generalprior_Ears" checklist-model="patientModel.medicalhistory[0].shgeneralthroatcheck" value="Ears/Nose/Throat"
+                                ng-change="patientModel.medicalhistory[0].generalprior_Ears_text=''" />
+                            <label for="generalprior_Ears" class="labelnormalfont">Ears / Nose / Throat</label>
+
+                            <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shgeneralthroatcheck.indexOf('Ears/Nose/Throat')!=-1">
+
+                                <button type="button" class="btn btn-info btn-xs" ng-click="Isgeneralprior_Ears=true">Text</button>
+
+                                <div ng-hide="Isgeneralprior_Ears" class="col-sm-12">
+
+                                    <span dynamic="patientModel.medicalhistory[0].shgeneralthroatothertext" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div class="" ng-if="Isgeneralprior_Ears">
+
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shgeneralthroatothertext"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Cardiovascular Checkbox -->
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shpriorillnessradio=='Contributory'">
+                            <input type="checkbox" id="generalprior_Cardiovascular" checklist-model="patientModel.medicalhistory[0].shgeneralcardiovascularcheck"
+                                value="Cardiovascular/Heart/Circulation" ng-change="patientModel.medicalhistory[0].shgeneralcardiovascularothertext=''" />
+                            <label for="generalprior_Cardiovascular" class="labelnormalfont">Cardiovascular / Heart / Circulation</label>
+                            <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shgeneralcardiovascularcheck.indexOf('Cardiovascular/Heart/Circulation')!=-1">
+
+                                <button type="button" class="btn btn-info btn-xs" ng-click="Isgeneralprior_Cardiovascular=true">Text</button>
+
+                                <div ng-hide="Isgeneralprior_Cardiovascular" class="col-sm-12">
+
+                                    <span dynamic="patientModel.medicalhistory[0].shgeneralcardiovascularothertext" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div class="" ng-if="Isgeneralprior_Cardiovascular">
+
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shgeneralcardiovascularothertext"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Respiratory/Breathing  Checkbox -->
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shpriorillnessradio=='Contributory'">
+                            <input type="checkbox" id="generalprior_Respiratory" checklist-model="patientModel.medicalhistory[0].shgeneralrespiratorycheck"
+                                value="Respiratory/Breathing" ng-change="patientModel.medicalhistory[0].shgeneralrespiratoryothertext=''" />
+                            <label for="generalprior_Respiratory" class="labelnormalfont">Respiratory / Breathing</label>
+                            <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shgeneralrespiratorycheck.indexOf('Respiratory/Breathing')!=-1">
+
+                                <button type="button" class="btn btn-info btn-xs" ng-click="Isgeneralprior_Respiratory=true">Text</button>
+
+                                <div ng-hide="Isgeneralprior_Respiratory" class="col-sm-12">
+
+                                    <span dynamic="patientModel.medicalhistory[0].shgeneralrespiratoryothertext" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div class="" ng-if="Isgeneralprior_Respiratory">
+
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shgeneralrespiratoryothertext"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Gastrointestinal/Digestive -->
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shpriorillnessradio=='Contributory'">
+                            <input type="checkbox" id="Isgeneralprior_Gastrointestinal" checklist-model="patientModel.medicalhistory[0].shgeneralgastrointestinalcheck"
+                                value="Gastrointestinal/Digestive" ng-change="patientModel.medicalhistory[0].shgeneralgastrointestinalothertext=''" />
+                            <label for="Isgeneralprior_Gastrointestinal" class="labelnormalfont">Gastrointestinal / Digestive</label>
+                            <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shgeneralgastrointestinalcheck.indexOf('Gastrointestinal/Digestive')!=-1">
+
+                                <button type="button" class="btn btn-info btn-xs" ng-click="Isgeneralprior_Gastrointestinal=true">Text</button>
+
+                                <div ng-hide="Isgeneralprior_Gastrointestinal" class="col-sm-12">
+
+                                    <span dynamic="patientModel.medicalhistory[0].shgeneralgastrointestinalothertext" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div class="" ng-if="Isgeneralprior_Gastrointestinal">
+
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shgeneralgastrointestinalothertext"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Genitourinary/Urinary or Reproductive -->
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shpriorillnessradio=='Contributory'">
+                            <input type="checkbox" id="generalprior_Genitourinary" checklist-model="patientModel.medicalhistory[0].shgeneralgenitourinary"
+                                value="Genitourinary/Urinary or Reproductive" ng-change="patientModel.medicalhistory[0].shgeneralgenitourinaryothertext=''" />
+                            <label for="generalprior_Genitourinary" class="labelnormalfont">Genitourinary / Urinary or Reproductive</label>
+                            <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shgeneralgenitourinary.indexOf('Genitourinary/Urinary or Reproductive')!=-1">
+
+                                <button type="button" class="btn btn-info btn-xs" ng-click="Isgeneralprior_Genitourinary=true">Text</button>
+
+                                <div ng-hide="Isgeneralprior_Genitourinary" class="col-sm-12">
+
+                                    <span dynamic="patientModel.medicalhistory[0].shgeneralgenitourinaryothertext" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div class="" ng-if="Isgeneralprior_Genitourinary">
+
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shgeneralgenitourinaryothertext"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Musculoskeletal/Joints Checkbox -->
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shpriorillnessradio=='Contributory'">
+                            <input type="checkbox" id="generalprior_Musculoskeletal" checklist-model="patientModel.medicalhistory[0].shgeneralmusculoskeletalcheck"
+                                value="Musculoskeletal/Joints" ng-change="patientModel.medicalhistory[0].shgeneralmusculoskeletalothertext=''" />
+                            <label for="generalprior_Musculoskeletal" class="labelnormalfont">Musculoskeletal / Joints</label>
+                            <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shgeneralmusculoskeletalcheck.indexOf('Musculoskeletal/Joints')!=-1">
+
+                                <button type="button" class="btn btn-info btn-xs" ng-click="Isgeneralprior_Musculoskeletal=true">Text</button>
+
+                                <div ng-hide="Isgeneralprior_Musculoskeletal" class="col-sm-12">
+
+                                    <span dynamic="patientModel.medicalhistory[0].shgeneralmusculoskeletalothertext" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div class="" ng-if="Isgeneralprior_Musculoskeletal">
+
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shgeneralmusculoskeletalothertext"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skin Checkbox -->
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shpriorillnessradio=='Contributory'">
+                            <input type="checkbox" id="generalprior_Skin" checklist-model="patientModel.medicalhistory[0].shgeneralskincheck" value="Skin"
+                                ng-change="patientModel.medicalhistory[0].shgeneralskinothertext=''" />
+                            <label for="generalprior_Skin" class="labelnormalfont">Skin</label>
+                            <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shgeneralskincheck.indexOf('Skin')!=-1">
+
+                                <button type="button" class="btn btn-info btn-xs" ng-click="Isgeneralprior_Skin=true">Text</button>
+
+                                <div ng-hide="Isgeneralprior_Skin" class="col-sm-12">
+
+                                    <span dynamic="patientModel.medicalhistory[0].shgeneralskinothertext" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div class="" ng-if="Isgeneralprior_Skin">
+
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shgeneralskinothertext"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Neurological/Dizziness/Weakness/Sensory Checkbox -->
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shpriorillnessradio=='Contributory'">
+                            <input type="checkbox" id="generalprior_Neurological" checklist-model="patientModel.medicalhistory[0].shgeneralneurologicalcheck"
+                                value="Neurological/Dizziness/Weakness/Sensory" ng-change="patientModel.medicalhistory[0].shgeneralneurologicalothertext=''" />
+                            <label for="generalprior_Neurological" class="labelnormalfont">Neurological / Dizziness / Weakness / Sensory</label>
+                            <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shgeneralneurologicalcheck.indexOf('Neurological/Dizziness/Weakness/Sensory')!=-1">
+
+                                <button type="button" class="btn btn-info btn-xs" ng-click="Isgeneralprior_Neurological=true">Text</button>
+
+                                <div ng-hide="Isgeneralprior_Neurological" class="col-sm-12">
+
+                                    <span dynamic="patientModel.medicalhistory[0].shgeneralneurologicalothertext" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div class="" ng-if="Isgeneralprior_Neurological">
+
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shgeneralneurologicalothertext"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Psychiatric/Depression/Anxiety/History of Suicidal Thoughts/Addictions Checkbox -->
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shpriorillnessradio=='Contributory'">
+                            <input type="checkbox" id="generalprior_Psychiatric" checklist-model="patientModel.medicalhistory[0].shgeneralpsychiatric"
+                                value="Psychiatric/Depression/Anxiety/History of Suicidal Thoughts/Addictions" ng-change="patientModel.medicalhistory[0].shgeneralpsychiatricothertext=''" />
+                            <label for="generalprior_Psychiatric" class="labelnormalfont">Psychiatric / Depression / Anxiety / History of Suicidal Thoughts / Addictions</label>
+                            <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shgeneralpsychiatric.indexOf('Psychiatric/Depression/Anxiety/History of Suicidal Thoughts/Addictions')!=-1">
+
+                                <button type="button" class="btn btn-info btn-xs" ng-click="Isgeneralprior_Psychiatric=true">Text</button>
+
+                                <div ng-hide="Isgeneralprior_Psychiatric" class="col-sm-12">
+
+                                    <span dynamic="patientModel.medicalhistory[0].shgeneralpsychiatricothertext" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div class="" ng-if="Isgeneralprior_Psychiatric">
+
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shgeneralpsychiatricothertext"></textarea>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shpriorillnessradio=='Contributory'">
+                            <!-- Endocrine/Diabetes or Thyroid Checkbox -->
+                            <input type="checkbox" id="generalprior_Endocrine" checklist-model="patientModel.medicalhistory[0].shgeneralendocrinecheck"
+                                value="Endocrine/Diabetes or Thyroid" ng-change="patientModel.medicalhistory[0].shgeneralendocrineothertext=''" />
+                            <label for="generalprior_Endocrine" class="labelnormalfont">Endocrine / Diabetes or Thyroid</label>
+                            <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shgeneralendocrinecheck.indexOf('Endocrine/Diabetes or Thyroid')!=-1">
+
+                                <button type="button" class="btn btn-info btn-xs" ng-click="Isgeneralprior_Endocrine=true">Text</button>
+
+                                <div ng-hide="Isgeneralprior_Endocrine" class="col-sm-12">
+
+                                    <span dynamic="patientModel.medicalhistory[0].shgeneralendocrineothertext" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div class="" ng-if="Isgeneralprior_Endocrine">
+
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shgeneralendocrineothertext"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hematological/Lymphatic/Bruising/Bleeding or Swollen Areas -->
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shpriorillnessradio=='Contributory'">
+                            <input type="checkbox" id="generalprior_Hematological" checklist-model="patientModel.medicalhistory[0].shgeneralhematologicalcheck"
+                                value="Hematological/Lymphatic/Bruising/Bleeding or Swollen Areas" ng-change="patientModel.medicalhistory[0].shgeneralhematologicalothertext=''" />
+                            <label for="generalprior_Hematological" class="labelnormalfont">Hematological / Lymphatic / Bruising / Bleeding or Swollen Areas</label>
+                            <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shgeneralhematologicalcheck.indexOf('Hematological/Lymphatic/Bruising/Bleeding or Swollen Areas')!=-1">
+
+                                <button type="button" class="btn btn-info btn-xs" ng-click="Isgeneralprior_Hematological=true">Text</button>
+
+                                <div ng-hide="Isgeneralprior_Hematological" class="col-sm-12">
+
+                                    <span dynamic="patientModel.medicalhistory[0].shgeneralhematologicalothertext" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div class="" ng-if="Isgeneralprior_Hematological">
+
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shgeneralhematologicalothertext"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Allergic/Immunologic/Drug Intolerance etc. -->
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shpriorillnessradio=='Contributory'">
+                            <input type="checkbox" id="generalprior_Allergic" checklist-model="patientModel.medicalhistory[0].shgeneralallergiccheck"
+                                value="Allergic/Immunologic/Drug Intolerance etc." ng-change="patientModel.medicalhistory[0].shgeneralallergicothertext=''" />
+                            <label for="generalprior_Allergic" class="labelnormalfont">Allergic / Immunologic / Drug Intolerance etc.</label>
+                            <div class="col-sm-12" ng-if="patientModel.medicalhistory[0].shgeneralallergiccheck.indexOf('Allergic/Immunologic/Drug Intolerance etc.')!=-1">
+
+                                <button type="button" class="btn btn-info btn-xs" ng-click="Isgeneralprior_Allergic=true">Text</button>
+
+                                <div ng-hide="Isgeneralprior_Allergic" class="col-sm-12">
+
+                                    <span dynamic="patientModel.medicalhistory[0].shgeneralallergicothertext" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div class="" ng-if="Isgeneralprior_Allergic">
+
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.medicalhistory[0].shgeneralallergicothertext"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <br />
+                    </div>
+
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-sm-12 text-left" style="margin-top: 20px;">
+                                <input type="submit" class="btn" style="background-color: black; border-radius: 0; color: white; font-size: 16px; height: 56px; margin-bottom: 20px; width: 135px; padding-top: 10px;"
+                                    ng-click="validateMedicalForm(medicalhistoryform)" id="btnMedicalFormSubmit" name="btnMedicalFormSubmit"
+                                    value="Submit Form" />
+                                <!-- Prior general review end -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-sm-12 text-left" style="margin-top: 20px;">
+                                <span data-ng-bind-html="kickstart_page.medical_page.footer"><span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div ng-show="step==3">
+    <section id="header-title">
+        <div class="container">
+            <div class="row">
+                <h2>{{kickstart_page.social_page.title}}</h2>
+            </div>
+        </div>
+    </section>
+    <div class="row">
+        <div class="container">
+            <div class="col-sm-12 text-left">
+                <div class="col-sm-12">
+                    <p>{{kickstart_page.social_page.subtitle}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12" ng-form="shform">
+                <form name="socialhistoryform" ng-submit="socialhistoryform.$valid && btnSocialFormSubmit.submit()">
+                    <!-- Form Social History shridhar -->
+                    <div class="form-group">
+
+                        <!-- Start Marital status/living arrangements -->
+                        <div class="col-sm-12 clearer">
+                            &nbsp;
+                        </div>
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <label>What best describes your marriage status?</label>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 col-md-2 col-lg-2">
+                                <label style="font-weight: normal;">
+                                    <input type="radio" name="SHrdoMaritalStatusSingle" id="SHrdoMaritalStatusSingle" value="Single" ng-model="patientModel.sh[0].SHrdoMaritalStatus" />
+                                    Single
+                                </label>
+                            </div>
+                            <div class="col-sm-12 col-xs-12 col-md-2 col-lg-2">
+                                <label style="font-weight: normal;">
+                                    <input type="radio" name="SHrdoMaritalStatusMarried" id="SHrdoMaritalStatusMarried" value="Married" ng-model="patientModel.sh[0].SHrdoMaritalStatus" />
+                                    Married
+                                </label>
+                            </div>
+                            <div class="col-sm-12 col-xs-12 col-md-2 col-lg-2">
+                                <label style="font-weight: normal;">
+                                    <input type="radio" name="SHrdoMaritalStatusDivorced" id="SHrdoMaritalStatusDivorced" value="Divorced" ng-model="patientModel.sh[0].SHrdoMaritalStatus" />
+                                    Divorced
+                                </label>
+                            </div>
+                            <div class="col-sm-12 col-xs-12 col-md-2 col-lg-2">
+                                <label style="font-weight: normal;">
+                                    <input type="radio" name="SHrdoMaritalStatusWidowed" id="SHrdoMaritalStatusWidowed" value="Widowed" ng-model="patientModel.sh[0].SHrdoMaritalStatus" />
+                                    Widowed
+                                </label>
+                            </div>
+                        </div>
+
+                        <!--End Marital status/living arrangements -->
+
+                        <!-- Start Employment status -->
+                        <div class="col-sm-12 clearer">
+                            &nbsp;
+                        </div>
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <label>What best describes your current employment status?</label>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 col-md-2 col-lg-2">
+                                <label style="font-weight: normal;">
+                                    <input type="radio" name="SHrdoEmploymentStatusFullTime" id="SHrdoEmploymentStatusFullTime" value="Full Time" ng-model="patientModel.sh[0].SHrdoEmploymentStatus" />
+                                    Full Time  
+                                </label>
+                            </div>
+                            <div class="col-sm-12 col-xs-12 col-md-2 col-lg-2">
+                                <label style="font-weight: normal;">
+                                    <input type="radio" name="SHrdoEmploymentStatusPartTime" id="SHrdoEmploymentStatusPartTime" value="Part Time" ng-model="patientModel.sh[0].SHrdoEmploymentStatus" />
+                                    Part Time
+                                </label>
+                            </div>
+                            <div class="col-sm-12 col-xs-12 col-md-2 col-lg-2">
+                                <label style="font-weight: normal;">
+                                    <input type="radio" name="SHrdoEmploymentStatusUnemployed" id="SHrdoEmploymentStatusUnemployed" value="Unemployed" ng-model="patientModel.sh[0].SHrdoEmploymentStatus" />
+                                    Unemployed                         
+                                </label>
+                            </div>
+                            <div class="col-sm-12 col-xs-12 col-md-3 col-lg-3">
+                                <label style="font-weight: normal;">
+                                    <input type="radio" name="SHrdoEmploymentStatusNotworkingduetorestrictions" id="SHrdoEmploymentStatusNotworkingduetorestrictions" value="Not working due to restrictions" ng-model="patientModel.sh[0].SHrdoEmploymentStatus" />
+                                    Not working due to restrictions
+                                </label>
+                            </div>
+                        </div>
+                        <!--End Employment status -->
+                        <div class="col-sm-12 clearer">
+                            &nbsp;
+                        </div>
+                        <!-- Start Occupational History -->
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                                <label id="SHlblOccupationalHistory">Please check all the industries that you have ever worked in.</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="SHchkOccupationalHistoryAgriculture" checklist-model="patientModel.sh[0].SHchkOccupationalHistory" value="Agriculture" />
+                                    Agriculture
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="SHchkOccupationalHistoryComputerTech" checklist-model="patientModel.sh[0].SHchkOccupationalHistory" value="Computer/Tech" />
+                                    Computer/Tech
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="SHchkOccupationalHistoryConstruction" checklist-model="patientModel.sh[0].SHchkOccupationalHistory" value="Construction" />
+                                    Construction
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="SHchkOccupationalHistoryFinance" checklist-model="patientModel.sh[0].SHchkOccupationalHistory" value="Finance" />
+                                    Finance
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="SHchkOccupationalHistoryHealthcare" checklist-model="patientModel.sh[0].SHchkOccupationalHistory" value="Healthcare" />
+                                    Healthcare
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="SHchkOccupationalHistoryRetail" checklist-model="patientModel.sh[0].SHchkOccupationalHistory" value="Retail" />
+                                    Retail
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="SHchkOccupationalHistoryHospitalityRestaurant" checklist-model="patientModel.sh[0].SHchkOccupationalHistory" value="Hospitality/Restaurant" />
+                                    Hospitality/Restaurant
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="SHchkOccupationalHistoryHospitalityManufacturing" checklist-model="patientModel.sh[0].SHchkOccupationalHistory" value="Manufacturing" />
+                                    Manufacturing
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="SHchkOccupationalHistoryHospitalityMechanicAutomotive" checklist-model="patientModel.sh[0].SHchkOccupationalHistory" value="Mechanic/Automotive" />
+                                    Mechanic/Automotive
+                                </label>
+                                <p>If you have worked in other industries, click the blue text button below and list them.</p>
+                                <button type="button" class="btn btn-info btn-xs" ng-click="IsOccupationalHistoryText=true">Text</button>
+
+                                <div ng-hide="IsOccupationalHistoryText" class="col-sm-12">
+                                    <span dynamic="patientModel.sh[0].chkOccupationalHistoryOtherTextarea" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+
+                                <div class="" ng-if="IsOccupationalHistoryText">
+
+                                    <br />
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.sh[0].chkOccupationalHistoryOtherTextarea"></textarea>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Occupational History -->
+                        <div class="col-sm-12 clearer">
+                            &nbsp;
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                                <label>Please describe your current use of caffeine, alcohol, and drugs.</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="chkCaffeineNegative" checklist-model="patientModel.sh[0].chkCaffeineNegative" value="Negative" ng-change="patientModel.sh[0].chkCaffeine=[]; patientModel.sh[0].chkStreetDrug=[]; patientModel.sh[0].chkTobacco=[]; patientModel.sh[0].chkAlcohol=[]" />
+                                    I don't use any caffeine, alcohol, or  drugs
+                                </label>
+
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="chkchkCaffeineCheck" checklist-model="patientModel.sh[0].chkCaffeine" value="Positive for caffeine" ng-change="patientModel.sh[0].chkCaffeineNegative=[]; patientModel.sh[0].txtCaffeine=''" />
+                                    I consume caffeine
+                                </label>
+                                <p ng-if="patientModel.sh[0].chkCaffeine.indexOf('Positive for caffeine')!=-1">Describe the frequency of usage</p>
+                                <input type="text" class="form-control" ng-model="patientModel.sh[0].txtCaffeine" ng-if="patientModel.sh[0].chkCaffeine.indexOf('Positive for caffeine')!=-1"
+                                    class="col-lg-4 col-md-4 col-sm-8  col-xs-8" />
+
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="chkchkStreetDrugCheck" checklist-model="patientModel.sh[0].chkStreetDrug" value="Positive for street drug" ng-change="patientModel.sh[0].chkCaffeineNegative=[]; patientModel.sh[0].txtStreetDrug=''" />
+                                    I use street drugs
+                                </label>
+                                <input type="text" class="form-control" ng-model="patientModel.sh[0].txtStreetDrug" ng-if="patientModel.sh[0].chkStreetDrug.indexOf('Positive for street drug')!=-1"
+                                    class="col-lg-4 col-md-4 col-sm-8  col-xs-8" />
+
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="chkTobacco" checklist-model="patientModel.sh[0].chkTobacco" value="Positive for tobacco" ng-change="patientModel.sh[0].chkCaffeineNegative=[]; patientModel.sh[0].txtTobacco=''" />
+                                    I use tobacco
+                                </label>
+                                <input type="text" class="form-control" ng-model="patientModel.sh[0].txtTobacco" ng-if="patientModel.sh[0].chkTobacco.indexOf('Positive for tobacco')!=-1"
+                                    class="col-lg-4 col-md-4 col-sm-8  col-xs-8" />
+
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="chkAlcohol" checklist-model="patientModel.sh[0].chkAlcohol" value="Positive for alcohol" ng-change="patientModel.sh[0].chkCaffeineNegative=[]; patientModel.sh[0].txtAlcohol=''" />
+                                    I drink alcohol
+                                </label>
+                                <input type="text" class="form-control" ng-model="patientModel.sh[0].txtAlcohol" ng-if="patientModel.sh[0].chkAlcohol.indexOf('Positive for alcohol')!=-1"
+                                    class="col-lg-4 col-md-4 col-sm-8  col-xs-8" />
+                            </div>
+                        </div>
+
+                        <!-- Start Free Data Entry of cafee-->
+                        <div class="col-sm-12 clearer">
+                            &nbsp;
+                        </div>
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <p>If you would like to  make a longer comment, click the blue text button below.</p>
+                        </div>                      
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="clearer top-buffer">
+
+                                    <button type="button" class="btn btn-info btn-xs" ng-click="Isshfreedataentry=true">Text</button>
+
+                                    <div ng-hide="Isshfreedataentry" class="col-sm-12">
+                                        <br />
+                                        <span dynamic="patientModel.sh[0].shfreedataentry" class="textEditorTextColor col-sm-12"></span>
+                                    </div>
+                                    <div class="" ng-if="Isshfreedataentry">
+                                        <br />
+                                        <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.sh[0].shfreedataentry"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Free Data Entry -->
+                        <!--End Use of caffeine, drugs, alcohol and tobacco -->
+
+                        <!-- Start Level of education -->
+                        <div class="col-sm-12 clearer">
+                            &nbsp;
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                                <label>What best describes your level of education?</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="radio" name="SHrdoLevelOfEducationElementaryMiddleSchool" id="SHrdoLevelOfEducationElementaryMiddleSchool" value="Elementary/Middle School" ng-model="patientModel.sh[0].SHrdoLevelOfEducation" />
+                                    Elementary/Middle School   
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="radio" name="SHrdoLevelOfEducationHighSchool" id="SHrdoLevelOfEducationHighSchool" value="High School" ng-model="patientModel.sh[0].SHrdoLevelOfEducation" />
+                                    High School 
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="radio" name="SHrdoLevelOfEducationGED" id="SHrdoLevelOfEducationGED" value="GED" ng-model="patientModel.sh[0].SHrdoLevelOfEducation" />
+                                    GED
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="radio" name="SHrdoLevelOfEducationTradeSchool" id="SHrdoLevelOfEducationTradeSchool" value="Trade School" ng-model="patientModel.sh[0].SHrdoLevelOfEducation" />
+                                    Trade School
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="radio" name="SHrdoLevelOfEducationCollegeDegree" id="SHrdoLevelOfEducationCollegeDegree" value="College Degree" ng-model="patientModel.sh[0].SHrdoLevelOfEducation" />
+                                    College Degree
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="radio" name="SHrdoLevelOfEducationGraduateSchoolDegree" id="SHrdoLevelOfEducationGraduateSchoolDegree" value="Graduate School Degree" ng-model="patientModel.sh[0].SHrdoLevelOfEducation" />
+                                    Graduate School Degree
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Start Free Data Entry -->
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <p>If you would like to make a longer comment, click the blue text button below.</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-info btn-xs" ng-click="IsSHrdoLevelOfEducation=true">Text</button>
+
+                                <div ng-hide="IsSHrdoLevelOfEducation" class="col-sm-12">
+                                    <br />
+                                    <span dynamic="patientModel.sh[0].SHrdoLevelOfEducationtextA" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div ng-if="IsSHrdoLevelOfEducation">
+                                    <br />
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.sh[0].SHrdoLevelOfEducationtextA"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Free Data Entry -->
+                        <!--End Level of education -->
+
+                        <!-- Start Second Jobs -->
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <label>Do you have a second job?</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                                <label style="font-weight: normal;">
+                                    <input type="radio" id="rdoSecondJobs_FreeDataEntry" ng-model="patientModel.sh[0].rdoSecondJobs" value="Free Data Entry" />
+                                    Yes
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                                <label style="font-weight: normal;">
+                                    <input type="radio" id="rdoSecondJobs_none" ng-model="patientModel.sh[0].rdoSecondJobs" value="None" ng-change="patientModel.sh[0].rdoSecondJobsTextarea=''" />
+                                    No 
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="clearer top-buffer col-sm-12 col-xs-12 col-md-12 col-lg-12" ng-if="patientModel.sh[0].rdoSecondJobs=='Free Data Entry'">
+                                <p>Please click the blue text button and describe your second job.</p>
+                                <button type="button" class="btn btn-info btn-xs" ng-click="IsrdoSecondJobsTextarea=true">Text</button>
+
+                                <div ng-hide="IsrdoSecondJobsTextarea" class="col-sm-12">
+                                    <br />
+                                    <span dynamic="patientModel.sh[0].rdoSecondJobsTextarea" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div ng-if="IsrdoSecondJobsTextarea">
+                                    <br />
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.sh[0].rdoSecondJobsTextarea"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--End Second Jobs -->
+                        <!-- Start Self-employment -->
+                        <br />
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <label>Are you self-employed?</label>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                                <label style="font-weight: normal;">
+                                    <input type="radio" id="rdoSelfEmployment_FreeDataEntry" ng-model="patientModel.sh[0].rdoSelfEmployment" value="Free Data Entry" />
+                                    Yes
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                                <label style="font-weight: normal;">
+                                    <input type="radio" id="rdoSelfEmployment_none" ng-model="patientModel.sh[0].rdoSelfEmployment" value="None" ng-change="patientModel.sh[0].rdoSelfEmploymentTextarea=''" />
+                                    No 
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="clearer top-buffer col-sm-12 col-xs-12 col-md-12 col-lg-12" ng-if="patientModel.sh[0].rdoSelfEmployment=='Free Data Entry'">
+                                <p>Please click the blue text button and describe your self employment.</p>
+                                <button type="button" class="btn btn-info btn-xs" ng-click="IsrdoSelfEmploymentTextarea=true">Text</button>
+
+                                <div ng-hide="IsrdoSelfEmploymentTextarea" class="col-sm-12">
+                                    <br />
+                                    <span dynamic="patientModel.sh[0].rdoSelfEmploymentTextarea" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div class="" ng-if="IsrdoSelfEmploymentTextarea">
+                                    <br />
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.sh[0].rdoSelfEmploymentTextarea"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Self-employment -->
+
+                        <!-- Start Military service -->
+                        <br />
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <label>Are you or were you ever in the military?</label>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                                <label style="font-weight: normal;">
+                                    <input type="radio" id="rdoMilitaryService_Computers" ng-model="patientModel.sh[0].rdoMilitaryService" value="Free Data Entry" />
+                                    Yes
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                                <label style="font-weight: normal;">
+                                    <input type="radio" id="rdoMilitaryService_none" ng-model="patientModel.sh[0].rdoMilitaryService" value="None" ng-change="patientModel.sh[0].rdoMilitaryServiceTextarea=''" />
+                                    No 
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="clearer top-buffer col-sm-12 col-xs-12 col-md-12 col-lg-12" ng-if="patientModel.sh[0].rdoMilitaryService=='Free Data Entry'">
+                                <p>Please click the blue text button and describe your military history.</p>
+                                <button type="button" class="btn btn-info btn-xs" ng-click="IsrdoMilitaryServiceTextarea=true">Text</button>
+
+                                <div ng-hide="IsrdoMilitaryServiceTextarea" class="col-sm-12">
+                                    <br />
+                                    <span dynamic="patientModel.sh[0].rdoMilitaryServiceTextarea" class="textEditorTextColor col-sm-12"></span>
+                                </div>
+                                <div class="" ng-if="IsrdoMilitaryServiceTextarea">
+                                    <br />
+                                    <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.sh[0].rdoMilitaryServiceTextarea"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Military service -->
+
+                        <!-- Start hobbies History -->
+                        <br />
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <label>Do you have any hobbies?</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="chkHobbiesNone_none" checklist-model="patientModel.sh[0].chkHobbiesNone" value="None" ng-change="patientModel.sh[0].chkHobbies=[]" />
+                                    None
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="chkHobbiesNone_Computers" checklist-model="patientModel.sh[0].chkHobbies" value="Computers" ng-change="patientModel.sh[0].chkHobbiesNone=[]" />
+                                    Computers
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="chkHobbiesNone_MusicalInstruments" checklist-model="patientModel.sh[0].chkHobbies" value="Musical Instruments" ng-change="patientModel.sh[0].chkHobbiesNone=[]" />
+                                    Musical Instruments
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="chkHobbiesNone_SportsHikingExercise" checklist-model="patientModel.sh[0].chkHobbies" value="Sports/Hiking/Exercise" ng-change="patientModel.sh[0].chkHobbiesNone=[]" />
+                                    Sports/Hiking/Exercise
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="chkHobbiesNone_OutdoorActivity" checklist-model="patientModel.sh[0].chkHobbies" value="Outdoor Activity" ng-change="patientModel.sh[0].chkHobbiesNone=[]" />
+                                    Outdoor Activity
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="chkHobbiesNone_TelevisionReading" checklist-model="patientModel.sh[0].chkHobbies" value="Television/Reading" ng-change="patientModel.sh[0].chkHobbiesNone=[]" />
+                                    Television/Reading
+                                </label>
+                                <label class="checkbox" style="font-weight: normal;">
+                                    <input type="checkbox" id="chkHobbiesNone_FamilyOutings" checklist-model="patientModel.sh[0].chkHobbies" value="Family Outings" ng-change="patientModel.sh[0].chkHobbiesNone=[]" />
+                                    Family Outings
+                                </label>
+                                <div class="clearer top-buffer">
+                                    <p>Please click the blue text button and describe your other hobbies.</p>
+                                    <button type="button" class="btn btn-info btn-xs" ng-click="IschkHobbiesOtherTextarea=true">Text</button>
+
+                                    <div ng-hide="IschkHobbiesOtherTextarea" class="col-sm-12">
+                                        <br />
+                                        <span dynamic="patientModel.sh[0].chkHobbiesOtherTextarea" class="textEditorTextColor col-sm-12"></span>
+                                    </div>
+                                    <div class="" ng-if="IschkHobbiesOtherTextarea">
+                                        <br />
+                                        <textarea ui-tinymce="tinymceOptions" ng-model="patientModel.sh[0].chkHobbiesOtherTextarea"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 text-left" style="margin-top: 20px;">
+                                <input type="submit" class="btn" style="background-color: black; border-radius: 0; color: white; font-size: 16px; height: 56px; margin-bottom: 20px; width: 135px; padding-top: 10px;"
+                                    ng-click="validateSocialForm(socialhistoryform)" id="btnSocialFormSubmit" name="btnSocialFormSubmit" value="Submit Form" />
+                            </div>
+                        </div>
+                        <!--End hobbies History -->
+
+
+                        <!-- Form ends here social history -->
+                        <div class="row">
+                            <div class="col-sm-12 text-left" style="margin-top: 20px;">
+                                <span data-ng-bind-html="kickstart_page.social_page.footer"><span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-show="step==4">
+    <section id="header-title">
+        <div class="container">
+            <div class="row">
+                <h2>{{kickstart_page.schedule_page.title}}</h2>
+            </div>
+        </div>
+    </section>
+    <div class="row">
+        <div class="container">
+            <div class="col-sm-12 text-left">
+                <p>{{kickstart_page.schedule_page.subtitle}}</p>
+            </div>
+        </div>
+    </div>
+    <!--Footer ng-show="status == 'true'" -->
+    <br />
+
+    <div class="container">
+        <form name="appointmentform" ng-submit="appointmentform.$valid && appointmentformSubmit.submit()">
+            <div class="row">
+                <div class="col-md-12">
+                    <label>
+                        Do you need to schedule an appointment with our clinic?
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label style="font-weight: normal;">
+                        <input type="radio" ng-model="appointment_schedule" value="Yes" />
+                        Yes
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label style="font-weight: normal;">
+                        <input type="radio" ng-model="appointment_schedule" value="No" ng-change="appointment_notes=''" />
+                        No 
+                    </label>
+                </div>
+            </div>
+			<div class="row" ng-show="appointment_schedule=='Yes'">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label>
+                    Please let us know the date and time  of your first choice for an appointment time. In case  we can't schedule you for that day, please let us know  alternative dates and times that will work for you.                             
+                </label>
+                <br />
+                <textarea rows="5" class="form-control" style="resize: none" name="appointment_notes" ng-model="appointment_notes"
+                    ng-maxlength="2000"></textarea>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 text-left" style="margin-top: 20px;">
+            <input type="submit" class="btn" style="background-color: black; border-radius: 0; color: white; font-size: 16px; height: 56px; margin-bottom: 20px; width: 135px; padding-top: 10px;"
+                ng-click="scheduleAppointmentForm(appointmentform)" id="appointmentformSubmit" name="appointmentformSubmit" value="Submit Form" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 text-left" style="margin-top: 20px;">
+            <span data-ng-bind-html="kickstart_page.schedule_page.footer"><span>
+        </div>
+    </div>
+    
+    
+    </form>
+	<!-- </div></div> -->
+</div>
+<!-- Form ends here social history -->
+</div>
+<div class="row clearer">
+    &nbsp;
+</div>
+<div class="row clearer">
+    &nbsp;
+</div>
+<div id="spiningwheel">
+    <div class="overlayBackground"></div>
+    <div class="overlayContentInjuryLaunch" style="top: 45%; position: fixed !important;">
+        <img src="/images/spinner.gif"><span>&nbsp;&nbsp;Loading</span>
+    </div>
+</div>

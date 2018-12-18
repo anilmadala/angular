@@ -1,0 +1,230 @@
+<!--Header cover -->
+<div>
+    <div style="font-size: 10px; font-weight: bold; text-align: center">STATE OF CALIFORNIA</div>
+    <div style="font-size: 14px; text-align: center" class="clearer"><strong>DOCTOR'S FIRST REPORT OF OCCUPATIONAL INJURY OR ILLNESS </strong></div>
+</div>
+<table border="1" cellpadding="2" cellspacing="0" style="font-size: 11px">
+    <tbody>
+        <tr>
+            <th colspan="3" style="font-weight: bold; font-size: 10px; text-align: left">Within 5 days of your initial examination, for every occupational injury or illness, send two copies of this report to the employer's workers' compensation insurance carrier or the insured employer. Failure to file a timely doctor's report
+ may result in assessment of a civil penalty. In the case of diagnosed or suspected pesticide poisoning, send a copy of the report to Division of Labor Statistics and Research, P.O. Box 420603, San Francisco, CA 94142-0603, and notify your local health officer by telephone within 24 hours.</th>
+        </tr>
+        <tr>
+            <td style="width: 80%; padding-top: 2px; vertical-align: top; font-size: 11px" colspan="2">1.<span style="font-size: 11px"><strong>&nbsp;INSURER NAME AND ADDRESS:&nbsp;</strong></span><span ng-if="report.data['bginfo'].insurance_claimsadministrator">{{report.data['bginfo'].insurance_claimsadministrator}}</span><span ng-if="report.data['bginfo'].insuranceaddressline1">, {{report.data['bginfo'].insuranceaddressline1}}</span><span ng-if="report.data['bginfo'].insuranceaddressline2">, {{report.data['bginfo'].insuranceaddressline2}}</span><span ng-if="report.data['bginfo'].insurancecity">, {{report.data['bginfo'].insurancecity}}</span><span ng-if="report.data['bginfo'].insurancestate">, {{report.data['bginfo'].insurancestate}}</span> <span ng-if="report.data['bginfo'].insurancezipcode">{{report.data['bginfo'].insurancezipcode}}</span><span ng-if="report.data['bginfo'].insurance_claimsnumber">. Claim Number: {{report.data['bginfo'].insurance_claimsnumber}}</span></td>
+            <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 2px">
+                <strong>PLEASE DO NOT USE THIS COLUMN</strong>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="width: 80%; padding-top: 2px; padding-bottom: 0px; font-size: 11px">2. <span style="font-size: 11px"><strong>EMPLOYER NAME:</strong></span>&nbsp;{{report.data['bginfo'].company}}<strong><br>
+            </strong></td>
+            <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 2px; padding-bottom: 5px"><strong>Case No.</strong></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="padding-top: 0px">
+                <table style="width: 100%; font-size: 11px" border="0" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td>3. Address:&nbsp;{{report.data['bginfo'].emp_address1}}</td>
+                            <td>No. and Street: {{report.data['bginfo'].emp_address2}}</td>
+                            <td>City: &nbsp;{{report.data['bginfo'].emp_city}}<span ng-if="report.data['bginfo'].emp_city && report.data['bginfo'].emp_state">, </span>{{report.data['bginfo'].emp_state}}</td>
+                            <td>Zip: &nbsp;{{report.data['bginfo'].emp_zipcode}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td border="1" style="width: 20%; text-align: center; font-size: 9px; padding-top: 0px; padding-bottom: 5px"><strong>Industry</strong></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="padding-top: 0px; font-size: 11px">4. Nature of business (e.g., food manufacturing, building construction, retailer of women's clothes.): &nbsp;<span ng-if="report.data['bginfo'].natureofbusiness != 'Other'">{{report.data['bginfo'].natureofbusiness}}</span> <span ng-if="report.data['bginfo'].natureofbusiness == 'Other'">{{report.data['bginfo'].othernatureofbusiness}}</span></td>
+            <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 0px; padding-bottom: 5px"><strong>Country</strong></td>
+        </tr>
+        <tr border="0">
+            <td border="0" style="padding-top: 0px; padding-bottom: 0px">
+                <table style="width: 100%; font-size: 11px" border="0" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td style="border-right: solid 1px gray; width: 75%; padding-top: 2px; padding-bottom: 0px">5. <strong>PATIENT NAME</strong> (first name, middle initial, last name): {{report.data ['bginfo'].firstname}}&nbsp;{{report.data['bginfo'].middlename}}&nbsp;{{report.data['bginfo'].lastname}}</td>
+                            <td style="vertical-align: top; padding-top: 2px; padding-bottom: 0px">&nbsp;6. Sex: {{report.data['bginfo'].gender}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td style="padding-top: 0px; padding-bottom: 0px; vertical-align: top"><span style="padding-top: 2px">7. Date of Birth: {{report.data['bginfo'].dateofbirth | date:'MM/dd/yyyy'}}</span></td>
+            <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 0px; padding-bottom: 0px; vertical-align: top"><span style="padding-top: 2px"><strong>Age</strong></span></td>
+        </tr>
+        <tr>
+            <td colspan="1" style="vertical-align: top; padding-top: 0px">
+                <table style="width: 100%; font-size: 11px" border="0" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr style="padding-top: 2px">
+                            <td>8. Address: {{report.data['bginfo'].addressline1}}&nbsp;&nbsp;</td>
+                            <td>No. and Street: {{report.data['bginfo'].addressline2}}&nbsp;</td>
+                            <td>City:&nbsp;{{report.data['bginfo'].city}}</td>
+                            <td class="vl" style="">Zip:&nbsp;{{report.data['bginfo'].zipcode}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td style="padding-top: 0px">9. Telephone number: <span ng-if="report.data['bginfo'].homephone">&nbsp;{{report.data['bginfo'].homephone | phonenumberFormat}} </span><span ng-if="report.data['bginfo'].cellphone && !report.data['bginfo'].homephone">{{report.data['bginfo'].cellphone | phonenumberFormat}} </span><span ng-if="report.data['bginfo'].workphone && !report.data['bginfo'].homephone && !report.data['bginfo'].cellphone">{{report.data['bginfo'].workphone | phonenumberFormat}}</span> <span ng-if="report.data['bginfo'].extension && !report.data['bginfo'].homephone && !report.data['bginfo'].cellphone">ext. {{report.data['bginfo'].extension}}</span></td>
+            <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 0px; padding-bottom: 5px; vertical-align: top"><strong>Hazard</strong></td>
+        </tr>
+        <tr>
+            <td class="vl" style="width: 65%; padding-top: 0px">10. Occupation (Specific job title):&nbsp;{{report.data['bginfo'].currentoccupation=='Other'?report.data['bginfo'].currentoccupationother:report.data['bginfo'].currentoccupation}} {{report.data['bginfo'].jobtitle ? '- '+report.data['bginfo'].jobtitle : ''}}</td>
+            <td style="padding-top: 0px">11. Social Security Number: {{report.data['bginfo'].socialsecurityno | socialSecurityFormat}}</td>
+            <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 0px; padding-bottom: 5px"><strong>Disease</strong></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="padding-top: 0px">12. Injured at: <span ng-if="report.data['bginfo'].location_address1">{{report.data['bginfo'].location_address1}}</span><span ng-if="report.data['bginfo'].location_address2">, {{report.data['bginfo'].location_address2}}</span><span ng-if="report.data['bginfo'].location_city">, {{report.data['bginfo'].location_city}}</span><span ng-if="report.data['bginfo'].location_state">, {{report.data['bginfo'].location_state}}</span><span ng-if="report.data['bginfo'].location_zipcode"> {{report.data['bginfo'].location_zipcode}}</span></td>
+            <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 0px; padding-bottom: 5px"><strong>Hospitalization</strong></td>
+        </tr>
+        <tr>
+            <td class="vl" style="padding-top: 0px">13. Date and hour of injury or onset of illness: {{report.data['bginfo'].dateofinjury | date:'MM/dd/yyyy'}}<span ng-if="report.data['bginfo'].timeofinjury">, </span><span ng-if="report.data['bginfo'].timeofinjury" ng-bind="(report.data['bginfo'].timeofinjury | date:'h:mma').replace('PM',' p.m.').replace('AM',' a.m.')"></span></td>
+            <td style="width: 35%; height: 31px; padding-top: 0px">14. Date last worked:&nbsp;{{report.data['bginfo'].dateoflastwork | date:'MM/dd/yyyy'}}</td>
+            <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 0px; padding-bottom: 5px; vertical-align: top">
+                <strong>Occupation</strong><strong>&nbsp;</strong>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top: 0px">15. Date and hour of first examination or treatment:&nbsp;
+ <span ng-if="report.data['selectinjuries'].evaluated_prior=='Yes'">{{report.data['selectinjuries'].dateofpriorevaluation | date:'MM/dd/yyyy'}}
+ <span ng-if="report.data['selectinjuries'].dateofpriorevaluation">, 
+ <span ng-bind="(report.data['selectinjuries'].timeofpriorevaluation?report.data['selectinjuries'].timeofpriorevaluation:currdate | date:'h:mma').replace('PM',' p.m.').replace('AM',' a.m.')"></span>
+ </span>
+ </span>
+                <span ng-if="report.data['selectinjuries'].evaluated_prior=='No'">{{report.data['patientcomplaints'].currentexamdate | date:'MM/dd/yyyy'}}, 
+ <span ng-bind="(report.data['patientcomplaints'].currenttimeofexam | date:'h:mma').replace('PM',' p.m.').replace('AM',' a.m.')"></span>
+                </span>
+            </td>
+            <td style="width: 35%; padding-top: 0px">
+                <p>16. Have you (or your office) previously treated patient? {{report.data['patientcomplaints'].prevtreatedpatient}}</p>
+            </td>
+            <td style="width: 20%; text-align: center; font-size: 9px; padding-top: 0px; padding-bottom: 5px; vertical-align: top"><strong>Return Date/Code</strong></td>
+        </tr>
+        <tr>
+            <td colspan="3"><strong>Patient please complete this portion, if able to do so. </strong><span>Otherwise, doctor please complete immediately, inability or failure of a patient to complete this portion <span>shall not affect his/her rights to workers' compensation under the California Labor Code.</span> </span>
+                <br>
+                17. <strong>DESCRIBE HOW THE ACCIDENT OR EXPOSURE HAPPENED. </strong>(Give specific object, machinery or chemical. Use reverse side if more space is required.) <span ng-if="report.data['patientcomplaints'].textareaforpatientwords">"<span ng-bind-html="appendPeriod(report.data['patientcomplaints'].textareaforpatientwords.substring(0,130))"></span><span ng-if="report.data['patientcomplaints'].textareaforpatientwords.length > 130">...(See next page)</span>"</span></td>
+        </tr>
+        <tr>
+            <td colspan="3">18. <strong>SUBJECTIVE COMPLAINTS </strong>(Describe fully. Use reverse side if more space is required.) {{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}} {{report.data['bginfo'].lastname}} and I discuss {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} current complaints. (See next page)</td>
+        </tr>
+        <tr>
+            <td colspan="3" style="padding-top: 0px">
+                <table style="width: 100%; padding-top: 0px; font-size: 11px">
+                    <tbody>
+                        <tr>
+                            <td style="padding-top: 0px">19. <strong>OBJECTIVE FINDINGS </strong>(Use reverse side if more space is required.)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 0px"><span ng-if="objectivefindingsCoverpage()"></span>A. Physical examination: <span ng-if="ofValue">See next page for findings.</span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 0px">{{dingnosticCoverpage()}}B. X-ray and laboratory results (State if non or pending.) <span ng-if="DTSValue">Diagnostic testing performed. (See next page)</span> </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="padding-top: 0px">{{diagnosesCoverpage()}}20. <strong>DIAGNOSIS </strong>(if occupational illness specify etiologic agent and duration of exposure.) {{report.data['decisionmaking'].mdmq2=='Yes'? 'Chemical/toxic compounds are involved.': 'Chemical/toxic compounds are NOT involved.'}}
+ (See next page)
+ 
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="3">21. Are your findings and diagnosis consistent with patient's account of injury or onset of illness? {{report.data['decisionmaking'].mdmq1opt}} <span ng-if="report.data['decisionmaking'].mdmq1optYesText">(See next page)</span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">22. Is there any other current condition that will impede or delay patient's recovery?&nbsp; 
+ <span ng-if="report.data['decisionmaking'].mdmq5 == 'No'">There are no other current conditions that will impede or delay the patient's recovery.</span>
+                <span ng-if="report.data['decisionmaking'].mdmq5 == 'Yes'">Yes. <span><span ng-if="report.data['decisionmaking'].mdmq5check2== 'Painful condition, same body part'">painful condition, same body part.</span></span> (See next page)
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">23. <strong>TREATMENT RENDERED</strong> (Use reverse side if more space is required.)
+ <span ng-if="treatmentCoverPage()">Treatment is indicated. (See next page)</span>
+                <span ng-if="NoCount">No treatment necessary.</span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">24. If further treatment required, specify treatment plan/estimated duration. {{report.data['decisionmaking'].mdmq4}}
+ <div ng-if="report.data['decisionmaking'].mdmq4 == 'No'">{{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Mrs.'}} {{report.data['bginfo'].lastname}} requires no further treatment.</div>
+                <div ng-if="report.data['decisionmaking'].mdmq4 == 'Yes' && report.data['decisionmaking'].mdmq4yesopt1 == ''">The patient does require further treatment.</div>
+                <div ng-if="report.data['decisionmaking'].mdmq4 == 'Yes' && report.data['decisionmaking'].mdmq4yesopt1.length>0 && report.data['decisionmaking'].mdmq4yesopt1 != 'Other'">
+                    The patient does require further treatment. It is my estimation this treatment will take {{report.data ['decisionmaking'].mdmq4yesopt1|lowercase}}.
+                </div>
+                <div ng-if="report.data['decisionmaking'].mdmq4 == 'Yes' && report.data['decisionmaking'].mdmq4yesopt1.length>0 && report.data['decisionmaking'].mdmq4yesopt1 == 'Other'">
+                    The patient does require further medical treatment. <span ng-bind-html="appendPeriod(report.data['decisionmaking'].mdmq4yesoptother)"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <table style="width: 100%; font-size: 11px">
+                    <tbody>
+                        <tr>
+                            <td>25. If hospitalized as inpatient, give hospital name and location.
+ <div ng-if="report.data['decisionmaking'].mdmq3== 'No'">The patient does not require hospitalization.</div>
+                                <div ng-if="report.data['decisionmaking'].mdHospitalLocation">
+                                    Hospital name: {{report.data['decisionmaking'].mdHospitalLocation}} &nbsp;&nbsp;&nbsp;&nbsp;
+ <span ng-if="report.data['decisionmaking'].mdmq3== 'Yes'">Date Admitted: {{report.data['decisionmaking'].mdmq4yesdate| date:'MM/dd/yyyy'}} &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span ng-if="report.data['decisionmaking'].mdmq3== 'Yes'">Estimated stay: {{report.data['decisionmaking'].mdmq3yesstay}}</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">26. WORK STATUS -- Is patient able to perform usual work? {{report.data['workrestriction'].WRpatientReturnOptions}}
+ 
+ <span ng-if="report.data['workrestriction'].WRpatientReturnOptions&nbsp; == 'Yes' ">The patient can return to {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} occupation.</span>
+                <span ng-if="report.data['workrestriction'].WRpatientReturnOptions &nbsp;== 'Yes with modifications' ">The patient can return to {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} occupation with the modifications described below. <span ng-if="report.data['workrestriction'].WRpatientReturnOptions != ''">Regular work {{report.data['workrestriction'].WRpatientReturnOpt2Date| date:'MM/dd/yyyy'}} </span></span>
+                <span ng-if="report.data['workrestriction'].WRpatientReturnOptions == 'No' ">The patient cannot return to {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} occupation. <span ng-if="report.data['workrestriction'].WRpatientReturnOptions != ''">Modified work {{report.data['workrestriction'].WRpatientReturnOpt3Date| date:'MM/dd/yyyy'}} </span></span>
+                <span ng-if="workRestrictionCoverPage()">(See next page)</span>
+                <div class="pull-right">
+                    <div ng-if="report.data['workrestriction'].WRindicatedRadio == 'Yes'">Specify Restrictions See section 26 of full report for work restrictions</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <table style="width: 100%; font-size: 11px">
+                    <tbody>
+                        <tr>
+                            <td style="width: 50%">Doctor's Signature</td>
+                            <td>CA License Number: {{report.data.signDoctor.level4.licensenumber}}</td>
+                        </tr>
+                        <tr>
+                            <td>Doctor Name and Degree (please type): {{report.data.signDoctor.level4.firstname}} {{report.data.signDoctor.level4.lastname}}<span ng-if="report.data.signDoctor.level4.profession">, <span ng-bind-html="getProfession(report.data.signDoctor.level4.profession, report.data.signDoctor.level4.otherprofessiontext)"></span></span></td>
+                            <td>IRS Number</td>
+                        </tr>
+                        <tr>
+                            <td>Address: {{setAddress()}}</td>
+                            <td>Telephone Number: {{report.data['selectinjuries']['phonenumber'] | phonenumberFormat}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p style="font-size: 9px">
+    <strong>FORM 5021 (Rev. 4)
+ <br>
+        1992</strong><strong>&nbsp;</strong>
+</p>
+<table style="width: 90%; font-size: 11px" align="center">
+    <tbody>
+        <tr style="background-color: black; color: #ffffff">
+            <td style="text-align: center">Any person who makes or causes to be made any knowingly false or fraudulent material statement or material representation<br>
+                for the purpose of obtaining or denying workers' compensation benefits or payments is guilty of a felony.</td>
+        </tr>
+    </tbody>
+</table>
+<!--Header cover -->

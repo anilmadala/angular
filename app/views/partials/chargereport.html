@@ -1,0 +1,160 @@
+<div class="practise">
+    <div class="bright">
+        <section id="header-title" style="margin-bottom: 0;">
+            <div class="container">
+                <div class="row">
+                    <h2 style="text-align: left;">Charge Report</h2>
+                </div>
+            </div>
+        </section>
+        <section ng-if="currentuserrole = 'siteadmin'"><!--" || fullPractice">-->
+            <div class="container">
+                <br />
+                <div class="row">                   
+					<div class="row">
+						<div class="col-sm-12">
+                                <section>
+                                    <div class="container">
+                                        <div class="form-horizontal">
+											<form class="form-inline" name="chargereportForm" novalidate>
+												<div class="row" >	
+												<div id='divError' class="col-sm-12 col-sm-offset alert alert-dismissable alert-danger text-center" ng-show="validationMessage==true">{{errMessage}}</div>
+												<div id='divMsg' class="col-sm-12 col-sm-offset alert alert-dismissable alert-danger text-center" style="display:none">Please select a Location</div>											
+													<div class="form-group col-sm-12 col-md-12">
+														<div class="form-group col-sm-5  col-md-4" ng-class="{ 'has-error' : chargereportForm.practicename.$invalid && submited }" ng-init="getPracticesList()" >
+															<label for="exampleInputEmail2">Practice Account:   &nbsp;</label>														
+															<select ng-model="formd.practicename" ng-change="getLocationList(formd.practicename)" name="practicename" class="form-control" ng-options="pracList.practicename for pracList in practiceList" style="width: 50%" required>            																
+																<option value="pracList.practicename">{{item.practicename}}</option>
+															</select>
+<!-- 															<select ng-model="formd.practicename" ng-change="getLocationList(formd.practicename)" name="practicename" class="form-control" ng-options="pracList.practicename for pracList in practiceList" style="width: 50%" required>            																 -->
+<!-- 																<option value="pracList.practicename">{{item.practicename}}</option> -->
+<!-- 															</select> -->
+															<p class="help-block" ng-show="chargereportForm.practicename.$invalid && submited" style="padding-left: 30%; color: #a94442">Required</p>
+														</div>
+														<div class="form-group col-sm-4 col-md-3" ng-class="{ 'has-error' : chargereportForm.fromdate.$invalid && submited }">
+															<label for="exampleInputName2">Date From:   &nbsp;</label>
+															<input type="text" ng-model="formd.startdate"  class="form-control" id="Text3" name="fromdate" date-options="dateOptions" custom-datepicker date-format="dd-MM-yy" style="width: 50%" required>
+															<p class="help-block" ng-show="chargereportForm.fromdate.$invalid && submited" style="padding-left: 29%; color: #a94442">Required</p>
+														</div>
+														<div class="form-group col-sm-4  col-md-3" ng-class="{ 'has-error' : chargereportForm.todate.$invalid && submited }">
+															<label for="exampleInputEmail2">Date To:   &nbsp;</label>
+															<input type="text" ng-model="formd.enddate" class="form-control" id="Text4" name="todate" date-options="dateOptions" custom-datepicker date-format="dd-MM-yy"  style="width: 50%" required>
+															<p class="help-block" ng-show="chargereportForm.todate.$invalid && submited" style="padding-left: 24%; color: #a94442">Required</p>
+														</div>
+														<div class="form-group col-sm-2  col-md-2">    
+															<button type="submit" class="btn btn-info btn-sm" ng-click="create(chargereportForm.$valid,formd)" title="Create">Create Report</button>
+														</div>
+													</div>
+												</div>
+												<div class="row" style="margin-left: 15px">
+													<div class="form-group col-sm-12 col-md-12">
+														&nbsp;
+													</div>
+												</div>			
+												<div class="row" style="margin-left: 10px" ng-hide="formd.practicename.practicename=='All Accounts' || !formd.practicename.practicename">
+													<div class="form-group col-sm-12 col-md-12">        
+														<div ng-show="formd.practicename!='All Accounts'" class="form-group col-sm-5  col-md-4" ng-class="{ 'has-error' : chargereportForm.locationname.$invalid && submited }">
+																<label for="exampleInputEmail2">Clinic Location:   &nbsp;</label>
+																<select ng-model="formd.locationname" name="locationname" class="form-control" ng-options="name.locationanme for name in LocationList" style="width: 51%">            
+																	<option value="item.locationanme">{{item.locationanme}}</option>
+																</select>                                                           
+																<p class="help-block" ng-show="chargereportForm.locationname.$invalid && submited" style="padding-left: 30%; color: #a94442">Required</p>
+														</div>   
+													</div>
+												</div>
+											</form>
+                                            <div ng-if="isLoad">
+                                                <div class="overlayBackground"></div>
+                                                <div class="overlayContent3">
+                                                    <img src="/images/spinner.gif">
+                                                </div>
+                                            </div>
+                                            <div id='divnorecordMsg' ng-if="displayedCollection.length<1 && submited" style="margin-top: 15px">
+                                               <div class="alert alert-danger text-center" role="alert">No Record Found!</div>
+                                            </div>
+                                            <div class="row" ng-if="showfirsttable" style="width:930px;overflow:auto">
+                                                <div class="col-sm-12 removePadding">
+                                                    <div class="col-sm-8 removePadding">
+                                                        <h4>Charge Report</h4>
+                                                    </div>
+                                                    <div ng-if="showfirsttable" class="col-sm-4 removePadding">
+                                                        <button type="button" class="btn btn-success btn-sm pull-right" title="Create" ng-click="createuserCSV()" style="margin: 4px 0;">Save to CSV</button>
+                                                    </div>
+                                                </div>                                                
+                                                    <table ng-if="showfirsttable" st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped table-bordered table-hover table-condensed">
+                                                        <thead>
+                                                            <tr>
+                                                                <!--<th st-sort="username">Practice</th>
+																<th st-sort="data.patientcomplaints.cliniclocation">Clinic Location</th>
+                                                                <!--<th st-sort="signindate">Practice ID</th>
+                                                                <th st-sort="signindate">Address</th>
+                                                                <th st-sort="signoutdate">Date Submitted</th>
+                                                                <th st-sort="signoutdate">Report</th>
+																<th st-sort="signoutdate">Charge Amount</th>
+																<th st-sort="signoutdate">Treating Physician</th>
+																<th st-sort="signoutdate">Signing Physician</th>
+																<!--<th st-sort="signoutdate">Sales Representative</th>
+																<th st-sort="signoutdate">Patient Name</th>
+																<th st-sort="signoutdate">Date of Exam</th>
+																<th st-sort="signoutdate">Report ID</th>-->	
+																<th>Practice</th>
+																<th>Clinic Location</th>
+                                                                <th>Date Submitted</th>
+                                                                <th>Report</th>
+																<th>Charge Amount</th>
+																<th>Treating Physician</th>
+																<th>Signing Physician</th>
+																<th>Patient Name</th>
+																<th>Date of Exam</th>
+																<th>Report ID</th>			
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th colspan="9">
+                                                                    <input st-search="" class="form-control input-sm" placeholder="Search..." type="text"  />
+                                                                </th>
+                                                            </tr>
+                                                            <tr ng-repeat="row in displayedCollection">
+                                                                <td>{{row.practicename}}</td>
+																<td>{{row.data.patientcomplaints.cliniclocation}}</td>
+																<!--<td>&nbsp;</td>
+																<td>&nbsp;</td>-->
+																<td>{{row.submittedDate | date:'MM/dd/yyyy'}}</td>
+																<td>{{row.formtype | uppercase}}</td>
+																<td>{{row.reportcharge}}</td>
+                                                                <td>{{row.data.patientcomplaints.treatphynamedropdown}}</td>
+																<td>{{row.data.signDoctor.level4.firstname}}&nbsp;{{row.data.signDoctor.level4.lastname}}</td>
+																<!--<td>sales rep</td>-->
+																<td>{{row.data.bginfo.firstname}} <span ng-if="row.data.bginfo.lastname">{{row.data.bginfo.lastname[0]}}</span></td>
+																<td>{{row.data.patientcomplaints.currentexamdate | date:'MM/dd/yyyy'}}</td>
+																<td>{{row._id}}</td>																
+                                                            </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="10" class="text-center">
+                                                                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="9"></div>
+                                                                </td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>                                                
+                                            </div>
+                                            <br />
+                                            <div class="text-center">
+                                                <div class="label label-success" data-ng-show="$parent.updateStatus">
+                                                    <span class="glyphicon glyphicon-thumbs-up icon-white"></span>&nbsp;&nbsp;updated!                   
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>                           
+					</div>                     					                      
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+

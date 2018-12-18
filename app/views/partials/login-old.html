@@ -1,0 +1,106 @@
+<section id="login" class="visible">
+    <div class="container" id="divLogin">
+        <div class="row">
+            <div class="col-md-5 col-md-offset-3 col-sm-7 col-sm-offset-3">
+                <div class="login-box-plain">
+                    <div class="login-sign text-center">
+                        <h3>Login with your account</h3>
+                        <a><span class="glyphicon glyphicon-user"></span></a>
+                    </div>
+                <div class="divide-40"></div>
+                <!--  <form role="form"> -->
+                <form class="form" name="form" id="form" ng-submit="login(form)">
+
+                    <!-- Practice Name -->
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Practice Name</label>
+                        <i class="fa fa-envelope"></i>
+
+                        <input type="text" id="txtPName" name="pname" class="form-control" ng-model="user.pname" required lowercase />
+                    </div>
+                    <div class="login-helpers">
+                        <a ng-click="open('forgotPractice')">Forgot your Practice Name?</a>
+                    </div>
+
+                    <!-- User Name -->
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Username</label>
+                        <i class="fa fa-envelope"></i>
+                        <!-- <input type="email" class="form-control" id="exampleInputEmail1"> -->
+                        <input type="text" id="txtUName" name="username" class="form-control" ng-model="user.username" required lowercase />
+                    </div>
+                    <div class="login-helpers">
+                        <a ng-click="open('forgotUsername')">Forgot your User Name?</a>
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <i class="fa fa-lock"></i>
+                        <input type="password" id="userPasswordText" name="password" ng-class="isCapsLockOn ? 'iconImage form-control' : 'form-control'" ng-model="user.password" required>
+						 <div  id="capsOnMessage" class="caps-lock-alert" ng-show='isCapsLockOn' style="display: none; color: red; margin-top: 10px">Careful! Passwords are case sensitive, and your capslock is on!</div>
+                    </div>
+                    <div class="login-helpers">
+                        <a ng-click="open('forgotPassword')">Forgot your Password?</a>
+                    </div>
+
+                    <div class="form-group has-error">
+                        <p class="help-block" ng-show="form.pname.$error.required && form.username.$error.required && form.password.$error.required  && submitted">
+                        </p>
+                        <p class="help-block">{{ errors.other }}</p>
+                    </div>
+
+                    <!-- <button type="submit" class="btn btn-lg btn-primary"> Sign in </button> -->
+                    <div class="form-actions text-center">
+                        <button type="submit" id="submit" class="btn btn-primary">Sign in</button>
+                    </div>
+
+                </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script>
+function OnMessage (evt)                                   
+{  
+    //set the scope value for the fields            
+    angular.element(document.getElementById('divLogin')).scope().user.username=evt.data.username;
+    angular.element(document.getElementById('divLogin')).scope().user.password=evt.data.password;   
+    angular.element(document.getElementById('divLogin')).scope().user.pname=evt.data.practicename;       
+
+    //call apply to make sure changes are heard and updated on DOM elements
+    angular.element(document.getElementById('form')).scope().$apply();   
+
+   //fire submit event
+    $('#submit').click();
+   
+   //angular.element(document.getElementById('divLogin')).scope().login(document.getElementById('form'));
+
+   //The above code sets the model values as well as validates the form prior to submitting.
+}
+
+//Add an event listener to the "message" event
+(   window.addEventListener && window.addEventListener('message', OnMessage, false) 
+	    || window.attachEvent && window.attachEvent('onmessage', OnMessage) );
+		
+$(function() { // Shorthand for $(document).ready(function() {
+     
+	 $('#userPasswordText').focus(function() { // Define focus handler
+            $('#capsOnMessage').show();
+      }).blur(function() {
+            $('#capsOnMessage').hide();
+      });
+});
+</script>
+<style>
+.iconImage {
+    background:#FFFFFF url(/images/CapsOnImg.png) no-repeat right 3px;
+    padding:4px 4px 4px 12px;
+}​
+</style>
+

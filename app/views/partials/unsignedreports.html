@@ -1,0 +1,92 @@
+<div class="bright" ng-init="getUnsignedReportsList()" ng-show="currentState"> <!--data-ng-controller="unsignedReportsCtrl" -->
+    <section id="header-title" style="margin-bottom: 0;">
+        <div class="container">
+            <div class="row">
+                <h2 style="text-align: left;">Unsigned Reports</h2>
+            </div>
+        </div>
+    </section>
+    <!----    List of Patients    ---->
+    <section>
+        <div class="container">
+            <div class="row">
+                <!----    List View    ---->
+                <br />
+                <div class="col-sm-12">
+                    <div class="col-sm-3 ">
+                        <select ng-model="users" class="form-control">
+                            <option value="">All Providers</option>
+                            <option ng-repeat="user in usersList" value="{{user.username}}">{{user.username}}</option>
+                        </select>
+                    </div>
+                </div>
+                <!----    No records    ---->
+                <div class="col-sm-12 alert alert-dismissable alert-danger" ng-show="unsignedReportslist.unsignedreports.length == 0">No Records Found!</div>
+                <br />
+                <br />
+                <div ng-if="isLoad">
+                    <div class="overlayContent">
+                        <img src="/images/spinner.gif" /><span>&nbsp;&nbsp;Loading</span>
+                    </div>
+                </div>
+                <div class="col-sm-12 customGrid" ng-show="noUnsignedReports">
+
+                     <table ng-if="noUnsignedReports" st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped table-bordered table-hover table-condensed">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Provider</th>
+                                <th style="width: 30%;">Patient Name</th>
+                                <th style="width: 15%;">Report Type</th>
+                                <th style="width: 15%;">Date Created</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-controller="injuryCtrl">
+                            <!--<tr>
+                                <th colspan="4">
+                                    <input st-search="" class="form-control input-sm" placeholder="Search..." type="text"  />
+                                </th>
+                            </tr>-->
+                            <tr data-ng-repeat="report in unsignreports = ( unsignedReportslist.unsignedreports | filter:users)">
+                                <td width="20%">{{report.createdby}}</td>
+                                <td width="25%"><a ng-click="reportConfirmation(report._id, report.patientid, 'existing', report.formtype, '', report.formid, report.injuryid)">{{report.data.bginfo.firstname | capitalize}} {{report.data.bginfo.middlename | capitalize}} {{report.data.bginfo.lastname | capitalize}}</a></td>
+                                <td width="10%">{{report.formtype | uppercase}}</td>
+                                <td width="25%">{{report.createdDate | date:'EEEE, MMMM d, y' }}</td>
+                            </tr>
+                            <tr ng-if="!unsignreports.length">
+                                <td  colspan="4">No data available</td>
+                            </tr>
+                        </tbody>
+                        <!--<tfoot>
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="9"></div>
+                                </td>
+                            </tr>
+                        </tfoot>-->
+                    </table>   
+                    <!--<table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Provider</th>
+                                <th style="width: 30%;">Patient Name</th>
+                                <th style="width: 15%;">Report Type</th>
+                                <th style="width: 15%;">Date Created</th>
+
+                            </tr>
+                        </thead>
+                        <tbody ng-controller="injuryCtrl">
+                            <tr data-ng-repeat="report in unsignedReportslist.unsignedreports | filter:users">
+                                <td width="20%">{{report.createdby}}</td>
+                                <td width="25%"><a ng-click="reportConfirmation(report._id, report.patientid, 'existing', report.formtype, '', report.formid, report.injuryid)">{{report.data.bginfo.firstname | capitalize}} {{report.data.bginfo.middlename | capitalize}} {{report.data.bginfo.lastname | capitalize}}</a></td>
+                                <td width="10%">{{report.formtype | uppercase}}</td>
+                                <td width="25%">{{report.createdDate | date:'EEEE, MMMM d, y' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>-->
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+

@@ -1,0 +1,89 @@
+<!--Start Documentation-->
+<div class="DFRReportHeadingFontSize"><strong>Documentation:</strong></div>
+<div ng-if="report.data['documentation'].docmedicalrecordchkbx.length>0 || report.data['documentation'].medicalrecordsOtherText">
+    <span ng-if="report.data['documentation'].docmedicalrecordchkbx==''">I reviewed patient&apos;s medical records.</span>
+    <span ng-if="report.data['documentation'].docmedicalrecordchkbx.length>=1">{{report.data['documentation'].docmedicalrecordchkbx | map | capitalize}} were reviewed. </span>
+    <span ng-if="report.data['documentation'].medicalrecordsOtherText" ng-bind-html="appendPeriod(report.data['documentation'].medicalrecordsOtherText)"></span>
+    <span ng-if="report.data['documentation'].docmedicalrecordchkbx.length>0">This information was necessary for the formulation of medical opinions. </span>
+    <br />
+</div>
+<div>
+    <br />
+    I declare under penalty of perjury that I have not violated the provisions of California Labor Code Section 139.3 with regard to the evaluation of this patient or the preparation of this report. This report was composed, in part, using RateFast. RateFast is owned and operated by Alchemy Logic Systems, Inc. and was developed in part by John W. Alchemy M.D., President and Owner of Alchemy Logic Systems, Inc.<br />
+</div>
+<div ng-if="report.data['documentation'].doctdreview || report.data['documentation'].doctdface || report.data['documentation'].doctdprepare" class="DFRReportHeadingFontSize">
+    <br />
+    <strong>Time Disclaimer</strong><br />
+</div>
+<div>
+    I verify under penalty of perjury that the total time I spend on the following activities is true and correct:
+</div>
+<div ng-if="report.data['documentation'].doctdreview">It took me <span ng-if="report.data['documentation'].doctdreview>1">{{getAbsValue(report.data['documentation'].doctdreview)}}&nbsp;minutes&nbsp;</span><span ng-if="report.data['documentation'].doctdreview==1">{{getAbsValue(report.data['documentation'].doctdreview)}}&nbsp;minute&nbsp;</span>to review the medical records.</div>
+<div ng-if="report.data['documentation'].doctdface">I spent <span ng-if="report.data['documentation'].doctdface>1">{{getAbsValue(report.data['documentation'].doctdface)}}&nbsp;minutes&nbsp;</span><span ng-if="report.data['documentation'].doctdface==1">{{getAbsValue(report.data['documentation'].doctdface)}}&nbsp;minute&nbsp;</span>face-to-face time with the patient.</div>
+<div ng-if="report.data['documentation'].doctdprepare">Complete preparation of this entire report took me <span ng-if="report.data['documentation'].doctdprepare>1">{{getAbsValue(report.data['documentation'].doctdprepare)}}&nbsp;minutes.&nbsp;</span><span ng-if="report.data['documentation'].doctdprepare==1">{{getAbsValue(report.data['documentation'].doctdprepare)}}&nbsp;minute.</span></div>
+<br />
+<table width="100%">
+    <tr>
+        <td>
+            <table width="100%">
+                <tr>
+                    <td style="width: 25%"><span class="DFRReportHeadingFontSize"><strong>Primary Treating Physician: </strong></span></td>
+                    <td style="width: 30%"></td>
+                    <td style="width: 20%">Date of Exam:</td>
+                    <td style="width: 20%">{{report.data['patientcomplaints'].currentexamdate | date:'MM/dd/yyyy'}}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>I declare under penalty of perjury that this report is true and correct to the best of my knowledge and that I have not
+violated Labor Code 139.3.</td>
+    </tr>
+    <tr>
+        <td>
+            <p></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table width="100%">
+                <tr>
+                    <td style="width: 50%">Signature: </td>
+                    <td style="width: 50%">Cal. Lic. # {{report.data.signDoctor.level4.licensenumber}}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table width="100%">
+                <tr>
+                    <td style="width: 50%">Executed at: {{setCounty()}}</td>
+                    <td style="width: 50%">Date: <span ng-bind-html="(submittedDate | date:'MM/dd/yy')"></span><span ng-if="submittedDate">,&nbsp;</span><span ng-bind="(submittedDate | date:'h:mma').replace('PM',' p.m.').replace('AM',' a.m.')"></span></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table width="100%">
+                <tr>
+                    <td style="width: 50%">Name: {{report.data.signDoctor.level4.firstname}} {{report.data.signDoctor.level4.lastname}}</td>
+                    <td style="width: 50%">Specialty: <span ng-bind-html="getSpeciality(report.data.signDoctor.level4.speciality)"></span></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table width="100%">
+                <tr>
+                    <td style="width: 50%">Address: {{setAddress()}}</td>
+                    <td style="width: 50%">Phone:&nbsp;{{report.data['patientcomplaints'].subjectivecomplaints_contactphonenumber | phonenumberFormat}}&nbsp;<span ng-if="report.data['patientcomplaints'].subjectivecomplaints_extension && report.data['patientcomplaints'].subjectivecomplaints_contactphonenumber">ext. {{report.data['patientcomplaints'].subjectivecomplaints_extension}}</span></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<div class="clearer"></div>
+<!--End Documentation-->

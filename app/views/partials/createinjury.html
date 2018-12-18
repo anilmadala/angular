@@ -1,0 +1,2240 @@
+﻿<div class="injury" ng-init="getPracticeUserList()"> <!-- data-ng-controller="injuryCtrl" -->
+    <div class="bright">
+        <section id="header-title" style="margin-bottom: 0;">
+            <div class="container">
+                <div class="row">
+                    <h2 style="text-align: left;" ng-show="viewLibrary">Patient Library
+                        <img src="/images/menu-search.png" ng-show="search1" alt="Search" title="Search Patients" ng-click="searchBoxmethod();search.reportsatus='';search.bodypart='';search.bodypartsides='';search.provider='';" ng-class="searchcolor" style="cursor: pointer; margin-left: 20px;" />
+                        <img src="/images/menu-search.png" ng-show="search2" alt="Search" title="Search Patients" ng-click="searchBoxmethod1()" ng-class="searchcolor1" style="cursor: pointer; margin-left: 20px;" />
+                    </h2>
+                    <h2 style="text-align: left;" ng-show="editsectionfalse">New Injury
+                        <input type="button" class="btn-header btn btn-info btn-sm" ng-click="patientlibraryClick()" value="{{basicinformation.firstname|capitalize}}   {{basicinformation.lastname}}" />
+                        <img src="/images/menu-search.png" ng-show="search1" alt="Search" title="Search Patients" ng-click="searchBoxmethod();search.reportsatus='';search.bodypart='';search.bodypartsides='';search.provider='';" ng-class="searchcolor" style="cursor: pointer; margin-left: 20px;" />
+                        <img src="/images/menu-search.png" ng-show="search2" alt="Search" title="Search Patients" ng-click="searchBoxmethod1()" ng-class="searchcolor1" style="cursor: pointer; margin-left: 20px;" />
+                    </h2>
+                    <h2 style="text-align: left;" ng-show="editsectiontrue">Injury Profile
+                        <input type="button" class="btn-header btn btn-info btn-sm" ng-click="createInjuryCancel('simplepopUp')" value="{{basicinformation.firstname|capitalize}}   {{basicinformation.lastname}}" />
+                        <img src="/images/menu-search.png" ng-show="search1" alt="Search" title="Search Patients" ng-click="searchBoxmethod();search.reportsatus='';search.bodypart='';search.bodypartsides='';search.provider='';" ng-class="searchcolor" style="cursor: pointer; margin-left: 20px;" />
+                        <img src="/images/menu-search.png" ng-show="search2" alt="Search" title="Search Patients" ng-click="searchBoxmethod1()" ng-class="searchcolor1" style="cursor: pointer; margin-left: 20px;" />
+                    </h2>
+                </div>
+            </div>
+        </section>
+        <section ng-init="getStates()">
+            <!----    Patient Library Top    ---->
+            <div class="container" ng-show="viewLibrary" style="margin-top: 25px" data-ng-init="injuryLibrary()">
+                <div class="row">
+                    <div class="col-sm-12 well">
+                        <div class="col-sm-12">
+                            <div class="col-sm-2">
+                                <div ng-if="communicationMaintab">
+                                    <button type="button" class="btn btn-info btn-lg" style="white-space: normal; font-size: inherit;" ng-click="OpenCommunicationtab()">Communication About this Claim</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-10">
+                                <div class="col-xs-4 col-sm-2 col-sm-offset-2 col-md-3 col-md-offset-1 text-right" style="margin-top: 15px">
+                                    <!--<img ng-show="reportAdd" ng-click="enterReportCreationMode('fromparentpage')" src="/images/report-create.png" alt="Add Report" title="Add Report" style="cursor: pointer;" />-->
+									<span ng-show="reportAdd">
+										<img  ng-click="enterReportCreationMode('fromparentpage')" src="/images/report-create.png" alt="Add Report" title="Add Report" style="cursor: pointer; margin-right: 20px" />
+										<br />
+										<b style="color: rgb(57,179,215)">Write report</b>
+                                    </span>
+                                    <img ng-show="reportExit" ng-click="exitReportCreationMode()" src="/images/report-exit.png" alt="Exit Report" title="Exit Report" style="cursor: pointer;" />
+									 <img ng-show="injuryAdd && !reportAdd && patientConfirmed==false" ng-click="setPatientConfirmed(patientConfirmed)" src="/images/confirmSign.png" alt="Confirmed Patient" title="Confirmed Patient" style="cursor: pointer;" />
+                                    <!--<img ng-show="injuryAdd && !reportAdd" ng-click="addInjury()" src="/images/add-injury1.png" alt="Add Injury" title="Add Injury" style="cursor: pointer;" />-->
+
+									<!-- Athena changes -->
+									<img ng-show="injuryAdd && !reportAdd" ng-click="checkAthenaInjury();" src="/images/add-injury1.png" alt="Add Injury" title="Add Injury" style="cursor: pointer;" />
+									<!-- Athena changes -->
+
+                                </div>
+								<div class="col-xs-8 col-sm-8 col-md-6">
+                                    <a class="col-sm-11 custom-title" ng-click="gotoDemographics('simplepopUp')" href="/patientdemographics" title="Patient Demographics">
+									<div class="row">
+										<div class="col-sm-9" style="max-width: 350px; word-wrap:break-word;">
+											   <h3>{{basicinformation.firstname}} {{basicinformation.middlename}} {{basicinformation.lastname}}</h3>
+										 </div>
+										<div class="col-sm-3" style=" margin-top: 20px; display: inline-block; padding-left: 10px;">
+											   <img src="/images/settings-demographics.png" style="cursor: pointer;" />
+										</div>
+                                      </div>
+                                      <div class="col-sm-12">
+										   <h6><b>Born: </b><span ng-if="!basicinformation.dateofbirth">-not provided</span><span ng-if="basicinformation.dateofbirth">{{basicinformation.dateofbirth| date:'MM/dd/yyyy'}}</span><span ng-if="basicinformation.dateofbirth">&nbsp;&nbsp;<b>Age:</b> {{getAge(basicinformation.dateofbirth)}} </span></h6>
+                                      </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!----    Recent Injuries    ---->
+
+                        <div class="text-center" ng-swipe-left="swipeleft()" ng-swipe-right="swiperight()">
+                            <span type="button" class="rc-buttons" data-ng-repeat="patientinj in InjuriesDatelist" ng-if="patientinj.injurydata.injuryinformation[0].dateofinjury!=null"
+                                ng-class="{ 'btn btn-primary btn-settings': $index == selectedIndex }" ng-dblclick="InjuryDemographic(patientinj._id)">
+                                <span ng-click="selectInjury($index, patientinj._id,patientinj.injurydata.injuryinformation[0].dateofinjury)">{{patientinj.injurydata.injuryinformation[0].dateofinjury | date:'MMM-dd-yyyy'}}</span>
+                                &nbsp;
+                                <img src="/images/settings-small.png" ng-if="$index == selectedIndex" ng-click="InjuryDemographic(patientinj._id)" />
+                            </span>
+                            <pager total-items="totalItems" style="margin-top: -28px;" page="pages" items-per-page="5" max-size="maxsize" on-select-page="listinjury(page)" class="pagination-sm" boundary-links="false" previous-text="<<" next-text=">>"></pager>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!----    Report Creation Mode    ---->
+            <div class="container" ng-show="reportAddTypes" ng-controller="reportFormCtrl">
+                <div class="row">
+                    <a class="btn btn-info" style="display: block; width: 175px;" ng-click="newreportConfirmation(patientId, 'dfr')">
+                        <span style="display: inline-block; width: 115px; vertical-align: middle;">Doctor's First</span>
+                        <span style="display: inline-block; vertical-align: middle;">
+                            <img ng-click="reportCreationMode=false" src="/images/report-create.png" style="float: right;" /></span>
+
+                    </a>
+                    <a class="btn btn-info top-buffer" style="display: block; width: 175px;" ng-click="newreportConfirmation(patientId, 'pr2')">
+                        <span style="display: inline-block; width: 115px; vertical-align: middle;">PR-2</span>
+                        <span style="display: inline-block; vertical-align: middle;">
+                            <img ng-click="reportCreationMode=false" src="/images/report-create.png" style="float: right;" /></span>
+                    </a>
+                    <a class="btn btn-info top-buffer" style="display: block; width: 175px;" ng-click="newreportConfirmation(patientId, 'pr4')">
+                        <span style="display: inline-block; width: 115px; vertical-align: middle;">PR-4</span>
+                        <span style="display: inline-block; vertical-align: middle;">
+                            <img ng-click="reportCreationMode=false" src="/images/report-create.png" style="float: right;" /></span>
+                    </a>
+                </div>
+            </div>
+            <!----    Search    ---->
+            <section class="search col-sm-12" style="margin-bottom: 10px;" ng-show="searchBox">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 well">
+                            <div ng-form="searchPatient1" class="searchPatient form-horizontal" id="searchPatient">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td style="width: 15%">
+                                            <b>Report Status</b><br />
+                                            <select ng-model="search.reportsatus" class="">
+                                                <option value="" selected>-- Select Status --</option>
+                                                <option value="open">Open</option>
+                                                <option value="closed">Closed</option>
+                                                <option value="rating">In-Rating</option>
+                                            </select>
+                                        </td>
+                                        <td style="width: 25%">
+                                            <b>Injury date</b><br />
+                                            <input style="width: 40%" id="from" type="text" ng-model="search.frominjurydate" ui-date="dateOptions2" ui-date-format="mm/dd/yy">
+                                            To
+                                            <input style="width: 40%" id="to" type="text" ng-model="search.toinjurydate" ui-date="dateOptions2" ui-date-format="mm/dd/yy">
+                                        </td>
+
+                                        <td style="width: 25%">
+                                            <b>Body Part(s)</b><br />
+                                            <select ng-model="search.bodypart" ng-change="changebodypart(search.bodypart,search)" style="width: 50%">
+                                                <option value="">-- Bodypart --</option>
+                                                <option ng-repeat="item in bodyparts" value="{{item}}">{{item.bodysystem=='Skin'?'Skin - ':''}}{{item.text}}</option>
+                                            </select>
+                                            <select ng-model="search.bodypartsides" ng-change="changebodypart(s.bodypart,s)">
+                                                <option value="">- Side -</option>
+                                                <option ng-repeat="item in sides[search.bodypart]" value="{{item}}">{{item}}</option>
+                                            </select>
+                                        </td>
+
+                                        <td style="width: 5%">
+                                            <img src="../../images/icon-doctor.png" style="width: 37px" />
+                                        </td>
+                                        <td style="width: 15%">
+                                            <select ng-model="search.provider" style="width: 85%">
+                                                <option value="" ng-selected="selected">- Select -</option>
+                                                <option ng-repeat="item in usersList" value="{{item.username}}">{{item.username}}</option>
+                                            </select>
+                                        </td>
+
+                                        <td colspan="2" style="text-align: center; width: 15%">
+                                            <div style="margin: 7px 0;">
+                                                <button type="button" id="Button1" class="btn btn-success btn-xs" ng-click="basicsearch()">Search</button>
+                                                <img src="/images/reset.png" id="resetSearch" alt="Reset" title="Reset" ng-click="reportList=false;search.reportsatus='';search.bodypart='';search.bodypartsides='';patients='';search.provider=''" style="cursor: pointer; width: 21px;" />
+                                                <!--  <button type="button" id="advancedSearch" class="btn btn-success btn-xs">Advanced</button>-->
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!--<button type="button" class="btn btn-lg btn-info col-sm-3 col-md-3" style="border: solid 1px; cursor: pointer; margin-top: 10px" ng-repeat="item in patients" ng-class="{ 'btn btn-primary btn-settings': $index == selectedIndex }" ng-click="selectInjury($index, item.injid)">
+                            <label style="cursor: pointer">Date Of Injury :</label>
+                            {{item.dateofinjury}}
+                            <br />
+                            <label style="cursor: pointer; font-size: small" ng-repeat="bdpart in item.bodypart"><span ng-repeat="system in bdpart.injuredbodypart | limitTo:2">{{system.bodypart.split(':')[3].split(',')[0].replace('"','').replace('"','') }}<span ng-if="system.bodypartsides!='None'">- {{ system.bodypartsides}}</span>, </span></label>
+                            ...
+                            <img src="/images/settings-small.png" ng-if="$index == selectedIndex" ng-click="InjuryDemographic(item.injid)" class="ng-scope">
+                        </button>-->
+
+                    </div>
+                </div>
+            </section>
+
+            <!----    Search Injuries for report    ---->
+            <section class="search col-sm-12" style="margin-bottom: 10px;" ng-show="searchReportBox">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 well">
+                            <div ng-form="searchPatient1" class="searchPatient form-horizontal" id="Div1">
+                                <table>
+                                    <tr style="width: 100%">
+                                        <td style="width: 20%">
+                                            <b>Report Status</b>
+                                            <div class="control-group">
+                                                <select ng-model="search.reportsatus" class="">
+                                                    <option value="" selected>-- Select Status --</option>
+                                                    <option value="open">Open</option>
+                                                    <option value="closed">Closed</option>
+                                                    <option value="rating">In-Rating</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td style="width: 30%">
+                                            <b>Exam date</b><br />
+                                            <input style="width: 40%" id="Text1" type="text" ng-model="search.frominjurydate" ui-date="dateOptions2" ui-date-format="mm/dd/yy">
+                                            To
+                                            <input style="width: 40%" id="Text2" type="text" ng-model="search.toinjurydate" ui-date="dateOptions2" ui-date-format="mm/dd/yy">
+                                        </td>
+                                        <td style="width: 5%">
+                                            <img src="../../images/icon-doctor.png" style="width: 35px" />
+                                        </td>
+                                        <td style="width: 20%">
+                                            <select ng-model="search.provider" style="width: 80%">
+                                                <option value="" selected>- Select -</option>
+                                                <option ng-repeat="item in usersList" value="{{item.username}}">{{item.username}}</option>
+                                            </select>
+                                        </td>
+                                        <td colspan="2" style="text-align: left;">
+                                            <div style="margin: 7px 0;">
+                                                <button type="button" id="Button2" class="btn btn-success btn-xs" ng-click="basicreportsearch()">Search</button>
+                                                <img src="/images/reset.png" id="Img1" alt="Reset" title="Reset" ng-click="search.reportsatus='';search.frominjurydate='';search.toinjurydate='';search.provider='';selectInjuryforsearch(selectedIndex, selectedInjuryId)" style="cursor: pointer; width: 21px;" />
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <!--<button type="button" class="btn btn-lg btn-info col-sm-3 col-md-3" style="border: solid 1px; cursor: pointer" ng-repeat="item in All_search_data" ng-click="reportConfirmation(injuryId, patientid, 'existing')">
+                            <label style="cursor: pointer">Visit Date :</label>
+                            {{item.dateofinjury}}
+                            <br />
+                            <label>Provider :</label>
+                            {{item.provider}}
+                        </button>-->
+
+
+
+                    </div>
+                </div>
+            </section>
+
+            <!----    List of Reports    ---->
+            <section class="" ng-show="reportList">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4">
+                            <!--<ul class="nav navbar-nav menu-view" style="margin-top: 0;">
+                                <li data-ng-class="{active: !listViewEnabled}" class="toolbaritem"><a data-ng-click="listViewEnabled = false"><span class="glyphicon glyphicon-th-large"></span>&nbsp;Card View</a></li>
+                                <li data-ng-class="{active: listViewEnabled}" class="toolbaritem"><a data-ng-click="listViewEnabled = true"><span class="glyphicon glyphicon-align-justify"></span>&nbsp;List View</a></li>
+                            </ul>-->
+                        </div>
+                        <!----    Recent Patients    ---->
+                        <div class="col-sm-8 col-md-8 text-right" data-ng-init="recentPatients()">
+                            <button type="button" class="rc-buttons" data-ng-repeat="patient in recentpatients">
+                                {{patient.basicinformation[0].firstname}} {{patient.basicinformation[0].lastname}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+			<section>
+                <div class="container">
+                    <div class="row">
+	            		<div class="col-sm-12 text-center" style="font-weight: bold; font-size: medium;"  ng-show="InjuriesDatelist.length==0 && viewLibrary">
+                    			<!--This patient doesn't have any injuries! To start writing reports, <a ng-click="addInjury()">add an Injury Claim.</a>-->
+								<!-- Athena changes -->
+								This patient doesn't have any injuries! To start writing reports, <a  ng-click="checkAthenaInjury();">Add an Injury Claim.</a>
+								<!-- Athena changes -->
+                    	</div>
+	            	</div>
+	            </div>
+            </section>
+
+            <section ng-show="reportList">
+                <div class="container">
+                    <div class="row">
+                        <!----    Card View    ---->
+                        <!--<div class="col-sm-12 col-sm-offset alert alert-dismissable alert-danger text-center" ng-hide="noreport">No Records Found for this Injury!</div>-->
+						<div ng-hide="noreport">
+            				<p ng-bind-html="trustAsHtml(noRecordsFoundMsg)"></p>
+            			</div>
+                        <div ng-if="isLoad">
+                            <div class="overlayBackground"></div>
+                            <div class="overlayContent" style="top: 60%">
+                                <img src="/images/spinner.gif"><span>&nbsp;&nbsp;Loading</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="text-center" ng-if="noreport">
+                                <h4 style="color: #5BAFDE;">D F R</h4>
+                            </div>
+                            <div class="col-sm-12" style="height: 250px; overflow: auto; padding-left: 2px!important; padding-right: 2px!important;">
+                                <!-- <div class="text-center" ng-if="noreport">
+                                <h4 style="color: #5BAFDE;">D F R</h4>
+                            </div>-->
+
+                                <div class="col-sm-12" data-ng-repeat="patient in patients track by $index" data-ng-hide="listViewEnabled" style="padding-left: 2px!important; padding-right: 2px!important;">
+
+                                    <div class="pt-card" style="width: 95%!important;" ng-if="patient.formtype == 'dfr'">
+
+                                        <div class="pt-cardHeader text-center" ng-class="{submitted: patient.status == 'closed'}" style="position: relative; cursor:default;">
+                                            Report Information
+                                            <div style="position: absolute; right: 3px; top: 3px;">
+                                                <button ng-if="patient.status == 'open' && (currentUser.role == 'superadmin' || currentUser.role=='siteadmin' || currentUser.role=='admin level1' || currentUser.role=='admin level2' || currentUser.role=='admin level3' || currentUser.role=='admin level4' || currentUser.role=='nonadmin level3' || currentUser.role=='nonadmin level4')" class="btn btn-danger btn-xs" style="float: right;" ng-click="deleteReportfunc(patient)"><span class="glyphicon glyphicon-remove"></span></button>
+                                            </div>
+                                        </div>
+                                        <div class="pt-cardBody" style="min-height: 63px" ng-click="reportConfirmation(patient._id, patient.patientid, 'existing', patient.formtype, patient.version, patient.formid, patient.injuryid)">
+                                            <div class="clearfix">
+                                                <div class="cardBodyLeft">
+                                                    <img src="/images/icon-patient.png" />
+                                                </div>
+                                                <div class="cardBodyRight">
+                                                    <div>
+                                                        <label>Visit Date:</label>
+                                                        {{patient.data.patientcomplaints.currentexamdate?patient.data.patientcomplaints.currentexamdate:patient.dateofinjury | date:'MMM-dd-yyyy'}}
+                                                    <br />
+                                                        <label>Provider:</label>
+                                                        <span ng-bind="getTreatphyinfo(patient.data.patientcomplaints.treatphynamedropdown)"></span>
+                                                        <br />
+                                                        <label>Status:</label>
+                                                        {{patient.status | capitalize}} <span ng-if="patient.submittedDate">on {{patient.submittedDate | date: 'MMM dd yyyy'}}</span> <span ng-if="patient.submittedBy">by {{patient.submittedBy | capitalize}}</span>
+                                                    <br />
+                                                        <small style="cursor: pointer; font-size: small" ng-repeat="bdpart in patient.data.selectinjuries.concatedbodypart|limitTo:2">{{bdpart.text}}{{bdpart.bdsides != 'none' && bdpart.bdsides != 'na'  ? ' - '+(bdpart.bdsides|capitalize):''}}<span ng-if="patient.data.selectinjuries.concatedbodypart.length>1 && $index == 0">, </span><span ng-if="$index==1">...</span></small>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="text-center" ng-if="noreport">
+                                <h4 style="color: #5BAFDE;">P R - 2</h4>
+                            </div>
+                            <div class="col-sm-12" ng-if="noreport" style="height: 250px; overflow: auto">
+
+                                <!--<div class="text-center">
+                                <h4 style="color: #5BAFDE;">P R - 2</h4>
+                            </div>-->
+                                <div class="col-sm-12" ng-if="noreport" data-ng-repeat="patient in patients track by $index" data-ng-hide="listViewEnabled" style="padding-left: 2px!important; padding-right: 2px!important;">
+                                    <div class="pt-card" style="width: 95%!important;" ng-if="patient.formtype == 'pr2'">
+                                        <div class="pt-cardHeader text-center" ng-class="{submitted: patient.status == 'closed'}" style="position: relative; cursor:default;">
+                                            Report Information
+                                            <div style="position: absolute; right: 3px; top: 3px;">
+                                                <button ng-if="patient.status == 'open' && (currentUser.role == 'superadmin' || currentUser.role=='siteadmin' || currentUser.role=='admin level1' || currentUser.role=='admin level2' || currentUser.role=='admin level3' || currentUser.role=='admin level4' || currentUser.role=='nonadmin level3' || currentUser.role=='nonadmin level4')" class="btn btn-danger btn-xs" style="float: right;" ng-click="deleteReportfunc(patient)"><span class="glyphicon glyphicon-remove"></span></button>
+                                            </div>
+                                        </div>
+                                        <div class="pt-cardBody" style="min-height: 63px" ng-click="reportConfirmation(patient._id, patient.patientid, 'existing', patient.formtype, patient.version, patient.formid, patient.injuryid)">
+                                            <div class="clearfix">
+                                                <div class="cardBodyLeft">
+                                                    <img src="/images/icon-patient.png" />
+                                                </div>
+                                                <div class="cardBodyRight">
+                                                    <div>
+                                                        <label>Visit Date:</label>
+                                                        {{patient.data.patientcomplaints.currentexamdate? patient.data.patientcomplaints.currentexamdate: patient.dateofinjury | date:'MMM-dd-yyyy'}}
+                                                    <br />
+                                                        <label>Provider:</label>
+                                                        <span ng-bind="getTreatphyinfo(patient.data.patientcomplaints.treatphynamedropdown)"></span>
+                                                        <br />
+                                                        <label>Status:</label>
+                                                        {{patient.status | capitalize}} <span ng-if="patient.submittedDate">on {{patient.submittedDate | date: 'MMM dd yyyy'}}</span> <span ng-if="patient.submittedBy">by {{patient.submittedBy | capitalize}}</span>
+                                                    <br />
+                                                        <small style="cursor: pointer; font-size: small" ng-repeat="bdpart in patient.data.selectinjuries.concatedbodypart|limitTo:2">{{bdpart.text}}{{bdpart.bdsides != 'none' && bdpart.bdsides != 'na'  ? ' - '+(bdpart.bdsides|capitalize):''}}<span ng-if="patient.data.selectinjuries.concatedbodypart.length>1 && $index == 0">, </span><span ng-if="$index==1">...</span></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="text-center" ng-if="noreport">
+                                <h4 style="color: #5BAFDE;">P R - 4</h4>
+                            </div>
+                            <div class="col-sm-12" ng-if="noreport" style="height: 250px; overflow: auto">
+                                <!--<div class="text-center">
+                                <h4 style="color: #5BAFDE;">P R - 4</h4>
+                            </div>-->
+                                <div class="col-sm-12" ng-if="noreport" data-ng-repeat="patient in patients track by $index" data-ng-hide="listViewEnabled" style="padding-left: 2px!important; padding-right: 2px!important;">
+                                    <div class="pt-card" style="width: 95%!important;" ng-if="patient.formtype == 'pr4'">
+                                        <div class="pt-cardHeader text-center" ng-class="{submitted: patient.status != 'open'}" style="position: relative; cursor:default;">
+                                            Report Information
+                                            <div style="position: absolute; right: 3px; top: 3px;">
+                                                <button ng-if="patient.status == 'open' && (currentUser.role == 'superadmin' || currentUser.role=='siteadmin' || currentUser.role=='admin level1' || currentUser.role=='admin level2' || currentUser.role=='admin level3' || currentUser.role=='admin level4' || currentUser.role=='nonadmin level3' || currentUser.role=='nonadmin level4')" class="btn btn-danger btn-xs" style="float: right;" ng-click="deleteReportfunc(patient)"><span class="glyphicon glyphicon-remove"></span></button>
+                                            </div>
+                                        </div>
+                                        <div class="pt-cardBody" style="min-height: 63px" ng-click="reportConfirmation(patient._id, patient.patientid, 'existing', patient.formtype, patient.version, patient.formid, patient.injuryid)">
+                                            <div class="clearfix">
+                                                <div class="cardBodyLeft">
+                                                    <img src="/images/icon-patient.png" />
+                                                </div>
+                                                <div class="cardBodyRight">
+                                                    <div>
+                                                        <label>Visit Date:</label>
+                                                        {{patient.data.patientcomplaints.currentexamdate?patient.data.patientcomplaints.currentexamdate:patient.dateofinjury | date:'MMM-dd-yyyy'}}
+                                                    <br />
+                                                        <label>Provider:</label>
+                                                        <span ng-bind="getTreatphyinfo(patient.data.patientcomplaints.treatphynamedropdown)"></span>
+                                                        <br />
+                                                        <label>Status:</label>&nbsp;
+                                                        <span ng-if="patient.status != 'open' && patient.status != 'closed'">Submitted for rating <span ng-if="patient.submittedDate">on <br />{{patient.submittedDate | date: 'MMM dd yyyy'}}</span> <span ng-if="patient.submittedBy">by {{patient.submittedBy | capitalize}}</span></span>
+                                                        <span ng-if="patient.status == 'open'">{{patient.status | capitalize}}</span>
+                                                        <span ng-if="patient.status == 'closed'">Rating complete on <br />{{patient.submittedDateAtLevel2 | date: 'MMM dd yyyy'}}</span>
+                                                        <br />
+                                                        <small style="cursor: pointer; font-size: small" ng-repeat="bdpart in patient.data.selectinjuries.concatedbodypart|limitTo:2">{{bdpart.text}}{{bdpart.bdsides != 'none' && bdpart.bdsides != 'na'  ? ' - '+(bdpart.bdsides|capitalize):''}}<span ng-if="patient.data.selectinjuries.concatedbodypart.length>1 && $index == 0">, </span><span ng-if="$index==1">...</span></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!----    Create injury    ---->
+            <div class="container" ng-hide="viewLibrary">
+                <div class="row">
+
+                    <form class="form-inline" role="form" id="myform">
+                        <div ng-hide="hideSelectInjury" style="padding-top: 20px;" class="col-sm-12 text-center">
+                            <!-- Create Injury new screen by Shridhar -->
+							<!-- changes 1  shridhar new changes 23 nove 2015-->
+							<div class="col-sm-12 text-center" style="margin-bottom: 20px; margin-left: 30px">
+                           		 <div class="col-sm-5 col-sm-offset-3 text-left">
+                           		 	<label class="control-label" style="padding-top: 8px;">
+                           			Please provide the date when this new injury occurred. If date of injury is unknown, then enter the nearest approximate date when symptoms began. (You can change the date later.)
+                           			</label>
+                          		</div>
+							</div>
+							<!-- changes 1 end-->
+
+                            <div class="col-sm-12 text-center" style=" margin-left: 20px">
+                                <div class="col-sm-3 col-sm-offset-2 text-center">
+                                       	<!-- changes 2  shridhar new changes 23 nove 2015-->
+                                        <!-- comment below line -->
+										<label for="inputEmail3" class="control-label" style="padding-top: 8px; padding-left: 55px;">Date of injury:</label>
+                                      <!-- changes 2 end-->
+                                </div>
+                                <div class="col-sm-3" style="margin-left: -50px">
+                                    <p class="input-group">
+                                        <input style="cursor: pointer" class="form-control" ng-model="dateofinjury" ng-required="true" custom-datepicker>
+                                    </p>
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+
+                            <!-- changes 3  shridhar new changes 23 nove 2015-->
+							<div class="col-sm-12 text-center">
+                           		 <div class="col-sm-5 col-sm-offset-3 text-center">
+                           		 	<label class="control-label" style="padding-top: 8px;">
+                           			Are you ready to start writing a report for this injury now?
+                           			</label>
+                          		</div>
+							</div>
+							<div class="col-sm-12 text-center" style="margin-bottom: 20px; margin-left: 8px">
+                           		 <div class="col-sm-5 col-sm-offset-3 text-center">
+                           		 	<label class="control-label" style="padding-top: 8px;">
+                           			Or do you want to enter more information about this injury?
+                           			</label>
+                          		</div>
+							</div>
+							<!-- changes 3 end-->
+                            <!-- End of create injury new screen by Shridhar -->
+
+							<div class="form-group col-sm-12" ng-show="isDone">
+                                <div class="col-sm-12 text-center">
+                                    <button type="button" id="btnStartReport" class="btn btn-info" ng-click="openReportCreationMode()">Start Report</button>
+                                    <button type="button" class="btn btn-primary" ng-click="isCreateinjuryformclick('add')">Enter more claim information</button>
+                                    <!-- <button type="button" ng-click="createInjuryCancel('simplepopUp')" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button> -->
+                                    <button type="button" ng-click="patientlibraryClick()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                                    <!--<br />
+                                    <button type="button" ng-click="createInjuryCancel('simplepopUp')" class="btn btn-danger">Cancel</button><br />-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" style="margin-top: 25px;" ng-hide="menushow">
+                            <ul id="features-menu" class="sidebar nav-bar vertical">
+                                <li><a ng-click="getfirstpage()" ng-class="{menuSelected: step==2}">Employer</a></li>
+
+                                <li><a ng-click="getbackdefaultpage()" ng-class="{menuSelected: step==1}">Injury Information</a></li>
+                                <li><a ng-click="getnextpage()" ng-class="{menuSelected: step==3}">Admin</a></li>
+                                <li><a ng-click="getcommunicationtab()" ng-class="{menuSelected: step==4}">Communication</a></li>
+								<li><a ng-click="getRfaList()" ng-class="{menuSelected: step==5}">Requests for Authorization</a></li>
+                            </ul>
+                            <br />
+                            <button type="submit" ng-click="injury.submit()" class="col-sm-12 btn btn-info btn-large top-buffer ng-scope" ng-show="editsectionfalse"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Save &amp; Exit</button>
+                            <button type="submit" ng-click="saveInjuryDetails('simplepopUp')" class="col-sm-12 btn btn-info btn-large top-buffer ng-scope" ng-show="!editsectionfalse"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Save &amp; Exit</button>
+                            <br />
+                            <button type="button" ng-click="enterReportCreationMode()" class="col-sm-12 btn btn-info btn-large top-buffer ng-scope">Create Report</button>
+                            <button type="button" class="col-sm-12 btn btn-info btn-large top-buffer ng-scope" ng-hide="IsdeleteInjury" ng-click="deleteInjury()">Delete Injury</button>
+
+							<!-- Athena code -->
+
+								<div ng-show="currentUser.practiceDetails.isAthena && athena_patientid !=0  && checkAthenaInjuryPackageID(injurydata.athena_insurancepackageid)">
+									<a type="button"  ng-click="getDetailsAthenaInsuranceData('toRatefast')" href="" class="col-sm-12 btn btn-info btn-large top-buffer ng-scope">&nbsp;&nbsp;Update from Athena</a>
+
+								   <a type="button"  ng-click="getDetailsAthenaInsuranceData('toPhoneNumber')" href="" class="col-sm-12 btn btn-info btn-large top-buffer ng-scope">Update Phone Numbers From Athena</a>
+
+									<a type="button" ng-click="sendInsuranceDataToAthena()" href="" class="col-sm-12 btn btn-info btn-large top-buffer ng-scope">Send Data to Athena</a>
+                               </div>
+                        </div>
+                        <div class="createinjury col-sm-9" ng-show="isCreateinjuryform">
+                            <div ng-show="firstpage">
+                                <div class="pt-boxes" style="margin-top: 25px;">
+                                    <!-- ng-show="isCreateinjury" -->
+                                    <h3 class="pt-titles">Employer</h3>
+
+                                    <!--                                    <div class="row" ng-form="employerform">
+                                        <label>Employer :</label>
+                                        &nbsp;&nbsp;&nbsp;<img src="/images/archive.png" style="cursor: pointer" ng-click="openarchivepopup('employer')" ng-show="injurydata.employer.length > 0 && employerUpdate" />
+                                        <input type="button" class="btn-small" value="Update" ng-show="employerform.$dirty && editsectiontrue" ng-click="addEntity('injury.$.injurydata.employer',injurydata.employer[0],employerform.$name)" />
+                                        <br />
+                                        <div class="form-group col-sm-4">
+                                            <span>Company</span>
+                                            <input class="form-control" type="text" ng-disabled="employeercompanydisable" ng-model="injurydata.employer[0].company" />
+                                            <br />
+                                        </div>
+                                        <div class="form-group col-sm-3">
+                                            <span>Nature of business </span>
+                                            <br />
+                                            <select ng-change="setothervalue()" class="form-control" ng-model="injurydata.employer[0].natureofbusiness">
+                                                <option value="">-- Select --</option>
+                                                <option value="Agriculture">Agriculture</option>
+                                                <option value="Computer/Tech">Computer/Tech</option>
+                                                <option value="Construction">Construction</option>
+                                                <option value="Finance">Finance</option>
+                                                <option value="Healthcare">Healthcare</option>
+                                                <option value="Retail">Retail</option>
+                                                <option value="Hospitality/Restaurant">Hospitality/Restaurant</option>
+                                                <option value="Manufacturing">Manufacturing</option>
+                                                <option value="Mechanic/Automotive">Mechanic/Automotive</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>
+                                                <br />
+                                            </span>
+                                            <input class="form-control" placeholder="Enter Nature of business" ng-if="injurydata.employer[0].natureofbusiness=='Other'" type="text" ng-model="injurydata.employer[0].othernatureofbusiness" />
+                                        </div>
+                                    </div>-->
+                                    <div class="row" ng-form="employerform">
+                                        <label>Employer:</label>
+                                        &nbsp;&nbsp;&nbsp;<img src="/images/archive.png" style="cursor: pointer" ng-click="openarchivepopup('employer')" ng-show="injurydata.employer.length > 0 && employerUpdate" />
+                                        <input type="button" class="btn-small" value="Update" ng-show="employerform.$dirty && editsectiontrue" ng-click="addEntity('injury.$.injurydata.employer',injurydata.employer[0],employerform.$name)" />
+                                        <br />
+                                        <div class="form-group col-sm-4">
+                                            <span>Company</span>
+                                            <input class="form-control" type="text" ng-disabled="employeercompanydisable" ng-model="injurydata.employer[0].company" maxlength="100" />
+                                            <br />
+                                        </div>
+                                        <div class="form-group col-sm-3">
+                                            <span>Nature of business </span>
+                                            <br />
+                                            <select ng-change="setothervalue()" class="form-control" ng-model="injurydata.employer[0].natureofbusiness" style="width: 100%!important;">
+                                                <option value="">-- Select --</option>
+                                                <option value="Agriculture">Agriculture</option>
+                                                <option value="Computer/Tech">Computer/Tech</option>
+                                                <option value="Construction">Construction</option>
+                                                <option value="Finance">Finance</option>
+                                                <option value="Healthcare">Healthcare</option>
+                                                <option value="Retail">Retail</option>
+                                                <option value="Hospitality/Restaurant">Hospitality/Restaurant</option>
+                                                <option value="Manufacturing">Manufacturing</option>
+                                                <option value="Mechanic/Automotive">Mechanic/Automotive</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-sm-4 margin-left-1">
+                                            <span>
+                                                <br />
+                                            </span>
+                                            <input class="form-control" placeholder="Nature of business" ng-if="injurydata.employer[0].natureofbusiness=='Other'" type="text" ng-model="injurydata.employer[0].othernatureofbusiness" />
+                                        </div>
+                                        <div class="form-group col-sm-4 clearer">
+                                            <span>Telephone </span>
+                                            <input class="form-control" pattern="[0-9]*" ng-disabled="empcontactdisable" type="tel" numbers-only="numbers-only" ng-model="injurydata.employer[0].emp_telephone" placeholder="(___) ___-____" ui-mask="(999) 999-9999" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Extension </span>
+                                            <input class="form-control" pattern="[0-9]*" ng-disabled="empcontactdisable" type="tel" numbers-only="numbers-only" ng-model="injurydata.employer[0].emp_extension" maxlength="7" />
+                                        </div>
+										<div class="form-group col-sm-6">
+											<span>Fax</span>
+											<input class="form-control" pattern="[0-9]*" ng-disabled="empcontactdisable" type="tel" placeholder="(___) ___-____" ui-mask="(999) 999-9999" validator-error="Required" numbers-only="numbers-only" ng-model="injurydata.employer[0].emp_fax" />
+										</div>
+                                    </div>
+                                    <hr />
+                                    <div class="row" ng-form="Empinfopageform">
+                                        <label>Employment Information:</label>&nbsp;&nbsp;&nbsp;<img src="/images/archive.png" style="cursor: pointer" ng-click="openarchivepopup('employment')" ng-show="editsectiontrue" />
+                                        <input type="button" class="btn-small" value="Update" ng-show="Empinfopageform.$dirty && editsectiontrue" ng-click="addEntity('injury.$.injurydata.employment',injurydata.employment[0],Empinfopageform.$name)" />
+                                        <!--<span class="label label-danger" ng-hide="injurydata.employeraddress[0].emp_city && injurydata.employeraddress[0].emp_state">
+                                            <input type="checkbox" class="control-group" ng-model="employeraddress" ng-change="unknown('injurydata.employeraddress[0].emp_zipcode,injurydata.employeraddress[0].emp_state,injurydata.employeraddress[0].emp_address1,injurydata.employeraddress[0].emp_address2,injurydata.employeraddress[0].emp_city','employeeraddress',employeraddress)" ng-true-value="1" ng-false-value="0" /><b>Employee Address Unknown</b></span>-->
+                                        <br />
+                                        <div class="col-sm-4">
+                                            <span>Job title with this employer: </span>
+                                            <br />
+                                            <input type="text" maxlength="225" class="form-control col-sm-4" ng-model="injurydata.employment[0].jobtitle"><br />
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <span>Duration of employment at time of injury</span><br />
+                                            <div class="form-group col-sm-4" style="padding-left: 0;">
+                                                <input type="tel" class="form-control" ng-model="injurydata.employment[0].durationofemployement" numbers-only="numbers-only" maxlength="3" /><br />
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <select id="Select2" class="form-control" name="durationtype" ng-required="injurydata.employment[0].durationofemployement!=''" ng-model="injurydata.employment[0].durationtype">
+                                                    <option value="">--Select--</option>
+                                                    <option value="Days">Days</option>
+                                                    <option value="Weeks">Weeks</option>
+                                                    <option value="Months">Months</option>
+                                                    <option value="Years">Years</option>
+                                                </select>
+                                                <label class="help-block control-label error" ng-show="Empinfopageform.durationtype.$error.required">Select Duration type </label>
+                                            </div>
+                                            <!--<div ng-show="employercontactform.empcontactemail.$dirty && employercontactform.empcontactemail.$invalid">
+                                                <label class="help-block control-label error" ng-show="employercontactform.empcontactemail.$error.required">Tell us your email.</label>
+                                                <label class="help-block control-label error" ng-show="employercontactform.empcontactemail.$error.email">This is not a valid email.</label>
+                                            </div>-->
+                                            <div class="col-sm-2"></div>
+
+                                        </div>
+
+                                        <!--<input type="button" class="btn btn-success btn-xs pull-right" ng-show="Empinfopageform.$dirty" ng-click="UpdateInjuryInfo()" value="Update Employment information" />-->
+                                    </div>
+                                    <hr />
+
+                                    <div class="row" ng-form="employeraddressform">
+                                        <label>Employer Address:</label>&nbsp;&nbsp;&nbsp;<img src="/images/archive.png" style="cursor: pointer" ng-click="openarchivepopup('employeraddress')" ng-show="injurydata.employeraddress.length > 0 && employeraddressUpdate" />
+                                        <input type="button" class="btn-small" value="Update" ng-show="employeraddressform.$dirty && editsectiontrue" ng-click="addEntity('injury.$.injurydata.employeraddress',injurydata.employeraddress[0],employeraddressform.$name)" />
+                                        <!--<span class="label label-danger" ng-hide="injurydata.employeraddress[0].emp_city && injurydata.employeraddress[0].emp_state">
+                                            <input type="checkbox" class="control-group" ng-model="employeraddress" ng-change="unknown('injurydata.employeraddress[0].emp_zipcode,injurydata.employeraddress[0].emp_state,injurydata.employeraddress[0].emp_address1,injurydata.employeraddress[0].emp_address2,injurydata.employeraddress[0].emp_city','employeeraddress',employeraddress)" ng-true-value="1" ng-false-value="0" /><b>Employee Address Unknown</b></span>-->
+                                        <br />
+                                        <div class="form-group col-sm-4">
+                                            <span>Address Line 1</span>
+                                            <div class="">
+                                                <input type="text" ng-disabled="employeeraddress" ng-model="injurydata.employeraddress[0].emp_address1"
+                                                    class="form-control" id="Text5" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Address Line 2</span>
+                                            <input type="text" ng-disabled="employeeraddress" ng-model="injurydata.employeraddress[0].emp_address2" class="form-control" id="Text7" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>City </span>
+                                            <input type="text" ng-disabled="employeeraddress" ng-model="injurydata.employeraddress[0].emp_city"
+                                                class="form-control" id="Text8" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>State </span>
+                                            <br />
+                                            <select class="form-control" ng-disabled="employeeraddress" id="Select3" name="addstate" ng-model="injurydata.employeraddress[0].emp_state">
+                                                <option value="">-- State --</option>
+                                                <option ng-repeat="item in states" value="{{item.state}}">{{item.state}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Zip/Postal Code</span>
+                                            <dynamic-zipcode ng-model="injurydata.employeraddress[0].emp_zipcode"></dynamic-zipcode>
+                                            <!-- <input type="tel" pattern="[0-9]*" ng-disabled="employeeraddress" ng-model="injurydata.employeraddress[0].emp_zipcode" class="form-control" id="Text9" numbers-only="numbers-only" minlength="5" maxlength="9" ng-blur="formatZip('injurydata.employeraddress[0].emp_zipcode')" /> -->
+                                        </div>
+                                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step1form.other.$valid && submitted,
+                                                    'has-error': step1form.other.$invalid && submitted }">
+                                        </div>
+                                    </div>
+                                    <hr />
+
+
+                                    <div class="row" ng-form="employercontactform">
+                                        <label>Employer Contact:</label>&nbsp;&nbsp;&nbsp;<img src="/images/archive.png" style="cursor: pointer" ng-click="openarchivepopup('employercontact')" ng-show="injurydata.employercontact.length > 0 && employercontactUpdate" />
+                                        <input type="button" class="btn-small" value="Update" ng-show="employercontactform.$dirty && editsectiontrue" ng-click="addEntity('injury.$.injurydata.employercontact',injurydata.employercontact[0],employercontactform.$name)" />
+                                        <!--<span class="label label-danger" ng-hide="injurydata.employercontact[0].employercontact_firstname && injurydata.employercontact[0].employercontact_lastname && injurydata.employercontact[0].employercontact_telephoneno && injurydata.employercontact[0].employercontact_extension &&  injurydata.employercontact[0].employercontact_fax && injurydata.employercontact[0].employercontact_address && injurydata.employercontact[0].employercontact_city && injurydata.employercontact[0].employercontact_state && injurydata.employercontact[0].employercontact_zipcode">
+                                            <input type="checkbox" ng-model="empcontactcheck" ng-change="unknown('injurydata.employercontact[0].employercontact_firstname,injurydata.employercontact[0].employercontact_lastname,injurydata.employercontact[0].employercontact_telephoneno,injurydata.employercontact[0].employercontact_extension,injurydata.employercontact[0].employercontact_email,injurydata.employercontact[0].employercontact_fax,injurydata.employercontact[0].employercontact_address,injurydata.employercontact[0].employercontact_city,injurydata.employercontact[0].employercontact_state,injurydata.employercontact[0].employercontact_zipcode','empcontactdisable',empcontactcheck)" ng-true-value="1" ng-false-value="0" /><span>Unknown Employer Contact</span>
+                                        </span>-->
+                                        <br />
+                                        <div class="form-group col-sm-4">
+                                            <span>First Name </span>
+                                            <input class="form-control" ng-disabled="empcontactdisable" type="text" ng-model="injurydata.employercontact[0].employercontact_firstname" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Last Name </span>
+                                            <input class="form-control" ng-disabled="empcontactdisable" type="text" ng-model="injurydata.employercontact[0].employercontact_lastname" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Email</span>
+                                            <input class="form-control" ng-disabled="empcontactdisable" type="email" ng-model="injurydata.employercontact[0].employercontact_email" name="empcontactemail" />
+                                            <div ng-show="employercontactform.empcontactemail.$dirty && employercontactform.empcontactemail.$invalid">
+
+                                                <label class="help-block control-label error" ng-show="employercontactform.empcontactemail.$error.email">This is not a valid email.</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-12"></div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Telephone </span>
+                                            <input class="form-control" pattern="[0-9]*" ng-disabled="empcontactdisable" type="tel" numbers-only="numbers-only" ng-model="injurydata.employercontact[0].employercontact_telephoneno" placeholder="(___) ___-____" ui-mask="(999) 999-9999" />
+                                        </div>
+
+                                        <div class="form-group col-sm-2">
+                                            <span>Extension</span>
+                                            <input class="form-control" pattern="[0-9]*" ng-disabled="empcontactdisable" type="tel" maxlength="7" ng-model="injurydata.employercontact[0].employercontact_extension" numbers-only="numbers-only" />
+                                        </div>
+
+                                        <div class="form-group col-sm-6">
+                                            <span>Fax</span>
+                                            <input class="form-control" pattern="[0-9]*" ng-disabled="empcontactdisable" type="tel" placeholder="(___) ___-____" ui-mask="(999) 999-9999" validator-error="Required" numbers-only="numbers-only" ng-model="injurydata.employercontact[0].employercontact_fax" />
+                                        </div>
+                                        <div class="form-group col-sm-12"></div>
+                                        <div class="form-group col-sm-12">
+                                            <span>Address </span>
+                                            <input class="form-control" ng-disabled="empcontactdisable" type="text" ng-model="injurydata.employercontact[0].employercontact_address" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>City</span>
+                                            <input class="form-control" ng-disabled="empcontactdisable" type="text" ng-model="injurydata.employercontact[0].employercontact_city" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>State</span><br />
+                                            <select class="form-control" style="width: 100%;" ng-disabled="empcontactdisable" id="Select4" name="addstate" ng-model="injurydata.employercontact[0].employercontact_state">
+                                                <option value="">-- State --</option>
+                                                <option ng-repeat="item in states" value="{{item.state}}">{{item.state}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Zip/Postal Code</span>
+                                            <dynamic-zipcode ng-model="injurydata.employercontact[0].employercontact_zipcode"></dynamic-zipcode>
+                                            <!-- <input class="form-control" pattern="[0-9]*" ng-disabled="empcontactdisable" type="tel" validator-error="Required" ng-model="injurydata.employercontact[0].employercontact_zipcode" numbers-only="numbers-only" minlength="5" maxlength="9" ng-blur="formatZip('injurydata.employercontact[0].employercontact_zipcode')" /> -->
+                                        </div>
+                                    </div>
+
+                                    <!--<div class="row" ng-form="patientpriorevaluation">
+                                        <input type="button" class="btn btn-success btn-xs pull-right" ng-show="patientpriorevaluation.$dirty && editsectiontrue" ng-click="UpdatePriorEvaluation()" value="Update" />
+                                        <label>Has the patient been evaluated prior by a medical facility for this injury</label>
+                                        <input type="radio" ng-model="injurydata.priorevaluation[0].evaluated_prior" value="Yes" />
+                                        Yes
+                                        <input type="radio" ng-model="injurydata.priorevaluation[0].evaluated_prior" value="No" />
+                                        No
+                                        <div ng-if="injurydata.priorevaluation[0].evaluated_prior=='Yes'">
+                                            <span>Time of prior evaluation <span style="color: #14A4DC; cursor: pointer" onclick="javascript:alert('If time is uncertain, leave at 12:00 a.m.')">(i)</span> </span>
+                                            <timepicker ng-model="injurydata.priorevaluation[0].timeofpriorevaluation" value="12:00 PM"></timepicker>
+                                            <span>Date of prior evaluation :</span>
+                                            <input ui-date="dateOptions" style="cursor: pointer; min-width: 100px; width: 115px" class="form-control" ui-date-format="dd-MM-yy" ng-model="injurydata.priorevaluation[0].dateofpriorevaluation" ng-required="true" readonly>
+                                        </div>
+                                        <br />
+                                    </div>-->
+
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-md-offset-1 col-md-10 text-center">
+                                            <!--<input type="button" ng-click="getbackdefaultpage()" class="btn btn-default btn-sm" value="Back" />-->
+                                            <!--<input type="button" ng-click="injury.reset()" class="btn btn-primary btn-sm" value="Reset" />-->
+                                            <button type="button" class="btn btn-info btn-sm" ng-click="injury.reset('employeer')">
+                                                <span class="glyphicon glyphicon-repeat"></span>
+                                            </button>
+                                            <!--<input type="button" ng-click="cancelFirstPage()" class="btn btn-danger btn-sm" value="Cancel" />-->
+                                            <!-- <button type="button" class="btn btn-danger btn-sm" ng-click="getbackdefaultpage()">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>-->
+                                            <button type="button" class="btn btn-warning btn-sm" ng-click="getbackdefaultpage()">
+                                                <span class="glyphicon glyphicon-arrow-right"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Mayur GT code replaced-->
+
+                            <div ng-show="defaultpage">
+                                <div class="pt-boxes" style="margin-top: 25px; min-height: 0;">
+                                    <h3 class="pt-titles">Injury Information</h3>
+                                    <div class="" ng-form="changedetect">
+                                        <input type="button" class="btn btn-success btn-sm pull-right" ng-show="changedetect.$dirty" ng-click="UpdateInjuryInfo()" value="Update" />
+                                        <div>
+                                            <!-- <input type="text" style="cursor: pointer" class="form-control" datepicker-popup="{{format}}" ng-model="dateofinjury" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" readonly />-->
+                                            <div class="col-sm-4">
+                                                <label style="margin-top: 13px" class="control-label" for="focusedInput">Injury Date & Time</label>
+                                                <!--<input type="text" ng-model="dateofinjury" class="form-control" ng-required="true" custom-datepicker />-->
+                                                <input type="tel" custom-datepicker ng-model="dateofinjury" class="form-control" placeholder="MM/DD/YYYY">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <timepicker ng-model="timeofinjury" ng-change="changed()" show-meridian="ismeridian"></timepicker>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="clearer"></div>
+                                        <div class="form-group" style="margin-left: 13px">
+                                            <label class="control-label">Date last worked:</label><br />
+                                            <input type="text" ng-model="dateoflastwork" class="form-control" custom-datepicker />
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group" style="margin-left: 13px">
+                                            <label>Date of permanent and stationary:</label>
+                                            <div class="clearer"></div>
+                                            <input type="text" ng-model="dateofpermanent" class="form-control" custom-datepicker />
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <br/>
+                                        	<label>Injury Description:</label>
+											<br />
+                                            <button type="button" class="btn btn-info btn-xs" ng-click="Isadditionalinjurydetail=true">Text</button>
+
+                                            <div ng-hide="Isadditionalinjurydetail">
+                                                <br />
+                                                <span dynamic="injurydata.injuryinformation[0].injuryinformationdetail" class="textEditorTextColor col-sm-10"></span>
+                                            </div>
+                                            <div class="" ng-if="Isadditionalinjurydetail">
+                                                <br />
+                                                <textarea ui-tinymce="tinymceOptions" ng-model="injurydata.injuryinformation[0].injuryinformationdetail"></textarea>
+
+                                            </div>
+                                            <br />
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group" dd-mm-yy="" style="margin-lui-date-format=">
+                                            <label>Where did the injury occur? &nbsp;</label>
+                                            <select class="form-control" ng-model="injurydata.injuryinformation[0].injuryplace" ng-change="injurydata.injuryinformation[0].other_injuryplace=''">
+                                                <option value="" selected>-- Select --</option>
+                                                <option value="Office">Office</option>
+                                                <option value="Field">Field</option>
+                                                <option value="Motor vehicle">Motor vehicle</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                            <input type="text" class="form-control" ng-if="injurydata.injuryinformation[0].injuryplace=='Other'" ng-model="injurydata.injuryinformation[0].other_injuryplace" style="width: 35%" />
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group" style="margin-left: 13px; width: 100%">
+                                            <label>Were there witnesses to the injury? &nbsp;</label>
+                                            <!--<select class="form-control" ng-model="injurydata.injuryinformation[0].isinjurywitnes" ng-change="injurydata.injuryinformation[0].other_isinjurywitnes='';injurydata.injuryinformation[0].witness=[]">
+                                                <option value="" selected>-- Select --</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                            <input type="text" class="form-control" ng-if="injurydata.injuryinformation[0].isinjurywitnes=='Other'" ng-model="injurydata.injuryinformation[0].other_isinjurywitnes" style="width: 35%" />-->
+                                            <input type="radio" id="isinjurywitnes_yes" value="Yes" ng-model="injurydata.injuryinformation[0].isinjurywitnes" ng-change="" />
+                                            <label for="isinjurywitnes_yes" class="labelnormalfont">Yes &nbsp;&nbsp;</label>
+                                            <input type="radio" id="isinjurywitnes_no" value="No" ng-model="injurydata.injuryinformation[0].isinjurywitnes" ng-change="injurydata.injuryinformation[0].other_isinjurywitnes=''; injurydata.injuryinformation[0].witnes=null" />
+                                            <label for="isinjurywitnes_no" class="labelnormalfont">No &nbsp;&nbsp;</label>
+                                            <input type="radio" id="isinjurywitnes_other" value="Other" ng-model="injurydata.injuryinformation[0].isinjurywitnes" />
+                                            <label for="isinjurywitnes_other" class="labelnormalfont">Other</label>
+                                            <input type="text" ng-if="injurydata.injuryinformation[0].isinjurywitnes=='Other'" ng-model="injurydata.injuryinformation[0].other_isinjurywitnes" class="form-control" style="width: auto" />
+                                            <br />
+                                            <div ng-if="injurydata.injuryinformation[0].isinjurywitnes=='Yes'" class="margin-left-1">
+                                                <br />
+                                                <label>Select Witness &nbsp;&nbsp;</label>
+                                                <input type="checkbox" id="witness_supervisor" ng-model="injurydata.injuryinformation[0].witnes.Supervisor" value="Supervisor" />
+                                                <label for="witness_supervisor" class="labelnormalfont">Supervisor &nbsp;&nbsp;&nbsp;</label>
+                                                <input type="checkbox" value="Co-worker" id="witness_coworker" ng-model="injurydata.injuryinformation[0].witnes.Coworker" />
+                                                <label for="witness_coworker" class="labelnormalfont">Co-worker &nbsp;&nbsp;&nbsp;</label>
+                                                <input type="checkbox" id="witness_other" value="Other" ng-model="injurydata.injuryinformation[0].witnes.Other" ng-click="injurydata.injuryinformation[0].otherwitnes=''" />
+                                                <label for="witness_other" class="labelnormalfont">Other  &nbsp;&nbsp;&nbsp;</label>
+                                                <input type="text" class="form-control" ng-model="injurydata.injuryinformation[0].otherwitnes" ng-if="injurydata.injuryinformation[0].witnes.Other==true" style="width: 32%;" />
+                                                <br />
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="margin-left: 13px; width: 100%">
+                                            <label>Was first aid provided on site? &nbsp;&nbsp;</label>
+                                            <input type="radio" value="Yes" id="firstaid_yes" ng-model="injurydata.injuryinformation[0].firstaid" />
+                                            <label for="firstaid_yes" class="labelnormalfont">Yes  &nbsp;&nbsp;</label>
+                                            <input type="radio" value="No" id="firstaid_no" ng-model="injurydata.injuryinformation[0].firstaid" ng-change="injurydata.injuryinformation[0].firstaid_measure=null" checked />
+                                            <label for="firstaid_no" class="labelnormalfont">No &nbsp;&nbsp;</label>
+                                            <div ng-if="injurydata.injuryinformation[0].firstaid=='Yes'" class="margin-left-1">
+                                                <br />
+                                                <label>Select first-aid measures  &nbsp;&nbsp;</label>
+                                                <input type="checkbox" id="firstaid_ice" ng-model="injurydata.injuryinformation[0].firstaid_measure.Ice" value="Ice" />
+                                                <label for="firstaid_ice" class="labelnormalfont">Ice &nbsp;&nbsp;&nbsp;</label>
+                                                <input type="checkbox" id="firstaid_heat" value="Heat" ng-model="injurydata.injuryinformation[0].firstaid_measure.Heat" />
+                                                <label for="firstaid_heat" class="labelnormalfont">Heat &nbsp;&nbsp;&nbsp;</label>
+                                                <label for="firstaid_overcounter" class="labelnormalfont">
+                                                    <input type="checkbox" id="firstaid_overcounter" value="Over the counter pain medication" ng-model="injurydata.injuryinformation[0].firstaid_measure.counterPain" />
+                                                    Over the counter pain medication &nbsp;&nbsp;&nbsp;
+                                                </label>
+                                                <input type="checkbox" id="firstaid_other" value="Other" ng-model="injurydata.injuryinformation[0].firstaid_measure.other_measure" ng-click="injurydata.injuryinformation[0].other_measure_text=''" />
+                                                <label for="firstaid_other" class="labelnormalfont">Other  &nbsp;&nbsp;&nbsp;</label>
+                                                <input type="text" class="form-control" name="other_measure" ng-required="injurydata.injuryinformation[0].firstaid_measure.other_measure=='Other'" ng-model="injurydata.injuryinformation[0].other_measure_text" ng-if="injurydata.injuryinformation[0].firstaid_measure.other_measure==true" style="width: 27%;" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="margin-left: 13px; width: 100%">
+                                            <br />
+                                            <label>Was the injury reported to the employer? &nbsp;&nbsp;&nbsp;</label>
+                                            <input type="radio" id="reportedemployer_yes" value="Yes" ng-model="injurydata.injuryinformation[0].reportedemployer" />
+                                            <label for="reportedemployer_yes" class="labelnormalfont">Yes &nbsp;&nbsp;</label>
+                                            <input type="radio" value="No" id="reportedemployer_no" ng-model="injurydata.injuryinformation[0].reportedemployer" ng-change="injurydata.injuryinformation[0].reportedemploye=null" checked />
+                                            <label for="reportedemployer_no" class="labelnormalfont">No &nbsp;&nbsp;</label>
+                                            <div ng-if="injurydata.injuryinformation[0].reportedemployer=='Yes'" class="margin-left-1">
+                                                <br />
+
+                                                <input type="checkbox" id="reportedemployer_supervisor" ng-model="injurydata.injuryinformation[0].reportedemploye.Supervisor" value="Supervisor" />
+                                                <label for="reportedemployer_supervisor" class="labelnormalfont">Supervisor &nbsp;&nbsp;&nbsp;</label>
+                                                <input type="checkbox" id="reportedemployer_hr" value="HR" ng-model="injurydata.injuryinformation[0].reportedemploye.HR" />
+                                                <label for="reportedemployer_hr" class="labelnormalfont">Human resources &nbsp;&nbsp;&nbsp;</label>
+                                                <input type="checkbox" id="reportedemployer_owner" value="Owner" ng-model="injurydata.injuryinformation[0].reportedemploye.Owner" />
+                                                <label for="reportedemployer_owner" class="labelnormalfont">Owner &nbsp;&nbsp;&nbsp;</label>
+                                                <input type="checkbox" id="reportedemployer_other" value="Other" ng-model="injurydata.injuryinformation[0].reportedemploye.Other_reportemployer" ng-click="injurydata.injuryinformation[0].reportedemployOther=''" />
+                                                <label for="reportedemployer_other" class="labelnormalfont">Other  &nbsp;&nbsp;&nbsp;</label>
+                                                <input type="text" class="form-control" ng-model="injurydata.injuryinformation[0].reportedemployOther" ng-if="injurydata.injuryinformation[0].reportedemploye.Other_reportemployer==true" style="width: 37%;" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" style="margin-left: 13px; width: 100%">
+                                            <br />
+                                            <label>Where did the patient go after the injury occurred? &nbsp;&nbsp;&nbsp;</label>
+                                            <select class="form-control" ng-model="injurydata.injuryinformation[0].afterworking" ng-change="injurydata.injuryinformation[0].other_afterworking=''">
+                                                <option value="" selected>-- Select --</option>
+                                                <option value="Continued working">Continued working</option>
+                                                <option value="Home">Home</option>
+                                                <option value="Emergency room">Emergency room</option>
+                                                <option value="Medical clinic">Medical clinic</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                            <input type="text" class="form-control" ng-if="injurydata.injuryinformation[0].afterworking=='Other'" ng-model="injurydata.injuryinformation[0].other_afterworking" style="width: 35%" />
+                                        </div>
+                                        <br />
+                                        <div class="form-group" style="margin-left: 13px; width: 100%">
+                                            <input type="button" class="btn btn-info btn-xs" ng-click="Isadditionaldetail=true" value="Additional Details" />
+                                            <div ng-hide="Isadditionaldetail" style="padding-top: 10px;" class="textEditorTextColor">
+                                                <span ng-bind-html="injurydata.injuryinformation[0].additionaldetail"></span>
+                                            </div>
+                                            <div ng-show="Isadditionaldetail">
+                                                <br />
+                                                <textarea ui-tinymce="tinymceOptions" class="form-control" style="height: 70%; width: 50%; resize: none" ng-model="injurydata.injuryinformation[0].additionaldetail"> </textarea>
+                                                <!--<button class="btn btn-danger btn-xs" ng-click="injurydata.injuryinformation[0].additionaldetail=''">Reset</button>-->
+												<br/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="margin-left: 13px; width: 100%">
+                                            <label>Has the patient been evaluated prior by a medical facility for this injury?</label>
+                                            <input type="radio" id="evaluatedprior_yes" ng-model="injurydata.injuryinformation[0].evaluated_prior" value="Yes" ng-change="injurydata.injuryinformation[0].dateofpriorevaluation=''" />
+                                            <label for="evaluatedprior_yes" class="labelnormalfont">Yes</label>
+                                            <input type="radio" id="evaluatedprior_no" ng-model="injurydata.injuryinformation[0].evaluated_prior" value="No" />
+                                            <label for="evaluatedprior_no" class="labelnormalfont">No</label>
+                                            <div ng-if="injurydata.injuryinformation[0].evaluated_prior=='Yes'">
+                                                <span>Time of prior evaluation <span style="color: #14A4DC; cursor: pointer" onclick="javascript:alert('If time is uncertain, leave at 12:00 a.m.')">(i)</span> </span>
+                                                <timepicker ng-model="injurydata.injuryinformation[0].timeofpriorevaluation" value="12:00 PM"></timepicker>
+                                                <div class="col-sm-12 removePadding">
+                                                    <div class="col-sm-3 removePadding">
+                                                        <span>Date of prior evaluation:</span>
+                                                        <input type="text" ng-model="injurydata.injuryinformation[0].dateofpriorevaluation" class="form-control" ng-required="true" custom-datepicker />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <hr />
+                                        <div class="row" ng-form="changedetect1" ng-dirty="ischange()">
+                                            <label>Location / Address Of Injury:</label>&nbsp;&nbsp;&nbsp;
+                                        <img src="/images/archive.png" style="cursor: pointer" ng-click="openarchivepopup('locationaddressinjury')" ng-show="injurydata.locationaddressinjury.length > 0 && locationaddressinjuryUpdate" />
+                                            <input type="button" class="btn-small" value="Update" ng-show="changedetect1.$dirty && editsectiontrue" ng-click="addEntity('injury.$.injurydata.locationaddressinjury',injurydata.locationaddressinjury[0],changedetect1.$name)" /><br />
+
+                                            <div class="form-group col-sm-6">
+                                                <span>Address Line 1</span>
+                                                <div class="">
+                                                    <input type="text" id="address1" name="address1" ng-model="injurydata.locationaddressinjury[0].location_address1" class="form-control" id="Text2" />
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <span>Address Line 2</span>
+                                                <input type="text" ng-model="injurydata.locationaddressinjury[0].location_address2" class="form-control" id="Text3" />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <span>City </span>
+                                                <input type="text" ng-model="injurydata.locationaddressinjury[0].location_city" class="form-control" id="Text4" placeholder="Required" />
+                                            </div>
+                                            <div class="form-group col-sm-2">
+                                                <span>State </span>
+                                                <br />
+                                                <select class="form-control" id="addstate" name="addstate" ng-model="injurydata.locationaddressinjury[0].location_state">
+                                                    <option value="">-- State --</option>
+                                                    <option ng-repeat="item in states" value="{{item.state}}">{{item.state}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <span>Zip/Postal Code</span>
+                                                <!-- <input pattern="[0-9]*" type="tel" ng-model="injurydata.locationaddressinjury[0].location_zipcode" numbers-only="numbers-only" class="form-control" id="Text6" maxlength="9" minlength="5" maxlength="9" ng-blur="formatZip('injurydata.locationaddressinjury[0].zipcode')" /> -->
+                                                <dynamic-zipcode ng-model="injurydata.locationaddressinjury[0].location_zipcode"></dynamic-zipcode>
+
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <br />
+                                                <input type="checkbox" id="location_injurylocation" ng-change="copyAddress()" ng-true-value="1" ng-false-value="0" ng-model="copy_address" />
+                                                <label for="location_injurylocation" style="display: inline">Injury location occurred at employer’s address</label>
+                                            </div>
+                                        </div>
+
+                                        <hr>
+
+
+                                        <div class="row" ng-form="acceptedbodypartform">
+                                            <button type="button" class="btn btn-info btn-xs" ng-click="addAnother()" style="margin-left: 2%;">
+                                                Injured Body System(s):
+                                            </button>
+                                            <img src="/images/add.png" style="height: 21px; cursor: pointer" ng-click="addAnother()" ng-show="AddanotherImage" />
+                                            <!-- <label>Accepted Body Parts :</label>-->
+                                            &nbsp;&nbsp;&nbsp;
+                                        <img src="/images/archive.png" style="cursor: pointer" ng-click="archiveAcceptedbodypartModal('acceptedbodyparts')" ng-show="injurydata.acceptedbodyparts.length > 0 && acceptedbodypartsUpdate" />
+                                            <input type="submit" class="btn-small" value="Update" ng-show="acceptedbodypartform.$dirty && editsectiontrue && AddanotherImage" id="updatebodypart" ng-click="addEntity('injury.$.injurydata.acceptedbodyparts',injurydata.acceptedbodyparts[0],acceptedbodypartform.$name)" />
+                                            <br />
+                                            <div class="form-group col-sm-12" ng-show="isAcceptedbodypart">
+												<table class="table table-striped" style="width: 100%">
+													<thead>
+														<tr>
+															<th>Body System</th>
+															<th>Body Part</th>
+															<th>Side</th>
+															<th>Mechanism of injury</th>
+															<th></th>
+															<th></th>
+															<!-- <td>
+															<button type="button" class="btn btn-primary" ng-click="addAnother()">Add Another</button>
+														</td>-->
+														</tr>
+													</thead>
+													<tbody style="width: 100%">
+														<tr ng-repeat="s in selectedbodypart">
+															<td style="width: 25%">
+																<select ui-select2="select2Options" ng-model="s.bodysystem" ng-change="changebodysystem(s.bodypart,s,$index)" style="width: 100%" validator="/^.+$/" ng-class="{'bodypartError' : !s.bodysystem.length}" required>
+																	<option value="">- Body system -</option>
+																	<option ng-repeat="item in bodysystem" value="{{item}}">{{item}}</option>
+																</select>
+																<br />
+																<br />
+																<!--<input type="hidden" style="width:300px" ui-select2="multi" ng-model="s.bodypart" />-->
+																<input ng-pattern="/^[a-zA-Z ]+$/" type="text" name="txtOtherSystem" class="form-control" ng-if="s.bodysystem=='Other'" ng-model="s.otherBodysystem" style="width: 100%;" ng-class="{'bodypartError' : !s.otherBodysystem.length}" required />
+															</td>
+															<td style="width: 25%">
+																<select ui-select2 ng-model="s.bodypart" ng-if="s.bodysystem" ng-disabled="s.bodysystem=='Other'" validator="/^.+$/" ng-change="changebodypart(s.bodypart,s)" style="width: 100%" ng-class="{'bodypartError' : !s.bodypart.length && s.bodysystem!='Other'}" required>
+																	<option value="">-- Body part --</option>
+																	<option ng-repeat="item in bodyparts|filter:s.bodysystem" ng-disabled="!item.selectable" ng-if="s.bodysystem!=item.text && item.text!=''" value="{{item}}">{{item.text}}</option>
+																</select>
+																<br />
+																<br />
+																<!--{{s.bodypart.split(',')[2].split(':')[1].indexOf("Other")}}-->
+																<!--{{s.bodypart.split('text')[1].indexOf('Other')}}-->
+																<!--<input type="hidden" style="width:300px" ui-select2="multi" ng-model="s.bodypart" />-->
+																<input ng-pattern="/^[a-zA-Z ]+$/" type="text" name="txtOtherPart" class="form-control" ng-if="s.bodysystem=='Other' || s.bodypart.split(',')[2].split(':')[1].indexOf('Other')==1" ng-keypress="loadbdpartsides(s)" ng-model="s.otherBodyparts" style="width: 100%;" ng-class="{'bodypartError' : !s.otherBodyparts.length}" required />
+															</td>
+															<td style="width: 20%">
+																<select ui-select2 ng-model="s.bodypartsides" ng-hide="s.Hidebdpartsides" ng-if="s.bodypart" validator="/^.+$/" ng-change="changebodypart(s.bodypart,s)" style="width: 100%" ng-class="{'bodypartError' : !s.bodypartsides.length}"  required>
+																	<option value="">- Side -</option>
+																	<option ng-repeat="item in sides[s.bodypart]" value="{{item}}">{{item}}</option>
+
+																	<!-- <option ng-repeat="item in bodyparts|filter:s.bodypart" value="{{item}}">{{item.sides}}</option>-->
+																</select>
+																<br />
+																<br />
+																<!--<input type="hidden" style="width:300px" ui-select2="multi" ng-model="s.bodypart" />-->
+																<!-- <input type="text" class="form-control" ng-show="s.otherBodypartshow" ng-model="s.otherBodypartshowmodel" style="width: 61%;" />-->
+															</td>
+															<td style="width: 25%">
+																<select ui-select2 id="Select1" ng-if="s.bodypartsides" ng-model="s.bodypart_mechanism" validator="/^.+$/" ng-change="changebodypartmechanism(s.bodypart_mechanism,s)" style="width: 100%" ng-class="{'bodypartError' : !s.bodypart_mechanism.length && s.bodypart_mechanism!='Other'}" required>
+																	<option value="">- Choose -</option>
+																	<option value="Cumulative Sun Exposure" ng-if="s.bodysystem=='Skin'">Cumulative Sun Exposure</option>
+																	<option value="Repetitive use">Repetitive use</option>
+																	<option value="Lifting">Lifting</option>
+																	<option value="Pushing">Pushing</option>
+																	<option value="Pulling">Pulling</option>
+																	<option value="Overhead Work">Overhead Work</option>
+																	<option value="Fall from Height">Fall from Height</option>
+																	<option value="Slip and Fall">Slip and Fall</option>
+																	<option value="Motor Vehicle Accident">Motor Vehicle Accident</option>
+																	<option value="Altercation">Altercation</option>
+																	<option value="Laceration by Object">Laceration by Object</option>
+																	<option value="Direct Strike Injury With Other Object">Direct Strike Injury With Other Object</option>
+																	<option value="Exposure Toxic/Infectious">Exposure Toxic/Infectious</option>
+																	<option value="Other">Other</option>
+																</select><br />
+																<br />
+																<input type="text" class="form-control" ng-show="s.otherbodypart_mechanismshow" ng-model="s.otherbodypart_mechanismshowmodel" ng-required="s.otherbodypart_mechanismshow" ng-class="{'bodypartError' : !s.otherbodypart_mechanismshowmodel.length}"  style="width: 100%;" /><!--no-special-char -->
+															</td>
+															<!-- <td class="">
+															<button type="button" class="btn btn-info btn-xs" ng-click="clearbodypart($index)">Clear</button>
+														</td>-->
+															<td class="" style="width: 5%">
+																<button type="button" class="btn btn-danger btn-sm" ng-click="deletebodypart($index)">
+																	<span class="glyphicon glyphicon-remove"></span>
+																</button>
+																<!--<img src="../../images/button_cancel.png" height="20" width="20" style="cursor: pointer" ng-click="deletebodypart($index)" class="">-->
+																<!--<button type="button" class="btn btn-danger btn-xs" ng-click="deletebodypart($index)">Delete</button>-->
+															</td>
+														</tr>
+														<tr>
+															<td colspan="5" style="background-color:#fff">
+																<div>
+																	<span class="errorMessage" ng-show="acceptedbodypartform.txtOtherSystem.$dirty && acceptedbodypartform.txtOtherSystem.$error.pattern">Note: You cannot give the &quot;Other&quot; body system a name containing special characters.</span>
+																 </div>
+																 <div>
+																	<span class="errorMessage" ng-show="acceptedbodypartform.txtOtherPart.$dirty && acceptedbodypartform.txtOtherPart.$error.pattern">Note: You cannot give the &quot;Other&quot; body part a name containing special characters.</span>
+																 </div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+                                            </div>
+                                        </div>
+										<div class="form-group col-sm-12">
+                                            <span>Which body parts have reached MMI? <a ng-click="popupMessage(1)" class="ng-scope ng-binding"><strong>(i)</strong></a></span>
+                                            <br />
+											<!-- <div ng-bind="parseObject(selectedbodypart)"></div>	 -->
+											<div ng-repeat="obj in selectedbodypart">
+												<!-- <div ng-bind-html="getTextMMI(obj.bodysystem)"></div> -->
+												<div class="col-sm-12">
+													<div>
+														<label>
+															<input type="checkbox" ng-click="checkMMIRateBody()" class="chkSelPart" id="chkSelPart{{obj.bodypartsides =='none'? '': obj.bodypartsides | capitalize}}" ng-model="obj.ratebodypart" />
+															{{obj.bodysystem=='Other'? obj.otherBodysystem: obj.bodysystem}} {{obj.bodysystem=='Other'? obj.otherBodyparts :  obj.bodypart.split(",")[2].split(":")[1].replace('"','').replace('"','')}} {{(obj.bodypartsides =='None' || obj.bodypartsides =='N/A')? '': obj.bodypartsides | capitalize}}
+														</label>
+													</div>
+												</div>
+												<div class="col-sm-12 clearer">
+													&nbsp;
+												</div>
+												<div class="col-sm-12" ng-show="obj.ratebodypart">
+												   <div class="col-sm-12 margin-left-1">
+														<label>Date of MMI/permanent or stationary <a ng-click="popupMessage(2)" class="ng-scope ng-binding">(i)</a>:</label>
+												   </div>
+												</div>
+												<div class="col-sm-12" ng-show="obj.ratebodypart">
+													<div class="col-sm-3 margin-left-1">
+														<input type="tel" ng-click="checkMMIRateBody()" ui-date="dateOptions" my-date ng-model="obj.dateOfRating" class="form-control" placeholder="MM/DD/YYYY">
+													</div>
+												</div>
+												<div class="col-sm-12 clearer">
+													&nbsp;
+												</div>
+											</div>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <span>Employee Handedness:</span>
+                                            <br />
+                                            <select ng-change="updatehandedness=true" id="Select12" ng-model="basicinformation.employeehandedness" validator-error="Required" ng-disabled="employeehandness" class="form-control">
+                                                <option value="Right">Right</option>
+                                                <option value="Left">Left</option>
+                                                <option value="Ambidextrous">Ambidextrous</option>
+                                            </select>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input type="button" class="btn btn-xs btn-primary" value="Update" ng-show="updatehandedness==true" ng-click="UpdateHandedness()" />
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-md-offset-1 col-md-10 text-center">
+                                                <button type="button" class="btn btn-warning btn-sm" ng-click="getfirstpage()">
+                                                    <span class="glyphicon glyphicon-arrow-left"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-info btn-sm" ng-click="injury.reset('injuryinfo')">
+                                                    <span class="glyphicon glyphicon-repeat"></span>
+                                                </button>
+                                                <!--<input type="submit" ng-click="getfirstpage()" class="btn btn-info btn-sm" value="Next" />
+                                            <a href="javascript:location.reload()" type="button" class="btn btn-danger btn-sm" value="Cancel">Cancel</a>-->
+                                                <button type="button" class="btn btn-warning btn-sm" ng-click="getnextpage()">
+                                                    <span class="glyphicon glyphicon-arrow-right"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Ends Here-->
+
+                            <div ng-show="secondpage">
+                                <div class="pt-boxes" style="margin-top: 25px;" ng-form="last">
+                                    <!-- ng-show="isCreateinjury" -->
+                                    <h3 class="pt-titles">Admin</h3>
+                                    <div class="row" ng-form="insuranceform">
+                                        <label>Insurance:</label>&nbsp;&nbsp;&nbsp;<img src="/images/archive.png" style="cursor: pointer" ng-click="openarchivepopup('insurance')" ng-show="injurydata.insurance.length > 0 && insuranceUpdate" />
+                                        <input type="button" class="btn-small" value="Update" ng-show="insuranceform.$dirty && editsectiontrue" ng-click="addEntity('injury.$.injurydata.insurance',injurydata.insurance[0],insuranceform.$name)" /><br />
+                                        <div class="col-sm-12">
+                                            <div class="form-group col-sm-6">
+                                                <span>Claims Administrator </span>
+                                                <br />
+                                                <input ng-disabled="claimsadministratordisable" type="text" typeahead-min-length="2" placeholder="Search Claim Administrator" typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" class="form-control" ng-model="injurydata.insurance[0].insurance_claimsadministrator" maxlength="100"><br />
+                                                <!--<span class="label label-danger" ng-hide="injurydata.insurance[0].insurance_claimsadministrator">
+                                                    <input type="checkbox" ng-model="insurencecheck" ng-change="unknown('injurydata.insurance[0].insurance_claimsadministrator','claimsadministratordisable',insurencecheck)" ng-true-value="1" ng-false-value="0" /><span>Unknown Claims Administrator</span>
+                                                </span>-->
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <span>Claim Number </span>
+                                                <input class="form-control" ng-disabled="insurencedisable" type="text" numberchar-only="numberchar-only" ng-model="injurydata.insurance[0].insurance_claimsnumber" maxlength="30"><br />
+                                                <!--<span class="label label-danger" ng-hide="injurydata.insurance[0].insurance_claimsnumber">
+                                                    <input type="checkbox" ng-model="insurencenumbercheck" ng-change="unknown('injurydata.insurance[0].insurance_claimsnumber','insurencedisable',insurencenumbercheck)" ng-true-value="1" ng-false-value="0" /><span>Unknown Claims Administrator</span>
+                                                </span>-->
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <span>Address Line 1</span>
+                                                <input class="form-control" ng-disabled="insurencedisable" type="text" ng-model="injurydata.insurance[0].insuranceaddressline1" maxlength="100" />
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <span>Address Line 2</span>
+                                                <input class="form-control" ng-disabled="insurencedisable" type="text" ng-model="injurydata.insurance[0].insuranceaddressline2" maxlength="100" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+
+                                            <div class="form-group col-sm-6">
+                                                <span>City:</span>
+                                                <input class="form-control" ng-disabled="insurencedisable" type="text" ng-model="injurydata.insurance[0].insurancecity" maxlength="100" />
+                                            </div>
+                                            <div class="form-group col-sm-2">
+                                                <span>State </span>
+                                                <br />
+                                                <select class="form-control" id="insurancestate" name="insurancestate" ng-model="injurydata.insurance[0].insurancestate" ng-disabled="insurencedisable">
+                                                    <option value="">-- State --</option>
+                                                    <option ng-repeat="item in states" value="{{item.state}}">{{item.state}}</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <span>Zip/Postal Code </span>
+                                                <dynamic-zipcode ng-model="injurydata.insurance[0].insurancezipcode"></dynamic-zipcode>
+                                                <!-- <input class="form-control" pattern="[0-9]*" type="tel" ng-model="injurydata.insurance[0].insurancezipcode" numbers-only="numbers-only" ng-disabled="insurencedisable" minlength="5" maxlength="9" ng-blur="formatZip('injurydata.insurance[0].insurancezipcode')" /> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row" ng-form="claimsadjusterform">
+                                        <label>Claim Adjuster:</label>&nbsp;&nbsp;&nbsp;<img src="/images/archive.png" style="cursor: pointer" ng-click="openarchivepopup('claimsadjuster')" ng-show="injurydata.claimsadjuster.length > 0 && claimsadjusterUpdate" />&nbsp;
+                                        <input type="button" class="btn-small" value="Update" ng-show="claimsadjusterform.$dirty && editsectiontrue" validator-error="Required" ng-click="addEntity('injury.$.injurydata.claimsadjuster',injurydata.claimsadjuster[0],claimsadjusterform.$name)" />
+                                        &nbsp;
+                                        <!--<span class="label label-danger" ng-hide="injurydata.claimsadjuster[0].claimsadjuster_firstname && injurydata.claimsadjuster[0].claimsadjuster_lastname && injurydata.claimsadjuster[0].claimsadjuster_city && injurydata.claimsadjuster[0].claimsadjuster_state && injurydata.claimsadjuster[0].claimsadjuster_company">
+                                            <input type="checkbox" ng-model="claimadjustercheck" ng-change="unknown('injurydata.claimsadjuster[0].claimsadjuster_firstname,injurydata.claimsadjuster[0].claimsadjuster_lastname,injurydata.claimsadjuster[0].claimsadjuster_telephoneno,injurydata.claimsadjuster[0].claimsadjuster_extension,injurydata.claimsadjuster[0].claimsadjuster_email,injurydata.claimsadjuster[0].claimsadjuster_fax,injurydata.claimsadjuster[0].claimsadjuster_address,injurydata.claimsadjuster[0].claimsadjuster_city,injurydata.claimsadjuster[0].claimsadjuster_state,injurydata.claimsadjuster[0].claimsadjuster_zipcode,injurydata.claimsadjuster[0].claimsadjuster_company','claimadmindisable',claimadjustercheck)" ng-true-value="1" ng-false-value="0" /><span>Unknown Claim Adjuster</span></span>-->
+                                        <br />
+                                        <div class="form-group col-sm-4">
+                                            <span>First Name </span>
+                                            <input class="form-control" type="text" ng-model="injurydata.claimsadjuster[0].claimsadjuster_firstname" ng-disabled="claimadmindisable" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Last Name </span>
+                                            <input class="form-control" type="text" ng-model="injurydata.claimsadjuster[0].claimsadjuster_lastname" ng-disabled="claimadmindisable" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Email </span>
+                                            <input class="form-control" type="email" ng-model="injurydata.claimsadjuster[0].claimsadjuster_email" name="claimsadjuster_email" ng-disabled="claimadmindisable" maxlength="100" />
+
+                                            <label class="help-block control-label error" ng-show="claimsadjusterform.claimsadjuster_email.$error.email">This is not a valid email.</label>
+
+                                        </div>
+                                        <div class="col-sm-12"></div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Telephone </span>
+                                            <input class="form-control" pattern="[0-9]*" type="tel" ng-model="injurydata.claimsadjuster[0].claimsadjuster_telephoneno" numbers-only="numbers-only" ng-disabled="claimadmindisable" placeholder="(___) ___-____" ui-mask="(999) 999-9999" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Extension </span>
+                                            <input class="form-control" pattern="[0-9]*" type="tel" maxlength="7" ng-model="injurydata.claimsadjuster[0].claimsadjuster_extension" ng-disabled="claimadmindisable" numbers-only />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Fax </span>
+                                            <input class="form-control" pattern="[0-9]*" type="text" placeholder="(___) ___-____" ui-mask="(999) 999-9999" ng-model="injurydata.claimsadjuster[0].claimsadjuster_fax" numbers-only="numbers-only" ng-disabled="claimadmindisable" />
+                                        </div>
+                                        <div class="col-sm-12"></div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Address </span>
+                                            <input class="form-control" type="text" ng-model="injurydata.claimsadjuster[0].claimsadjuster_address" ng-disabled="claimadmindisable" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>City </span>
+                                            <input class="form-control" type="text" ng-model="injurydata.claimsadjuster[0].claimsadjuster_city" ng-disabled="claimadmindisable" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <span>State </span>
+                                            <br />
+                                            <select class="form-control" id="Select5" name="addstate" ng-model="injurydata.claimsadjuster[0].claimsadjuster_state" ng-disabled="claimadmindisable">
+                                                <option value="">-- State --</option>
+                                                <option ng-repeat="item in states" value="{{item.state}}">{{item.state}}</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <span>Zip/Postal Code </span>
+                                            <dynamic-zipcode ng-model="injurydata.claimsadjuster[0].claimsadjuster_zipcode"></dynamic-zipcode>
+                                            <!-- <input class="form-control" pattern="[0-9]*" type="tel" validator-error="Required" ng-model="injurydata.claimsadjuster[0].claimsadjuster_zipcode" numbers-only="numbers-only" ng-disabled="claimadmindisable" minlength="5" maxlength="9" ng-blur="formatZip('injurydata.claimsadjuster[0].claimsadjuster_zipcode')" /> -->
+                                        </div>
+                                        <div class="col-sm-12"></div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Company </span>
+                                            <input class="form-control" type="text" validator-error="Required" ng-model="injurydata.claimsadjuster[0].claimsadjuster_company" ng-disabled="claimadmindisable" maxlength="100" />
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <input type="button" class="btn btn-xs btn-success" ng-click="toggleMode()" value="Bill Review">
+                                    &nbsp;&nbsp;&nbsp;
+                                    <img src="/images/archive.png" style="cursor: pointer" style="cursor: pointer" ng-click="openarchivepopup('billreview')" ng-show="injurydata.billreview.length > 0 && billreviewUpdate" />
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input type="button" class="btn-small" value="Update" ng-show="billreviewform.$dirty && editsectiontrue" ng-click="addEntity('injury.$.injurydata.billreview',injurydata.billreview[0],billreviewform.$name)" />
+                                    <div class="row" ng-form="billreviewform" togglebill>
+                                        <br />
+                                        <div class="form-group col-sm-4">
+                                            <span>First Name</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.billreview[0].billreview_firstname" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Last Name</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.billreview[0].billreview_lastname" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Email</span>
+                                            <input class="form-control" type="email" name="billreview_email" ng-model="injurydata.billreview[0].billreview_email" maxlength="50" />
+                                            <label class="help-block control-label error" ng-show="billreviewform.billreview_email.$error.email">This is not a valid email.</label>
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <span>Telephone</span>
+                                            <input class="form-control" pattern="[0-9]*" type="tel" ng-model="injurydata.billreview[0].billreview_telephoneno" numbers-only="numbers-only" placeholder="(___) ___-____" ui-mask="(999) 999-9999" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Extension</span>
+                                            <input class="form-control" pattern="[0-9]*" type="tel"  ng-model="injurydata.billreview[0].billreview_extension" maxlength="7" numbers-only />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Fax</span>
+                                            <input class="form-control" pattern="[0-9]*" type="text" placeholder="(___) ___-____" ui-mask="(999) 999-9999" ng-model="injurydata.billreview[0].billreview_fax" numbers-only="numbers-only" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Address</span>
+                                            <input class="form-control" type="text" validator-error="Required" ng-model="injurydata.billreview[0].billreview_address" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>City</span>
+                                            <input class="form-control" type="text" validator-error="Required" ng-model="injurydata.billreview[0].billreview_city" maxlength="30" />
+
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <span>State</span><br />
+                                            <select class="form-control" id="Select6" name="addstate" ng-model="injurydata.billreview[0].billreview_state">
+                                                <option value="">-- State --</option>
+                                                <option ng-repeat="item in states" value="{{item.state}}">{{item.state}}</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <span>Zip/Postal Code </span>
+                                            <dynamic-zipcode ng-model="injurydata.billreview[0].billreview_zipcode"></dynamic-zipcode>
+                                            <!-- <input class="form-control" pattern="[0-9]*" type="tel" ng-model="injurydata.billreview[0].billreview_zipcode" numbers-only="numbers-only" minlength="5" maxlength="9" ng-blur="formatZip('injurydata.billreview[0].billreview_zipcode')" /> -->
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Company</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.billreview[0].billreview_company"  maxlength="100" />
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <input type="button" class="btn btn-xs btn-success" ng-click="toggleModetoggleReview()" value="Utilization Review" />
+                                    &nbsp;&nbsp;&nbsp;
+                                    <img src="/images/archive.png" style="cursor: pointer" ng-click="openarchivepopup('utilizationreview')" ng-show="injurydata.utilizationreview.length > 0 && utilizationreviewUpdate" />
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input type="button" class="btn-small" value="Update" ng-show="utilizationreviewform.$dirty && editsectiontrue" ng-click="addEntity('injury.$.injurydata.utilizationreview',injurydata.utilizationreview[0],utilizationreviewform.$name)" />
+                                    <div class="row" ng-form="utilizationreviewform" togglereview>
+                                        <br />
+                                        <div class="form-group col-sm-4">
+                                            <span>First Name</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.utilizationreview[0].utilizationreview_firstname" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Last Name</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.utilizationreview[0].utilizationreview_lastname" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Email</span>
+                                            <input class="form-control" type="email" ng-model="injurydata.utilizationreview[0].utilizationreview_email" name="utilizationreview_email" maxlength="50" />
+                                            <label class="help-block control-label error" ng-show="utilizationreviewform.utilizationreview_email.$error.email">This is not a valid email.</label>
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <span>Telephone</span>
+                                            <input class="form-control" pattern="[0-9]*" type="tel" ng-model="injurydata.utilizationreview[0].utilizationreview_telephoneno" numbers-only="numbers-only" placeholder="(___) ___-____" ui-mask="(999) 999-9999" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Extension</span>
+                                            <input class="form-control" pattern="[0-9]*" type="tel" maxlength="7" ng-model="injurydata.utilizationreview[0].utilizationreview_extension" numbers-only />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Fax</span>
+                                            <input class="form-control" pattern="[0-9]*" type="text" placeholder="(___) ___-____" ui-mask="(999) 999-9999" ng-model="injurydata.utilizationreview[0].utilizationreview_fax" numbers-only="numbers-only" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Address</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.utilizationreview[0].utilizationreview_address" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>City</span>
+                                            <input class="form-control" type="text" validator-error="Required" ng-model="injurydata.utilizationreview[0].utilizationreview_city" maxlength="30" />
+
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <span>State</span><br />
+                                            <select class="form-control" id="Select7" name="addstate" ng-model="injurydata.utilizationreview[0].utilizationreview_state">
+                                                <option value="">-- State --</option>
+                                                <option ng-repeat="item in states" value="{{item.state}}">{{item.state}}</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <span>Zip/Postal Code </span>
+                                            <dynamic-zipcode ng-model="injurydata.utilizationreview[0].utilizationreview_zipcode"></dynamic-zipcode>
+                                            <!-- <input class="form-control" pattern="[0-9]*" type="tel" ng-model="injurydata.utilizationreview[0].utilizationreview_zipcode" numbers-only="numbers-only" minlength="5" maxlength="9" ng-blur="formatZip('injurydata.utilizationreview[0].utilizationreview_zipcode')" /> -->
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Company</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.utilizationreview[0].utilizationreview_company" maxlength="100" />
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    <input type="button" class="btn btn-xs btn-success" ng-click="toggleModetoggleantattorney()" value="Applicant Attorney" />&nbsp;&nbsp;&nbsp;
+                                    <img src="/images/archive.png" style="cursor: pointer" ng-click="openarchivepopup('applicantattorney')" ng-show="injurydata.applicantattorney.length > 0 && applicantattorneyUpdate" />
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input type="button" class="btn-small" value="Update" ng-show="applicantattorneyform.$dirty && editsectiontrue" ng-click="addEntity('injury.$.injurydata.applicantattorney',injurydata.applicantattorney[0],applicantattorneyform.$name)" />
+                                    <div class="row" ng-form="applicantattorneyform" toggleattorney>
+                                        <br />
+                                        <div class="form-group col-sm-4">
+                                            <span>First Name</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.applicantattorney[0].applicantattorney_firstname" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Last Name</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.applicantattorney[0].applicantattorney_lastname" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Email</span>
+                                            <input class="form-control" type="email" ng-model="injurydata.applicantattorney[0].applicantattorney_email" name="applicantattorney_email" maxlength="50" />
+                                            <label class="help-block control-label error" ng-show="applicantattorneyform.applicantattorney_email.$error.email">This is not a valid email.</label>
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <span>Telephone</span>
+                                            <input class="form-control" pattern="[0-9]*" placeholder="(___) ___-____" ui-mask="(999) 999-9999" type="tel" ng-model="injurydata.applicantattorney[0].applicantattorney_telephoneno" numbers-only="numbers-only" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Extension</span>
+                                            <input class="form-control" type="tel" maxlength="7" ng-model="injurydata.applicantattorney[0].applicantattorney_extension" numbers-only />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Fax</span>
+                                            <input class="form-control" pattern="[0-9]*" type="text" placeholder="(___) ___-____" ui-mask="(999) 999-9999" ng-model="injurydata.applicantattorney[0].applicantattorney_fax" numbers-only="numbers-only" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Address</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.applicantattorney[0].applicantattorney_address" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>City</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.applicantattorney[0].applicantattorney_city" maxlength="30" />
+
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <span>State</span><br />
+                                            <select class="form-control" id="Select8" name="addstate" ng-model="injurydata.applicantattorney[0].applicantattorney_state">
+                                                <option value="">-- State --</option>
+                                                <option ng-repeat="item in states" value="{{item.state}}">{{item.state}}</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <span>Zip/Postal Code </span>
+                                            <dynamic-zipcode ng-model="injurydata.applicantattorney[0].applicantattorney_zipcode"></dynamic-zipcode>
+                                            <!-- <input class="form-control" pattern="[0-9]*" type="tel" ng-model="injurydata.applicantattorney[0].applicantattorney_zipcode" numbers-only="numbers-only" minlength="5" maxlength="9" ng-blur="formatZip('injurydata.applicantattorney[0].applicantattorney_zipcode')" /> -->
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Company</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.applicantattorney[0].applicantattorney_company" maxlength="100" />
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    <input type="button" class="btn btn-xs btn-success" ng-click="toggleModetoggleDefense()" value="Defense Attorney" />&nbsp;&nbsp;&nbsp;
+                                    <img src="/images/archive.png" style="cursor: pointer" ng-click="openarchivepopup('defenseattorney')" ng-show="injurydata.defenseattorney.length > 0 && defenseattorneyUpdate" />
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input type="button" class="btn-small" value="Update" ng-show="defenseattorneyform.$dirty && editsectiontrue" ng-click="addEntity('injury.$.injurydata.defenseattorney',injurydata.defenseattorney[0],defenseattorneyform.$name)" />
+                                    <div class="row" ng-form="defenseattorneyform" toggledattorney>
+                                        <br />
+                                        <div class="form-group col-sm-4">
+                                            <span>First Name</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.defenseattorney[0].defenseattorney_firstname" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Last Name</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.defenseattorney[0].defenseattorney_lastname" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Email</span>
+                                            <input class="form-control" type="email" ng-model="injurydata.defenseattorney[0].defenseattorney_email" name="defenseattorney_email" maxlength="50" />
+                                            <label class="help-block control-label error" ng-show="defenseattorneyform.defenseattorney_email.$error.email">This is not a valid email.</label>
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <span>Telephone</span>
+                                            <input class="form-control" pattern="[0-9]*" type="tel" placeholder="(___) ___-____" ui-mask="(999) 999-9999" validator-error="Required" ng-model="injurydata.defenseattorney[0].defenseattorney_telephoneno" numbers-only="numbers-only" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Extension</span>
+                                            <input class="form-control" pattern="[0-9]*" type="tel" maxlength="7" ng-model="injurydata.defenseattorney[0].defenseattorney_extension" numbers-only />
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <span>Fax</span>
+                                            <input class="form-control" pattern="[0-9]*" type="text" placeholder="(___) ___-____" ui-mask="(999) 999-9999" ng-model="injurydata.defenseattorney[0].defenseattorney_fax" numbers-only="numbers-only" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Address</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.defenseattorney[0].defenseattorney_address" maxlength="100" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>City</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.defenseattorney[0].defenseattorney_city" maxlength="100" />
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <span>State</span><br />
+                                            <select class="form-control" id="Select9" name="addstate" ng-model="injurydata.defenseattorney[0].defenseattorney_state">
+                                                <option value="">-- State --</option>
+                                                <option ng-repeat="item in states" value="{{item.state}}">{{item.state}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <span>Zip/Postal Code</span>
+                                            <dynamic-zipcode ng-model="injurydata.defenseattorney[0].defenseattorney_zipcode"></dynamic-zipcode>
+                                            <!-- <input class="form-control" pattern="[0-9]*" type="tel" ng-model="injurydata.defenseattorney[0].defenseattorney_zipcode" numbers-only="numbers-only" minlength="5" maxlength="9" ng-blur="formatZip('injurydata.defenseattorney[0].defenseattorney_zipcode')" /> -->
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Company</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.defenseattorney[0].defenseattorney_company" maxlength="100" />
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    <input type="button" class="btn btn-xs btn-success" ng-click="toggleModerncasemanager()" value="RN Case manager" />&nbsp;&nbsp;&nbsp;
+                                    <img src="/images/archive.png" style="cursor: pointer" ng-click="openarchivepopup('rncasemanager')" ng-show="injurydata.rncasemanager.length > 0 && rncasemanagerUpdate" />
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input type="button" class="btn-small" value="Update" ng-show="rncasemanagerform.$dirty && editsectiontrue" ng-click="addEntity('injury.$.injurydata.rncasemanager',injurydata.rncasemanager[0],rncasemanagerform.$name)" />
+                                    <div class="row" ng-form="rncasemanagerform" togglerncase>
+                                        <br />
+                                        <div class="form-group col-sm-4">
+                                            <span>First Name</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.rncasemanager[0].rncasemanager_firstname" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Last Name</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.rncasemanager[0].rncasemanager_lastname" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Email</span>
+                                            <input class="form-control" type="email" ng-model="injurydata.rncasemanager[0].rncasemanager_email" name="rncasemanager_email" maxlength="100" />
+                                            <label class="help-block control-label error" ng-show="rncasemanagerform.rncasemanager_email.$error.email">This is not a valid email.</label>
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <span>Telephone</span>
+                                            <input class="form-control" type="tel" placeholder="(___) ___-____" ui-mask="(999) 999-9999" validator-error="Required" ng-model="injurydata.rncasemanager[0].rncasemanager_telephoneno" numbers-only="numbers-only" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Extension</span>
+                                            <input class="form-control" pattern="[0-9]*" type="tel" maxlength="7" ng-model="injurydata.rncasemanager[0].rncasemanager_extension" numbers-only />
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <span>Fax</span>
+                                            <input class="form-control" pattern="[0-9]*" type="text" placeholder="(___) ___-____" ui-mask="(999) 999-9999" ng-model="injurydata.rncasemanager[0].rncasemanager_fax" numbers-only="numbers-only" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Address</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.rncasemanager[0].rncasemanager_address" maxlength="100" />
+
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>City</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.rncasemanager[0].rncasemanager_city" maxlength="30" />
+
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <span>State</span><br />
+                                            <select class="form-control" id="Select10" name="addstate" ng-model="injurydata.rncasemanager[0].rncasemanager_state">
+                                                <option value="">-- State --</option>
+                                                <option ng-repeat="item in states" value="{{item.state}}">{{item.state}}</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <span>Zip/Postal Code</span>
+                                            <dynamic-zipcode ng-model="injurydata.rncasemanager[0].rncasemanager_zipcode"></dynamic-zipcode>
+                                            <!-- <input class="form-control" pattern="[0-9]*" type="tel" ng-model="injurydata.rncasemanager[0].rncasemanager_zipcode" numbers-only="numbers-only" minlength="5" maxlength="9" ng-blur="formatZip('injurydata.rncasemanager[0].rncasemanager_zipcode')" /> -->
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <span>Company</span>
+                                            <input class="form-control" type="text" ng-model="injurydata.rncasemanager[0].rncasemanager_company" maxlength="100" />
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-md-offset-1 col-md-10 text-center">
+                                            <button type="button" class="btn btn-warning btn-sm" ng-click="getbackdefaultpage()">
+                                                <span class="glyphicon glyphicon-arrow-left"></span>
+                                            </button>
+                                            <button type="button" class="btn btn-info btn-sm" ng-click="injury.reset('admin')">
+                                                <span class="glyphicon glyphicon-repeat"></span>
+                                            </button>
+                                            <!--<input type="submit" ng-click="injury.submit()" value="Save and exit" class="btn btn-success btn-sm" ng-show="editsectionfalse" />-->
+
+                                            <!--<button type="button" class="btn btn-danger btn-sm" ng-click="cancelSecondPage()">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>-->
+											<button type="button" class="btn btn-warning btn-sm" ng-click="getcommunicationtab()">
+                                                <span class="glyphicon glyphicon-arrow-right"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div ng-show="communicationtab">
+                                <div class="pt-boxes" style="margin-top: 25px;" ng-form="communicationform">
+									<!-- ng-show="isCreateinjury" -->
+                                    <p class="pt-titles">
+                                        <span style="min-width: 50%;">Communication</span>
+                                        <span style="min-width: 50%;">
+                                            <button class="btn btn-warning btn-xs" style="padding: 0px 5px; margin-top: -3px; float: right;" ng-show="communicationform.$dirty" ng-click="saveCommunication()">Save</button>
+                                        </span>
+										<div class="col-sm-12">This section is meant for doctors, nurses, and other staff members to keep notes that are related to this work injury. The notes that you save here will not be included in any official workers' compensation reports.</div>
+										<div class="clearer"></div>
+                                    </p>
+
+                                    <div class="col-sm-12">
+                                        <button type="button" class="btn btn-info btn-xs" ng-click="patientcommunicationcomment_condition=true">Patient Communication</button>
+
+                                        <div ng-hide="patientcommunicationcomment_condition">
+                                            <br />
+                                            <span dynamic="injurydata.communication.patientcommunicationcomment" class="textEditorTextColor col-sm-10"></span>
+                                        </div>
+                                        <div class="" ng-if="patientcommunicationcomment_condition">
+                                            <br />
+                                            <textarea ui-tinymce="tinymceOptions" ng-model="injurydata.communication.patientcommunicationcomment"></textarea>
+                                            <!--<button type="button" class="btn btn-success btn-sm pull-right" ng-click="CommEval('patientcommunicationcomment_condition = false')" style="margin-top: 1%;">Save</button>-->
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12">
+                                        <br />
+                                        <button type="button" class="btn btn-info btn-xs" ng-click="admincommunicationcomment_condition=true">Admin Communication</button>
+
+                                        <div ng-hide="admincommunicationcomment_condition">
+                                            <br />
+                                            <span dynamic="injurydata.communication.admincommunicationcomment" class="textEditorTextColor col-sm-10"></span>
+                                        </div>
+                                        <div class="" ng-if="admincommunicationcomment_condition">
+                                            <br />
+                                            <textarea ui-tinymce="tinymceOptions" ng-model="injurydata.communication.admincommunicationcomment"></textarea>
+                                            <!--<button type="button" class="btn btn-success btn-sm pull-right" ng-click="CommEval('admincommunicationcomment_condition = false')" style="margin-top: 1%;">Save</button>-->
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12">
+                                        <br />
+                                        <button type="button" class="btn btn-info btn-xs" ng-click="diagnostictesting_condition=true">Diagnostic Testing</button>
+
+                                        <div ng-hide="diagnostictesting_condition">
+                                            <br />
+                                            <span dynamic="injurydata.communication.diagnostictesting" class="textEditorTextColor col-sm-10"></span>
+                                        </div>
+                                        <div class="" ng-if="diagnostictesting_condition">
+                                            <br />
+                                            <textarea ui-tinymce="tinymceOptions" ng-model="injurydata.communication.diagnostictesting"></textarea>
+                                            <!--<button type="button" class="btn btn-success btn-sm pull-right" ng-click="CommEval('diagnostictesting_condition = false')" style="margin-top: 1%;">Save</button>-->
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12" style="min-height:300px">
+                                        <br />
+                                        <button type="button" class="btn btn-info btn-xs" ng-click="othernotes_condition=true">Other Notes</button>
+
+                                        <div ng-hide="othernotes_condition">
+                                            <br />
+                                            <span dynamic="injurydata.communication.othernotes" class="textEditorTextColor col-sm-10"></span>
+                                        </div>
+                                        <div class="" ng-if="othernotes_condition">
+                                            <br />
+                                            <textarea ui-tinymce="tinymceOptions" ng-model="injurydata.communication.othernotes"></textarea>
+                                            <!--<button type="button" class="btn btn-success btn-sm pull-right" ng-click="CommEval('othernotes_condition = false')" style="margin-top: 1%;">Save</button>-->
+                                        </div>
+                                    </div>
+									<!-- code added by shridhar 23 march 2016 for navigation -->
+                                    <div class="row">
+                                        <div class="col-md-offset-1 col-md-10 text-center">
+                                         </br>
+                                            <button type="button" class="btn btn-warning btn-sm" ng-click="getnextpage()">
+                                                <span class="glyphicon glyphicon-arrow-left"></span>
+                                            </button>
+                                            <button type="button" class="btn btn-info btn-sm" ng-click="injury.reset('communication')">
+                                                <span class="glyphicon glyphicon-repeat"></span>
+                                            </button>
+                                            <button type="button" class="btn btn-warning btn-sm" ng-click="getRfaList()">
+                                                <span class="glyphicon glyphicon-arrow-right"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+							<div ng-show="rfapage" class="" >
+                                <div class="pt-boxes" style="margin-top: 25px;">
+                                    <!-- ng-show="rfapage" -->
+                                    <h3 class="pt-titles">Requests for Authorization</h3>
+									<div ng-if="rfacards.length==0" class="text-left">
+										There are currently no requests for treatment authorization for this injury. To create Requests for Authorization forms, go to the "Treatment" or "Future Medical Treatment" section of a report. After you submit the report, the Requests for Authorization will appear here.
+									</div>
+
+                                    <div class="row">
+                                        <div class="col-md-4 text-center">
+
+                                           <!-- RFA Card Display start here-->
+                                           <div class="raf_card" >
+											    <div class="bright">
+											        <section style="margin-top:10px;">
+											            <div class="row">
+
+									                            <div style="height: 480px; overflow: auto; -webkit-overflow-scrolling: touch;">
+									                                <!--  RFA Card starts -->
+									                                <div ng-repeat="item in rfacards" >
+									                                      <!-- inner card data -->
+									                                        <div ng-repeat="(key,rfa) in item.rfas" ng-click=""  >
+										                                        <div ng-if="rfa.status=='Pending'" class="col-sm-12" style="overflow: hidden;padding:0px;border:1px solid #e8e8e8;margin-bottom:20px;">
+												                                    <div class="panel panel-default raterhead"  ng-click="rfaFullView(item,key)" style="border:1px solid #e8e8e8;padding:0px;margin-left:0px;text-align:left;cursor:pointer" >
+
+												                                        <!--<div style="margin-bottom:0px;"class="cardHeader {{'rfaHeader'+rfa.status}}">
+												                                            {{rfa.header.selectnsaids}}
+												                                        </div>-->
+
+																						<div style="margin-bottom:0px;"class="cardHeader {{'rfaHeader'+rfa.status}}">
+												                                            <div ng-switch="rfa.header.selectnsaids">
+												                                            	<div ng-switch-when="Other">
+												                                            		{{rfa.svctext | splitrfaheading :'-'}}
+												                                            	</div>
+												                                            	<div ng-switch-default>
+												                                            		{{rfa.header.selectnsaids}}
+												                                            	</div>
+												                                            </div>
+												                                        </div>
+
+												                                        <div class="col-sm-12" style="padding: 10px 0px 10px 0px;">
+												                                            <div class="row">
+																								<div class="col-xs-12 pad4px">
+																								<strong>{{rfa.bdtext_bdside}}</strong>
+																								</div>
+																							</div>
+																							 <div class="row">
+																								<div class="col-xs-3 pad4px" >
+																									<strong>Status:</strong>
+																								</div>
+																								<div class="col-xs-9 pad4px0px">
+																									{{rfa.status}}
+																								</div>
+																							</div>
+																							<div class="row">
+																								<div class="col-xs-3 pad4px">
+																									<strong>Faxed:</strong>
+																								</div>
+																								<div class="col-xs-9 pad4px0px">
+																									{{rfa.faxed}}
+																								</div>
+																							</div>
+																							<div class="row">
+																								<div class="col-xs-3 pad4px">
+																									<strong>Report:</strong>
+																								</div>
+																								<div class="col-xs-9 pad4px0px">
+																									<span ng-if="item.formtype=='dfr'">Doctor's First
+																								</span>
+																								 <span ng-if="item.formtype!='dfr'">
+																									  {{item.formtype | uppercase }}
+																								</span>
+																								</div>
+																							</div>
+																							<div class="row">
+																								<div class="col-xs-3 pad4px">
+																									<strong>Created:</strong>
+																								</div>
+																								<div class="col-xs-9 pad4px0px">
+																									{{item.submittedDate | date:'MM/dd/yyyy' }} at {{ item.submittedDate | date:'h:mm a'}} PST
+																								</div>
+																							</div>
+												                                        </div>
+											                                        </div>
+										                                    	</div>
+									                                    	</div>
+									                                    	<!-- inner card data -->
+									                                </div>
+									                                <!--  RFA Card starts -->
+									                                <div class="clearer"></div>
+									                            </div>
+											                </div>
+											        </section>
+											    </div>
+											</div>
+
+                                           <!--  RFA ard Display end here -->
+                                        </div>
+                                        <div class="col-md-4 text-center">
+
+                                           <!-- RFA Card Display start here-->
+                                           <div class="raf_card" >
+											    <div class="bright">
+											        <section style="margin-top:10px;">
+											            <div class="row">
+									                            <div style="height: 480px; overflow: auto; -webkit-overflow-scrolling: touch;">
+									                                <!--  RFA Card starts -->
+									                                <div ng-repeat="item in rfacards" >
+									                                      <!-- inner card data -->
+									                                        <div ng-repeat="(key,rfa) in item.rfas" ng-click=""  >
+										                                        <div ng-if="rfa.status=='Authorized'" class="col-sm-12" style="overflow: hidden;padding:0px;border:1px solid #e8e8e8;margin-bottom:20px;">
+												                                    <div class="panel panel-default raterhead"  ng-click="rfaFullView(item,key)" style="border:1px solid #e8e8e8;padding:0px;margin-left:0px;text-align:left;cursor:pointer" >
+
+												                                        <!--<div style="margin-bottom:0px;"class="cardHeader {{'rfaHeader'+rfa.status}}">
+												                                            {{rfa.header.selectnsaids}}
+												                                        </div>-->
+
+																						<div style="margin-bottom:0px;"class="cardHeader {{'rfaHeader'+rfa.status}}">
+												                                            <div ng-switch="rfa.header.selectnsaids">
+												                                            	<div ng-switch-when="Other">
+												                                            		{{rfa.svctext | splitrfaheading :'-'}}
+												                                            	</div>
+												                                            	<div ng-switch-default>
+												                                            		{{rfa.header.selectnsaids}}
+												                                            	</div>
+												                                            </div>
+												                                        </div>
+
+												                                        <div class="col-sm-12" style="padding: 10px 0px 10px 0px;">
+												                                            <div class="row">
+																								<div class="col-xs-12 pad4px">
+																								<strong>{{rfa.bdtext_bdside}}</strong>
+																								</div>
+																							</div>
+																							 <div class="row">
+																								<div class="col-xs-3 pad4px" >
+																									<strong>Status:</strong>
+																								</div>
+																								<div class="col-xs-9 pad4px0px">
+																									{{rfa.status}}
+																								</div>
+																							</div>
+																							<div class="row">
+																								<div class="col-xs-3 pad4px">
+																									<strong>Faxed:</strong>
+																								</div>
+																								<div class="col-xs-9 pad4px0px">
+																									{{rfa.faxed}}
+																								</div>
+																							</div>
+																							<div class="row">
+																								<div class="col-xs-3 pad4px">
+																									<strong>Report:</strong>
+																								</div>
+																								<div class="col-xs-9 pad4px0px">
+																									<span ng-if="item.formtype=='dfr'">Doctor's First
+																								</span>
+																								 <span ng-if="item.formtype!='dfr'">
+																									  {{item.formtype | uppercase }}
+																								</span>
+																								</div>
+																							</div>
+																							<div class="row">
+																								<div class="col-xs-3 pad4px">
+																									<strong>Created:</strong>
+																								</div>
+																								<div class="col-xs-9 pad4px0px">
+																									{{item.submittedDate | date:'MM/dd/yyyy' }} at {{ item.submittedDate | date:'h:mm a'}} PST
+																								</div>
+																							</div>
+												                                        </div>
+											                                        </div>
+										                                    	</div>
+									                                    	</div>
+									                                    	<!-- inner card data -->
+									                                </div>
+									                                <!--  RFA Card starts -->
+									                                <div class="clearer"></div>
+									                            </div>
+
+
+											                </div>
+											        </section>
+											    </div>
+											</div>
+
+                                           <!--  RFA ard Display end here -->
+                                        </div>
+                                        <div class="col-md-4 text-center">
+                                           <!-- RFA Card Display start here-->
+                                           <div class="raf_card" >
+											    <div class="bright">
+											        <section style="margin-top:10px;">
+											            <div class="row">
+								                            <div style="height: 480px; overflow: auto; -webkit-overflow-scrolling: touch;">
+								                                <!--  RFA Card starts -->
+								                                <div ng-repeat="item in rfacards" >
+								                                      <!-- inner card data -->
+								                                        <div ng-repeat="(key,rfa) in item.rfas" ng-click=""  >
+									                                        <div ng-if="rfa.status=='Denied' || rfa.status=='Cancelled' " class="col-sm-12" style="overflow: hidden;padding:0px;border:1px solid #e8e8e8;margin-bottom:20px;">
+											                                    <div class="panel panel-default raterhead"  ng-click="rfaFullView(item,key)" style="border:1px solid #e8e8e8;padding:0px;margin-left:0px;text-align:left;cursor:pointer" >
+
+												                                        <!--<div style="margin-bottom:0px;"class="cardHeader {{'rfaHeader'+rfa.status}}">
+												                                            {{rfa.header.selectnsaids}}
+												                                        </div>-->
+
+																						<div style="margin-bottom:0px;"class="cardHeader {{'rfaHeader'+rfa.status}}">
+												                                            <div ng-switch="rfa.header.selectnsaids">
+												                                            	<div ng-switch-when="Other">
+												                                            		{{rfa.svctext | splitrfaheading :'-'}}
+												                                            	</div>
+												                                            	<div ng-switch-default>
+												                                            		{{rfa.header.selectnsaids}}
+												                                            	</div>
+												                                            </div>
+												                                        </div>
+
+												                                        <div class="col-sm-12" style="padding: 10px 0px 10px 0px;">
+												                                            <div class="row">
+																								<div class="col-xs-12 pad4px">
+																								<strong>{{rfa.bdtext_bdside}}</strong>
+																								</div>
+																							</div>
+																							 <div class="row">
+																								<div class="col-xs-3 pad4px" >
+																									<strong>Status:</strong>
+																								</div>
+																								<div class="col-xs-9 pad4px0px">
+																									{{rfa.status}}
+																								</div>
+																							</div>
+																							<div class="row">
+																								<div class="col-xs-3 pad4px">
+																									<strong>Faxed:</strong>
+																								</div>
+																								<div class="col-xs-9 pad4px0px">
+																									{{rfa.faxed}}
+																								</div>
+																							</div>
+																							<div class="row">
+																								<div class="col-xs-3 pad4px">
+																									<strong>Report:</strong>
+																								</div>
+																								<div class="col-xs-9 pad4px0px">
+																									<span ng-if="item.formtype=='dfr'">Doctor's First
+																								</span>
+																								 <span ng-if="item.formtype!='dfr'">
+																									  {{item.formtype | uppercase }}
+																								</span>
+																								</div>
+																							</div>
+																							<div class="row">
+																								<div class="col-xs-3 pad4px">
+																									<strong>Created:</strong>
+																								</div>
+																								<div class="col-xs-9 pad4px0px">
+																									{{item.submittedDate | date:'MM/dd/yyyy' }} at {{ item.submittedDate | date:'h:mm a'}} PST
+																								</div>
+																							</div>
+												                                        </div>
+											                                        </div>
+									                                    	</div>
+								                                    	</div>
+								                                    	<!-- inner card data -->
+								                                </div>
+								                                <!--  RFA Card starts -->
+								                                <div class="clearer"></div>
+								                            </div>
+
+									                        <!-- <hr />
+									                        <div style="margin-left: 25px;">
+									                            <pagination total-items="totalItemsRfaDenied" page="currentPageRfaDenied" items-per-page="itemsperpageRfaDenied" max-size="maxsize" on-select-page="getRfaCardDenied(page)" class="pagination-sm" boundary-links="true"></pagination>
+									                        </div>
+											                     -->
+											                </div>
+											        </section>
+											    </div>
+											</div>
+
+                                           <!--  RFA ard Display end here -->
+                                        </div>
+                                    </div>
+									<div class="row">
+	                                        <div class="col-md-offset-1 col-md-10 text-center">
+	                                            <button type="button" class="btn btn-warning btn-sm" ng-click="getcommunicationtab()">
+	                                                <span class="glyphicon glyphicon-arrow-left"></span>
+	                                            </button>
+	                                        </div>
+	                                 </div>
+                                </div>
+                            </div>
+                            <!-- RFA card ends here -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+			<div ng-show="activityRFA">
+				<!-- <div ng-include src="'partials/rfaActivity.html'" ></div>			 -->
+				<div class="contactus">
+					<div class="bright">
+						  <section id="header-title">
+							<div class="container">
+								<div class="row">
+									<h2 style="text-align: left;" class="col-sm-9">Injury Profile
+										<input type="button" class="btn-header btn btn-info btn-sm" ng-click="createInjuryCancel('simplepopUp')" value="{{basicinfo.firstname|capitalize}}   {{basicinfo.lastname}}" /> Request for Authorization
+									</h2>
+									<button class="btn-header btn btn-info btn-sm ng-binding pull-right ng-scope" style="margin-top: 1.5%;"  ng-click="backInjury()"><span style="margin-top: 1.5%;"  class="glyphicon glyphicon-arrow-left">&nbsp;</span>Back to Injury Profile</button>
+								</div>
+							</div>
+						</section>
+
+						<div class="panel panel-default" style="width: 800px; margin: 0 auto">
+							<div class="panel-body" style="font-size: medium;">
+								<div class="row">
+									<div class="headerMain {{'header'+rdostatus}}" style="padding-top:10px;padding-left:10px; font-size:x-large">
+											<span>{{selectedRfa.headertext}}</span>
+									</div>
+								</div>
+
+								<div class="row" style="margin-top:10px;">
+									<div class="col-md-3" style="font-size: x-larger;">
+										<span><strong>Current Status:</strong></span>
+									</div>
+									<div class="col-md-2">
+										<input type="radio" ng-change='rfaStatusChange(rdostatus)' name="status" value="Pending" ng-model="rdostatus"> Pending
+									</div>
+									<div class="col-md-2">
+										<input type="radio" ng-change='rfaStatusChange(rdostatus)' name="status" value="Authorized" ng-model="rdostatus"> Authorized
+									</div>
+									<div class="col-md-2">
+										<input type="radio" ng-change='rfaStatusChange(rdostatus)' name="status" value="Denied" ng-model="rdostatus"> Denied
+									</div>
+									<div class="col-md-2">
+										<input type="radio" ng-change='rfaStatusChange(rdostatus)' name="status" value="Cancelled" ng-model="rdostatus"> Cancelled
+									</div>
+								</div>
+								<div class="row" style="margin-top:10px;">
+									<div class="col-md-3">
+									<span><strong>Faxed:</strong></span>
+									</div>
+									<div class="col-md-2">
+										<input type="radio" ng-change='rfaFaxStatusChange(rdofaxstatus)' name="faxstatus" value="Yes" ng-model="rdofaxstatus"/> Yes
+									</div>
+									<div class="col-md-2">
+										<input type="radio" ng-change='rfaFaxStatusChange(rdofaxstatus)' name="faxstatus" value="No" ng-model="rdofaxstatus" /> No
+									</div>
+									<div class="col-md-2">
+									</div>
+									<div class="col-md-2">
+									</div>
+								</div>
+								<div class="row" style="margin-top:10px;">
+									<div class="col-md-3">
+									<span><strong>Date Created:</strong></span>
+									</div>
+									<div class="col-md-9">
+										<span>{{dateCreated | date:'MM/dd/yyyy' }} at {{ dateCreated | date:'h:mm a PST'}}
+												<span ng-if="rfaformtype=='dfr'">( Doctor's First )</span>
+												<span ng-if="rfaformtype!='dfr'">( {{rfaformtype | uppercase }} )</span>
+											</span>
+									</div>
+								</div>
+								<div class="row" style="margin-top:10px;">
+									<div class="col-md-3">
+									<span><strong>Treating Physician:</strong></span>
+									</div>
+									<div class="col-md-9">
+										<span>
+											{{treatingPhysician.firstname | capitalize}} {{treatingPhysician.lastname | capitalize}}
+											<span ng-if="treatingPhysician.profession">, <span ng-bind-html="getProfession(treatingPhysician.profession,treatingPhysician.otherprofessiontext)"></span></span>
+										</span>
+									</div>
+								</div>
+
+								<div class="row" style="margin-top:10px;">
+									<div class="col-md-3">
+										<span><strong>Signing Physician:</strong></span>
+									</div>
+									<div class="col-md-9">
+										<span>
+										{{signDoctor.level4.firstname | capitalize}} {{signDoctor.level4.lastname | capitalize}}
+											<span ng-if="signDoctor.level4.profession">, <span ng-bind-html="getProfession(signDoctor.level4.profession,signDoctor.level4.otherprofessiontext)"></span></span>
+										</span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<p style="margin-top:10px;">{{selectedRfa.publishtext}}</p>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-12">
+										<button type="button" ng-click="reportPreviewRFA('view')" class="btn btn-info btn-lg pull-right" value="View" style="white-space: normal; font-size: inherit;">Preview RFA</button>
+									</div>
+								</div>
+
+
+								<h3><span><strong>Activity and Comments</strong></span></h3>
+								<span ng-if="selectedRfacomment.length==0 || selectedRfacomment==undefined">
+								<h4>No comments found...</h4>
+								</span>
+								<span ng-if="selectedRfacomment.length>0">
+									<table style="width: 100%; overflow: hidden;" class="table table-striped table-bordered table-condensed">
+										<tr style="font-weight: bold;">
+											<td>Date/Time</td>
+											<td>Name</td>
+											<td>Update</td>
+										</tr>
+										<tr ng-repeat="activity in selectedRfacomment">
+											<td style="width: 30%">{{activity.createdDate | date:'MM/dd/yyyy' }} at {{ activity.createdDate | date:'h:mm a PST'}}</td>
+											<td style="width: 30%">{{activity.submittedby}}</td>
+											<td style="width: 40%;"><div style="max-width:250px; overflow:hidden">{{activity.comment}}</div></td>
+										</tr>
+									</table>
+								</span>
+								<form name="userForm" novalidate>
+								<table>
+									<tr>
+										<td style="width: 50%"></td>
+										<td style="width: 50%"><h3><span class="pull-center"><strong>Add Comment</strong></span></h3></td>
+									</tr>
+									<tr>
+										<td style="width: 50%"></td>
+										<td style="width: 50%">
+											<div class="form-group">
+													<textarea ng-model="userComment" id="userCommentTextarea" name="name" rows="4" cols="50" style="resize: none;" required></textarea>
+													 <span class="help-inline" style="color: #a94442" ng-show="userForm.name.$error.required">Type your comment here.</span>
+											</div>
+										</td>
+									</tr>
+								</table>
+								</br>
+								<table style="width:100%">
+									<tr>
+											<td>
+												<button type="submit" id="modalCreateBtn" ng-disabled="userForm.$invalid" ng-click="confirmActivity(userForm.$valid)" class="btn btn-info btn-lg pull-right"
+											style="white-space: normal; font-size: inherit; align:right">Submit Comment</button>
+										</td>
+									</tr>
+								</table>
+								</form>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+        </section>
+    </div>
+	<!-- Athena changes -->
+	<div id="isSpinnerImportInjury">
+		<div class="overlayBackground"></div>
+		<div class="overlayContent" style="top: 45%;position: fixed !important;">
+			<img src="/images/spinner.gif"><span>&nbsp;&nbsp;Loading</span>
+		</div>
+	</div>
+
+</div>
+
+<style>
+    input[type=checkbox] {
+        vertical-align: -3px;
+        margin-right: 2px;
+    }
+
+    .searchborder {
+        border: solid 2px white;
+        background-color: white;
+        border-radius: 5px;
+    }
+	.headerMain
+	{
+		padding-left:5px;
+		padding-right:5px;
+		height:50px;
+		text-wrap:true;
+		color: white;
+		margin-bottom: 5px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.headerPending
+	{
+	background-color: orange;
+	}
+	.headerDenied
+	{
+	background-color: red;
+	}
+	.headerAuthorized
+	{
+	background-color: green;
+	}
+	.headerCancelled
+	{
+	background-color: black;
+	}
+	.rfaHeaderPending {
+	   background-color:orange !important;
+	}
+
+	.rfaHeaderCancelled {
+	   background-color:black;
+	}
+	.rfaHeaderAuthorised {
+	   background-color:green;
+	}
+	.rfaHeaderDenied {
+	   background-color:red;
+	}
+	.pad4px {
+	   padding-left: 4px;
+	}
+	.pad4px0px {
+	   padding-left: 4px;
+	   padding-right:0px;
+	}
+
+</style>
+
+
+

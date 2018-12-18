@@ -1,0 +1,26 @@
+<div class="aboutus" style="font-size:16px;line-height:16px;min-height:450px;"> 
+    <div class="bright">
+        <section id="header-title">
+            <div class="container">
+                <div class="row">
+					<h2>{{kickstart_page.successpage.title!=''?kickstart_page.successpage.title:"Your information has been received!"}}</h2>
+                </div>
+            </div>
+        </section>
+        <div class="section">
+			<div class="container">
+				<div class="row ">           
+					<div class="col-sm-9 ">              
+						
+                        <span data-ng-bind-html="kickstart_page.successpage.message"></span>
+                        <p ng-show="kickstart_page.successpage.message==''">Your information has successfully been submitted. You will be contacted
+						within three business days. If you have a question, please call Dr. John Alchemy at 
+						707.483.4346 or email <a href="mailto:jamd@pr4report.com" >jamd@pr4report.com.</a> </p>                  
+					</div>
+					<div style="clear: both"></div>				
+					<!-- <div class="col-sm-offset-modified">  -->        
+				</div>
+			</div>        
+        </div>        
+    </div>
+</div>

@@ -1,0 +1,534 @@
+<div class="practise" data-ng-init="userProfileList(1)"> <!-- data-ng-controller="UsersCtrl" -->
+    <div class="bright">
+        <section id="header-title" style="margin-bottom: 0;">
+            <div class="container">
+                <div class="row">
+                    <h2 style="text-align: left;">User Profile<span ng-show="section == 3"> - {{updateuser.firstname}}&nbsp;{{updateuser.lastname}}</span></h2>
+                </div>
+            </div>
+        </section>
+        <section class="bar2" data-ng-hide="section == 3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <ul class="nav navbar-nav menu-view" style="margin-top: 0;">
+                             <li ng-hide="userProfileNavigation=='inviteuser'" data-ng-class="{active: !listViewEnabled}" class="toolbaritem"><a data-ng-click="section = 1;listViewEnabled=false"><span class="glyphicon glyphicon-th-large"></span>&nbsp;Card View</a></li>
+                            <li ng-hide="userProfileNavigation=='inviteuser'" data-ng-class="{active: listViewEnabled}" class="toolbaritem"><a data-ng-click="section = 2;listViewEnabled=true"><span class="glyphicon glyphicon-align-justify"></span>&nbsp;List View</a></li>
+                            <li class="toolbaritem" ng-show="currentuserrolename != 'nonadmin'"><a data-ng-click="open()"><span class="glyphicon glyphicon-user"></span>&nbsp;Invite User</a></li>
+                        </ul>
+                    </div>
+					<div class="col-sm-6" ng-show="section==1 || section==2">                     
+                        <form class="form-inline text-right" name="form" ng-submit="searchUsers()">                             
+                            <div class="form-group" ng-show="currentuserrole=='siteadmin'">
+                                <div data-ng-init="getPracticesList()">
+			                    	  <span >Practice Account: &nbsp;</span>														
+									<select ng-model="selectpracticename" ng-change="searchUsersByPracticename(selectpracticename)" name="selectpracticename" class="form-control" ng-options="pracList.practicename for pracList in practiceList">            																
+										<option value="pracList.practicename">{{item.practicename}}</option>
+								   </select>                       
+			                    </div>		                    
+		                    </div>                            
+                            <div class="form-group">
+                                <input type="text" data-ng-model="search" class="novalidate form-control" placeholder="Search" />
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" id="submit" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search"></span></button>
+                            </div>                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="container" ng-init="section = 1">
+            <div class="row">
+				<!--<div class="col-sm-4 col-sm-offset-4" ng-hide="userYes" style="font-weight: bold; color: #b61f1f">
+					<div style="font-size: 24px">No records found!</div>
+					<div style="font-size: 16px">Try searching for the first name, last name,</br>&nbsp;full username, or complete email address.</div>
+				</div>-->
+				<div ng-hide="userYes" ng-show="section==1 || section==2">
+					<p ng-bind-html="trustAsHtml(noRecordsFoundMsg)"></p> 
+				</div>
+                <div class="col-sm-4" data-ng-repeat="user in usersList" ng-show="section==1" ng-init="disable = false">
+                    <div class="card" data-ng-click="updateUser(user)" style="height:138px" ng-show="userYes">
+                        <div class="cardHeader" >{{user.firstname | capitalize}}&nbsp;{{user.lastname | capitalize}}</div>
+                        <div class="cardBody">
+                            <div class="clearfix">
+                                <div class="cardBodyLeft">
+                                    <a>
+                                        <img src="/images/icon-doctor.png" /></a>
+                                </div>
+                                <div class="cardBodyRight">
+                                    <div>
+                                        <label>Email:</label>
+                                        {{user.email}}
+                                    </div>
+                                    <div ng-if="currentuserrole != 'siteadmin'"><label>Status:&nbsp;</label>{{getCurrentStatus(user.practice)|capitalize}}</div>
+                                    <div ng-if="currentuserrole == 'siteadmin'">
+                                        <h5>{{user.practice.length}} Practices</h5>
+                                        <ng-pluralize count="personCount"
+                                            when="{'0': 'Nobody is viewing.',
+                                                          'one': '1 person is viewing.',
+                                                          'other': '{} people are viewing.'}">
+                                            </ng-pluralize>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-10" data-ng-show="section == 2">
+                    <table class="table table-striped table-condensed" ng-show="userYes">
+                        <thead ng-show="usersList">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th ng-if="currentuserrole != 'siteadmin'">Status</th>
+                                <th ng-if="currentuserrole == 'siteadmin'">Practice Name</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="user in usersList">
+                                <td><a ng-click="updateUser(user)">{{user.firstname | capitalize}}&nbsp;{{user.lastname | capitalize}}</a></td>
+                                <td>{{user.email}}</td>
+                                <td ng-if="currentuserrole != 'siteadmin'">{{getCurrentStatus(user.practice)|capitalize}}</td>
+                                <td ng-if="currentuserrole == 'siteadmin'"><span ng-repeat="u in user.practice">{{u.name}}<span ng-if="!$last">, </span> </span> </td>
+                                <td>
+                                    <span><button class="btn btn-info btn-xs" data-ng-click="updateUser(user)">View Profile</button></span>									
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-sm-12" ng-show="section == 3" style="margin-top: 25px;">
+                    <div ng-if="isLoad">
+                        <div class="overlayBackground"></div>
+                        <div class="overlayContent" style="top: 60%">
+                            <img src="/images/spinner.gif"><span>&nbsp;&nbsp;Sending mail...</span>
+                        </div>
+                    </div>
+                    <tabset>
+                        <tab heading="Update User Profile">
+                            <br />                                      
+                                <div ng-form="editUser">
+                                    <fieldset ng-disabled="usernameMatch">  
+                                        <div class="form-group col-sm-4">                                          
+                                            Username
+                                            <input type="text" class="form-control" name="username" ng-model="updateuser.username" ng-disabled="true" required />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            Email
+                                        <input type="email" class="form-control" name="practiceEmail" id="practiceEmail" ng-model="updateuser.email" ng-disabled="true" />
+                                        </div>
+                                        <div class="clearer"></div>
+                                        <div class="form-group col-sm-2">
+                                            First Name
+                                            <input type="text" class="form-control" name="firstname" ng-model="updateuser.firstname" ng-disabled="usernameMatch" required />
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            Last Name
+                                            <input type="text" class="form-control" name="lastname" ng-model="updateuser.lastname" ng-disabled="usernameMatch" required />
+                                        </div>
+                                        
+                                        <div class="form-group col-sm-4" ng-if="(updateuser.practice[0].level=='level4' || updateuser.practice[0].level=='level3' || currentuserlevel.rolename=='siteadmin')">
+                                            <div>
+                                                License Number
+												<input type="text" class="form-control" name="licensenumber" id="licensenumber" ng-model="updateuser.licensenumber" maxlength="10" ng-disabled="usernameMatch" />
+                                            </div>
+                                        </div>
+                                        <div style="clear: both"></div>
+										<div class="form-group col-sm-2" ng-if="(updateuser.practice[0].level=='level4' || updateuser.practice[0].level=='level3' || currentuserlevel.rolename=='siteadmin')">
+					                            NPI Number
+					                            <!-- <input name="step1npinumber" ng-model="updateuser.usernpinumber" class="form-control" numbers-only="numbers-only" maxlength="10" onchange="return trim(this)" onkeypress="return trim(this)"/> -->
+					                            <input name="step1npinumber" ng-model="updateuser.usernpinumber" class="form-control" numbers-only="numbers-only" maxlength="10" />
+					                    </div>
+										<div style="clear: both"></div>
+										<div class="form-group col-sm-2">
+					                            Phone Number
+					                            <input name="step1phonenumber" ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" 
+					                                ng-model="updateuser.userphonenumber" class="form-control" numbers-only="numbers-only" maxlength="10"/>
+					                    </div>
+											
+					                    <div class="form-group col-sm-2" ng-show="updateuser.userphonenumber.length==10">
+											Extension
+											<input name="step1extension"  ng-model="updateuser.userextension" class="form-control" numbers-only="numbers-only"
+											 maxlength="7" />
+                       					</div>
+                        
+                                         <div style="clear: both"></div>
+                                         <!--for NON siteadmin-->
+                                        
+                                        <div class="form-group col-sm-12" ng-model="updateuser.profession" name="profession" ng-if="(updateuser.practice[0].rolename!='rater1' && updateuser.practice[0].rolename!='rater2' && currentuserlevel.rolename!='siteadmin')">
+                                            <div ng-show="updateuser.practice[0].level=='level2' || updateuser.practice[0].level=='level3' || updateuser.practice[0].level=='level4' || updateuser.practice[0].rolename=='superadmin'">
+												<label>Select Professional degree</label>  
+												<hr />												
+											</div>	
+                                            
+                                            <div class="col-sm-4" ng-if="updateuser.practice[0].level=='level4'">
+                                                <label class="normalFont"><input type="checkbox" name="profession" ng-model="updateuser.profession.md" value="md" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('md',updateuser.profession.md)" ng-checked="isChecked('md')" ng-disabled="usernameMatch" />&nbsp;M.D. </label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="do" ng-model="updateuser.profession.do" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('do',updateuser.profession.do)" ng-checked="isChecked('do')" ng-disabled="usernameMatch" />&nbsp;D.O.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="dc" ng-model="updateuser.profession.dc" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('dc',updateuser.profession.dc)" ng-checked="isChecked('dc')" ng-disabled="usernameMatch" />&nbsp;D.C.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="dpm" ng-model="updateuser.profession.dpm" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('dpm',updateuser.profession.dpm)" ng-checked="isChecked('dpm')" ng-disabled="usernameMatch" />&nbsp;D.P.M.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="lac" ng-model="updateuser.profession.lac" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('lac',updateuser.profession.lac)" ng-checked="isChecked('lac')" ng-disabled="usernameMatch" />&nbsp;LAc.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="other" ng-model="updateuser.profession.other" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('other',updateuser.profession.other)" ng-disabled="usernameMatch" ng-checked="isChecked('other')" />&nbsp;Other
+                                            </div>
+
+                                            <div class="col-sm-4" ng-if="updateuser.practice[0].level=='level4'">
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="phd" ng-model="updateuser.profession.phd" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('phd',updateuser.profession.phd)" ng-checked="isChecked('phd')" ng-disabled="usernameMatch" />&nbsp;Ph.D.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="dds" ng-model="updateuser.profession.dds" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('dds',updateuser.profession.dds)" ng-checked="isChecked('dds')" ng-disabled="usernameMatch" />&nbsp;D.D.S.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="dmd" ng-model="updateuser.profession.dmd" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('dmd',updateuser.profession.dmd)" ng-checked="isChecked('dmd')" ng-disabled="usernameMatch" />&nbsp;D.M.D.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="od" ng-model="updateuser.profession.od" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('od',updateuser.profession.od)" ng-checked="isChecked('od')" ng-disabled="usernameMatch" />&nbsp;O.D.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="pharm" ng-model="updateuser.profession.pharm" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('pharm',updateuser.profession.pharm)" ng-checked="isChecked('pharm')" ng-disabled="usernameMatch" />&nbsp;Pharm.D.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="mph" ng-model="updateuser.profession.mph" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('mph',updateuser.profession.mph)" ng-checked="isChecked('mph')" ng-disabled="usernameMatch" />&nbsp;M.P.H.
+                                            </div>                                            
+                                            
+                                            <div class="col-sm-4" ng-if="updateuser.practice[0].level=='level2'">
+                                                <label class="normalFont"><input type="checkbox" name="profession" ng-model="updateuser.profession.nurse" value="nurse" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('nurse',updateuser.profession.nurse)" ng-checked="isChecked('nurse')" />&nbsp;Nurse</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="ma" ng-model="updateuser.profession.ma" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('ma',updateuser.profession.ma)" ng-checked="isChecked('ma')" />&nbsp;Medical Assistant</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="other" ng-model="updateuser.profession.other" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('other',updateuser.profession.other)" ng-checked="isChecked('other')" />&nbsp;Other</label><br />
+                                            </div>
+                                            <div class="col-sm-4" ng-if="updateuser.practice[0].level=='level3'">
+                                                <label class="normalFont"><input type="checkbox" name="profession" ng-model="updateuser.profession.np" value="np" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('np',updateuser.profession.np)" ng-checked="isChecked('np')" />&nbsp;N.P.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="pa" ng-model="updateuser.profession.pa" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('pa',updateuser.profession.pa)" ng-checked="isChecked('pa')" />&nbsp;P.A.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="other" ng-model="updateuser.profession.other" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('other',updateuser.profession.other)" ng-checked="isChecked('other')" ng-disabled="usernameMatch" />&nbsp;Other</label><br />
+                                            </div>
+                                            <div class="col-sm-2 clearer col-sm-offset-1" style="margin-top:0px">
+                                                <input type="text" class="form-control" name="otherprofessiontext" ng-model="updateuser.otherprofessiontext" ng-disabled="usernameMatch" ng-if="(updateuser.profession.other == 'add' || updateuser.otherprofessiontext) && updateuser.profession.length>0" required />
+                                            </div>
+                                        </div>                                        
+
+                                        <!--for siteadmin-->
+                                        <div ng-if="currentuserlevel.rolename=='siteadmin'">
+                                            <label>Select Professional degree</label>                                            
+                                            <hr />
+                                            <div class="col-sm-4">
+                                                <label class="normalFont"><input type="checkbox" name="profession" ng-model="updateuser.profession.md" value="md" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('md',updateuser.profession.md)" ng-checked="isChecked('md')" ng-disabled="usernameMatch" />&nbsp;M.D. </label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="do" ng-model="updateuser.profession.do" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('do',updateuser.profession.do)" ng-checked="isChecked('do')" ng-disabled="usernameMatch" />&nbsp;D.O.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="dcm" ng-model="updateuser.profession.dcm" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('dcm',updateuser.profession.dcm)" ng-checked="isChecked('dcm')" ng-disabled="usernameMatch" />&nbsp;D.C.M.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="dpm" ng-model="updateuser.profession.dpm" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('dpm',updateuser.profession.dpm)" ng-checked="isChecked('dpm')" ng-disabled="usernameMatch" />&nbsp;D.P.M.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="lac" ng-model="updateuser.profession.lac" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('lac',updateuser.profession.lac)" ng-checked="isChecked('lac')" ng-disabled="usernameMatch" />&nbsp;LAc.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="phd" ng-model="updateuser.profession.phd" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('phd',updateuser.profession.phd)" ng-checked="isChecked('phd')" ng-disabled="usernameMatch" />&nbsp;Ph.D.</label><br />
+                                                <!--<label class="normalFont"><input type="checkbox" name="profession" value="other" ng-model="updateuser.profession.other" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('other',updateuser.profession.other)" ng-disabled="usernameMatch" ng-checked="updateuser.otherprofessiontext" />&nbsp;Other-->
+                                            </div>
+                                            <div class="col-sm-4">                                                
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="dds" ng-model="updateuser.profession.dds" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('dds',updateuser.profession.dds)" ng-checked="isChecked('dds')" ng-disabled="usernameMatch" />&nbsp;D.D.S.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="dmd" ng-model="updateuser.profession.dmd" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('dmd',updateuser.profession.dmd)" ng-checked="isChecked('dmd')" ng-disabled="usernameMatch" />&nbsp;D.M.D.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="od" ng-model="updateuser.profession.od" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('od',updateuser.profession.od)" ng-checked="isChecked('od')" ng-disabled="usernameMatch" />&nbsp;O.D.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="pharm" ng-model="updateuser.profession.pharm" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('pharm',updateuser.profession.pharm)" ng-checked="isChecked('pharm')" ng-disabled="usernameMatch" />&nbsp;Pharm.D.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="mph" ng-model="updateuser.profession.mph" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('mph',updateuser.profession.mph)" ng-checked="isChecked('mph')" ng-disabled="usernameMatch" />&nbsp;M.P.H.</label><br />
+                                                 <label class="normalFont"><input type="checkbox" name="profession" ng-model="updateuser.profession.nurse" value="nurse" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('nurse',updateuser.profession.nurse)" ng-checked="isChecked('nurse')" />&nbsp;Nurse</label>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="ma" ng-model="updateuser.profession.ma" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('ma',updateuser.profession.ma)" ng-checked="isChecked('ma')" />&nbsp;Medical Assistant</label><br />
+                                                <!--<label class="normalFont"><input type="checkbox" name="profession" value="other" ng-model="updateuser.profession.other" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('other',updateuser.profession.other)" ng-checked="isChecked('other')" />&nbsp;Other</label><br />-->
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="normalFont"><input type="checkbox" name="profession" ng-model="updateuser.profession.np" value="np" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('np',updateuser.profession.np)" ng-checked="isChecked('np')" />&nbsp;N.P.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="pa" ng-model="updateuser.profession.pa" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('pa',updateuser.profession.pa)" ng-checked="isChecked('pa')" />&nbsp;P.A.</label><br />
+                                                <label class="normalFont"><input type="checkbox" name="profession" value="other" ng-model="updateuser.profession.other" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('other',updateuser.profession.other)" ng-checked="isChecked('other')" ng-disabled="usernameMatch" />&nbsp;Other</label><br />
+                                                <input type="text" class="form-control" name="otherprofessiontext" ng-model="updateuser.otherprofessiontext" ng-disabled="usernameMatch" ng-if="(updateuser.profession.other == 'add' || updateuser.otherprofessiontext) && updateuser.profession.length>0" required />
+                                            </div>                                           
+                                        </div>
+
+                                        <div class="form-group col-sm-10"> 
+											<p class="help-block" style="color: #a94442" ng-show="(updateuser.profession.length==0 && updateuser.practice[0].rolename=='superadmin') || (updateuser.profession.length==0 && (updateuser.practice[0].rolename!='superadmin' && updateuser.practice[0].level!='' && updateuser.practice[0].level!='level1'))">
+												Please select your degree(s)
+											</p>
+											<p class="help-block clearer"  ng-show="isDisabledOnProfession" style="color: #a94442; margin-left: 10px">
+												Please limit yourself to four degrees!
+											</p>
+											   <!--<hr>-->
+										</div>
+                                
+                                        <!-- Speciality-->
+                                        <div class="form-group col-sm-12" ng-if="updateuser.practice[0].level=='level4' || updateuser.practice[0].rolename=='superadmin' || currentuserlevel.rolename=='siteadmin'">
+                                            <label>
+                                                &nbsp;&nbsp;&nbsp; Are you board certified and/or board eligible in any specialties
+                                            ?</label>                                    
+                                            <br />                                  
+                                            <div class="col-sm-12">
+                                                <input type="radio" name="boardcertified" id="boardcertified_yes" value="1" ng-selected="updateuser.speciality.length>0" ng-model="boardcertified" ng-click="showSpeciality(1)" />
+                                                <label for="boardcertified_yes">Yes</label>
+                                        
+                                                &nbsp;&nbsp;
+                                            <input type="radio" name="boardcertified" id="boardcertified_no" value="0" ng-model="boardcertified" ng-click="showSpeciality(0)" />
+                                                <label for="boardcertified_no">No</label>
+                                            </div>
+                                    
+                                            <div class="maindiv" ng-show="boardcertified">
+                                                <div class="col-sm-12" ng-repeat="p in updateuser.speciality">
+                                                    <div class="col-sm-4">
+                                                        <select ng-model="p.name" class="form-control" 
+                                                            ng-required="boardcertified1==true">
+                                                            <option value="">--Select Speciality--</option>
+                                                            <option ng-repeat="speciality in specialities" value="{{speciality.title}}" ng-selected="speciality.title == p.name">{{speciality.title}}
+                                                            </option>
+                                                        </select>
+                                                        &nbsp;&nbsp;&nbsp;
+                                                    <p class="help-block" ng-show="myform.p.name.$error.required && submitted">
+                                                        Please select speciality
+                                                    </p>
+                                                    </div>
+                                                   <label> <input type="radio" name="{{$index}}boardcertified" id="boardcertificate_yes" value="1" ng-model="p.boardcertified"/>
+                                                    Board Certificate</label>
+
+                                                   <label> <input type="radio" name="{{$index}}boardcertified" id="boardeligible_yes" value="0"
+                                                        ng-model="p.boardcertified" />
+                                                    Board Eligible</label>
+                                                    &nbsp;&nbsp;
+
+                                                <button ng-click="removespeciality(p)" class="btn btn-md btn-warning btn-xs">Remove</button>
+
+                                                    <div style="clear: both"></div>
+                                                </div>
+                                                &nbsp;&nbsp;&nbsp;
+                                            <button ng-click="addSpeciality()" class="btn btn-md btn-primary">
+                                                Add Another
+                                                Speciality
+                                            </button>
+                                            </div>
+                                            <br>
+                                        </div>
+
+                                        <div style="clear: both"></div>
+                                        <section>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <h3 style="text-align: left;">Practices</h3>
+                                                </div>
+                                            </div>
+                                        </section>
+                                
+                                        <table class="table table-striped table-condensed">
+                                            <thead>
+                                                <tr>
+                                                    <th>Practice Name</th>
+                                                    <th>Status</th>
+                                                    <th>Role</th>
+                                                    <th>Report Access Level</th>
+                                                    <!--<th>Stamp of Approval</th>-->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="practice in updateuser.practice | filter : practicenameExp : true" ng-init="resetStamp(practice)">
+                                         
+                                                    <td>
+                                                        <input type="text" class="form-control" name="practiceName" id="practiceName" ng-model="practice.name" ng-disabled="true" required />
+                                                    </td>
+                                                    <td>
+                                                        <select ng-model="practice.status" class="form-control" name="practice.status" ng-disabled="!checkrole(['superadmin','siteadmin','admin level1','admin level2','admin level3','admin level4']) || isDisabled"><!-- || practice.status == 'invited'-->
+                                                            <option value="" ng-selected="practice.status == ''">--Choose--</option>
+                                                            <option value="active" ng-selected="practice.status == 'active'">Active</option>
+                                                            <option value="inactive" ng-selected="practice.status == 'inactive'">Inactive</option>
+                                                            <option value="invited" ng-selected="practice.status == 'invited'">Invited</option><!-- ng-disabled="true"-->
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <!--<select ng-model="practice.rolename" class="form-control" id="practiceRole" name="practiceRole" ng-disabled="!checkrole(['superadmin','admin level1','admin level2','admin level3','admin level4','siteadmin']) || isDisabled" ng-change="checkLevel(practice)" ng-show="practice.name!='ratefast'">
+                                                            <option value="" ng-selected="roleFirst(practice.role) == ''">--Role--</option>
+                                                            <option value="admin" ng-selected="practice.rolename == 'admin'">Admin</option>
+                                                            <option value="nonadmin" ng-selected="practice.rolename == 'nonadmin'">Non Admin</option>
+                                                            <option value="superadmin" ng-show="practice.role=='superadmin'" ng-selected="practice.role == 'superadmin'">Super Admin</option>
+                                                            <option value="rater1" ng-show="practice.role == 'rater1' || roleName == 'siteadmin'" ng-selected="practice.role == 'rater1'" ng-hide="!checkrole(['siteadmin'])">Rater1</option>
+                                                            <option value="rater2" ng-show="practice.role == 'rater2' || roleName == 'siteadmin'" ng-selected="practice.role == 'rater2'" ng-hide="!checkrole(['siteadmin'])">Rater2</option>
+                                                            <option value="siteadmin" ng-show="roleName == 'siteadmin'" ng-selected="practice.role == 'siteadmin'" ng-hide="!checkrole(['siteadmin'])">Site Admin</option>
+                                                        </select>-->	
+														<select ng-model="practice.rolename" class="form-control" id="practiceRole" name="practiceRole" ng-if="practice.name=='ratefast'" ng-disabled="currentUser.rolename == 'siteadmin' && currentUser.username == updateuser.username">														
+                                                            <!--<option value="" ng-selected="roleFirst(practice.role) == ''">--Role--</option>-->
+                                                            <option value="nonadmin" ng-selected="practice.rolename == 'nonadmin'">Non Admin</option>
+															<option value="admin" ng-selected="practice.rolename == 'admin'">Admin</option>
+															<option value="superadmin" ng-selected="practice.role == 'superadmin'">Super Admin</option>
+                                                            <option value="rater1" ng-if="practice.role == 'rater1' || practice.role == 'rater2' || practice.role == 'siteadmin'" ng-selected="practice.role == 'rater1'">Rater1</option>
+                                                            <option value="rater2" ng-if="practice.role == 'rater2' || practice.role == 'siteadmin'" ng-selected="practice.role == 'rater2'">Rater2</option>
+                                                            <option value="siteadmin" ng-if="practice.role == 'siteadmin'" ng-selected="practice.role == 'siteadmin'">Site Admin</option>
+                                                        </select>
+														<select ng-model="practice.rolename" class="form-control" id="practiceRole" name="practiceRole"  ng-change="checkLevel(practice)" ng-if="practice.name!='ratefast'" ng-disabled="currentUser.rolename == 'nonadmin' || currentUser.rolename == 'rater1' || currentUser.rolename == 'rater2' || isDisabled">
+                                                            <!--<option value="" ng-selected="roleFirst(practice.role) == ''">--Role--</option>-->
+                                                            <option value="nonadmin" ng-selected="practice.rolename == 'nonadmin'">Non Admin</option>
+															<option value="admin" ng-selected="practice.rolename == 'admin'">Admin</option>
+															<option value="superadmin" ng-if="practice.role=='superadmin' || practice.role=='siteadmin'" ng-selected="practice.role == 'superadmin'">Super Admin</option>
+															<option value="siteadmin" ng-if="practice.role=='siteadmin'" ng-selected="practice.role == 'siteadmin'">Site Admin</option>                                                            
+                                                        </select>	
+                                                    </td>                                            
+                                                    <td>
+													<!--currentUser.rolename == 'nonadmin' || isDisabled || (practice.rolename!='admin' && practice.rolename!='nonadmin')-->
+                                                        <select ng-model="practice.level" ng-change="checkStamp(practice);updateuser.profession=[];updateuser.otherprofessiontext=''" class="form-control" name="levels" ng-disabled="currentUser.rolename == 'nonadmin' || currentUser.rolename == 'rater1' || currentUser.rolename == 'rater2'">
+                                                            <option value="">--Report Access Level--</option>
+                                                            <option value="level1" ng-selected="practice.level == 'level1'">1 - Staff</option>
+                                                            <option value="level2" ng-selected="practice.level == 'level2'">2 - Medical Assistant</option>
+                                                            <option value="level3" ng-selected="practice.level == 'level3'">3 - NP/PA</option>
+                                                            <option value="level4" ng-selected="practice.level == 'level4'">4 - Physician</option>
+                                                        </select>                                                
+                                                    </td> 
+													<td>
+                                                    	<button  ng-show="practice.status=='invited' && (currentuserrolename=='admin' || currentuserrolename=='superadmin' || currentuserrolename=='siteadmin')" ng-click="reSend(practice.name)" class="btn btn-warning">Resend Invitation</button>
+                                                    </td>		
+                                                    <!--<td>              
+                                                        <select ng-model="practice.stampapproval" class="form-control" name="levels" ng-disabled="isStampapproval && currentUser.rolename!='siteadmin'">
+                                                            <option value="">--Select--</option>
+                                                            <option value="on">On</option>
+                                                            <option value="off">Off</option>                                                    
+                                                        </select>                                                
+                                                    </td>-->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                
+                                        <div style="clear: both"></div>
+                                    </fieldset>
+                                <div class="text-center">
+                                    <!--<div class="label label-success label-credit" data-ng-show="updateStatus">
+                                        <span class="glyphicon glyphicon-thumbs-up icon-white"></span>&nbsp;&nbsp;updated!                   
+                                    </div>-->
+                                    <br>
+                                    <br>
+                                    <button ng-if="userProfileNavigation!='myprofile'" class="btn btn-default" ng-click="userTest()">Back</button>
+                                    <button ng-disabled="(!editUser.$valid || isDisabledOnProfession || (updateuser.practice[0].level!='level1' && updateuser.profession.length==0) || (updateuser.practice[0].rolename!='superadmin' && updateuser.practice[0].level!='' && updateuser.practice[0].level!='level1' && updateuser.practice[0].level!='level2' && updateuser.practice[0].level!='level3' && updateuser.practice[0].level!='level4'))" ng-hide="usernameMatch" class="btn btn-default" ng-click="saveEditUser()">Update</button>
+                                    <!--<button ng-if="isstatusInvites && !usernameMatch" ng-click="reSend()" class="btn btn-warning">Resend Invitation</button>-->
+                                    <button ng-if="!usernameMatch" ng-click="changePwd()" class="btn btn-info">Reset Password</button>
+									<button ng-show="loginuserusername==updateuser.username" ng-click="changeUserPassword()" class="btn btn-info">Change Password</button>
+                                </div>
+                            </div>         
+                                
+                        </tab>
+                        <!--<tab heading="Personal Signature" ng-hide="$parent.hideme ">                            
+                            <br />                            
+                                <div class="signatureEdit">
+                                    <form action="/api/usersUpload" class="form-horizontal" name="signForm" method="post" enctype="multipart/form-data">
+                                        <div class="row">
+                                            <div class="col-sm-12" style="min-height: 185px;">
+                                                <h4>Personal Signature</h4>
+                                                <div>
+                                                    <input type="text" name="userId" data-ng-model="updateuser._id" style="display: none;" />
+                                                    <img ng-show="signature_img!=null" src="{{signature_img}}" alt="Personal Signature" style="max-width: 300px;" />
+                                                </div>
+                                                <div>
+                                                    <input type="file" name="signature" id="signature" required />
+                                                </div>
+                                                <br />                                                
+                                            </div>
+                                            <div style="padding: 5px 0 8px 10px;">                                                
+                                                <a ng-click='cleanData()' class="btn btn-default">Back</a>
+                                                <button type="submit" class="btn btn-md btn-default">Upload</button>
+                                            </div>
+                                        </div>                                        
+                                    </form>
+                                </div>
+                        </tab>-->                        
+                    </tabset>
+                </div>
+            </div>
+            <div class="row">               
+	                <div ng-if="userYes" class="col-sm-12" data-ng-hide="section == 3 || section == 4">
+	                    <div class="">
+	                        <pagination total-items="totalItems" page="currentPage" items-per-page="itemsperpage" max-size="maxsize" on-select-page="userProfileList(page)" class="pagination-sm" boundary-links="true"></pagination>
+	                    </div>
+	                </div>                
+            </div>           
+        </div>
+
+        <form class="container" name="myform" data-ng-show="section == 4">
+            <div class="col-sm-12">
+
+                <div ng-if="isLoad">
+                    <div class="overlayBackground"></div>
+                    <div class="overlayContent" style="top: 60%">
+                        <img src="/images/spinner.gif"><span>&nbsp;&nbsp;Sending...</span>
+                    </div>
+                </div>
+
+                <div class="col-sm-12" ng-repeat="u in useralert">
+                    <div>
+                        <alert ng-hide="(!alerts[$index].msg)" type="alerts[$index].type">{{alerts[$index].msg}}</alert>
+                        <!--<alert ng-repeat="alert in alerts" type="alert.type">{{alert.msg}}</alert>-->
+                    </div>
+                </div>
+                <table class="table table-bordered table-hover table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>First Name
+                            </th>
+                            <th>Last Name
+                            </th>
+                            <th>Email
+                            </th>
+                            <th>Verify Email
+                            </th>
+                            <th>Role <span ng-click="openPopup(7)" style="color: #14A4DC; cursor: pointer">(i)</span>
+                            </th>
+                            <th ng-if="currentUser.rolename == 'superadmin' || currentUser.rolename == 'admin'">Report Access Level <span ng-click="openPopup(8)" style="color: #14A4DC; cursor: pointer">(i)</span>
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="u in user" style="text-align: center">
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="firstname" class="form-control" ng-model="u.firstname" required>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="lastname" class="form-control" ng-model="u.lastname" required>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="email" name="emailId" class="form-control" ng-model="u.emailId" required>
+                                </div>
+
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="email" name="verifyemailId" class="form-control" ng-model="u.verifyemailId" ui-validate=" '$value==u.emailId' " ui-validate-watch=" 'u.emailId' " required>
+                                    <span style="color: #ff0000;" ng-show='u.emailId!=u.verifyemailId && u.emailId'>These emails don't match!</span>
+                                    <input type="hidden" ng-model="u.isVerifyemail" ng-bind="u.isVerifyemail=(u.emailId==u.verifyemailId)" />
+
+                                </div>
+                            </td>
+                            <td ng-if="currentUser.rolename == 'superadmin' || currentUser.rolename == 'admin'">
+                                <select ng-model="u.role" class="form-control" name="role" required>
+                                    <option value="" selected="selected">--Select Role--</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="nonadmin">NonAdmin</option>
+                                </select>
+                            </td>
+                            <td ng-if="currentUser.role =='siteadmin'">
+                                <select ng-model="u.role" class="form-control" name="role">
+                                    <option value="" selected="selected">--Select Role--</option>
+                                    <option value="rater1">Rater 1</option>
+                                    <option value="rater2">Rater 2</option>
+                                    <option value="siteadmin">SiteAdmin</option>
+                                </select>
+                            </td>
+                            <td ng-if="currentUser.rolename == 'superadmin' || currentUser.rolename == 'admin'">
+                                <select ng-model="u.level" class="form-control" name="levels" required>
+                                    <option value="" selected="selected">--Report Access Level--</option>
+                                    <option value="1">1 - Staff</option>
+                                    <option value="2">2 - Medical Assistant</option>
+                                    <option value="3">3 - NP/PA</option>
+                                    <option value="4">4 - Physician</option>
+                                </select>
+                            </td>
+                            <td ng-hide="{{$index==0}}">
+                                <a data-ng-click="removeUser(u)"><span style="margin-top: 10px;" class="glyphicon glyphicon-remove"></span></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="pull-right">
+                    <button class="btn" ng-click="addinvitation()">Add Another</button>
+                    <button class="btn btn-info" ng-click="ok(myform)">Send</button>
+                    <button ng-hide="userProfileNavigation=='inviteuser'" class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <!-- Invite Users -->
+</div>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+    <script>
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+		
+		document.trim= function(el) {
+            el.value = el.value.
+            replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
+            replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
+            replace(/\n +/, "\n");  // Removes spaces after newlines
+            return;
+        }
+		
+      </script>
+	  <style type="text/css">
+		svg 
+		{
+			pointer-events: none;
+		}						
+	</style>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <base href="/">
+    <meta name="google-site-verification" content="Xq-Di4u3YWQbMXA688WxsYIjLcBlL6PYyb1Pteqjlqg" />
+    <title>RateFast Report Center</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+	
+	<!-- Meta tags for FB -->
+	<meta property="og:url" content="https://ratefastcloud.azurewebsites.net" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="RateFast" />
+	<meta property="og:description" content="Workers' compensation reporting and impairment rating software for California medical providers and work-comp professionals. Fast and easy Doctor's First, PR-2, PR-4 reports and RFAs." />
+	<meta property="og:image" content="https://ratefastcloud.azurewebsites.net/images/ratefast.png" />
+
+<!--Script for googlem captcha -->
+	<script src="https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit" async defer></script>
+	
+	<!-- Facebook Pixel Code -->
+	<!--<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+			n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+			n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+			t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+			document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+			fbq('init', '1579284529034639');
+			fbq('track', "PageView");</script>-->
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1579284529034639&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+	
+	<!-- End of Meta tags for FB -->
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(app) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-rn-carousel/dist/angular-carousel.css" />
+    <link rel="stylesheet" href="bower_components/select2/select2.css" />
+    <!-- endbower -->
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css" />
+    <link href="../bower_components/select2/select2.css" rel="stylesheet" />
+    <!-- endbuild -->
+    <!-- build:css({.tmp,app}) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/formbuilder.css">
+    <!-- endbuild -->
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+        
+         if (window.location.host == 'rate-fast.com' || window.location.host == 'www.rate-fast.com') {
+             var gaTrackingId = 'UA-46770951-7';
+         } else {
+             var gaTrackingId = '';
+         }
+
+         (function (i, s, o, g, r, a, m) {
+             i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                 (i[r].q = i[r].q || []).push(arguments)
+             }, i[r].l = 1 * new Date(); a = s.createElement(o),
+             m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+         ga('create', gaTrackingId, 'auto');
+         ga('send', 'pageview');
+
+    </script>
+
+</head>
+<body ng-app="ratefastApp">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <div class="wrapper">
+        <div ng-include="'partials/navbar'"></div>
+        <div ng-style="navheight" id="spacer"></div>
+		<span class="hidden-md hidden-lg visible-xs-* visible-sm-*" style="height:90px;" ></span>
+        <!-- Add your site or application content here -->        
+        <div ng-view="" ng-class="{content: currentUser}" autoscroll="true"></div>			
+        <div style="height: 15px;" id="spacer-bottom"></div>
+        <div ng-include="'partials/footer'"></div>
+    </div>
+    
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- build:js(app) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-rn-carousel/dist/angular-carousel.js"></script>
+    <script src="bower_components/angular-ui-utils/modules/utils.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/select2/select2.js"></script>
+    <script src="bower_components/angular-ui-select2/src/select2.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="bower_components/angular-ui-date/ui-date.js"></script>
+    <script src="bower_components/angular-smart-table/dist/smart-table.js"></script>
+    <!-- endbower -->
+    <script src="bower_components/angular-ui-utils/modules/mask/mask.js"></script>
+    <script src="bower_components/angular-ui-utils/modules/validate/validate.js"></script>
+    <script src="bower_components/angular-validator/dist/angular-validator.js"></script>
+    <script src="bower_components/angular-validator/dist/angular-validator-rules.js"></script>
+    <script src="bower_components/tinymce/tinymce.min.js"></script>
+    <script src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
+    <script src="bower_components/angular-pdf/dist/angular-pdf.min.js"></script>
+    <script src="bower_components/angular-socket-io/socket.js"></script>
+    <!-- endbuild -->
+    <script src="scripts/socket.io.js"></script>
+	<script src="scripts/ngStorage.min.js"></script>
+    
+	<!-- Used for creating an array of checked checkboxes -->
+	<script type="text/javascript" src="scripts/checklist-model.js"></script>
+	
+	<!--Script for captcha -->
+	<script src='scripts/angular-recaptcha.min.js'></script>	
+	
+	 <!--Script for IdleTimeout -->
+	<script src='scripts/angular-idle-service.js'></script>	
+	
+	<!--Script for Caps Lock detection -->
+    <script type='text/javascript' src='scripts/ng-caps-lock.min.js'></script>
+	
+	<script src="scripts/ng-clipboard.js"></script>
+	
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+	 <!-- work status script -->
+    <script src="scripts/controllers/workstatus.controller.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/addendum.js"></script>
+	<script src="scripts/controllers/OauthCtrl.js"></script>
+    <script src="scripts/controllers/navbar.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+    <script src="scripts/controllers/signup.js"></script>
+    <script src="scripts/controllers/settings.js"></script>
+    <script src="scripts/controllers/testimonial.js"></script>
+    <script src="scripts/controllers/salesperson.js"></script>
+    <script src="scripts/controllers/states.js"></script>
+    <script src="scripts/controllers/question.js"></script>
+    <script src="scripts/controllers/users.js"></script>
+    <script src="scripts/controllers/specialities.js"></script>
+    <script src="scripts/controllers/practice.js"></script>
+    <script src="scripts/controllers/dashboard.js"></script>
+    <script src="scripts/controllers/forms.js"></script>
+    <script src="scripts/controllers/formbuilder.js"></script>
+    <script src="scripts/controllers/formsections.js"></script>
+    <script src="scripts/controllers/formPreview.js"></script>
+    <script src="scripts/controllers/tinymce.js"></script>
+    <script src="scripts/controllers/reportPreview.js"></script>
+    <script src="scripts/controllers/templates.js"></script>
+    <script src="scripts/controllers/pricing.js"></script>
+    <script src="scripts/controllers/custom.js"></script>
+    <script src="scripts/controllers/patient.js"></script>
+    <script src="scripts/controllers/patientInjury.js"></script>
+    <script src="scripts/controllers/reportform.js"></script>
+    <script src="scripts/controllers/archivepopup.js"></script>
+    <script src="scripts/controllers/blogs.js"></script>
+    <script src="scripts/controllers/unsignedreports.js"></script>
+    <script src="scripts/controllers/backbuttonpopup.js"></script>    
+    <script src="scripts/controllers/popupbuttonctrl.js"></script>
+    <script src="scripts/controllers/addanother.js"></script>
+    <script src="scripts/controllers/addanotherdiagnostic.js"></script>
+    <script src="scripts/controllers/Addanotherbiologicalsibling.js"></script>
+    <script src="scripts/controllers/submitreportCtrl.js"></script>
+    <script src="scripts/controllers/reportpricingctrl.js"></script>
+    <script src="scripts/controllers/useractivity.js"></script>
+	<script src="scripts/controllers/chargereport.js"></script>
+    <script src="scripts/controllers/completedpr4report.js"></script>
+	<script src="scripts/controllers/changeUserPasswordCtrl.js"></script>
+	<script src="scripts/controllers/websitepagesCtrl.controller.js"></script>
+	<script src="scripts/controllers/popupCtrl.js"></script>
+	<script src="scripts/controllers/injurykickstart.js"></script> <!-- For injury kickstart system -->
+	<script src="scripts/controllers/injurykickstartsuccess.js"></script> <!-- For injury kickstart system -->
+		
+		
+    <!-- For all services -->
+    <script src="scripts/services/auth.js"></script>
+    <script src="scripts/services/session.js"></script>
+    <script src="scripts/services/user.js"></script>
+    <script src="scripts/services/testimonial.js"></script>
+    <script src="scripts/services/blogs.js"></script>
+    <script src="scripts/services/salesperson.js"></script>
+    <script src="scripts/services/practice.js"></script>
+    <script src="scripts/services/states.js"></script>
+    <script src="scripts/services/question.js"></script>
+    <script src="scripts/services/specialities.js"></script>
+    <script src="scripts/services/report.js"></script>
+    <script src="scripts/services/countries.js"></script>
+    <script src="scripts/services/injuries.js"></script>
+    <script src="scripts/services/patient.js"></script>
+    <script src="scripts/services/datafromapi.js"></script>
+    <script src="scripts/services/unsignedreports.js"></script>
+    <script src="scripts/services/submittedreportcount.js"></script>
+    <script src="scripts/services/reportpricing.js"></script>
+    <script src="scripts/services/socket.service.js"></script>
+    <script src="scripts/services/mail.js"></script>	
+	
+    <!-- End Services -->
+
+    <!-- For Form Builder Components -->
+    <script src="scripts/angular-form-builder.js"></script>
+    <script src="scripts/angular-form-builder-components.js"></script>
+    <script src="scripts/angular-validator-rules.js"></script>
+
+
+    <!-- For all directives -->
+    <script src="scripts/directives/capitalize.js"></script>
+    <script src="scripts/directives/mongooseError.js"></script>
+    <script src="scripts/directives/creditCardvalidation.js"></script>
+    <script src="scripts/directives/isNumber.js"></script>
+    <script src="scripts/directives/number.js"></script>
+    <script src="scripts/directives/sortable.js"></script>
+    <script src="scripts/directives/compile_html.js"></script>
+    <script src="scripts/directives/jvectormap-1.2.2.min.js"></script>
+    <script src="scripts/directives/jvectormap-us-aea-en.js"></script>
+    <script src="scripts/directives/map.js"></script>
+    <script src="scripts/directives/loader.js"></script>
+    <script src="scripts/directives/download.js"></script>
+    <script src="scripts/directives/toggleMode.js"></script>
+    <script src="scripts/directives/addanothertreatment.js"></script>
+    <script src="scripts/directives/datepickerextended.js"></script>
+    <script src="scripts/directives/diagnosticcontrols.js"></script>
+    <script src="scripts/directives/disablebrowser.js"></script>
+    <!--<script src="scripts/directives/pdfdownload.js"></script>
+    <script src="scripts/directives/docpdfconversion.js"></script>-->
+    <script src="scripts/directives/base64.js"></script>
+	<script src="scripts/directives/sprintf.js"></script>
+    <script src="scripts/directives/FileSaver.js"></script>
+    <script src="scripts/directives/html-docx.js"></script>
+    <!--<script src="scripts/directives/jspdf.debug.js"></script>
+    <script src="scripts/directives/jspdf.min.js"></script>-->
+	
+    <!-- endbuild -->
+
+    <!-- Auto log out -->
+    <script type="text/ng-template" id="warning-dialog.html">
+        <div class="modal-header">
+            <h3>Ratefast</h3>
+        </div>
+        <div class="modal-body">
+            <div class="login-sign">
+                <h3>You're idle. Do something!</h3>
+            </div>
+        </div>    
+	    <div ng-controller="logoutCountdown" class="modal-body">
+			<progressbar max="10" value="countdown" animate="false" class="progress-striped active"></progressbar>
+			<!-- <uib-progressbar class="progress-striped" value="{{countdown}}" type="warning" class="progress-striped active">You'll be logged out in {{countdown}} second(s).</uib-progressbar> -->
+			<span class="progress-striped active">You'll be logged out in {{countdown}} second(s).</span>
+	    </div>
+    </script>
+	
+	
+    <script type="text/ng-template" id="timedout-dialog.html">
+      <div class="modal-header">
+       <h3>Ratefast</h3>
+      </div>
+      <div class="modal-body">
+        <div class="login-sign">
+            <h3>Your session expired due to inactivity.</h3>
+        </div>
+     </div>
+    </script>
+    <script type="text/ng-template" id="forceLogout-dialog.html">
+      <div class="modal-header">
+       <h3>Ratefast</h3>
+      </div>
+      <div class="modal-body">
+        <div class="login-sign">
+            <h3>Your session has been terminated because you have logged in elsewhere.</h3>
+        </div>
+     </div>
+    </script>
+    <script type="text/ng-template" id="forceLogoutReport-dialog.html">
+      <div class="modal-header">
+       <h3>Ratefast</h3>
+      </div>
+      <div class="modal-body">
+        <div class="login-sign">
+            <h3>You have been forcefully logged out because another user just opened this report! Don't worry: your data has been saved.</h3>
+        </div>
+     </div>
+    </script>
+	<!--<script type="text/javascript">
+		$(document).ready(function(){
+			//$("span").html('24a5').
+			
+		var arr = $("div.wrapper" ).children();
+		
+		for(var i=0;i<arr.length;i++)
+		{			
+			if(arr[i].nodeName=='SPAN')
+			{				
+				if(arr[i].innerText=='24a5')
+				{
+					arr[i].innerText='';					
+				}
+				
+			}			
+		}			
+		});		
+	</script>-->
+</body>
+</html>

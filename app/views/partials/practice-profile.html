@@ -1,0 +1,973 @@
+﻿<style type="text/css">
+.borderSpaceStyle {
+    border-collapse: separate;
+    border-spacing: 10px;
+    border:solid 8px #e1e1e1;
+    margin-top: 15px;
+}
+</style>
+<div class="practise" data-ng-init="listPractices(1)"> <!-- data-ng-controller="PracticeCtrl" -->
+    <div ng-if="!fullFormLoader">
+        <div class="overlayBackground"></div>
+        <div class="overlayContent">
+            <img src="/images/spinner.gif" /><span>&nbsp;&nbsp;Loading</span>
+        </div>
+    </div>
+
+    <div class="bright">
+        <section id="header-title" style="margin-bottom: 0;">
+            <div class="container">
+                <div class="row">
+                    <h2 style="text-align: left;">Practice Profile<span ng-if="fullPractice"> - {{practice.practicename}}</span>
+
+                    </h2>
+                </div>
+            </div>
+        </section>
+        <!----    2nd Menu Strip    ---->
+        <section class="bar2" ng-if="!fullPractice">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4 col-md-4" ng-if="currentuserrole == 'siteadmin' || fullPractice">
+                        <ul class="nav navbar-nav menu-view" style="margin-top: 0;">
+                            <li data-ng-class="{active: !listViewEnabled}" class="toolbaritem"><a ng-click="showlist(false)"><span class="glyphicon glyphicon-th-large"></span>&nbsp;Card View</a></li>
+
+                            <li data-ng-class="{active: listViewEnabled}" class="toolbaritem"><a ng-click="showlist(true)"><span class="glyphicon glyphicon-align-justify"></span>&nbsp;List View</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-8 text-right">
+                        <div class="col-sm-3 col-md-3 form-horizontal" ng-if="currentuserrole == 'siteadmin' || fullPractice">
+                            <div class="form-group form-group-custom" >
+                                <div class="form-inline" ng-if="!fullPractice">
+                                    <select ng-change="filterPractices(statusId)" ng-model="statusId" class="form-control">
+                                        <option value="" selected="selected">-- Status All --</option>
+                                        <option value="active">Active</option>
+                                        <!--<option value="inactive">Inactive</option>-->
+                                        <option value="registered">Registered</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+						<div class="col-sm-4 col-md-4 form-horizontal" ng-if="currentuserrole == 'siteadmin' || fullPractice">
+                            <div class="form-group form-group-custom" >
+                                <div class="form-inline" ng-if="!fullPractice">
+                                Search By :
+                                    <select ng-change="setsearchByselection(searchBy)" ng-model="searchBy" class="form-control">
+                                        <option value="byPracticename">Practice Name</option>
+                                        <option value="byUsername">User Name</option>
+                                        <option value="byEmail">Email ID</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>                        
+                        <div class="col-sm-5 col-md-5 text-right" ng-if="currentuserrole == 'siteadmin'">
+                            <form class="form-inline" name="form" ng-submit="searchPractices(search)">
+								<div class="form-inline">
+									<div class="form-group">
+										<input type="text" data-ng-model="search" class="novalidate form-control" placeholder="Search..." />
+
+									</div>
+									<div class="form-group">
+										<button type="submit" id="submit" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search"></span></button>
+									</div>
+								</div>
+							</form>	
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!----    Content    ---->
+        <section ng-hide="fullPractice">
+            <div class="container">
+                <div class="row">
+                    <!----    Card View    ---->
+                    <!--<div class="col-sm-2 col-sm-offset-5 alert alert-dismissable alert-danger" ng-hide="practiceYes">No Records Found !</div>-->
+					<div ng-hide="practiceYes">
+            			<p ng-bind-html="trustAsHtml(noRecordsFoundMsg)"></p>  
+            		</div>
+                    <div class="col-sm-4" data-ng-repeat="practice in practices" data-ng-hide="listViewEnabled" ng-if="currentuserrole == 'siteadmin'">
+
+                        <div class="card" ng-click="editPractice(practice)" ng-show="practiceYes">
+                            <div class="cardHeader {{practice.status | lowercase}}">{{practice.practicename}}</div>
+                            <div class="cardBody">
+                                <div class="clearfix">
+                                    <div class="cardBodyLeft">
+                                        <img src="/images/icon-hospital.png" />
+                                    </div>
+                                    <div class="cardBodyRight">
+                                        <div>
+                                            <label>Status</label>
+                                            : {{practice.status | capitalize}}
+                                   
+                                        </div>
+                                        <div>
+                                            <label>Users</label>
+                                            : {{practice.usercount}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!----    List View    ---->
+                    <div class="col-sm-10" data-ng-show="listViewEnabled">
+
+                        <table class="table table-striped table-condensed" ng-show="practiceYes">
+                            <thead>
+                                <tr>
+                                    <!--<th>Name</th>-->
+                                    <th>Practice Name</th>
+                                    <th>Status</th>
+                                    <th>Users</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="practice in practices">
+                                    <td><a href ng-click="editPractice(practice)">{{practice.practicename}}</a></td>
+                                    <!--<td>{{practice.practicename}}</td>-->
+                                    <td>{{practice.status | capitalize}}</td>
+                                    <td>{{practice.usercount}}</td>
+                                    <td style="text-align: center;">
+                                        <button class="btn btn-info btn-xs" ng-click="editPractice(practice)">Update</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row" ng-if="currentuserrole == 'siteadmin' || fullPractice" ng-show="practiceYes">
+                    <div class="col-sm-12">
+                        <pagination total-items="totalItems" page="currentPage" items-per-page="itemsperpage" max-size="maxsize" on-select-page="listPractices(page)" class="pagination-sm" boundary-links="true"></pagination>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!----    Open Card (Update)    ---->
+        <section ng-if="currentuserrole != 'siteadmin' || fullPractice">
+            <div class="container">
+                <div ng-repeat="practice in practices">
+                    <!--ng-init="editPractice(practice)"-->
+                </div>
+                <div class="row">
+                    <br />
+					<fieldset ng-disabled="currentuserrolename=='nonadmin'">
+                    <tabset>
+                        <!----    Update Profile    ---->
+                        <tab heading="General">
+                            <br />
+                            <div class="practiceEdit">
+                                <form class="form-horizontal" name="editForm" novalidate>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h4>Basic Details</h4>
+                                                <hr />
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <div class="col-sm-2 top-buffer">
+                                                    Practice ID Number <span ng-click="openPopup(10)" style="color: #14A4DC; cursor: pointer">(i)</span>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="text" name="pid" class="form-control" data-ng-model="practice.pid" disabled="disabled" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <div class="col-sm-2 top-buffer">
+                                                   Practice Account <span ng-click="openPopup(10)" style="color: #14A4DC; cursor: pointer">(i)</span>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="text" disabled="disabled" name="name" class="form-control" data-ng-model="practice.practicename" />
+                                                </div>
+                                            </div>
+											<div class="form-group col-sm-12">
+                                                <div class="col-sm-2 top-buffer" >
+                                                    Practice Name <span ng-click="openPopup(10)" style="color: #14A4DC; cursor: pointer">(i)</span>
+                                                </div>
+                                                <div class="col-sm-4" ng-class="{'has-error': editForm.practicename2.$invalid  }">
+                                                    <input type="text" name="practicename2" class="form-control" data-ng-model="practice.practicename2" placeholder="What is your practice called?"  ng-minlength="3" ng-class="{'has-error': editForm.practicename2.$invalid}" maxlength="40" /><!--onchange="return trim(this)" onkeypress="return trim(this)" --><!--numberchar-only="numberchar-only"-->
+													<span class="error" ng-show="editForm.practicename2.$invalid"> 
+														Practice name should have at least three characters.
+													</span>
+                                                </div>
+                                            </div>
+											<div class="form-group col-sm-12">
+                                                <div class="col-sm-2 top-buffer" >
+                                                    IRS Number
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="text" name="irsnumber" class="form-control" only-num-and-hyphen data-ng-model="practice.irsnumber" placeholder="Enter your IRS number"  ng-maxlength="15" maxlength="15" />													
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                        <!--div class="row" ng-show="practice.practiceaddress.length > 0">
+                                            <div class="col-sm-12">
+                                                <h4>Practice Address</h4>
+                                                <hr />
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-condensed">
+                                                        <thead style="text-align: center;">
+                                                            <tr>                                                                
+                                                                <th class="text-center">Street Address</th>
+                                                                <th class="text-center">County</th>
+                                                                <th class="text-center">City</th>
+                                                                <th class="text-center">State / Province</th>
+                                                                <th class="text-center">Zip/Postal Code</th>
+                                                                <th class="text-center">Country</th>
+                                                                <th class="text-center">&nbsp;</th>
+                                                            </tr>
+                                                        </thead>
+                                                        
+                                                        <tbody>
+                                                            <tr data-ng-repeat="practiceAdd in practice.practiceaddress">   
+                                                                <td>{{practiceAdd}}</td>                                                          
+                                                                <td style="width: 25%;">
+                                                                    <input type="text" name="street{{$index+1}}" class="form-control" data-ng-model="practiceAdd.street" ng-class="{'has-error': editForm.street{{$index+1}}.$invalid}" required />
+                                                                    <span class="errorMessage" ng-show="editForm.street{{$index+1}}.$dirty && editForm.street{{$index+1}}.$invalid">Street name is required</span>
+                                                                </td>
+                                                                <td style="width: 18%;">
+                                                                    <input type="text" name="county{{$index+1}}" class="form-control" maxLength="100" data-ng-model="practiceAdd.county" ng-class="{'has-error': editForm.county{{$index+1}}.$invalid}" required />
+                                                                </td>
+                                                                <td style="width: 16%;">
+                                                                    <input type="text" name="city" class="form-control" data-ng-model="practiceAdd.city" maxLength="100" ng-class="{'has-error': editForm.city.$invalid}" required />
+                                                                </td>
+                                                                <td style="width: 12%;" data-ng-init="statesList()" ng-if="practiceAdd.country == 'United States'">
+                                                                    <select name="state{{$index+1}}" class="form-control" 
+                                                                        ng-model="practiceAdd.state"
+                                                                        ng-class="{'has-error': editForm.{{$index+1}}.$invalid}" 
+                                                                        ng-options="obj.state as obj.state for obj in states" 
+                                                                        required>
+                                                                    </select>
+                                                                </td>
+                                                                <td style="width: 12%;" ng-init="scope.province='/Province'" ng-if="practiceAdd.country != 'United States'">                                                                    
+                                                                    <input type="text" name="state{{$index+1}}" class="form-control"
+                                                                        ng-model="practiceAdd.state"
+                                                                        ng-class="{'has-error': editForm.$invalid}"
+                                                                        required />
+                                                                </td>
+                                                                <td style="width: 10%;">
+                                                                    <input type="text" name="zipcode" minlength="5" maxlength="5" numbers-only="numbers-only" class="form-control" data-ng-model="practiceAdd.zipcode" ng-class="{'has-error': editForm.zipcode.$invalid}" required />
+                                                                </td>
+                                                                <td style="width: 15%;" data-ng-init="countriesList()">                                                                    
+                                                                    <select name="country{{$index+1}}" class="form-control" maxlength="100"
+                                                                        ng-class="{'has-error': editForm.{{$index+1}}.$invalid}" 
+                                                                        ng-model="practiceAdd.country" 
+                                                                        ng-options="obj.name as obj.name for obj in countries"
+                                                                        ng-change="practiceAdd.state = ''"
+                                                                        required>
+                                                                    </select>
+                                                                </td>
+                                                                <td style="width: 6%;">
+                                                                    <button ng-click="removeAddress(practiceAdd)" class="btn btn-md btn-warning" ng-show="$index > 0">Remove</button>
+                                                                </td>
+                                                            </tr>                                                           
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div ng-show="flagAddress" class="text-center">
+                                                    <button ng-click="addAddress()" class="btn btn-md btn-info">Add Address</button>
+                                                </div>
+                                            </div>
+                                        </div>-->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h4>Additional Information</h4>
+                                                <hr />
+                                            </div>
+											<div class="form-group col-sm-12">
+												<div class="col-sm-2 top-buffer"> Telephone number: </div>
+												
+												<div class="col-sm-10  pull-left">
+													<div class="col-sm-12" style="padding-left: 0px">
+							                             <div class="col-sm-2" style="padding-left: 0px">						                             	
+							                             		<input name="Telephone" ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" 
+								                               	ng-model="practice.billingaddress.phonenumber" class="form-control" numbers-only="numbers-only" maxlength="10"/>                                
+							                         	</div>  
+							                                <div class="col-sm-1 top-buffer"> 
+							                                	Extension:
+							                                </div>
+							                                <div class="col-sm-2">
+							                                	<input name="Extension" style="width:85px; margin-left: 20px" ng-model="practice.billingaddress.billingextension" class="form-control"
+							 				                      numbers-only="numbers-only" maxlength="7" />
+							                             	</div>	
+							                             	 <div class="col-sm-7">&nbsp;</div>
+							                        </div>   
+ 												</div>                           
+											</div>                                           
+                                            <div class="form-group col-sm-12">
+                                                <div class="col-sm-2 top-buffer">
+                                                    Primary fax number :
+                                                </div>
+                                                <div class="col-sm-4">
+                                                   <input name="faxnumber" ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" 
+                               						ng-model="practice.faxnumber" class="form-control" numbers-only="numbers-only" maxlength="10"/>
+                                                 </div>
+                                                 <div class="col-sm-6">
+                                                		&nbsp;
+                                                 </div>
+                                            </div>                                                                                         
+                                            <div class="form-group col-sm-12">
+                                                <div class="col-sm-4 top-buffer">
+                                                    Edition AMA Guides for Impairment Rating <span ng-click="openPopup(11)" style="color: #14A4DC; cursor: pointer">(i):</span>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <div class="form-inline">
+                                                        <div class="controls-row">                                                            
+                                                            <label class="radio inline label-custom">
+                                                                <input type="radio" data-ng-model="practice.editionama" name="editionama" id="amaguides_4" value="AMA Guides 4th Edition" required />
+                                                                4th Edition
+                                                            </label>
+                                                            <label class="radio inline label-custom">
+                                                                <input type="radio" data-ng-model="practice.editionama" name="editionama" id="Radio1" value="AMA Guides 5th Edition" required />
+                                                                5th Edition
+                                                            </label>
+                                                            <label class="radio inline label-custom">
+                                                                <input type="radio" data-ng-model="practice.editionama" name="editionama" id="amaguides_6" value="AMA Guides 6th Edition" required />
+                                                                6th Edition
+                                                            </label>                                                            
+                                                        </div>
+                                                    </div>                              
+                                                </div>
+                                            </div>                                            
+                                            <div class="form-group col-sm-12">
+                                                <div class="col-sm-4 top-buffer">
+                                                  PR-4 Report (OMFS) Automatic Billing Calculator <span ng-click="openPopup(4)" style="color: #14A4DC; cursor: pointer">(i)</span>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <div class="form-inline">
+                                                        <div class="controls-row">                                                            
+                                                            <label class="radio inline label-custom">
+                                                                <input type="radio" name="billingCalc" data-ng-model="practice.billingcalculatoromfs" id="Radio3" value="on" required />
+                                                                On
+                                                            </label>
+                                                            <label class="radio inline label-custom">
+                                                                <input type="radio" name="billingCalc" data-ng-model="practice.billingcalculatoromfs" id="Radio4" value="off" required />
+                                                                Off
+                                                            </label>
+                                                        </div>            
+                                                    </div>                                        
+                                                    <!--<div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="billingCalc" data-ng-model="practice.billingcalculatoromfs" id="billingCalc_on" value="on" required /> On
+                                                        </label>
+                                                    </div>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="billingCalc" data-ng-model="practice.billingcalculatoromfs" id="billingCalc_off" value="off" required /> Off
+                                                        </label>
+                                                    </div>-->
+                                                </div>
+                                            </div>
+                                        </div>
+										<div class="row">
+                                            <div class="col-sm-12">
+                                                <h4>Request for Authorization Forms</h4>
+                                                <hr />
+                                            </div>
+											<div class="form-group col-sm-12">
+												<div class="col-sm-2 top-buffer"> RFA Contact first name: </div>
+												<div class="col-sm-3" style="padding-left: 0px">						                             	
+													<input name="rfaFirstName" type="text" ng-model="practice.rfadetails.firstname" class="form-control" maxlength="25"/>                                
+												</div> 												
+ 											</div>  
+											<div class="form-group col-sm-12">
+												<div class="col-sm-2 top-buffer"> 
+													Last name:
+												</div>
+												<div class="col-sm-3" style="padding-left: 0px">						                             	
+													<input name="rfaLastName" type="text" ng-model="practice.rfadetails.lastname" class="form-control" maxlength="25"/>                                
+												</div>
+											</div>
+                                            <div class="form-group col-sm-12">
+												<div class="col-sm-2 top-buffer"> RFA Contact email: </div>												
+												<div class="col-sm-3" style="padding-left: 0px">						                             								                             		
+													<input type="email" name="rfaEmail" class="form-control" ng-model="practice.rfadetails.email"
+														ng-model-options="{ updateOn: 'blur' }" maxlength="50" />													
+													<span class="error" ng-show="editForm.rfaEmail.$invalid && !editForm.rfaEmail.$pristine" >This doesn't look like a valid email.
+													</span>
+							                    </div>                         
+											</div>                                                                                                                                      
+                                        </div>
+                                    <br />
+                                    <div class="text-center">                                        
+                                        <div class="label label-success" data-ng-show="$parent.updateStatus">
+                                            <span class="glyphicon glyphicon-thumbs-up icon-white"></span>&nbsp;&nbsp;updated!                   
+                                        </div>
+                                        <div style="padding-top: 8px;">
+                                            <a ng-click='cleanData()' ng-if="currentuserrole == 'siteadmin'" class="btn btn-default">Back</a>
+                                            <a ng-click='savePractice()' class="btn btn-default" ng-disabled="editForm.$invalid">Update</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </tab>
+                        <!----    Update Credit Card Information    ---->
+                        <tab heading="Credit Card Information">
+                            <br />
+                            <div class="creditEdit">
+                                <form class="form-horizontal" name="creditForm" novalidate>
+                                    <div class="row">
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-2 control-label">
+                                                Card Number
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <input type="text" name="cardNo" class="form-control" data-ng-model="practice.cardno"  ng-minlength="13" numbers-only="numbers-only" ng-maxlength="19" maxlength="19" required />                                                
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-2 control-label">
+                                                Expiration Date
+                                            </div>
+                                            <div class="col-sm-2">
+                                                 <select ng-model="practice.month" name="month" class="form-control" >
+                                                    <option disabled selected value="">Month</option>
+                                                    <option ng-repeat="month in months" value="{{$index+1}}" > {{$index+1}} - {{month}}</option>
+                                                </select>                                               
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <select ng-model="practice.year" name="year" class="form-control" >
+                                                    <option disabled selected value="">Year</option>
+                                                    <option ng-repeat="year in [] | range:currentYear:currentYear+13">{{year}}</option>
+                                                </select>                                               
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="form-group col-sm-12">
+                                                <div class="col-sm-2 control-label">
+                                                    Billing Email
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="email" name="billEmail" class="form-control" data-ng-model="practice.billingaddress.billingemail" ng-class="{'has-error': creditForm.billEmail.$invalid}" required />                                                  
+                                                    <span class="errorMessage" ng-show="creditForm.billEmail.$invalid && !creditForm.email.$pristine">Enter a valid Billing Email.</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <div class="col-sm-2 control-label">
+                                                    Phone Number
+                                                </div>
+                                                <div class="col-sm-4" ng-init="y='(999) 999-9999'">
+                                                    <input type="text" name="phoneNumber" class="form-control" ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" data-ng-model="practice.billingaddress.phonenumber" numbers-only="numbers-only" maxlength="14"  ng-class="{'has-error': creditForm.billingaddress.phoneNumber.$invalid}" required />
+                                                    <span class="errorMessage" ng-show="creditForm.billingaddress.phone.$dirty && creditForm.billingaddress.phone.$invalid">Phone is required
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <div class="col-sm-2 control-label">
+                                                    Billing Address
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="text"  name="billingAddress" class="form-control" maxLength="50" data-ng-model="practice.billingaddress.billingaddres" ng-class="{'has-error': creditForm.billingaddress.billingaddres.$invalid}" required />
+                                                    <span class="errorMessage" ng-show="creditForm.billingaddress.billingaddres.$dirty && creditForm.billingaddress.billingaddres.$invalid">Billing Address is required
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <div class="col-sm-2 control-label">
+                                                    County
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="text" name="county" class="form-control" maxLength="35" data-ng-model="practice.billingaddress.county" ng-class="{'has-error': creditForm.billingaddress.county.$invalid}" required />
+                                                    <span class="errorMessage" ng-show="creditForm.billingaddress.county.$dirty && creditForm.billingaddress.county.$invalid">Country is required
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <div class="col-sm-2 control-label">
+                                                    City
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="text" name="city" class="form-control" data-ng-model="practice.billingaddress.city" maxLength="35" ng-class="{'has-error': creditForm.billingaddress.city.$invalid}" required />
+                                                    <span class="errorMessage" ng-show="creditForm.billingaddress.city.$dirty && creditForm.billingaddress.city.$invalid">City is required
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <div class="col-sm-2 control-label">
+                                                    State
+                                                </div>
+                                                <div class="col-sm-4" data-ng-init="statesList()">
+                                                    <select ng-model="practice.billingaddress.state" name="billingState" class="form-control" ng-class="{'has-error': creditForm.billingState.$invalid}" required>
+                                                        <option value="">--Choose--</option>
+                                                        <option ng-repeat="obj in states" ng-selected="practice.billingaddress.state==obj.state" value="{{obj.state}}">{{obj.state}}</option>
+                                                    </select>                                                 
+                                                    <!--<select ng-model="practice.billingaddress.state" name="billingState" class="form-control">
+                                                        <option value="" selected="selected">SELECT</option>
+                                                        <option ng-repeat="state in states" value="{{state.state}}">{{state.state}}</option>
+                                                    </select> -->                                                   
+                                                    <span class="errorMessage" ng-show="creditForm.billingaddress.state.$dirty && creditForm.billingaddress.state.$invalid">State is required
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <div class="col-sm-2 control-label">
+                                                    Zip/Postal Code
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="text" name="zipCode" minlength="5" maxlength="9" numbers-only="numbers-only" class="form-control" data-ng-model="practice.billingaddress.zipcode" ng-class="{'has-error': creditForm.billingaddress.zipcode.$invalid}" required />
+                                                    <span class="errorMessage" ng-show="creditForm.billingaddress.zipcode.$dirty && creditForm.billingaddress.zipcode.$invalid">Zip Code is required
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <br />
+                                    <div class="text-center">
+                                        <div class="label label-success label-credit" data-ng-show="updateStatusCredit">
+                                            <span class="glyphicon glyphicon-thumbs-up icon-white"></span>&nbsp;&nbsp;updated!                   
+                                        </div>
+                                        <div style="padding-top: 8px;">
+                                            <a ng-click='cleanData()' ng-if="currentuserrole == 'siteadmin'" class="btn btn-default">Back</a>
+                                            <a ng-click='saveCreditInfo()' class="btn btn-default" ng-disabled="creditForm.$invalid">Update</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </tab>
+                        <!----    Settings    ---->
+                        <!--<tab heading="Letterhead" ng-if="currentuserrole == 'superadmin'">
+                            <br />
+                            <div class="uploadEdit">
+                                <form action="/api/practicesUpload" class="form-horizontal" name="logoForm" method="post" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-sm-12" style="min-height: 185px;">
+                                            <h4>Letter Head</h4>
+                                            <div>
+                                                <input type="text" name="practiceId" ng-model="practice._id" style="display: none" />
+                                                <img ng-if="letterhead_img!=null" src="{{letterhead_img}}" alt="Letter Head" style="max-width: 300px;" />
+                                            </div>
+                                            <div>
+                                                <input type="file" name="letterhead" id="letterhead" required />
+                                            </div>
+                                            <br />
+                                        </div>
+                                    </div>
+                                    <div style="padding: 5px 0 8px 10px;">                                                
+                                        <a ng-click='cleanData()' ng-if="currentuserrole == 'siteadmin'" class="btn btn-default">Back</a>
+                                        <button type="submit" class="btn btn-md btn-default">Upload</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </tab>-->
+                        <!--<tab heading="Stamp of Approval" ng-hide="$parent.hideme">
+                            <br />
+                            <div class="stampEdit">
+                                <form class="form-horizontal" name="stampForm" novalidate>
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <h4>Stamp of Approval</h4>                                            
+                                                <div class="radio">                                                    
+                                                     <input type="radio" data-ng-model="practice.stampapproval" value="publish"/>
+                                                        Always Publish
+                                                </div>
+                                                <div class="radio">
+                                                      <input type="radio" data-ng-model="practice.stampapproval" value="never"/>
+                                                            Never Publish
+                                                </div>
+                                                <div class="radio">
+                                                     <input type="radio" data-ng-model="practice.stampapproval" value="preference"/>
+                                                        Publish according to Provider Preference
+                                                </div>
+                                            </div>
+                                      </div>
+                                    <br />
+                                    <div class="text-left">
+                                        <div class="label label-success label-credit" data-ng-show="updateStatusStamp">
+                                            <span class="glyphicon glyphicon-thumbs-up icon-white"></span>&nbsp;&nbsp;updated!                   
+                                        </div>
+                                        <div style="padding-top: 8px;">
+                                            <a ng-click='cleanData()' ng-if="currentuserrole == 'siteadmin'" class="btn btn-default">Back</a>
+                                            <a ng-click='saveStampInfo()' class="btn btn-default">Update</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </tab>-->
+                         <tab heading="Office Location" ng-hide="$parent.hideme">
+                            <br />
+                            <div class="stampEdit">
+                                <form class="form-horizontal" name="stampForm1" novalidate>
+                                    <div class="row"> <!--<pre> {{practice|json}}</pre>-->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="table-responsive" data-ng-init="countriesList()">
+                                                
+                                                   <div class="row">
+	                                                    <div class="col-sm-12">
+	                                                    	<div class="col-sm-4">
+	                                                    		<h3>Office Location</h3>
+	                                                    	</div>
+                                                   			<div class="col-sm-8">                                                  
+				                                                 <div class="text-right" style="margin-right: 110px"> 
+					                                                <div class="label label-success" data-ng-show="$parent.updateStatus">
+					                                                    <span class="glyphicon glyphicon-thumbs-up icon-white" ></span>&nbsp;&nbsp;updated!                   
+					                                                </div>
+					                                           	 </div>
+					                                             <div style="padding-top: 8px;" class="text-right">
+					                                           			 <button ng-click='cleanData()' ng-if="currentuserrole == 'siteadmin'" class="btn btn-default">Back</button>
+					                                           			 <button ng-click='savePractice()' class="btn btn-default" ng-disabled="stampForm1.$invalid">Update</button>
+					                                          			 <button ng-show="flagAddress" ng-click="addAddress()" class="btn btn-md btn-info">Add Address</button>
+				                                                 </div>   				                                                
+			                                                 </div>                                	   
+				                                         </div>
+                                                   </div>
+                                                
+                                                <hr /> 
+                                                
+                                                    <table data-ng-repeat="practiceAdd in practice.practiceaddress" class="borderSpaceStyle">
+                                                            <tr>
+                                                            	<td class="text-center" style="font-weight:bold">
+                                                            		Location Name
+                                                            	</td>
+                                                            	<td class="text-center" style="font-weight:bold">
+                                                            		Telephone
+                                                            	</td>
+                                                            	<td class="text-center" style="font-weight:bold">
+                                                            		Ext
+                                                            	</td>
+                                                            	<td class="text-center" style="font-weight:bold">
+                                                            		Fax Number
+                                                            	</td>
+                                                            	<td colspan="3">
+                                                            		&nbsp;
+                                                            	</td>
+                                                            </tr>
+                                                            <tr>
+                                                            	<td style="width: 25%;">                                                                    
+                                                                   <input type="text" name="location{{$index+1}}" class="form-control" data-ng-model="practiceAdd.location" />
+                                                                    <!--<span class="errorMessage" ng-show="editForm.location{{$index+1}}.$dirty && editForm.location{{$index+1}}.$invalid">Location name is required</span>-->
+                                                                </td>
+                                                                <td style="width: 18%;">                                                                    
+                                                                   <input type="text" name="phonenumber{{$index+1}}" class="form-control" data-ng-model="practiceAdd.phonenumber"  ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" numbers-only="numbers-only" maxlength="10"/>                                                                    
+                                                                </td>
+                                                                <td style="width: 14%;">                                                                    
+                                                                   <input type="text" name="ext{{$index+1}}" class="form-control" data-ng-model="practiceAdd.extension" numbers-only="numbers-only" maxlength="7"/>
+                                                                </td>
+                                                                <td style="width: 14%;">                                                                                                                                 
+                                                                   <input type="text" name="fax{{$index+1}}" class="form-control" data-ng-model="practiceAdd.faxnumber" ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" numbers-only="numbers-only" maxlength="10"/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>                                                                
+                                                                <td class="text-center" style="font-weight:bold">Street Address</td>
+                                                                <td class="text-center" style="font-weight:bold">County</td>
+                                                                <td class="text-center" style="font-weight:bold">City</td>
+                                                                <td class="text-center" style="font-weight:bold">State / Province</td>
+                                                                <td class="text-center" style="font-weight:bold">Zip/Postal Code</td>
+                                                                <td class="text-center" style="font-weight:bold">Country</td>
+                                                                <td class="text-center">&nbsp;</td>
+                                                             </tr>
+                                                            <tr >                                                                
+                                                                <td style="width: 25%;">
+                                                                    <input type="text"  name="street{{$index+1}}" class="form-control" data-ng-model="practiceAdd.street" ng-class="{'has-error': editForm.street{{$index+1}}.$invalid}"  required />
+                                                                    <span class="errorMessage" ng-show="editForm.street{{$index+1}}.$dirty && editForm.street{{$index+1}}.$invalid">Street name is required</span>
+                                                                </td>
+                                                                <td style="width: 18%;">
+                                                                    <input type="text"  name="county{{$index+1}}" class="form-control" maxLength="100" data-ng-model="practiceAdd.county" ng-class="{'has-error': editForm.county{{$index+1}}.$invalid}" required />
+                                                                </td>
+                                                                <td style="width: 16%;">
+                                                                    <input type="text" name="city" class="form-control" data-ng-model="practiceAdd.city" maxLength="100" ng-class="{'has-error': editForm.city.$invalid}" required />
+                                                                </td>
+                                                                <td style="width: 12%;" data-ng-init="statesList()" ng-if="practiceAdd.country == 'US'">
+                                                                    <select name="state{{$index+1}}" class="form-control" 
+                                                                        ng-model="practiceAdd.state"
+                                                                        ng-class="{'has-error': editForm.{{$index+1}}.$invalid}" 
+                                                                        ng-options="obj.state as obj.state for obj in states" 
+                                                                        required  >
+                                                                        <option value="">-choose-</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td style="width: 12%;" ng-init="scope.province='/Province'" ng-if="practiceAdd.country != 'US'">                                                                    
+                                                                    <input type="text" name="state{{$index+1}}" class="form-control"                                                                      ng-model="practiceAdd.state"
+                                                                        ng-class="{'has-error': editForm.$invalid}"
+                                                                        required  />
+                                                                </td>
+                                                                <td style="width: 10%;">
+                                                                    <input  type="text" name="zipcode" minlength="5" maxlength="10" numbers-only="numbers-only" class="form-control" data-ng-model="practiceAdd.zipcode" ng-class="{'has-error': editForm.zipcode.$invalid}" required />
+                                                                </td>
+                                                                <td style="width: 15%;">                                                                    
+                                                                    <select name="country{{$index+1}}" class="form-control" maxlength="100"
+                                                                        ng-class="{'has-error': editForm.{{$index+1}}.$invalid}" 
+                                                                        ng-model="practiceAdd.country" required>
+                                                                         <option ng-repeat="c in countries" value="{{c.code}}" ng-selected="c.code==practiceAdd.country">{{c.name}}</option>
+                                                                    </select>
+                                                                </td>                                                                
+                                                                <td style="width: 6%;">                                                                   
+																		<button ng-click="removeAddress(practiceAdd)" class="btn btn-md btn-warning" ng-show="$index > 0">Remove</button>
+																		<!-- <button ng-click="removeAddress(practiceAdd)" class="btn btn-md btn-warning"><span class="glyphicon glyphicon-remove"></span></button>
+                                                                        <button ng-click='savePractice()' class="btn btn-default" ng-disabled="stampForm1.$invalid"><span class="glyphicon glyphicon-ok"></span></button> -->
+                                                                </td>
+                                                            </tr>      
+                                                    </table>
+                                                </div>                                               
+                                            </div>                                           
+                                        </div>                                       
+                                    </div>
+                                </form>
+                             </div>
+                         
+                         </tab>
+
+                         <tab heading="CC Charge Report" ng-hide="$parent.hideme">
+                            <br />
+                              <div class="stampEdit">
+                                   <div class="form-horizontal">
+                                        <div class="row"> <!--<pre> {{practice|json}}</pre>-->
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <h4>CC Charge Report</h4>                                                   
+                                                    <hr />
+                                                </div>
+                                                <div class="col-sm-12" ng-if="!$parent.hideme" ng-controller="PracticeCtrl">    
+												<div id='divError' class="col-sm-12 col-sm-offset alert alert-dismissable alert-danger text-center" ng-show="validationMessage==true">{{errMessage}}</div>
+                                                    <section style="margin-top: 15px;">
+                                                        <div class="container">
+                                                            <div class="container">
+                                                                <form class="form-inline" name="chargereportForm" ng-submit="create(chargereportForm.$valid)" novalidate>
+                                                                    <div class="form-group col-sm-4 col-md-3" ng-class="{ 'has-error' : chargereportForm.fromdate.$invalid && submited }">
+                                                                        <label for="exampleInputName2">Date From:   &nbsp;</label>
+                                                                        <input type="text" class="form-control" id="Text1" name="fromdate" ui-date="dateOptions" date-format="mm/dd/yy" ng-model="startdate" style="width: 50%" required>                                                                        
+                                                                        <p class="help-block" ng-show="chargereportForm.fromdate.$invalid && submited" style="padding-left: 29%;color:#a94442">Required</p>
+                                                                    </div>
+                                                                    <div class="form-group col-sm-4 col-md-3" ng-class="{ 'has-error' : chargereportForm.todate.$invalid && submited }">
+                                                                        <label for="exampleInputEmail2">Date To:   &nbsp;</label>
+                                                                        <input type="text" class="form-control" id="Text2" name="todate" ui-date="dateOptions" date-format="mm/dd/yy" ng-model="enddate" style="width: 50%" required>                                                                        
+                                                                        <p class="help-block" ng-show="chargereportForm.todate.$invalid && submited" style="padding-left: 24%;color:#a94442">Required</p>
+                                                                    </div>
+                                                                    <button type="submit" class="btn btn-info btn-sm" title="Create">Create</button>                                                                   
+                                                                    
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <div ng-if="isLoad">
+                                                            <div class="overlayBackground"></div>
+                                                            <div class="overlayContent2">
+                                                                <img src="/images/spinner.gif">
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                     <br /><br />
+                                                    <section>
+                                                        <div class="alert alert-danger" ng-if="displayedCollection.length<1 && submited" style="margin-left:3%" role="alert">Report Not Available!</div>                                                                      
+
+                                                        <div class="container">
+                                                            <div ng-if="rowCollection.length>0">
+                                                                <button type="button" class="btn btn-success btn-sm pull-right" title="Create" ng-click="ccChargereportCSV()">Save to CSV</button>
+                                                                <br /><br />
+                                                            </div>
+
+                                                            <table ng-if="displayedCollection.length>0" st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped table-bordered table-hover table-condensed">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th st-sort="">Provider Name</th>
+                                                                        <th st-sort="formtype">Report Type</th>
+                                                                        <th st-sort="">Report ID</th>
+                                                                        <th st-sort="">Charge Amount</th>
+                                                                        <th st-sort="">Date</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th colspan="5">
+                                                                            <input st-search="" class="form-control" placeholder="Search..." type="text" />
+                                                                        </th>
+                                                                    </tr>
+                                                                    <tr ng-repeat="row in displayedCollection | orderBy:'submittedDate':true">
+                                                                        <td>{{row.data.signDoctor.level4.firstname | capitalize}} {{row.data.signDoctor.level4.lastname | capitalize}}</td>
+                                                                        <td>{{row.formtype | uppercase}}</td>
+                                                                        <td>{{row.id}}</td>
+                                                                        <td>{{row.reportcharge?row.reportcharge:0 | currency}}</td>
+                                                                        <td>{{row.submittedDate | date:'MM/dd/yyyy'}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                                <tfoot ng-if="rowCollection.length>10">
+                                                                    <tr>
+                                                                        <td colspan="5" class="text-center">
+                                                                            <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="9"></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tfoot>
+                                                             </table>
+                                                        </div>                                                        
+                                                    </section>                                                    
+                                                  </div>
+                                                <div class="text-center">
+                                                   <a ng-click='cleanData()' ng-if="currentuserrole == 'siteadmin'" class="btn btn-default">Back</a>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                   </div>
+                              </div>
+                         </tab>
+                        <tab heading="Pricing" ng-hide="$parent.hideme" ng-init="getPricingList()">
+                            <br />
+                              <div class="stampEdit">
+                                   <div class="form-horizontal">
+                                        <div class="row"> <!--<pre> {{practice|json}}</pre>-->
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <h4><span ng-if="currentuserrole == 'siteadmin'">Pricing Type</span><span ng-if="currentuserrole != 'siteadmin'">Pricing</span></h4>                                                   
+                                                    <hr />
+                                                </div>
+                                                <div class="col-sm-12" ng-if="!$parent.hideme">                                                      
+                                                    <section style="margin-top: 10px;">
+                                                        <div ng-if="isLoad">
+                                                            <div class="overlayBackground"></div>
+                                                            <div class="overlayContent2" >
+                                                                <img src="/images/spinner.gif">
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <form class="form-inline" name="pricingForm" ng-submit="create(pricingForm.$valid)" novalidate>
+                                                                <div class="col-sm-12" ng-show="currentuserrole == 'siteadmin'">
+                                                                    <div class="col-sm-2">                                                            
+                                                                        <label class="radio inline label-custom">
+                                                                            <input type="radio" ng-model="practice.pricingtype" name="pricingtype" value="defaultpricing" required ng-click="setDefaultPricing()" />
+                                                                            <b>Default Pricing</b>  
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="col-sm-2">      
+                                                                        <label class="radio inline label-custom">
+                                                                            <input type="radio" ng-model="practice.pricingtype" name="pricingtype" value="custompricing" required />
+                                                                            <b>Custom Pricing</b>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="clearer"></div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="col-sm-7" style="margin-top: 20px;" ng-show="practice.pricingtype == 'defaultpricing'">
+                                                                        <table ng-if="reportpricinglist.length>0" class="table table-striped table-bordered table-condensed">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Report Type</th>
+                                                                                <th>Default Price</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                    
+                                                                            <tr ng-repeat="row in reportpricinglist | orderBy:'formtype'">
+                                                                                <td>{{row.formtype| uppercase}}</td>
+                                                                                <td>{{row.pricing | currency}}</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="col-sm-7" style="margin-top: 20px;" ng-show="practice.pricingtype == 'custompricing'">
+                                                                        <table ng-if="reportpricinglist.length>0" class="table table-striped table-bordered table-condensed">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Report Type</th>
+                                                                                <th>Custom Price</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td width="50%" style="vertical-align:middle">DFR</td>
+                                                                                <td width="50%">
+                                                                                    <div class="input-group col-sm-8" ng-show="currentuserrole == 'siteadmin'">
+                                                                                      <div class="input-group-addon">$</div>
+                                                                                      <input type="tel" class="form-control" name="dfr" ng-model="practice.reportpricing.dfr" numbers-onlydec="numbers-onlydec" maxlength="6" > 
+                                                                                    </div>
+                                                                                    <div ng-hide="currentuserrole == 'siteadmin'">{{practice.reportpricing.dfr | currency}}</div>
+                                                                                </td>
+                                                                            </tr>
+                                                                             <tr>
+                                                                                <td width="50%" style="vertical-align:middle">PR2</td>
+                                                                                <td width="50%">
+                                                                                    <div class="input-group col-sm-8" ng-show="currentuserrole == 'siteadmin'">
+                                                                                      <div class="input-group-addon">$</div>
+                                                                                      <input type="tel" class="form-control" name="pr2" ng-model="practice.reportpricing.pr2" numbers-onlydec="numbers-onlydec" maxlength="6">
+                                                                                    </div>
+                                                                                    <div ng-hide="currentuserrole == 'siteadmin'">{{practice.reportpricing.pr2 | currency}}</div>
+                                                                                </td>
+                                                                            </tr>
+                                                                             <tr>
+                                                                                <td width="50%" style="vertical-align:middle">PR4</td>
+                                                                                <td width="50%">
+                                                                                    <div class="input-group col-sm-8" ng-show="currentuserrole == 'siteadmin'">
+                                                                                      <div class="input-group-addon">$</div>
+                                                                                      <input type="tel" class="form-control" name="pr4" ng-model="practice.reportpricing.pr4" numbers-onlydec="numbers-onlydec" maxlength="6">
+                                                                                    </div>
+                                                                                    <div ng-hide="currentuserrole == 'siteadmin'">{{practice.reportpricing.pr4 | currency}}</div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="text-right col-sm-7">
+                                                                        <a ng-click='cleanData()' ng-show="currentuserrole == 'siteadmin'" class="btn btn-default">Back</a>
+                                                                        <a ng-click='updateCustomReportPricing()' ng-show="currentuserrole == 'siteadmin'" class="btn btn-info">Save Changes</a>
+                                                                    </div>
+                                                                </div>
+                                                               
+                                                            </form>
+                                                        </div>
+                                                        
+                                                    </section>
+                                                  </div>
+                                                
+                                            </div> 
+                                        </div>
+                                   </div>
+                              </div>
+                         </tab>
+						 <!-- user tab start -->
+                     	<tab heading="Users" ng-hide="$parent.hideme">       
+		                    <div ng-hide="users.length>0">
+			                    <div class="col-sm-12" style="margin-top: 30px">	
+			            			<p ng-bind-html="trustAsHtml(noUserRecordsFoundMsg)"></p>  
+			            		</div>
+		            		</div>              
+		                    <div class="col-sm-12" style="margin-top: 20px" ng-show="users.length>0">		
+		                        <!-- <table class="table table-striped table-condensed" ng-show="practiceYes"> -->
+		                        <!-- show table only when user length > 0 -->
+		                            <table class="table table-striped table-condensed">
+		                            <thead>
+		                                <tr>
+		                                    <th>Name</th>
+		                                    <th>Email</th>
+		                                    <th>Username</th>
+		                                    <th>Role</th>
+		                                    <th>Level</th>
+		                                    <th>Phone Number</th>
+		                                    <th>&nbsp;</th>
+		                                    <th>&nbsp;</th>
+		                                </tr>
+		                            </thead>
+		                            <tbody>
+		                               <tr data-ng-repeat="user in users">	
+		                                	<td><a href ng-click="updateUser(user.username,user.practice.name)">{{user.firstname | capitalize}} &nbsp; {{user.lastname | capitalize}}</a></td>                                  		                                    		                                    
+		                                    <td>{{user.email}}</td>
+		                                    <td>{{user.username}}</td>
+		                                    <td>{{user.practice.rolename}}</td>
+		                                    <td>{{user.practice.level}}</td>
+		                                    <td>{{user.userphonenumber | phonenumberFormat}} <span ng-if="user.userextension">ext. {{user.userextension}}</span></td>
+		                                    <td style="text-align: center;">		                                    
+			                                    <button class="btn btn-info btn-xs" ng-if="user.practice.status=='active'" ng-click="changePwd(user)" >Reset Password</button>
+			                                    <button class="btn btn-info btn-xs" ng-if="user.practice.status=='invited'" ng-click="reSend(user)">Resend Invitation</button>
+		                                    </td>		                                    
+		                                    <td style="text-align: center;">
+		                                        <button class="btn btn-info btn-xs" ng-click="updateUser(user.username,user.practice.name)">Update</button>
+		                                    </td>
+		                                </tr>
+		                            </tbody>
+		                        </table>
+		                         <div class="row">
+				                    <div class="col-sm-12">
+				                        <pagination total-items="usertotalItems" page="usercurrentPage" items-per-page="itemsperpage" max-size="maxsize" on-select-page="getUsersList(practice.practicename,page)" class="pagination-sm" boundary-links="true"></pagination>
+				                    </div>
+				                </div>
+		                    </div>
+		                    <div class="text-center">
+                                  <a ng-click='cleanData()' ng-if="currentuserrole == 'siteadmin'" class="btn btn-default">Back</a>
+                            </div>
+                     	</tab>
+                     <!-- user tab end -->
+                    </tabset>
+					</fieldset>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+

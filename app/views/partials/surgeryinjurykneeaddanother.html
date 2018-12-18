@@ -1,0 +1,144 @@
+<div ng-controller="SurgeryInjuryShoulderAddAnotherCtrl">
+    <label>Surgery for this injury - </label>
+    <label ng-bind="bodypartname.bodysystem == 'Other' ? bodypartname.bdsystemother : bodypartname.bodysystem | capitalize"></label> -
+    <label ng-bind="bodypartname.text == 'Other' ? bodypartname.bdpartother : bodypartname.text | capitalize"></label>
+    <label ng-if="bodypartname.bdsides && (bodypartname.bdsides != 'none' && bodypartname.bdsides != 'n/a')"> - {{bodypartname.bdsides | capitalize}}</label>
+    <button type="button" ng-click="addTodos()" class="btn btn-default btn-circle btn-success">
+        <span class="glyphicon glyphicon-plus"></span>
+    </button>
+    <div ng-repeat="todo in todos.slice().reverse()" class="col-sm-12 checkbox addAnotherBottomBorder" style="padding: 5px;">
+        <input type="hidden" ng-model="todo.indexValue" ng-init="todo.indexValue = todos.length - ($index+1)" />
+        <div class="col-sm-12">
+            <div class="col-sm-2">
+                <label>Date of Surgery: </label>
+            </div>
+            <div class="col-sm-3">
+                <input type="tel" ui-date="dateOptions" my-date ng-model="todo.dateOfSurgery" class="form-control" placeholder="MM/DD/YYYY">
+            </div>
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-info btn-xs" ng-click="clearbodypart($index+1,todos.length)"> Clear</button>
+            </div>
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-danger btn-xs" ng-click="deletebodypart($index+1,todos.length)"> Delete</button>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="col-sm-10 checkbox">
+                <label>
+                    <br />
+                    Surgeon Name and Procedure: </label>
+                    <button type="button" class="btn btn-info btn-xs" ng-click="surgeonNameShow=true">Text</button>
+            </div>
+        </div>
+        <div class="col-sm-12" >
+            <div ng-hide="surgeonNameShow"><span dynamic="todo.surgeonName" class="textEditorTextColor col-sm-12"></span></div>
+                        
+            <div class="col-sm-10" ng-if="surgeonNameShow">
+                <textarea ui-tinymce="tinymceOptions" ng-model="todo.surgeonName"></textarea>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="col-sm-7 margin-left-1">
+                <br />
+                <label><input type="radio" ng-model="todo.arthoscopicOpenRadio" value="Arthoscopic" />&nbsp;Arthoscopic</label>
+                <label><input type="radio" ng-model="todo.arthoscopicOpenRadio" value="Open" />&nbsp;Open</label>
+            </div>
+        </div>
+        <div class="col-sm-12 checkbox" ng-if="todo.arthoscopicOpenRadio">
+            <div class="col-sm-7 margin-left-2">
+                <label><input type="checkbox" ng-model="todo.medialMeniscus" ng-true-value="Medial meniscus" />&nbsp;Medial meniscus</label>
+            </div>
+            <div class="col-sm-7 margin-left-2" ng-if="todo.medialMeniscus">
+                <div class="col-sm-8">
+                    <label><input type="radio" ng-model="todo.medialMeniscusRadio" value="Partial debridement" />&nbsp;Partial debridement</label>
+                </div>
+                <div class="col-sm-8">
+                    <label><input type="radio" ng-model="todo.medialMeniscusRadio" value="Total debridement" />&nbsp;Total debridement</label>
+                </div>
+                <div class="col-sm-8">
+                    <label><input type="radio" ng-model="todo.medialMeniscusRadio" value="Repair" />&nbsp;Repair</label>
+                </div>
+            </div>
+            <div class="col-sm-7 margin-left-2">
+                <label><input type="checkbox" ng-model="todo.lateralMeniscus" ng-true-value="Lateral meniscus" />&nbsp;Lateral meniscus</label>
+            </div>
+            <div class="col-sm-7 margin-left-2" ng-if="todo.lateralMeniscus">
+                <div class="col-sm-7">
+                    <label><input type="radio" ng-model="todo.lateralMeniscusRadio" value="Partial debridement" />&nbsp;Partial debridement</label>
+                </div>
+                <div class="col-sm-7">
+                    <label><input type="radio" ng-model="todo.lateralMeniscusRadio" value="Total debridement" />&nbsp;Total debridement</label>
+                </div>
+                <div class="col-sm-7">
+                    <label><input type="radio" ng-model="todo.lateralMeniscusRadio" value="Repair" />&nbsp;Repair</label>
+                </div>
+            </div>
+            <div class="col-sm-7 margin-left-2">
+                <label><input type="checkbox" ng-model="todo.chondroplasty" ng-true-value="Chondroplasty" />&nbsp;Chondroplasty</label>
+            </div>
+            <div class="col-sm-7 margin-left-2" ng-if="todo.chondroplasty">
+                <div class="col-sm-8">
+                    <label><input type="radio" ng-model="todo.chondroplastyRadio" value="Medial femoral condyle" />&nbsp;Medial femoral condyle</label>
+                </div>
+                <div class="col-sm-8">
+                    <label><input type="radio" ng-model="todo.chondroplastyRadio" value="Lateral femoral condyle" />&nbsp;Lateral femoral condyle</label>
+                </div>
+                <div class="col-sm-8">
+                    <label><input type="radio" ng-model="todo.chondroplastyRadio" value="Patella" />&nbsp;Patella</label>
+                </div>
+            </div>
+            <div class="col-sm-7 margin-left-2">
+                <label><input type="checkbox" ng-model="todo.aclRepair" ng-true-value="ACL Repair" />&nbsp;ACL Repair</label>
+            </div>
+            <div class="col-sm-7 margin-left-2" ng-if="todo.aclRepair">
+                <div class="col-sm-8">
+                    <label><input type="radio" ng-model="todo.aclRepairRadio" value="Without graft" />&nbsp;Without graft</label>
+                </div>
+                <div class="col-sm-8">
+                    <label><input type="radio" ng-model="todo.aclRepairRadio" value="With auto graft" />&nbsp;With auto graft</label>
+                </div>
+                <div class="col-sm-8">
+                    <label><input type="radio" ng-model="todo.aclRepairRadio" value="With cadaver graft" />&nbsp;With cadaver graft</label>
+                </div>
+            </div>
+            <div class="col-sm-7 margin-left-2">
+                <label><input type="checkbox" ng-model="todo.pclRepair" ng-true-value="PCL Repair" />&nbsp;PCL Repair</label>
+            </div>
+            <div class="col-sm-7 margin-left-2" ng-if="todo.pclRepair">
+                <div class="col-sm-8">
+                    <label><input type="radio" ng-model="todo.pclRepairRadio" value="Without graft" />&nbsp;Without graft</label>
+                </div>
+                <div class="col-sm-8">
+                    <label><input type="radio" ng-model="todo.pclRepairRadio" value="With auto graft" />&nbsp;With auto graft</label>
+                </div>
+                <div class="col-sm-8">
+                    <label><input type="radio" ng-model="todo.pclRepairRadio" value="With cadaver graft" />&nbsp;With cadaver graft</label>
+                </div>
+            </div>
+            <div class="col-sm-7 margin-left-2">
+                <label><input type="checkbox" ng-model="todo.hardwarePlacementProsthesis" ng-true-value="Hardware placement/prosthesis" />&nbsp;Hardware placement/prosthesis</label>
+            </div>
+            <div class="col-sm-12 margin-left-2" ng-if="todo.hardwarePlacementProsthesis">
+                <button type="button" class="btn btn-info btn-xs" ng-click="hardwarePlacementProsthesisTextShow=true">Text</button>
+                <div class="col-sm-12">
+                    <div ng-hide="hardwarePlacementProsthesisTextShow"><span dynamic="todo.hardwarePlacementProsthesisText" class="textEditorTextColor col-sm-10"></span></div>
+                    <div class="col-sm-10" ng-if="hardwarePlacementProsthesisTextShow">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="todo.hardwarePlacementProsthesisText"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 margin-left-2">
+                <button type="button" class="btn btn-info btn-xs" ng-click="arthopenOtherShow=true">
+                    Text
+                </button>
+                <div class="col-sm-12">
+                    <div ng-hide="arthopenOtherShow"><span dynamic="todo.arthopenOtherText" class="textEditorTextColor col-sm-10"></span></div>
+                    <div class="col-sm-10" ng-if="arthopenOtherShow">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="todo.arthopenOtherText"></textarea>
+                    </div>
+                 </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

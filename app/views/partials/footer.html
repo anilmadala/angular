@@ -1,0 +1,88 @@
+<footer>
+    <div ng-controller="NavbarCtrl" ng-hide="currentUser || hideFooterMenu" class="container" style="padding-top: 20px; padding-bottom:10px;"><!--min-height: 275px;-->
+        <div class="row hidden-xs hidden-sm" style="min-height: 275px">
+
+            <div class="col-sm-2">
+                <h4><i class="icon-beaker icon-white"></i>About</h4>
+                <nav>
+                    <ul class="quick-links">
+                        <li><a href="/about">Team</a></li>
+                        <li><a href="/about">About Us</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-sm-3">
+                <h4><i class="icon-cogs icon-white"></i>Report</h4>
+                <nav>
+                    <ul class="quick-links">
+                        <li><a href="/docfirst">Doctor's First Report</a></li>
+                        <li><a href="/pr2">PR-2 Report</a></li>
+                        <li><a href="/pr4">PR-4 Report</a></li>
+
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-sm-2">
+                <h4><i class="icon-thumbs-up icon-white"></i>Resources</h4>
+                <nav>
+                    <ul class="quick-links">
+                        <li><a href="/faq">FAQ</a></li>
+                        <li><a href="http://blog.rate-fast.com" target="_blank">Blog</a></li>
+                        <li><a href="/learn">Learn</a></li>
+                        <!--<li><a href="/sample">Sample</a></li>-->
+                        <li><a href="/testimonial">Testimonials</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-sm-3">
+                <h4>Get in touch</h4>
+                <nav>
+                    <ul class="quick-links">
+                        <li><a href="/contact">Contact Us</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-sm-2">
+                <h4><i class="icon-legal icon-white"></i>Legal</h4>
+                <nav>
+                    <ul class="quick-links">
+                        <li><a href="/files/terms_of_use.pdf" target="_Blank">Terms of Use</a></li>
+                        <li><a href="/files/RateFast_website_privacy_policy.pdf" target="_Blank">Privacy Policy</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div ng-controller="NavbarCtrl" class="section footer-stripe">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    © {{footerCurYear}}, Alchemy Logic Systems, Inc.,&nbsp;All rights reserved.&nbsp;Patent pending.
+                </div>
+                <div class="col-md-2 col-sm-4 col-xs-4">
+                    <span class="glyphicon glyphicon-phone-alt"></span>&nbsp;707.304.5949
+                </div>
+				<div class="col-md-2 col-sm-4 col-xs-4" style="text-align: right; text-decoration: none;" ng-show="currentUser">
+                    <a href="/files/RateFast_Services_Agreement.pdf" target="_blank" style="color:#7a858c;text-decoration: none;">RateFast Services Agreement</a>
+                </div>
+				<div class="col-md-2 col-sm-4 col-xs-4" style="text-align: right; text-decoration: none;" ng-show="showPrivacyMenu || currentUser">
+                    <a href="/files/RateFast_website_privacy_policy.pdf" target="_blank" style="color:#7a858c;text-decoration: none;">Privacy Policy</a>
+                </div>
+				
+                <!--<div class="col-sm-4 text-right social">
+                    <a href="https://twitter.com/RateFast" target="_Blank">
+                        <img src="/images/social-twitter.png" /></a>
+                    <a href="https://www.facebook.com/Rate.Fast1" target="_Blank">
+                        <img src="/images/social-facebook.png" /></a>
+                    <a href="http://www.youtube.com/user/ratefast" target="_Blank">
+                        <img src="/images/social-youtube.png" /></a>
+                </div>-->
+            </div>
+        </div>
+    </div>
+</footer>

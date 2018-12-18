@@ -1,0 +1,514 @@
+<script type="text/javascript">
+    var idleTime = 0;
+    $(document).ready(function () {
+        //Increment the idle time counter every minute.
+        //testing
+        //var idleInterval = setInterval(timerIncrement, 6000); // 1 minute
+        //live
+        var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+        $('body').bind('updatemovement', function () {
+            idleTime = 0;
+        });
+
+        //Zero the idle timer on mouse movement.
+        $(this).mousemove(function (e) {
+            idleTime = 0;
+        });
+        $(this).keypress(function (e) {
+            idleTime = 0;
+        });
+
+    });
+
+    function timerIncrement() {
+
+        idleTime = idleTime + 1;
+
+        //console.log('idleTime: ' + idleTime);
+        if (idleTime > 4) { // 5 minutes
+
+            idleTime = 0;
+
+            //Check form is dirty if yes then save the changes
+            var scope = angular.element(document.getElementById("reportForm")).scope();
+            if (scope) {
+                scope.$apply(function () {
+
+                    var sectionId = scope.currentBdSectionId ? scope.currentBdSectionId : scope.currentsectionId;
+
+                    if (scope.reportStatus == 'open' || scope.reportStatus == 'level1' || scope.reportStatus == 'level2') {
+
+                        if (angular.element('#' + sectionId).scope() && !scope.fieldDisable) {
+
+                            var Text = "angular.element('#" + sectionId + "').scope()." + sectionId + '.$dirty';
+                            var result = eval(Text);
+
+                            if (result) {
+                                scope.savenewPatientdata('idletimeout');
+                                scope.idleTimeout();
+                                var Text = "angular.element('#" + sectionId + "').scope()." + sectionId + '.$setPristine();';
+                                eval(Text);
+                            }
+                        }
+
+                    }
+
+                });
+            }
+
+
+        }
+    }
+</script>
+
+<style type="text/css">
+    .clearnone:after {
+        clear: none !important;
+    }
+
+    .form-group {
+        margin-bottom: 0px;
+    }
+
+    .panel {
+        background-color: #cee39b!important;
+        border: none!important;
+    }
+
+    .panel-body {
+        padding: 0!important;
+    }
+
+    .panel-default > .panel-heading {
+        background-color: #cee39b!important;
+        padding: 0!important;
+    }
+
+    .panel-group .panel-heading + .panel-collapse .panel-body {
+        border-top: none!important;
+    }
+
+    .panel-heading {
+        background: none!important;
+    }
+
+    .panel-title > a {
+        color: #1C2F3A;
+        font-size: 12px;
+       /*  padding: 7px 15px;*/
+        margin: 0;
+        display: block;
+        border-bottom: 0;
+        text-decoration: none;
+        font-weight: bold;
+        text-transform: uppercase;		
+    }
+
+    .form-horizontal .form-group {
+        margin-right: 0!important;
+        margin-left: 0!important;
+    }
+
+    .select2-container {
+        border-left: solid 1px rgb(158, 149, 149);
+    }
+    
+    
+	.greenbg
+	{
+		background-color: #2ad06a !important;
+		padding: 7px 15px;
+	}
+	
+	.redbg
+	{
+		background-color: 	#CEE39B !important;
+		padding: 7px 15px;
+	}
+	
+    
+    .greenbgbodypart
+	{
+		color: #1C2F3A;
+		font-size: 12px;
+		padding: 7px 15px;
+		margin: 0;
+		display: block;
+		border-bottom: 1px solid #a1cd3a;
+		text-decoration: none;
+		background-color: #2ad06a !important;
+	}
+	.greenbgbodypart:hover
+	{	
+		text-decoration: none;
+		/*color:black;*/
+	}
+	
+	.redbgbodypart
+	{
+		color: #1C2F3A;
+		font-size: 12px;
+		padding: 7px 15px;
+		margin: 0;
+		display: block;
+		border-bottom: 1px solid #a1cd3a;
+		text-decoration: none;
+		background-color: #CEE39B !important;
+	}
+	.redbgbodypart:hover
+	{	
+		text-decoration: none;
+		/*color:black;*/
+	}
+	
+	.defaultanchor
+	{
+		color: #1C2F3A;
+		font-size: 12px;
+		padding: 7px 15px;
+		margin: 0;
+		display: block;
+		border-bottom: 1px solid #a1cd3a;		
+		background-color: #CEE39B !important;
+	}
+	.defaultanchor:hover
+	{	
+		text-decoration: none;
+		/*color: #fff !important;*/
+	}
+    #features-menu .panel-group .panel{
+    border-radius:0px;
+    }
+	
+	.active-anchor
+	{
+		background: #009B3A !important;
+		color: #fff !important
+	}
+  .active-anchor:hover
+	{
+		background: #009B3A !important;
+		color: #fff !important
+	}
+</style>
+
+<div id="reportForm" ng-init="newdfrReport()"> <!-- ng-controller="reportFormCtrl" -->
+    <div ng-if="!submitFormLoader">
+        <div class="overlayBackground"></div>
+        <div class="overlayContent1">
+            Transaction in progress. Please do not click the Back button or the Refresh button.
+            <img src="/images/spinner.gif"><span>&nbsp;&nbsp;Loading</span>
+        </div>
+    </div>
+    <div ng-if="!fullFormLoader">
+        <div class="overlayBackground"></div>
+        <div class="overlayContent">
+            <img src="/images/spinner.gif"><span>&nbsp;&nbsp;Loading</span>
+        </div>
+    </div>	
+	<!-- Athena changes -->
+	<div id="isSpinnerAthenaMedication">
+            <div class="overlayBackground"></div>
+            <div class="overlayContent" style="top: 45%;position: fixed !important;">
+                <img src="/images/spinner.gif"><span>&nbsp;&nbsp;Loading</span>
+            </div>
+    </div>
+	<div id="isAthenaUpdateSpinner">
+            <div class="overlayBackground"></div>
+            <div class="overlayContent" style="top: 45%;position: fixed !important; width:400px">
+                <img src="/images/spinner.gif"><span>&nbsp;&nbsp;{{athenaSpinnerMessage}}</span>
+            </div>
+     </div>
+	<!-- Athena changes -->	
+    <section id="header-title" style="margin-bottom: 0">
+        <div class="container">
+            <div class="row" style="vertical-align: middle">
+                <h2 ng-if="!fieldDisable" style="text-align: left; display: inline-block; font-family: Arial; font-weight: normal; text-transform: capitalize">
+                    <input type="button" ng-if="patientName" class="btn-header btn btn-info btn-sm" ng-click="createInjuryCancel('simplepopUp')" value="{{patientName}}">&nbsp;<span ng-if="createdDate">DOI: <span ng-bind="datenewFormat(createdDate)"></span>- </span>{{formTypeName}}</h2>
+                <h2 ng-if="fieldDisable" style="text-align: left; display: inline-block; font-family: Arial; font-weight: normal; text-transform: capitalize">
+                    <a href="patient/createinjury" ng-if="patientName" class="btn-header btn btn-info btn-sm">{{patientName}} </a>&nbsp;<span ng-if="createdDate">DOI: {{datenewFormat(createdDate)}} - </span>{{formTypeName}}</h2>
+                    <!--<a ng-click="redirect()" ng-if="patientName" class="btn-header btn btn-info btn-sm">{{patientName}} </a>&nbsp;<span ng-if="createdDate">DOI: {{datenewFormat(createdDate)}} - </span>{{formTypeName}}</h2>-->
+                <span style="float: right; font-size: 15px; padding-top: 20px">Report ID: {{reportid ? reportid : 'New'}}</span>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3"><!--  id="sidebarFixedmenu"> -->
+                <!-- <div ng-show="displayFormdiv" class="left-bar smoothscroll" autoscroll="true" style="max-height: 370px; postion:fixed"> -->
+				<div ng-show="displayFormdiv" class="left-bar smoothscroll" autoscroll="true" style="max-height: 370px; overflow: auto">
+                    <ul id="features-menu" class="sidebar nav-bar vertical">
+                                        
+                <accordion close-others="true">                  
+                    <div data-ng-repeat="section in report.sections">
+                        <accordion-group ng-if="section.type == 'section'" ng-show="visibility(section)">
+                            <accordion-heading>
+                                <div ng-class="assignClass(section.sectiondataid)">
+                              		<div ng-click="currentsectionchange(section, $index, newPreviousId)">{{section.sectionname}}</div>
+ 								</div>
+                            </accordion-heading>
+                        </accordion-group>                      
+                        <accordion-group ng-if="section.type == 'bodypart'" is-open="isopen" ng-show="visibility(section)">
+                            <accordion-heading>
+                                <div ng-class="assignClass(section.sectiondataid)" ng-click="currentsectionchange(section, $index,newPreviousId)">{{section.sectionname}}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+                                </div>
+                            </accordion-heading>
+                            <div ng-if="section.type == 'bodypart'">								
+                                <div ng-repeat="s in getSection(section.modal) | orderBy:'sequence'" ng-show="bodypartVisibility(section)">
+                                	<li ng-show="showBodyPart(s.id,section.hidebodypart)">
+                                        <a ng-class="assignClassToBodyParts(s.concateId,section.sectiondataid)" ng-hide="hideSectionOnMMINo(s.concateId,section.sectiondataid)" ng-click="gettemplate(section,s,$index,newPreviousId)"><span ng-bind="s.bodysystem == 'Other' ? s.bdsystemother : s.bodysystem | capitalize"></span> - <span ng-bind="s.text == 'Other' ? s.bdpartother : s.text | capitalize"></span><span ng-if="s.bdsides != 'none' && s.bdsides != 'n/a'" style="text-transform:capitalize"> - {{s.bdsides}}</span></a>
+                                    </li>
+                                </div>
+                            </div>
+                        </accordion-group> 
+                        <div ng-if="section.type == 'subsection'" ng-show="visibility(section)">
+                            <li>
+                               <a ng-class="assignClass(section.sectiondataid)" ng-click="currentsectionchange(section, $index, currentsectionId)">{{section.sectionname}}</a>
+                            </li>
+                        </div>
+                    </div>
+                </accordion>
+                
+                </ul>
+                </div>
+                <h5><b>Status: {{displayReportStatus}}</b></h5>
+                <div>
+                    <!--<button type="button" ng-click="validationSubmit()" class="col-sm-12 btn btn-info btn-large">Validate</button>-->
+                    <button type="button" ng-click="confirmSubmitRerating()" ng-if="formType == 'pr4' && currentReportStatus =='closed' && displayFormdiv && (loggedinUserLevel == 'level3' || loggedinUserLevel == 'level4' || loggedinUserRole == 'siteadmin' || loggedinUserRole == 'superadmin')" ng-hide="rerateflag" class="col-sm-12 btn btn-info btn-large">Submit for Re-rating</button>
+					<button type="button" ng-click="addendum()" ng-if="currentReportStatus =='closed' && displayFormdiv && (loggedinUserLevel == 'level3' || loggedinUserLevel == 'level4' || loggedinUserRole == 'siteadmin' || loggedinUserRole == 'superadmin')" class="col-sm-12 btn btn-info btn-large  top-buffer">Make Addendum</button>
+                    <button type="button" ng-click="checkValidation(currentsectionId,'submit', 'closed')" ng-if="!fieldDisable && (loggedinUserLevel == 'level3' || loggedinUserLevel == 'level4' || loggedinUserRole == 'siteadmin' || loggedinUserRole == 'superadmin') && formType != 'pr4'" class="col-sm-12 btn btn-info btn-large" id="submitButton">Submit Report</button>
+                    <button type="button" ng-click="checkValidation(currentsectionId,'submit', 'level1')" ng-if="!fieldDisable && (loggedinUserLevel == 'level3' || loggedinUserLevel == 'level4' || loggedinUserRole == 'siteadmin' || loggedinUserRole == 'superadmin') && formType == 'pr4' && (reportStatus == 'open')" class="col-sm-12 btn btn-info btn-large" id="Button3" ng-show="mmiUncompleted();">Submit for rating</button>
+					<button type="button" ng-click="checkValidation(currentsectionId,'savedata','open')" ng-if="reportStatus == 'open'" class="col-sm-12 btn btn-info btn-large top-buffer" value="Save" ng-show="mmiUncompleted();">Save</button>
+                    <button type="button" ng-click="checkValidation(currentsectionId,'submit', 'level2')" ng-if="currentReportStatus == 'level1' && (loggedinUserRole == 'siteadmin' || loggedinUserRole == 'rater1' || loggedinUserRole == 'rater2')" class="col-sm-12 btn btn-info btn-large" id="Button1">Submit for Level II</button>
+                    <button type="button" ng-click="checkValidation(currentsectionId,'submit', 'closed')" ng-if="currentReportStatus == 'level2' && (loggedinUserRole == 'siteadmin' || loggedinUserRole == 'rater2')" class="col-sm-12 btn btn-info btn-large" id="Button2">Mark Rating Completed</button>
+                    <input type="button" ng-if="!fieldDisable" ng-click="newdfrReportPreivew('preview', currentsectionId)" ng-disable="!isLoad" class="col-sm-12 btn btn-info btn-large top-buffer" value="Preview">
+                    <input type="button" ng-if="fieldDisable" ng-click="newdfrReportPreivew('view', currentsectionId)" ng-disable="!isLoad" class="col-sm-12 btn btn-info btn-large top-buffer" value="View">
+                    <input type="button" ng-if="currentUser.role == 'superadmin' || currentUser.role=='siteadmin' || currentUser.role=='admin level1' || currentUser.role=='admin level2' || currentUser.role=='admin level3' || currentUser.role=='admin level4' || currentUser.role=='nonadmin level1' || currentUser.role=='nonadmin level2' || currentUser.role=='nonadmin level3'  || currentUser.role=='nonadmin level4'" ng-click="workStatusNote(currentsectionId,'savefaxdata',currentReportStatus)" class="col-sm-12 btn btn-info btn-large top-buffer" value="Work Status Note">
+					
+					<!-- Athena code -->
+					<div ng-show="isAthenaPatient()==true">                    
+                        <a ng-click="getUpdatedAthenaPatientData()"  ng-if="reportStatus == 'open' && currentUser.practiceDetails.isAthena && (currentUser.role == 'superadmin' || currentUser.role=='siteadmin' || currentUser.role=='admin level1' || currentUser.role=='admin level2' || currentUser.role=='admin level3' || currentUser.role=='admin level4' || currentUser.role=='nonadmin level3' || currentUser.role=='nonadmin level4')" href="" class="col-sm-12 btn btn-info btn-large top-buffer">Update from Athena</a>
+                        <a ng-click="getUpdatedAthenaPatientPhoneNumbers()"  ng-if="reportStatus == 'open' && currentUser.practiceDetails.isAthena && (currentUser.role == 'superadmin' || currentUser.role=='siteadmin' || currentUser.role=='admin level1' || currentUser.role=='admin level2' || currentUser.role=='admin level3' || currentUser.role=='admin level4' || currentUser.role=='nonadmin level3' || currentUser.role=='nonadmin level4')" href="" class="col-sm-12 btn btn-info btn-large top-buffer">Update Phone Numbers From Athena</a>
+                        <a ng-click="setPatientDataToAthena()" ng-if="reportStatus == 'open' && currentUser.practiceDetails.isAthena && (currentUser.role == 'superadmin' || currentUser.role=='siteadmin' || currentUser.role=='admin level1' || currentUser.role=='admin level2' || currentUser.role=='admin level3' || currentUser.role=='admin level4' || currentUser.role=='nonadmin level3' || currentUser.role=='nonadmin level4')" href="" class="col-sm-12 btn btn-info btn-large top-buffer">Send Data to Athena</a>                            
+                    </div>
+					
+										
+					<a ng-click="checkValidation(currentsectionId,'notsubmit','open')" ng-if="reportStatus == 'open'" class="col-sm-12 btn btn-info btn-large top-buffer"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Save & Exit</a>
+                    <!--<a ng-click="checkValidation(currentsectionId,'notsubmit','open')" ng-href="{{redirect == 'true' ? '/patient/createinjury' : '/createreport'}}" ng-if="reportStatus == 'open'" class="col-sm-12 btn btn-info btn-large top-buffer"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Save & Exit</a>-->
+                    <a ng-click="exitform('/patient/createinjury')" ng-if="(reportStatus == 'level1' || reportStatus == 'level2' || reportStatus == 'closed') && !(loggedinUserRole == 'rater1' || loggedinUserRole == 'rater2')" class="col-sm-12 btn btn-info btn-large top-buffer"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Exit</a>
+                    <a ng-click="saveReportData('/submittedreport')" ng-if="(reportStatus == 'level1' || reportStatus == 'level2') && (loggedinUserRole == 'rater1' || loggedinUserRole == 'rater2')" class="col-sm-12 btn btn-info btn-large top-buffer"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Save & Exit</a>
+                    <a ng-click="exitform('/submittedreport')" ng-if="(reportStatus == 'closed') && (loggedinUserRole == 'rater1' || loggedinUserRole == 'rater2')" class="col-sm-12 btn btn-info btn-large top-buffer"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Exit</a>
+                    <a ng-click="deleteReportfunc(reportId)" ng-if="reportStatus == 'open' && (currentUser.role == 'superadmin' || currentUser.role=='siteadmin' || currentUser.role=='admin level1' || currentUser.role=='admin level2' || currentUser.role=='admin level3' || currentUser.role=='admin level4' || currentUser.role=='nonadmin level3' || currentUser.role=='nonadmin level4')" class="col-sm-12 btn btn-info btn-large top-buffer">Delete Report</a>
+					
+					
+				   
+                </div>
+            </div>
+            <div class="col-sm-9" ng-show="displayFormdiv"><!-- col-sm-offset-3 -->
+                <div class="col-sm-12">
+                    <div class="col-sm-3" style="margin: 20px 0 0; float: right">
+                        <button type="button" ng-click="updateForm('archive', 'basicinformation')" class="btn btn-info" id="basicinformation_archive" style="display: none">Archive</button>
+                        <button type="button" ng-click="updateForm('archive', 'contactinformation')" class="btn btn-info" style="display: none" id="contactinformation_archive">Archive</button>
+                        <button type="button" ng-click="updateForm('archive', 'address')" class="btn btn-info" style="display: none" id="address_archive">Archive</button>
+                        <button type="button" ng-click="updateForm('archive', 'occupation')" class="btn btn-info" style="display: none" id="occupation_archive">Archive</button>
+                        <!-- Updating injuries demographics data -->
+                        <button type="button" ng-click="openinjuryarchivepopup('employment')" class="btn btn-info" style="display: none" id="empduration_archive">Archive</button>
+                        <button type="button" ng-click="openinjuryarchivepopup('employer')" class="btn btn-info" style="display: none" id="employer_archive">Archive</button>
+                        <button type="button" ng-click="openinjuryarchivepopup('insurance')" class="btn btn-info" style="display: none" id="insuranceadministrator_archive">Archive</button>
+                        <button type="button" ng-click="openinjuryarchivepopup('claimsadjuster')" class="btn btn-info" style="display: none" id="claimsadjuster_archive">Archive</button>
+                        <button type="button" ng-click="openinjuryarchivepopup('injuryinformation')" class="btn btn-info" style="display: none" id="injuryinformation_archive">Archive</button>
+                        <button type="button" ng-click="openinjuryarchivepopup('employeraddress')" class="btn btn-info" style="display: none" id="employeraddress_archive">Archive</button>
+                        <button type="button" ng-click="openinjuryarchivepopup('locationaddressinjury')" class="btn btn-info" style="display: none" id="locationaddressinjury_archive">Archive</button>
+                    </div>
+                    <!-- Start Section Questions-->
+                    <div style="position:relative">
+						<h4 class="section-current" class="col-sm-12">{{currentsection}} <span ng-show="currentbodypart">- <span ng-bind="bodypartname.bodysystem == 'Other' ? bodypartname.bdsystemother : bodypartname.bodysystem | capitalize"></span>&nbsp;- <span ng-bind="bodypartname.text == 'Other' ? bodypartname.bdpartother : bodypartname.text | capitalize"></span><span ng-if="bodypartname.bdsides && (bodypartname.bdsides != 'none' && bodypartname.bdsides != 'n/a')">- {{bodypartname.bdsides | capitalize}}</span></span> </h4>
+                   
+						<div ng-if="currentsectionId == 'diagnoses' || currentsectionId == 'diagnoseshandleft' || currentsectionId == 'diagnoseshandleft'">
+							Need to check the ICD-10 code for your diagnosis? We recommend&nbsp;<a href="http://www.icd10data.com" target="_blank" style="cursor:hand"><strong>www.icd10data.com</strong></a>						
+						</div>	
+						<br>					
+					</div>                   
+					<div ng-if="(formType == 'dfr' || formType == 'pr2' || formType == 'pr4') && !currentBdSectionId && currentReportStatus =='open'" style="padding-bottom: 10px">                       
+                        <div ng-if="report.data[currentsectionId].disableradio == '1' || report.data[currentsectionId].disableradio == 'No' || report.data[currentsectionId].disableradio == 'Yes'">	                          
+                            <label ng-if="currentsectionId == 'ActivitiesofDailyLiving' && formType != 'pr4'">Have ADLs changed for any of the injured body parts?</label>
+                            <label ng-if="currentsectionId == 'hipactivities' && checkHipActivitiesPR4Rating">Would you like to update or add to the Hip Activities?</label>
+                            <label ng-if="currentsectionId == 'relevantmedicalsocialhistory'">Would you like to publish and/or update the patient's medical history in this report?</label>
+                            <label ng-if="currentsectionId == 'sh'">Would you like to publish and/or update the patient's social history in this report?</label>
+                            <label ng-if="currentsectionId == 'objectivefindingsgeneral'">Would you like to publish and/or update the general exam in this report?</label>
+                            <label ng-if="currentsectionId == 'diagnostictestresults'">Would you like to publish and/or update the diagnostic tests in this report?</label>
+                            <label ng-if="currentsectionId == 'diagnoses'">Would you like to publish and/or update the diagnoses in this report?</label>
+                            <label ng-if="currentsectionId == 'objectivefindingslimb'">Would you like to publish and/or update the limb measurements in this report?</label>
+                            <label ng-if="currentsectionId == 'objectivefindingsgait'">Would you like to publish and/or update the gait measurements in this report?</label>
+                            <label ng-if="currentsectionId == 'diagnoseshandleft'">Would you like to publish and/or update the diagnoses of hand/finger/thumb in this report?</label>
+                            <label ng-if="currentsectionId == 'diagnoseshandright'">Would you like to publish and/or update the diagnoses of hand/finger/thumb in this report?</label>
+                            <label ng-if="currentsectionId == 'diagnostictestresultslimblength'">Would you like to publish and/or update the limb length discrepency in this report?</label>
+                            <label ng-if="currentsectionId == 'painassessment'">Would you like to publish and/or update the pain assessment in this report?</label>
+                            <label ng-if="currentsectionId == 'apportionment'">Would you like to publish and/or update the apportionment in this report?</label>
+                            <label ng-if="currentsectionId == 'workrestriction' && (formType == 'pr2' || formtype == 'dfr')">Would you like to publish and/or update the work restriction in this report?</label>
+							<label ng-if="currentsectionId == 'workrestriction' && formType == 'pr4'">Would you like to publish and/or update the functional limitations in this report?</label>
+                            <br>	
+							<div ng-if="formType == 'dfr' || formType == 'pr2' || formType == 'pr4'">
+								<div ng-if="formType == 'pr4'">	
+									<div ng-if="currentsectionId == 'hipactivities' && checkHipActivitiesPR4Rating">	
+										<input type="radio"  ng-model="report.data[currentsectionId].disableradio" name="maindisableradio" value="Yes" ng-click="enableForm()" id="{{currentsectionId}}maindisableradioYes"><label for="{{currentsectionId}}maindisableradioYes">&nbsp;Yes</label>
+										<input type="radio"  ng-model="report.data[currentsectionId].disableradio" name="maindisableradio" value="No" ng-click="disableForm()" id="{{currentsectionId}}maindisableradioNo"><label for="{{currentsectionId}}maindisableradioNo">&nbsp;No</label>
+									</div>
+									<div ng-if="currentsectionId != 'hipactivities'">
+										<div ng-if="currentsectionId != 'ActivitiesofDailyLiving'">	
+											<input type="radio" ng-model="report.data[currentsectionId].disableradio" name="maindisableradio" value="Yes" ng-click="enableForm()" id="{{currentsectionId}}maindisableradioYes"><label for="{{currentsectionId}}maindisableradioYes">&nbsp;Yes</label>
+											<input type="radio" ng-model="report.data[currentsectionId].disableradio" name="maindisableradio" value="No" ng-click="disableForm()" id="{{currentsectionId}}maindisableradioNo"><label for="{{currentsectionId}}maindisableradioNo">&nbsp;No</label>
+										</div>	
+									</div>	
+								</div>
+								<div ng-if="formType != 'pr4'">										
+									<input type="radio" ng-model="report.data[currentsectionId].disableradio" name="maindisableradio" value="Yes" ng-click="enableForm()" id="{{currentsectionId}}maindisableradioYes"><label for="{{currentsectionId}}maindisableradioYes">&nbsp;Yes</label>
+									<input type="radio" ng-model="report.data[currentsectionId].disableradio" name="maindisableradio" value="No" ng-click="disableForm()" id="{{currentsectionId}}maindisableradioNo"><label for="{{currentsectionId}}maindisableradioNo">&nbsp;No</label>									
+								</div>								
+							</div>							
+                            <!--<div ng-if="currentsectionId != 'hipactivities'">					
+								<input type="radio"  ng-model="report.data[currentsectionId].disableradio" name="maindisableradio" value="Yes" ng-click="enableForm()" id="{{currentsectionId}}maindisableradioYes"><label for="{{currentsectionId}}maindisableradioYes">&nbsp;Yes</label>
+								<input type="radio"  ng-model="report.data[currentsectionId].disableradio" name="maindisableradio" value="No" ng-click="disableForm()" id="{{currentsectionId}}maindisableradioNo"><label for="{{currentsectionId}}maindisableradioNo">&nbsp;No</label>
+							</div>-->
+							<!--<div ng-if="currentsectionId == 'hipactivities' && checkHipActivitiesPR4Rating">												
+								<input type="radio"  ng-model="report.data[currentsectionId].disableradio" name="maindisableradio" value="Yes" ng-click="enableForm()" id="{{currentsectionId}}maindisableradioYes"><label for="{{currentsectionId}}maindisableradioYes">&nbsp;Yes</label>
+								<input type="radio"  ng-model="report.data[currentsectionId].disableradio" name="maindisableradio" value="No" ng-click="disableForm()" id="{{currentsectionId}}maindisableradioNo"><label for="{{currentsectionId}}maindisableradioNo">&nbsp;No</label>
+							</div>-->							
+                     </div>
+                      <div ng-if="currentsectionId == 'hipactivities'">                      	 	 
+	                   		<div ng-if="!checkHipActivitiesPR4Rating"> 
+								<div ng-controller="SelectBodyPartForRatingCtrl">
+                   				 	<span style="color: red; font-weight: bold;">This body part has not been selected for rating! It will not appear in your report.
+						    			<a ng-click="popupMessage(4)" class="ng-scope ng-binding">(i)</a>
+						    		</span>
+								</div>	
+	                   		</div>	                   		
+	                   </div> 
+	                </div>
+                    <!-- End Section Questions-->
+                    <!-- Start template body parts Questions-->
+                    <div ng-if="(formType == 'dfr' || formType == 'pr2' || formType == 'pr4') && currentBdSectionId && currentReportStatus =='open'" style="padding-bottom: 10px">                       
+						<div  ng-if="report.data[currentBdSectionId].disableradio == '1' || report.data[currentBdSectionId].disableradio == 'No' || report.data[currentBdSectionId].disableradio == 'Yes'">
+
+                         	 <div ng-switch="mmiRatebodystatus">                        			
+	                        	  <div ng-switch-when="true">
+	    								<div ng-controller="SelectBodyPartForRatingCtrl">
+					    					<span style="color: red; font-weight: bold;">This body part has not been selected for rating! It will not appear in your report.
+					    						<a ng-click="popupMessage(4)" class="ng-scope ng-binding">(i)</a>
+					    					</span>
+				    					</div>
+								  </div>
+								  <div ng-switch-when="false">
+									   	<label ng-if="currentsectionId == 'patientcomplaints'">Would you like to publish and/or update the information about the condition of {{currentBdSectionName}} in this report?</label>
+			                            <label ng-if="currentsectionId == 'relevantmedicalsocialhistory'">Would you like to publish and/or update the medical history of {{currentBdSectionName}} in this report?</label>
+			                            <label ng-if="currentsectionId == 'objectivefindings'">Would you like to publish and/or update the objective findings of {{currentBdSectionName}} in this report?</label>
+			                            <label ng-if="currentsectionId == 'diagnostictestresults'">Would you like to publish and/or update the diagnostic tests of {{currentBdSectionName}} in this report?</label>
+			                            <label ng-if="currentsectionId == 'diagnoses'">Would you like to publish and/or update the diagnoses of {{currentBdSectionName}} in this report?</label>
+			                            <label ng-if="currentsectionId == 'apportionment'">Would you like to publish and/or update the apportionment of {{currentBdSectionName}} in this report?</label>
+			
+			                            <br>							
+										<label>
+											<input type="radio" ng-model="report.data[currentBdSectionId].disableradio" value="Yes" ng-click="enableBodypartForm()">&nbsp;Yes</label>
+										<label>
+											<input type="radio" ng-model="report.data[currentBdSectionId].disableradio" value="No" ng-click="disableBodypartForm()">&nbsp;No</label>							
+								  </div>							 
+							</div>                                       
+                       </div>
+	                   <div  ng-if="report.data[currentBdSectionId].disableradio != '1' && report.data[currentBdSectionId].disableradio != 'No' && report.data[currentBdSectionId].disableradio != 'Yes' && formType == 'pr4' && mmiRatebodystatus==true">                     		
+	    					<div ng-controller="SelectBodyPartForRatingCtrl">
+		    					<span style="color: red; font-weight: bold;">This body part has not been selected for rating! It will not appear in your report.
+		    						<a ng-click="popupMessage(4)" class="ng-scope ng-binding">(i)</a>
+		    					</span>
+	    					</div>							
+	                   </div>
+                    </div>
+                    <!-- End template body parts Questions-->
+
+                </div>
+                <div ng-if="!isLoad">
+                    <div class="overlayBackground"></div>
+                    <div class="overlayContent">
+                        <img src="/images/spinner.gif"><span>&nbsp;&nbsp;Loading</span>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-12 smoothscroll" style="padding-right: 0; margin-top: -10px">--><!-- Changed by Unais to remove scrollbar -->
+				<div class="col-sm-12 smoothscroll" style="padding-right: 0; height: 500px; overflow: auto; margin-top: -10px">
+				<!--<div class="col-sm-12 smoothscroll" style="padding-right: 0; margin-top: -10px">-->
+                    <fieldset ng-disabled="fieldDisable" class="form-horizontal panel-body">
+                        <input type="text" style="border: 0px solid; background-color: transparent; width: 1px" id="start">
+                        <div ng-repeat="s in report.sections | filter:{sectiondataid:currentsectionId}:true">
+                            <fieldset ng-disabled="DisableSections" ng-init="disablesectionInit()" class="form-group" ng-if="!currentbodypart">
+                                <section ng-model="report.data[s.sectiondataid]" fb-form="{{s.sectiondataid}}" ng-form="{{s.sectiondataid}}" fb-default="defaultValue[s.sectiondataid]" name="{{s.sectiondataid}}" id="{{s.sectiondataid}}"></section>
+                            </fieldset>
+                            <fieldset ng-disabled="DisableBodyparts" ng-init="disablebodypartInit()" ng-if="currentbodypart" ng-repeat="bodypart in getSection(s.modal) | filter:{concateId:concateId}:true">
+                                <div ng-model="report.data[s.sectiondataid+bodypart.concateId]" ng-form="{{s.sectiondataid+bodypart.concateId}}" fb-form="{{s.sectiondataid+bodypart.concateId}}" fb-default="defaultValue[s.sectiondataid+bodypart.concateId]" name="{{s.sectiondataid+bodypart.concateId}}" id="{{s.sectiondataid+bodypart.concateId}}"></div>
+                            </fieldset>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="col-sm-9" ng-show="displayNoReratingdiv" style="min-height: 300px">
+                <div class="col-sm-12">
+                    <br>
+                    <br>
+                    <label>Please explain why you feel the report should be re-rated. Be specific - we are unable to re-rate a report unless you have a specific issue.</label>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-10">
+                        <textarea ng-model="reratecomment" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-12" style="margin-left: 15px">
+                    <br>
+                    <button ng-click="rerateReport('level1')" class="col-sm-2 btn btn-success btn-large">Submit</button>
+                    <button ng-click="showDiv();" class="col-sm-2 btn btn-danger btn-large" style="margin-left: 15px">Cancel</button>
+                </div>
+            </div>
+            <div class="col-sm-9" ng-show="displayYesReratingdiv" style="min-height: 300px">
+                <div class="col-sm-12">
+                    <br>
+                    <br>
+                    <label>The report will now be copied to a new report and you will be able to change any part of the report. Once the report is complete, please submit the report for rating and you will be charged the standard fee for rating a report.</label>
+                </div>
+                <div class="col-sm-12" style="margin-left: 15px">
+                    <br>
+                    <button ng-click="rerateReport('open')" class="col-sm-2 btn btn-success btn-large">I Agree</button>
+                    <button ng-click="showDiv();" class="col-sm-2 btn btn-danger btn-large" style="margin-left: 15px">Disagree</button>
+                </div>
+            </div>
+
+        </div>
+        <div ng-if="showDocxBtn" class="col-sm-12" style="margin: auto">
+            <hr>
+            <!--<div ng-if="reportList" style="height: 400px; overflow: scroll;">
+                <h4>Report Preview - {{reportFlavor}}</h4>
+                <div dynamic="reportList" class="smoothscroll" style="width: 816px; line-height: 20px; font-size: 12px;"></div>
+            </div>-->
+            <!--<div id="div1" style="width:1050px; line-height:20px; max-height:400px; overflow: auto; font-size:12px;">
+                <div ng-include src="'partials/report_PR2_A.html'"></div>
+            </div>-->
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="save-timedout-dialog.html">
+  <div class="modal-header">
+   <h3>Ratefast</h3>
+  </div>
+  <div class="modal-body">
+    <div class="login-sign">
+        <h3>Report data saved.</h3>
+    </div>
+ </div>
+ 
+</script>
+<!--<div class="panel-footer clearer" ng-if="showDocxBtn">
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="isshowscope" />
+            show Report Data
+        </label>
+    </div>
+    <pre ng-if="isshowscope" style="height: 400px; overflow: auto; overflow-y: scroll; -webkit-overflow-scrolling: touch;">{{report.data | json}}</pre>
+</div>-->

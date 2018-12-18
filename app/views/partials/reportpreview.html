@@ -1,0 +1,186 @@
+﻿<!--Report Publish text from databse -->
+<!--
+<div>
+    <div class="modal-header">
+        <div ng-if="submitStatus">
+            <h3>Ratefast</h3>
+            <div style="font-weight: bold;">
+                <div ng-if="currentUser.role == 'siteadmin'">
+                    <div ng-if="formtype == 'dfr'">
+                        Click Confirm to submit the DFR report.
+                    </div>
+                    <div ng-if="formtype == 'pr2'">
+                        Click Confirm to submit the PR-2 report.
+                    </div>
+                    <div ng-if="formtype == 'pr4'">
+                        Click Confirm to submit for rating. Once submitted you will not be able to make changes until rating is completed.
+                    </div>
+                </div>
+                <div ng-if="currentUser.level == 'level4' || currentUser.level == 'level3' || currentUser.role == 'superadmin'">
+                    <div ng-if="formtype == 'dfr' && reportcharge > 0 && freereportsLeft == 0 ">
+                        This report will be charged to your credit card for <b>${{reportcharge}}</b>. Once submitted you will not be able to make changes in the report.
+                    </div>
+                    <div ng-if="formtype == 'dfr' && reportcharge == 0 && freereportsLeft == 0">
+                        Doctor's First reports are free! Once submitted, you will not be able to make changes in the report.
+                    </div>
+                    <div ng-if="formtype == 'dfr' && freereportsLeft > 0">
+                        Doctor's First reports are free! Once submitted, you will not be able to make changes in the report.
+                    </div>
+                    <div ng-if="formtype == 'pr2' && reportcharge > 0  && freereportsLeft == 0 ">
+                        This report will be charged to your credit card for <b>${{reportcharge}}</b>. Once submitted you will not be able to make changes in the report.
+                    </div>
+                    <div ng-if="formtype == 'pr2' && reportcharge == 0 && freereportsLeft == 0">
+                        PR-2 reports are free! Once submitted, you will not be able to make changes in the report.
+                    </div>
+                    <div ng-if="formtype == 'pr2' && freereportsLeft > 0">
+                        PR-2 reports are free! Once submitted, you will not be able to make changes in the report.
+                    </div>
+                    <div ng-if="formtype == 'pr4' && reportcharge > 0  && freereportsLeft == 0 ">
+                        This report will be charged to your credit card for <b>${{reportcharge}}</b>. You will receive an email alert when the impairment rating for this report is complete.
+                    </div>
+                    <div ng-if="formtype == 'pr4' && reportcharge == 0 && freereportsLeft == 0">
+                        PR-4 reports are free! You will receive an email alert when the impairment rating for this report is complete.
+                    </div>
+                    <div ng-if="formtype == 'pr4' && freereportsLeft > 0">
+                        PR-4 reports are free! You will receive an email alert when the impairment rating for this report is complete.
+                    </div>
+                </div>
+                <div ng-if="(currentUser.role == 'rater1' || currentUser.role == 'rater2') && newReportStatus == 'level2' && formtype == 'pr4'">
+                    Click Confirm to mark your impairment rating as complete.
+                </div>
+                <div ng-if="currentUser.role == 'rater2' && newReportStatus == 'closed' && formtype == 'pr4'">
+                    Confirm rating is completed. Once confirmed the report will return to the provider.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="float: right;">
+                    <button ng-click="ok()" class="btn btn-info">Confirm</button>
+                    <button ng-click="close()" class="btn btn-warning">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <div ng-if="!submitStatus">
+            <button type="button" class="close" aria-hidden="true" ng-click="cancel()">&times;</button><br />
+            <h3>Report Preview <!--<span ng-if="(reportFlavor && newReportStatus == 'view') || showDocxBtn">- {{reportFlavor}}</span>
+                <button ng-if="(currentUser.role != 'rater1' && currentUser.role != 'rater2' && currentUser.role != 'siteadmin') && (newReportStatus == 'view' || showDocxBtn)" class="btn btn-primary pull-right" ng-click="downloadDocx()">Save to Docx</button>
+            </h3>
+        </div>
+    </div>
+    <a ng-click="cancel()"><span class="glyphicon glyphicon-remove " style="float: right; margin: 20px 20px 0 0; color: #FFFAFA;"></span></a>
+    <div class="modal-body">
+        <div style="overflow-y: scroll; -webkit-overflow-scrolling: touch; height: 700px;">
+            <div dynamic="currentreport" id="reportHtmlData" style="max-width: 816px; line-height: 20px; font-size: 12px;" ng-class="{'restrict-selection': currentUser.role=='siteadmin' || currentUser.role=='rater1' || currentUser.role=='rater2'}"></div>
+			<!--<ng-include id="rfaHtml" src="'partials/reports/' + formtype + '/v' + version + '/rfa.html'"></ng-include>
+        </div>
+    </div>
+</div>-->
+
+
+
+
+<!--Report Publish text from HTML File -->
+<div >
+	<!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> -->
+    <div class="modal-header">
+        <div ng-if="submitStatus">
+            <h3>RateFast</h3>
+            <div style="font-weight:bold;">
+               <div ng-if="currentUser.role == 'siteadmin'">
+                    <div ng-if="formtype == 'dfr'">
+                        Click Confirm to submit the DFR report.
+                    </div>
+                    <div ng-if="formtype == 'pr2'">
+                        Click Confirm to submit the PR-2 report.
+                    </div>
+                    <div ng-if="formtype == 'pr4'">
+                        Click Confirm to submit for rating. Once submitted you will not be able to make changes until rating is completed.
+                    </div>
+                </div>
+                <div ng-if="currentUser.level == 'level4' || currentUser.level == 'level3' || currentUser.role == 'superadmin'">
+                    <div ng-if="formtype == 'dfr' && reportcharge > 0 && freereportsLeft == 0 ">
+                        This report will be charged to your credit card for <b>${{reportcharge}}</b>. Once submitted you will not be able to make changes in the report.
+                    </div>
+                    <div ng-if="formtype == 'dfr' && reportcharge == 0 && freereportsLeft == 0">
+                        Doctor's First reports are free! Once submitted, you will not be able to make changes in the report.
+                    </div>
+                    <div ng-if="formtype == 'dfr' && freereportsLeft > 0">
+                        Doctor's First reports are free! Once submitted, you will not be able to make changes in the report.
+                    </div>
+                    <div ng-if="formtype == 'pr2' && reportcharge > 0  && freereportsLeft == 0 ">
+                        This report will be charged to your credit card for <b>${{reportcharge}}</b>. Once submitted you will not be able to make changes in the report.
+                    </div>
+                    <div ng-if="formtype == 'pr2' && reportcharge == 0 && freereportsLeft == 0">
+                        PR-2 reports are free! Once submitted, you will not be able to make changes in the report.
+                    </div>
+                    <div ng-if="formtype == 'pr2' && freereportsLeft > 0">
+                        PR-2 reports are free! Once submitted, you will not be able to make changes in the report.
+                    </div>
+                    <div ng-if="formtype == 'pr4' && reportcharge > 0  && freereportsLeft == 0 ">
+                        This report will be charged to your credit card for <b>${{reportcharge}}</b>. You will receive an email alert when the impairment rating for this report is complete.
+                    </div>
+                    <div ng-if="formtype == 'pr4' && reportcharge == 0 && freereportsLeft == 0">
+                        PR-4 reports are free! You will receive an email alert when the impairment rating for this report is complete.
+                    </div>
+                    <div ng-if="formtype == 'pr4' && freereportsLeft > 0">
+                        PR-4 reports are free! You will receive an email alert when the impairment rating for this report is complete.
+                    </div>
+                </div>
+                <div ng-if="(currentUser.role == 'rater1' || currentUser.role == 'rater2') && newReportStatus == 'level2' && formtype == 'pr4'">
+                    Click Confirm to mark your impairment rating as complete.
+                </div>
+                <div ng-if="currentUser.role == 'rater2' && newReportStatus == 'closed' && formtype == 'pr4'">
+                    Confirm rating is completed. Once confirmed the report will return to the provider.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="float:right;">
+                    <button ng-if="!reportisLoad"  ng-click="ok()" class="btn btn-info">Confirm</button>
+                    <button ng-click="close()" class="btn btn-warning">Cancel</button>
+                </div>
+            </div>
+        </div>
+		<div ng-if="!submitStatus">
+            <button type="button" class="close" aria-hidden="true" ng-click="cancel()">&times;</button><br />
+            <h3>Report Preview <!--<span ng-if="(reportFlavor && newReportStatus == 'view') || showDocxBtn">- {{reportFlavor}}</span>-->
+                <button ng-if="(currentUser.role != 'rater1' && currentUser.role != 'rater2' && currentUser.role != 'siteadmin') && (newReportStatus == 'view' || showDocxBtn)" class="btn btn-primary pull-right" ng-click="downloadDocx()">Save as Word Doc</button>
+            </h3>
+        </div>
+        <!--<div ng-if="!submitStatus">
+            <button type="button" class="close" aria-hidden="true" ng-click="cancel()">&times;</button><br />
+            <h3>Report Preview
+				<button ng-if="(currentUser.role != 'rater1' && currentUser.role != 'rater2' && currentUser.role == 'siteadmin') && (newReportStatus == 'view' || showDocxBtn)" class="btn btn-primary pull-right" ng-click="downloadDocx()">Save to Docx</button>                
+                <a ng-if="currentreportstatus == 'closed'" class="btn btn-primary pull-right" ng-click="downloadpdf()">Save to PDF</a>
+            </h3>
+        </div>-->
+    </div>
+    <a ng-click="cancel()"><span class="glyphicon glyphicon-remove " style="float: right; margin: 20px 20px 0 0; color: #fffafa;"></span></a>
+     <div style="overflow-y: scroll; -webkit-overflow-scrolling: touch; height: 700px;">   
+		<div class="modal-body" id="reportHtmlData" style="width:816px; line-height:20px;" ng-class="(currentUser.role == 'rater1' || currentUser.role == 'rater2')? 'restrict-selection': '' ">
+			<!--<div ng-if="formtype == 'dfr'">
+				<div ng-if="version == '1'">
+					<div ng-cloak ng-include src="'partials/report_DFR_A_V1.html'"></div>
+				</div>
+				<div ng-if="version == '2'">
+					<div ng-include src="'partials/dfr/v2/a/dfr-main.html'"></div>				
+				</div>                
+            </div>
+			<div ng-if="formtype == 'pr2'">
+				<div ng-if="version == '1'">
+					<div ng-cloak ng-include src="'partials/report_PR2_A_V1.html'"></div>
+				</div>
+				<div ng-if="version == '2'">
+					<div ng-cloak ng-include src="'partials/report_PR2_A_V2.html'"></div>
+				</div> 
+			</div>
+			<div ng-if="formtype == 'pr4'">
+				<div ng-if="version == '1'">
+					<div ng-cloak ng-include src="'partials/report_PR4_A_V1.html'"></div>
+				</div>
+				<div ng-if="version == '2'">
+					<div ng-cloak ng-include src="'partials/report_PR4_A_V2.html'"></div>
+				</div> 
+			</div>-->	
+			<div ng-include src="strTemplate"></div>			
+        </div>
+     </div>
+</div>

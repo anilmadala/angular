@@ -1,0 +1,53 @@
+﻿<section ng-init="archivectrl">
+    <div class="modal-header">
+        <h4>Archive Information</h4>
+    </div>
+
+    <div class="modal-body" style="min-height: 250px; overflow: scroll;">
+        <div class="container">
+            <img ng-hide="isLoader" src="/images/ajax-loader-event-list.gif" style="width: 100px; position: absolute; top: 50%; left: 50%;" />
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" style="width: 100%;">
+                        <tr>
+                            <th>Action</th>
+                            <th ng-repeat="(key,value) in data[data.length-1]" ng-if="key!='_id' && columns.length < 1 && key!='id'">{{key|replaceword|capitalize }}</th>
+                            <th ng-repeat="key in columns" ng-if="columns.length > 0">{{key|replaceword|capitalize }}</th>
+                        </tr>
+                        <tr ng-repeat="(key,value) in data" ng-if="key!='_id' && data[key].status=='current' && key!='id'">
+                            <!--<td> <pre>{{data[key]|json}}</pre></td>-->
+                            <!--<td ng-repeat="item in data[key]" ng-if="item==data[key]._id">
+                                <input type="button" class="btn btn-info" ng-click="changeStatus(data[key]._id)" ng-if="data[key].status=='current'" value="Current" />
+                                <input type="button" class="btn btn-default" ng-click="changeStatus(data[key]._id)" ng-if="data[key].status=='archive'" value="Restore" />
+                            </td>-->
+
+                            <td>
+                                <input type="button" class="btn btn-info" ng-click="changeStatus(data[key]._id)" ng-if="data[key].status=='current'" value="Current" />
+                            </td>
+                            <td ng-repeat="(subkey,item) in data[key] | sortByColumn:columns track by $index" ng-if="item!=data[key]._id && data[key].status=='current' && item.indexOf(':')==-1"><span ng-if="subkey!=3 && subkey!=5">{{item}}</span>
+                                <span ng-if="subkey==3 || subkey==5">{{item|phonenumberFormat}}</span></td>
+                            <td ng-repeat="(subkey,item) in data[key] | sortByColumn:columns track by $index" ng-if="item!=data[key]._id && data[key].status=='current' && item.indexOf(':')!=-1">{{item | date:'MM-dd-yyyy HH:mm'}} PST</td>
+
+                        </tr>
+                        <tr ng-repeat="(key,value) in data" ng-if="key!='_id' && data[key].status!='current' && key!='id'">
+                           <!-- <td ng-repeat="item in data[key]" ng-if="item==data[key]._id && data[key].status!='current'">
+                                <input type="button" class="btn btn-info" ng-click="changeStatus(data[key]._id)" ng-if="data[key].status=='current'" value="Current" />
+                                <input type="button" class="btn btn-default" ng-click="changeStatus(data[key]._id)" ng-if="data[key].status=='archive'" value="Restore" />
+                            </td>-->
+                            <td><input type="button" class="btn btn-default" ng-click="changeStatus(data[key]._id)" ng-if="data[key].status=='archive'" value="Restore" /></td>
+                            <td ng-repeat="(subkey,item) in data[key] | sortByColumn:columns track by $index" ng-if="item!=data[key]._id && data[key].status!='current' && item.indexOf(':')==-1">
+                                <span ng-if="subkey!=3 && subkey!=5">{{item}}</span>
+                                <span ng-if="subkey==3 || subkey==5">{{item|phonenumberFormat}}</span>
+                            </td>
+                            <td ng-repeat="(subkey,item) in data[key] | sortByColumn:columns track by $index" ng-if="item!=data[key]._id && data[key].status!='current' && item.indexOf(':')!=-1">{{item | date:'MM-dd-yyyy HH:mm'}} PST</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="leave()">Cancel</button>
+    </div>
+</section>

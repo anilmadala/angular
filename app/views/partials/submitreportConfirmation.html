@@ -1,0 +1,132 @@
+﻿<!--<div>
+    <h2 style="text-align: center">Hi {{currentUser.username}},</h2>
+    <br />
+    <h3 ng-if="reportsCharged">Thank you for having our services, You have already submitted {{freereportsLeft}} reports. You will be charged standard rate of {{standardAmount}}.</h3>
+    <br />
+    <h3 ng-if="reportsLeft">You have {{freereportsLeft}} free reports left and after that you will be charged for standard rates of report submission. Standard rates for report submission is {{standardrateforreport}}.</h3>
+    <br />
+    <h2>Do you want to proceed with report submission ?</h2>
+    <button ng-click="OK()" class="btn btn-info btn-xs">OK</button>
+    <button ng-click="close()" class="btn btn-danger btn-xs">Close</button>
+</div>-->
+<div class="modal-header">
+    <h3>Ratefast</h3>
+</div>
+<div class="modal-body">
+    <!--<div class="login-sign">
+        <h4>Hi {{currentUser.username}},</h4>
+    </div>-->
+    <div ng-if="currentUser.role == 'siteadmin' && formtype == 'dfr'">
+        Click Confirm to submit the DFR report.
+    </div>
+    <div ng-if="currentUser.role == 'siteadmin' && formtype == 'pr2'">
+        Click Confirm to submit the PR-2 report.
+    </div>
+    <div ng-if="currentUser.role == 'siteadmin' && formtype == 'pr4'">
+        Click Confirm to submit for rating. Once submitted you will not be able to make changes until rating is completed.
+    </div>
+    <!--For Level4 Users-->
+    <div ng-if="currentUser.level == 'level4' && formtype == 'dfr' && freereportsLeft == 0">
+        Free reports have been used this report will be charged to your credit card for <b>$ {{reportcharge}}</b>. Once submitted you will not be able to make changes in the report.
+    </div>
+    <div ng-if="currentUser.level == 'level4' && formtype == 'dfr' && freereportsLeft > 0">
+        Click Confirm to submit the free DFR report.
+    </div>
+    <div ng-if="currentUser.level == 'level4' && formtype == 'dfr' && freereportsLeft == 'No Reports'">
+        Click Confirm to submit your first DFR report.
+    </div>
+    <div ng-if="currentUser.level == 'level4' && formtype == 'pr2' && freereportsLeft == 0">
+        Free reports have been used this report will be charged to your credit card for <b>$ {{reportcharge}}</b>. Once submitted you will not be able to make changes in the report.
+    </div>
+    <div ng-if="currentUser.level == 'level4' && formtype == 'pr2' && freereportsLeft > 0">
+        Click Confirm to submit the free PR-2 report.
+    </div>
+    <div ng-if="currentUser.level == 'level4' && formtype == 'pr2' && freereportsLeft == 'No Reports'">
+        Click Confirm to submit your first PR-2 report.
+    </div>
+    <div ng-if="currentUser.level == 'level4' && formtype == 'pr4' && freereportsLeft == 0">
+        Free reports have been used this report will be charged to your credit card for <b>$ {{reportcharge}}</b>. Once submitted you will not be able to make changes until rating is completed.
+    </div>
+    <div ng-if="currentUser.level == 'level4' && formtype == 'pr4' && freereportsLeft > 0">
+        Click Confirm to submit the free PR-4 report.
+    </div>
+    <div ng-if="currentUser.level == 'level4' && formtype == 'pr4' && freereportsLeft == 'No Reports'">
+        Click Confirm to submit your first PR-4 report.
+    </div>
+    <!--For Level3 Users-->
+    <div ng-if="currentUser.level == 'level3' && formtype == 'dfr' && freereportsLeft == 0">
+        Free reports have been used this report will be charged to your credit card for <b>$ {{reportcharge}}</b>. Once submitted you will not be able to make changes in the report.
+    </div>
+    <div ng-if="currentUser.level == 'level3' && formtype == 'dfr' && freereportsLeft > 0">
+        Click Confirm to submit the free DFR report.
+    </div>
+    <div ng-if="currentUser.level == 'level3' && formtype == 'dfr' && freereportsLeft == 'No Reports'">
+        Click Confirm to submit your first DFR report.
+    </div>
+    <div ng-if="currentUser.level == 'level3' && formtype == 'pr2' && freereportsLeft == 0">
+        Free reports have been used this report will be charged to your credit card for <b>$ {{reportcharge}}</b>. Once submitted you will not be able to make changes in the report.
+    </div>
+    <div ng-if="currentUser.level == 'level3' && formtype == 'pr2' && freereportsLeft > 0">
+        Click Confirm to submit the free PR-2 report.
+    </div>
+    <div ng-if="currentUser.level == 'level3' && formtype == 'pr2' && freereportsLeft == 'No Reports'">
+        Click Confirm to submit your first PR-2 report.
+    </div>
+    <div ng-if="currentUser.level == 'level3' && formtype == 'pr4' && freereportsLeft == 0">
+        Free reports have been used this report will be charged to your credit card for <b>$ {{reportcharge}}</b>. Once submitted you will not be able to make changes until rating is completed.
+    </div>
+    <div ng-if="currentUser.level == 'level3' && formtype == 'pr4' && freereportsLeft > 0">
+        Click Confirm to submit the free PR-4 report.
+    </div>
+    <div ng-if="currentUser.level == 'level3' && formtype == 'pr4' && freereportsLeft == 'No Reports'">
+        Click Confirm to submit your first PR-4 report.
+    </div>
+    <!--For Superadmin-->
+    <div ng-if="currentUser.role == 'superadmin' && formtype == 'dfr' && freereportsLeft == 0">
+        Free reports have been used this report will be charged to your credit card for <b>$ {{reportcharge}}</b>. Once submitted you will not be able to make changes in the report.
+    </div>
+    <div ng-if="currentUser.role == 'superadmin' && formtype == 'dfr' && freereportsLeft > 0">
+        Click Confirm to submit the free DFR report.
+    </div>
+    <div ng-if="currentUser.role == 'superadmin' && formtype == 'dfr' && freereportsLeft == 'No Reports'">
+        Click Confirm to submit your first DFR report.
+    </div>
+    <div ng-if="currentUser.role == 'superadmin' && formtype == 'pr2' && freereportsLeft == 0">
+        Free reports have been used this report will be charged to your credit card for <b>$ {{reportcharge}}</b>. Once submitted you will not be able to make changes in the report.
+    </div>
+    <div ng-if="currentUser.role == 'superadmin' && formtype == 'pr2' && freereportsLeft > 0">
+        Click Confirm to submit the free PR-2 report.
+    </div>
+    <div ng-if="currentUser.role == 'superadmin' && formtype == 'pr2' && freereportsLeft == 'No Reports'">
+        Click Confirm to submit your first PR-2 report.
+    </div>
+    <div ng-if="currentUser.role == 'superadmin' && formtype == 'pr4' && freereportsLeft == 0">
+        Free reports have been used this report will be charged to your credit card for <b>$ {{reportcharge}}</b>. Once submitted you will not be able to make changes until rating is completed.
+    </div>
+    <div ng-if="currentUser.role == 'superadmin' && formtype == 'pr4' && freereportsLeft > 0">
+        Click Confirm to submit the free PR-4 report.
+    </div>
+    <div ng-if="currentUser.role == 'superadmin' && formtype == 'pr4' && freereportsLeft == 'No Reports'">
+        Click Confirm to submit your first PR-4 report.
+    </div>
+    <div ng-if="(currentUser.role == 'rater1' || currentUser.role == 'rater2') && reportStatus == 'level1' && formtype == 'pr4'">
+        Click Confirm to submit for rating. Once submitted you will not be able to make changes until rating is completed.
+    </div>
+    <div ng-if="currentUser.role == 'rater2' && reportStatus == 'level2' && formtype == 'pr4'">
+        Confirm rating is completed. Once confirmed the report will return to the provider.
+    </div>
+    <!--<div ng-if="freereportsLeft == 0">
+        Thank you for having our services, You have already submitted {{submittedReportcount}} reports. You will be charged standard rate of {{standardAmount}}.
+    </div>
+    <div ng-if="freereportsLeft > 0">
+        You have {{freereportsLeft}} free reports left and after that you will be charged for standard rates of report submission. Standard rates for report submission is {{standardrateforreport}}.
+    </div>
+    <div ng-if="freereportsLeft == 'No Reports'">
+        Thank you for having our services, You have 1 free report left after submission of this report.
+    </div>-->
+    <!--<h3>Do you want to proceed with report submission ?</h3>-->
+</div>
+<div class="modal-footer">
+    <button ng-click="OK()" class="btn btn-info">Confirm</button>
+    <button ng-click="close()" class="btn btn-warning">Cancel</button>
+</div>

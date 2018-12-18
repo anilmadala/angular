@@ -1,0 +1,117 @@
+{     
+    "formdata" : {
+        "sections" : [            
+        ], 
+        "forms" : {
+            
+        }, 
+        "data" : {
+            "neck" : {
+
+            }, 
+            "midback" : {
+
+            }, 
+            "wristleft" : {
+
+            }, 
+            "neckleft" : [
+
+            ], 
+            "upperextremityleft" : {
+
+            }, 
+            "trunkleft" : {
+
+            }, 
+            "upperextremityright" : {
+
+            }, 
+            "trunkright" : {
+
+            }, 
+            "groingenitalialeft" : {
+
+            }, 
+            "cervical" : {
+
+            }, 
+            "thoracic" : {
+
+            }, 
+            "lumbar" : {
+
+            }, 
+            "neckright" : {
+
+            }, 
+            "trunk" : {
+
+            }, 
+            "groingenitaliaright" : {
+
+            }, 
+            "groingenitalia" : {
+
+            }, 
+            "skinother" : {
+
+            }, 
+            "skinotherleft" : {
+
+            }, 
+            "skinotherright" : {
+
+            }, 
+            "thumbright" : {
+
+            }, 
+            "upperextremityother" : {
+
+            }, 
+            "upperextremityotherleft" : {
+
+            }, 
+            "upperextremityotherright" : {
+
+            }, 
+            "lowerextremityother" : {
+
+            }, 
+            "lowerextremityotherleft" : {
+
+            }, 
+            "lowerextremityotherright" : {
+
+            }, 
+            "other" : {
+
+            }, 
+            "otherleft" : {
+
+            }, 
+            "otherright" : {
+
+            }, 
+            "shoulderleft" : {
+
+            }, 
+            "elbowleft" : {
+
+            }, 
+            "lowerextremityright" : {
+
+            }, 
+            "lowerextremityleft" : {
+
+            }, 
+            "toeleft" : {
+
+            }
+        }
+    }, 
+    "formname" : "PR-4 Objective Findings Version 1", 
+    "formtype" : "pr4", 
+    "status" : "draft", 
+    "type" : "template"
+}

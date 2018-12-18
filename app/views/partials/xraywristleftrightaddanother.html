@@ -1,0 +1,243 @@
+<div ng-controller="XrayWristLeftRightAddAnotherCtrl">
+    <div class="col-sm-12">
+        <label class="{{labelclass}}">{{label}}</label>
+        <button type="button" ng-click="addControl()" class="btn btn-default btn-circle btn-success">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+    <div ng-repeat="todo in todos.slice().reverse()" class="col-sm-12 checkbox addAnotherBottomBorder" style="padding: 5px;">
+        <input type="hidden" ng-model="todo.indexValue" ng-init="todo.indexValue = todos.length - ($index+1)" />
+        <div class="col-sm-12">
+            <div class="col-sm-1" style="margin-top: 7px; padding-left: 0;">
+                <label>Date:</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="tel" ui-date="dateOptions" my-date ng-model="todo.dateOfSurgery" class="form-control" placeholder="MM/DD/YYYY">
+            </div>
+            <div class="col-sm-1" style="margin-top: 7px;">
+                <button type="button" class="btn btn-info btn-xs" ng-click="clearbodypart($index+1,todos.length)">Clear</button>
+            </div>
+            <div class="col-sm-6" style="margin-top: 7px;">
+                <button type="button" class="btn btn-danger btn-xs" ng-click="deletebodypart($index+1,todos.length)">Delete</button>
+            </div>
+            <!------- Normal ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.normal" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].fracture = false','$scope.todos[{{todo.indexValue}}].arthritis = false','$scope.todos[{{todo.indexValue}}].avascular = false','$scope.todos[{{todo.indexValue}}].amputation = false','$scope.todos[{{todo.indexValue}}].carpal = false'],todo.normal,'$scope.todos[{{todo.indexValue}}].normal',true)" />
+                    &nbsp;Normal</label>
+            </div>
+            <!------- Fracture ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.fracture" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'],todo.fracture,'$scope.todos[{{todo.indexValue}}].fracture')" />
+                    &nbsp;Fracture</label>
+            </div>
+            <!------- Arthritis/degenerative joint changes ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.arthritis" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false','$scope.todos[{{todo.indexValue}}].arthritisterno = false', '$scope.todos[{{todo.indexValue}}].arthritisternopts = false','$scope.todos[{{todo.indexValue}}].arthritisternoptsedittext=\'\''])" />
+                    &nbsp;Arthritis/degenerative joint changes</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.arthritis">               
+                <div class="col-sm-12" ng-if="todo.arthritis">
+                    <label>
+                        <input type="radio" value="Mild" ng-model="todo.arthritisternopts" />&nbsp;Mild</label><br />
+                    <label>
+                        <input type="radio" value="Moderate" ng-model="todo.arthritisternopts" />&nbsp;Moderate</label><br />
+                    <label>
+                        <input type="radio" value="Severe" ng-model="todo.arthritisternopts" />&nbsp;Severe</label><br />
+                    <label>
+                        <input type="checkbox" value="Postoperative" ng-model="todo.arthritisternoptschk" style="margin-left: 0;" />&nbsp;Postoperative changes</label><br />
+                    <div class="col-sm-12  checkbox">
+                        <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                        <div class="clearer"></div>
+                        <div ng-hide="isEdit"><span dynamic="todo.arthritisternoptsedittext" class="textEditorTextColor col-sm-10"></span></div>
+                        <div class="col-sm-10" ng-if="isEdit">
+                            <textarea ui-tinymce="tinymceOptions" ng-model="todo.arthritisternoptsedittext"></textarea>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <!------- Avascular necrosis changes ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.avascular" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Avascular necrosis changes</label>
+            </div>
+            <!------- Amputation ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.amputation" ng-change="todo.amputationselectopts='';todo.AmputationtextA=''" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false','$scope.todos[{{todo.indexValue}}].amputationopts = false'])" />
+                    &nbsp;Amputation</label>
+            </div>
+            <div class="col-sm-12 margin-left-1" ng-if="todo.amputation">
+                <!--  <label>
+                    <input type="radio" value="proximaldeltoid" ng-model="todo.amputationopts" />&nbsp;At or proximal to deltoid tubercle</label><br />
+                <label>
+                    <input type="radio" value="distaldeltoid" ng-model="todo.amputationopts" />&nbsp;Distal to the deltoid tubercle</label><br />-->
+                <!--<label>
+                    <input type="radio" value="bicepital" ng-model="todo.amputationopts" />&nbsp;Below the bicepital tubercle (above transmetacarpophalangeal level)</label><br />
+                <label>
+                    <input type="radio" value="transmetacarpophalangeal" ng-model="todo.amputationopts" />&nbsp;At transmetacarpophalangeal level (includes all digits)</label><br />-->
+                <div class="col-sm-6">
+                    <select class="form-control col-sm-6" ng-model="todo.amputationselectopts">
+                        <option selected value="">-- Select --</option>
+                        <option value="Below mid shaft radius/ulna">Below mid shaft radius/ulna</option>
+                        <option value="At or above distal 1/3 radius/ulna">At or above distal 1/3 radius/ulna</option>
+                        <option value="Below the distal 1/3 radius/ulna">Below the distal 1/3 radius/ulna</option>
+                        <option value="At or above the proximal carpal row">At or above the proximal carpal row</option>
+                        <option value="Below the proximal carpal row">Below the proximal carpal row</option>
+                        <option value="At or above mid shaft metacarpals">At or above mid shaft metacarpals</option>
+                        <option value="Distal to mid shaft metacarpals">Distal to mid shaft metacarpals</option>
+                        <option value="At or above metacarpophalangeal joints">At or above metacarpophalangeal joints</option>
+                    </select>
+                </div>
+                <div class="clearer"></div>
+                <div class="col-sm-12  checkbox">
+                    <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                    <div class="clearer"></div>
+                    <div ng-hide="isEdit"><span dynamic="todo.AmputationtextA" class="textEditorTextColor col-sm-10"></span></div>
+                    <div class="col-sm-10" ng-if="isEdit">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="todo.AmputationtextA"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!------- Carpal instability ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.carpal" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false','$scope.todos[{{todo.indexValue}}].radiolunate = false', '$scope.todos[{{todo.indexValue}}].scapholunateangle = false','$scope.todos[{{todo.indexValue}}].scapholunategap = false','$scope.todos[{{todo.indexValue}}].triquetrolunate = false','$scope.todos[{{todo.indexValue}}].ulnar = false', '$scope.todos[{{todo.indexValue}}].carpalopts = false', '$scope.todos[{{todo.indexValue}}].carpaloptsinner = false','$scope.todos[{{todo.indexValue}}].scapholunateangleopts = false', '$scope.todos[{{todo.indexValue}}].scapholunateangleoptsinner = false','$scope.todos[{{todo.indexValue}}].scapholunategapopts = false', '$scope.todos[{{todo.indexValue}}].scapholunategapoptsinner = false', '$scope.todos[{{todo.indexValue}}].triquetrolunateopts = false', '$scope.todos[{{todo.indexValue}}].triquetrolunateoptsinner = false', '$scope.todos[{{todo.indexValue}}].ulnaropts = false', '$scope.todos[{{todo.indexValue}}].ulnaroptsinner = false'],todo.carpal,'$scope.todos[{{todo.indexValue}}].carpal')" />
+                    &nbsp;Carpal instability</label>
+            </div>
+            <div class="col-sm-12 margin-left-1" ng-if="todo.carpal">
+                <div class="col-sm-12">
+                    <label>
+                        <input type="checkbox" ng-model="todo.radiolunate" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].carpalopts = false', '$scope.todos[{{todo.indexValue}}].carpaloptsinner = false'])" />
+                        &nbsp;Radiolunate angle</label>
+                </div>
+                <div class="col-sm-12" ng-if="todo.radiolunate">
+                    <label>
+                        Are films and measurements obtained on lateral radiographs with fist forcefully clenched (stressed view) and wrist in neutral flexion/extension and lateral deviation?
+                    </label>
+                    <br />
+                    <label>
+                        <input type="radio" value="Yes" ng-model="todo.carpalopts" />&nbsp;Yes</label>
+                    <label>
+                        <input type="radio" value="No" ng-model="todo.carpalopts" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].carpaloptsinner = false'])" />&nbsp;No</label>
+
+                    <div class="col-sm-12 margin-left-2" ng-if="todo.carpalopts">
+                        <label>
+                            <input type="radio" value="Mild" ng-model="todo.carpaloptsinner" />&nbsp;11-20 degrees (Mild)</label><br />
+                        <label>
+                            <input type="radio" value="Moderate" ng-model="todo.carpaloptsinner" />&nbsp;21-30 degrees (Moderate)</label><br />
+                        <label>
+                            <input type="radio" value="Severe" ng-model="todo.carpaloptsinner" />&nbsp;>30 degrees (Severe)</label>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label>
+                        <input type="checkbox" ng-model="todo.scapholunateangle" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].scapholunateangleopts = false', '$scope.todos[{{todo.indexValue}}].scapholunateangleoptsinner = false'])" />
+                        &nbsp;Scapholunate angle</label>
+                </div>
+                <div class="col-sm-12" ng-if="todo.scapholunateangle">
+                    <label>
+                        Are films and measurements obtained on lateral radiographs with fist forcefully clenched (stressed view) and wrist in neutral flexion/extension and lateral deviation?
+                    </label>
+                    <br />
+                    <label>
+                        <input type="radio" value="Yes" ng-model="todo.scapholunateangleopts" />&nbsp;Yes</label>
+                    <label>
+                        <input type="radio" value="No" ng-model="todo.scapholunateangleopts" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].scapholunateangleoptsinner = false'])" />&nbsp;No</label>
+                    <div class="col-sm-12 margin-left-2" ng-if="todo.scapholunateangleopts">
+                        <label>
+                            <input type="radio" value="Mild" ng-model="todo.scapholunateangleoptsinner" />&nbsp;61-70 degrees (Mild)</label><br />
+                        <label>
+                            <input type="radio" value="Moderate" ng-model="todo.scapholunateangleoptsinner" />&nbsp;71-80 degrees (Moderate)</label><br />
+                        <label>
+                            <input type="radio" value="Severe" ng-model="todo.scapholunateangleoptsinner" />&nbsp;>80 degrees (Severe)</label>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label>
+                        <input type="checkbox" ng-model="todo.scapholunategap" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].scapholunategapopts = false', '$scope.todos[{{todo.indexValue}}].scapholunategapoptsinner = false'])" />
+                        &nbsp;Scapholunate gap</label>
+                </div>
+                <div class="col-sm-12" ng-if="todo.scapholunategap">
+                    <label>
+                        Are films and measurements obtained with neutral PA view with the ulnar aspect of the hand elevated 10 to 15 degrees or on a neutral anteroposterior (AP) view?
+                    </label>
+                    <br />
+                    <label>
+                        <input type="radio" value="Yes" ng-model="todo.scapholunategapopts" />&nbsp;Yes</label>
+                    <label>
+                        <input type="radio" value="No" ng-model="todo.scapholunategapopts" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].scapholunategapoptsinner = false'])" />&nbsp;No</label>
+                    <div class="col-sm-12 margin-left-2" ng-if="todo.scapholunategapopts">
+                        <label>
+                            <input type="radio" value="Mild" ng-model="todo.scapholunategapoptsinner" />&nbsp;>3 to 5 mm (Mild)</label><br />
+                        <label>
+                            <input type="radio" value="Moderate" ng-model="todo.scapholunategapoptsinner" />&nbsp;>5 to 8 mm (Moderate)</label><br />
+                        <label>
+                            <input type="radio" value="Severe" ng-model="todo.scapholunategapoptsinner" />&nbsp;>8 mm (Severe)</label>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label>
+                        <input type="checkbox" ng-model="todo.triquetrolunate" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].triquetrolunateopts = false', '$scope.todos[{{todo.indexValue}}].triquetrolunateoptsinner = false'])" />
+                        &nbsp;Triquetrolunate stepoff</label>
+                </div>
+                <div class="col-sm-12" ng-if="todo.triquetrolunate">
+                    <label>
+                        Are films and measurements obtained with neutral posteroanterior (PA) view?
+                    </label>
+                    <br />
+                    <label>
+                        <input type="radio" value="Yes" ng-model="todo.triquetrolunateopts" />&nbsp;Yes</label>
+                    <label>
+                        <input type="radio" value="No" ng-model="todo.triquetrolunateopts" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].triquetrolunateoptsinner = false'])" />&nbsp;No</label>
+                    <div class="col-sm-12 margin-left-2" ng-if="todo.triquetrolunateopts">
+                        <label>
+                            <input type="radio" value="Mild" ng-model="todo.triquetrolunateoptsinner" />&nbsp;>1 to 2 mm (Mild)</label><br />
+                        <label>
+                            <input type="radio" value="Moderate" ng-model="todo.triquetrolunateoptsinner" />&nbsp;>2 to 3 mm (Moderate)</label><br />
+                        <label>
+                            <input type="radio" value="Severe" ng-model="todo.triquetrolunateoptsinner" />&nbsp;>3 mm (Severe)</label>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label>
+                        <input type="checkbox" ng-model="todo.ulnar" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].ulnaropts = false', '$scope.todos[{{todo.indexValue}}].ulnaroptsinner = false'])" />
+                        &nbsp;Ulnar translation</label>
+                </div>
+                <div class="col-sm-12" ng-if="todo.ulnar">
+                    <label>
+                        Are films and measurements obtained with neutral PA view with the fist forcefully clenched?
+                    </label>
+                    <br />
+                    <label>
+                        <input type="radio" value="Yes" ng-model="todo.ulnaropts" />&nbsp;Yes</label>
+                    <label>
+                        <input type="radio" value="No" ng-model="todo.ulnaropts" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].ulnaroptsinner = false'])" />&nbsp;No</label>
+                    <div class="col-sm-12 margin-left-2" ng-if="todo.ulnaropts">
+                        <label>
+                            <input type="radio" value="Mild" ng-model="todo.ulnaroptsinner" />&nbsp;Mild (Less than 50% of the lunate overlies the distal radius ulnar border)</label><br />
+                        <label>
+                            <input type="radio" value="Moderate" ng-model="todo.ulnaroptsinner" />&nbsp;Moderate (Less than 25% of the lunate overlies the distal radius ulnar border)</label><br />
+                        <label>
+                            <input type="radio" value="Severe" ng-model="todo.ulnaroptsinner" />&nbsp;Severe (Lunate is displaced ulnarly off the radius)</label>
+                    </div>
+                </div>
+            </div>
+            <!------- Other ------->
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-info btn-xs" ng-click="othertexteditorCondition=true">
+                    Text
+                </button>
+                <div class="clearer"></div>
+                <div ng-hide="othertexteditorCondition"><span dynamic="todo.othertexteditor" class="textEditorTextColor col-sm-10"></span></div>
+                <div class="col-sm-10" ng-if="othertexteditorCondition">
+                    <textarea ui-tinymce ng-model="todo.othertexteditor"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

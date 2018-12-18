@@ -1,0 +1,117 @@
+﻿<div class="bright" ng-init="getreportdata()">
+    <section id="header-title" style="margin-bottom: 0;">
+        <div class="container">
+            <div class="row">
+                <h2 style="text-align: left;">{{currentreport.formtitle}} version {{currentreport.reportversion}}
+                </h2>
+            </div>
+        </div>
+    </section>
+    <br />
+    <div class="container">
+        <div class="col-sm-12 text-right">
+            <input type="button" ng-click="open()" class="btn btn-info" value="Preview" />
+            <input type="button" ng-click="savereportData()" class="btn btn-success" value="Save Form" />
+            <a href="/reportlist" class="main btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span>Back</a>
+        </div>
+        <div style="clear: both;"></div>
+        <br />
+        <div ng-class="changeeditor">
+            <form method="post">
+                <!--<textarea ui-tinymce="tinymceOptions" id="div1" ng-click="setscope(currentreport.reportdata)" ng-model="currentreport.reportdata" ondrop="drop(event)" ondragover="allowDrop(event)"></textarea>-->
+                <textarea ui-tinymce="tinymceOptions" id="div1" ng-model="currentreport.reportdata"></textarea>
+            </form>
+            <input type="button" id="cbtn" ng-click="setscope()" ng-hide="true" />
+            <!--<pre>{{currentreport.reportdata}}</pre>-->
+            <div dynamic="currentreport.reportdata"></div>
+        </div>
+        <div class="col-sm-1">
+            <a ng-click="changediv(1)" ng-show="changeeditor=='col-sm-8'">
+                <img width="50%" height="35%" src="/images/next.png" /></a>
+            <a ng-click="changediv(2)" ng-show="changeeditor=='col-sm-11'">
+                <img width="50%" height="35%" src="/images/previous.png" /></a>
+        </div>
+        <div class="col-sm-3" ng-hide="isHide">
+            <div class="panel panel-default ng-scope">
+                <div class="panel-heading text-center">
+                    <h3 class="panel-title"><b>Section</b>  </h3>
+                </div>
+                <div class="panel-body text-center">
+                    <accordion close-others="oneAtATime=true">                            
+                            <accordion-group is-open="isopen" data-ng-repeat="section in report.sections">
+                                <accordion-heading>
+                                   {{section.sectionname}}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+                                </accordion-heading>
+                                 <span ng-repeat="rep in report.forms[section.sectiondataid]">
+                                    <!-- <pre>{{report.forms[section.sectiondataid]|json}}</pre>              -->                                                              
+                                     <button ng-if="rep" class='btn btn-info btn-xs' id="report.data['{{section.sectiondataid}}'].{{rep.uniqueid}}" draggable="true" ondragend="drop(event)"  ondragstart="drag(event)">{{rep.uniqueid}}</button>                                                                    
+                                 </span>
+                                <accordion close-others="oneAtATime=true"> 
+                                    <accordion-group is-open="isopen" ng-if="section.type=='bodypart'" ng-repeat="(key1, value1) in bodypartdata">
+                                        <accordion-heading>{{key1}}</accordion-heading>
+                                        <span ng-repeat="(key, value) in report.data[value1]">                                        
+                                            <button ng-if="key" class='btn btn-info btn-xs' id="report.data['{{value1}}'].{{key}}" draggable="true" ondragend="drop(event)"  ondragstart="drag(event)">{{key}}</button>                                                             
+                                        </span>
+                                    </accordion-group>
+                                </accordion>
+                                <br/>
+                            </accordion-group>
+                    </accordion>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    function allowDrop(ev) {
+
+        ev.preventDefault();
+    }
+
+    function drag(ev) {
+
+        var id = "{{" + ev.target.id + "}}";
+        ev.dataTransfer.setData("Text", id);
+    }
+
+    function drop(ev) {
+        $("#cbtn").trigger("click");
+    }
+
+</script>

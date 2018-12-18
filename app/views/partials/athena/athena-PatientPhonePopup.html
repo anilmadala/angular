@@ -1,0 +1,182 @@
+<div class="modal-header" style="padding: 5px 5px 5px 15px">
+    <h3>Ratefast</h3>
+</div>
+<div class="modal-body" style="padding: 5px 5px 5px 15px">
+	<div class="login-sign">
+	   <div ng-bind-html="dispalyMessage">	   
+	   </div>	
+	   
+	   <!-- home phone -->
+	   <div>	   		
+	   		 <div class="col-sm-12">                       
+		          <div class="container">
+				    <div class="row">
+				          <div class="col-sm-2">
+							  <!--font-family: Open Sans; -->
+							<span style= "color: #0e80c7; font-size: 14px; font-weight: bold;">Home Phone:</span>
+						  </div>						  
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							&nbsp;
+						</div>
+					</div>	
+					<div class="row">
+				          <div class="col-sm-2">
+								<span style= "color: #0e80c7; font-size: 14px;">Number in Athena: </span>				     		
+				           </div>
+				                               
+				           <div class="col-sm-3">
+                                <span style= "color: #0e80c7; font-size: 15px;font-weight:bold">
+                                    <span ng-if="CurrentphoneValues.homephone == ''">Number not present in Athena.</span>
+                                        {{CurrentphoneValues.homephone}}
+                                </span>                  
+                           </div>
+				      </div>
+				      <div class="row" style="height:8px">
+				           	<div class="clearer">&nbsp;</div>
+				       </div>
+		       	</div>
+	       </div> 		
+		   <div class="col-sm-12">                       
+	          <div class="container">
+				 <div class="row">
+			           <div class="col-sm-2">
+							<span style= "color: #0e80c7; font-size: 14px">Number to import: </span>				     		
+			           </div>
+			                               
+			           <div class="col-sm-3">
+							<input pattern="[0-9]*" type="tel" class="form-control" id="homephone" name="homephone" ng-model="phoneValues.homephone" maxlength="10" numbers-only="numbers-only" ui-mask="(999) 999-9999" />                   
+			           </div>
+			   	 </div>
+			  </div>
+		   	</div>
+		   	<div class="col-sm-12">    
+		   		<hr />
+		   	</div>
+	   </div>
+	   
+	   
+	   <!-- mobile phone -->
+	    <div>	   		
+	   		 <div class="col-sm-12">                       
+		          <div class="container">
+					<div class="row">
+				          <div class="col-sm-2">
+							<span style= "color: #0e80c7; font-size: 14px; font-weight: bold;">Mobile Phone:</span>
+						  </div>						  
+					 </div>
+					 <div class="row">
+						<div class="col-sm-12">
+							&nbsp;
+						</div>
+					 </div>	
+				     <div class="row">
+				          <div class="col-sm-2">
+								<span style= "color: #0e80c7; font-size: 14px">Number in Athena: </span>				     		
+				           </div>
+				              
+							<div class="col-sm-3">
+                                <span style= "color: #0e80c7; font-size: 15px;font-weight:bold">
+                                    <span ng-if="CurrentphoneValues.mobilephone == ''">Number not present in Athena.</span>
+                                        {{CurrentphoneValues.mobilephone}}
+                                </span>                  
+                           </div>  
+				          
+				      </div>
+				      <div class="row" style="height:8px">
+				           	<div class="clearer">&nbsp;</div>
+				      </div>
+		       	</div>
+	       </div> 		
+		   <div class="col-sm-12">                       
+	          <div class="container">
+				 <div class="row">
+			           <div class="col-sm-2">
+							<span style= "color: #0e80c7; font-size: 14px;">Number to import: </span>				     		
+			           </div>			                             
+			           <div class="col-sm-3">
+							<input pattern="[0-9]*" type="tel" class="form-control" id="mobilephone" name="mobilephone" ng-model="phoneValues.mobilephone" maxlength="10" numbers-only="numbers-only" ui-mask="(999) 999-9999" />                   
+			           </div>
+			   	 </div>
+			  </div>
+		   	</div>
+		   	<div class="col-sm-12">    
+		   		<hr />
+		   	</div>
+	   </div>
+	  
+	    <!-- work phone -->
+	   <div>	   		
+	   		 <div class="col-sm-12">                       
+		          <div class="container">
+				     <div class="row">
+				          <div class="col-sm-2">
+							<span style= "color: #0e80c7; font-size: 14px; font-weight: bold;">Work Phone:</span>
+						  </div>						  
+					 </div>	
+					 <div class="row">
+							<div class="col-sm-12">
+								&nbsp;
+							</div>
+					   </div> 	
+					 <div class="row">
+				          <div class="col-sm-2">
+								<span style= "color: #0e80c7; font-size: 14px;">Number in Athena: </span>				     		
+				           </div>
+				              
+							 <div class="col-sm-3">
+                                <span style= "color: #0e80c7; font-size: 15px;font-weight:bold">
+                                    <span ng-if="CurrentphoneValues.workphone == ''">Number not present in Athena.</span>
+                                        {{CurrentphoneValues.workphone}}
+                                </span>                  
+                           </div>  				           
+				      </div>
+				      <div class="row" style="height:8px">
+				           	<div class="clearer">&nbsp;</div>
+				      </div>
+		       	</div>
+	       </div> 		
+		   <div class="col-sm-12">                       
+	          <div class="container">
+				 <div class="row">
+			           <div class="col-sm-2">
+							<span style= "color: #0e80c7; font-size: 14px;">Number to import: </span>				     		
+			           </div>			                               
+			           <div class="col-sm-3">
+							<input pattern="[0-9]*" type="tel" class="form-control"  id="workphone" name="workphone" ng-model="phoneValues.workphone" maxlength="10" numbers-only="numbers-only" ui-mask="(999) 999-9999" />							              
+			           </div>
+			   	 </div>
+				 <div class="row" style="height:8px">
+					    <div class="clearer">&nbsp;</div>
+				 </div>
+				 <div class="row">
+			           <div class="col-sm-2">
+							<span style= "color: #0e80c7; font-size: 14px;">Extension to import: </span>				     		
+			           </div>			                               
+			           <div class="col-sm-3">
+							<input pattern="[0-9]*" type="tel" class="form-control"  id="workphoneExtension" name="workphoneExtension" ng-model="phoneValues.workphoneExtension" maxlength="7" numbers-only="numbers-only" />                  
+			           </div>
+			   	 </div>
+			  </div>
+		   	</div>
+		   	<div class="col-sm-12">    
+		   		<!--<hr />-->
+				&nbsp;
+		   	</div>
+	   </div>
+	   	   
+   	  <!--<div class="form-group" ng-hide="message">
+	     <span style= "color: #0e80c7; font-family: Open Sans; font-size: 20px; font-weight: 300;"><h3>Note : If changes are not made, value against "Desired" will be updated</h3></span>
+	  </div>-->  
+</div>
+</div>
+<div>
+			<div class="col-sm-12">
+				<hr />
+			</div>
+	   </div>
+<div class="modal-footer" style="border-top: 0px">
+    <a type="button" class="btn btn-primary" ng-click="proceed('confirm1')">{{confirmButtonText}}</a>
+    <a type="button" class="btn btn-default" ng-click="cancel('cancel')">{{cancelButtonText}}</a>
+</div>

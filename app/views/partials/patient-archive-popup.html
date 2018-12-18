@@ -1,0 +1,108 @@
+﻿<section ng-init="archivectrl">
+    <div class="modal-header">
+        <h4>Archive Information</h4>
+    </div>
+    <div class="modal-body" style="overflow:auto">
+        <!--<div class="container-fluid">-->
+        <!--<div class="row">
+            <div class="table-responsive" style="max-height: 350px">-->
+        <table class="table table-bordered table-striped" style="width: 100%;">
+            <tr>
+                <th>Status</th>
+                <th ng-repeat="col in columnHeaders track by $index">{{col}}</th>
+            </tr>
+            <tr ng-repeat="item in rows | orderBy:'updateddate':true track by $index">
+
+                <td>
+
+                    <button class="btn btn-info" ng-if="item.status=='current'">{{item.status | capitalize}}</button>
+                    <button ng-click="changeStatus(item._id)" class="btn btn-default" ng-if="item.status!='current'">Restore</button>
+                </td>
+                <td ng-if="category == 'basicinformation'" ng-repeat="(key, val) in item | sortByColumn:columns track by $index">
+                    <span ng-if="key=='0'">{{val | capitalize}}</span>
+                    <span ng-if="key=='1'">{{val | capitalize}}</span>
+                    <span ng-if="key=='2'">{{val | capitalize}}</span>
+                    <span ng-if="key=='3'">{{val | capitalize}}</span>
+                    <span ng-if="key=='4'">{{val | date:'MM-dd-yyyy'}}</span>
+                    <span ng-if="key=='5'">{{val | date:'MM-dd-yyyy'}}</span>
+                    <span ng-if="key=='6'">{{val | socialSecurityFormat |capitalize}}</span>
+                    <span ng-if="key=='7'">{{val}} </span>
+                    <span ng-if="key=='8'">{{val | date:'MM-dd-yyyy HH:mm'}} <span ng-if="val">PST</span></span>
+                    <span ng-if="key=='9'">{{val}}</span>
+                </td>
+                <td ng-if="category == 'contactinformation'" ng-repeat="(key, val) in item | sortByColumn:columns track by $index">
+                    <span ng-if="key=='0'">{{val | capitalize}}</span>
+                    <span ng-if="key=='1'">{{val | phonenumberFormat}}</span>
+                    <span ng-if="key=='2'">{{val | phonenumberFormat}}</span>
+                    <span ng-if="key=='3'">{{val | phonenumberFormat}}</span>
+                    <span ng-if="key=='4'">{{val | capitalize}}</span>
+                    <span ng-if="key=='5'">{{val | capitalize}}</span>
+                    <span ng-if="key=='6'">{{val | capitalize}}</span>
+                    <span ng-if="key=='7'">{{val | date:'MM-dd-yyyy HH:mm' | capitalize}} <span ng-if="val">PST</span></span>
+                    <span ng-if="key=='8'">{{val}}</span>
+                </td>
+                <td ng-if="category == 'address'" ng-repeat="(key, val) in item | sortByColumn:columns track by $index">
+                    <span ng-if="key=='0'">{{val | capitalize}}</span>
+                    <span ng-if="key=='1'">{{val | capitalize}}</span>
+                    <span ng-if="key=='2'">{{val | capitalize}}</span>
+                    <span ng-if="key=='3'">{{val}}</span>
+                    <span ng-if="key=='4'">{{val | capitalize}}</span>
+                    <span ng-if="key=='5'">{{val | date:'MM-dd-yyyy HH:mm' | capitalize}} <span ng-if="val">PST</span></span>
+                    <span ng-if="key=='6'">{{val}}</span>
+                </td>
+                <td ng-if="category == 'emergencycontactinfo'" ng-repeat="(key, val) in item | sortByColumn:columns track by $index">
+
+                    <span ng-if="key=='0'">{{val!='Other'?val:item.emergencyrelationother|capitalize}}</span>
+                    <span ng-if="key=='1'">{{val | capitalize}}</span>
+                    <span ng-if="key=='2'">{{val | capitalize}}</span>
+                    <span ng-if="key=='3'">{{val | capitalize}}</span>
+                    <span ng-if="key=='4'">{{val | capitalize}}</span>
+                    <span ng-if="key=='5'">{{val | capitalize}}</span>
+                    <span ng-if="key=='6'">{{val | capitalize}}</span>
+                    <span ng-if="key=='7'">{{val | capitalize}}</span>
+                    <span ng-if="key=='8'">{{item.address[0]|separetBycomma}}</span>
+                    <span ng-if="key=='9'">{{val | date:'MM-dd-yyyy HH:mm' | capitalize}} <span ng-if="val">PST</span></span>
+                    <span ng-if="key=='10'">{{val}}</span>
+
+                </td>
+                <td ng-if="category == 'demographics'" ng-repeat="(key, val) in item | sortByColumn:columns track by $index">
+                    <span ng-if="key=='0'">{{val | capitalize}}</span>
+                    <span ng-if="key=='1'">{{val | capitalize}}</span>
+                    <span ng-if="key=='2'">{{val | capitalize}}</span>
+                    <span ng-if="key=='3'">{{val | capitalize}}</span>
+                    <span ng-if="key=='4'">{{val | capitalize}}</span>
+                    <span ng-if="key=='5'">{{val | capitalize}}</span>
+                    <span ng-if="key=='6'">{{val | date:'MM-dd-yyyy HH:mm' | capitalize}} <span ng-if="val">PST</span></span>
+                    <span ng-if="key=='7'">{{val}}</span>
+                </td>
+                <td ng-if="category == 'occupation'" ng-repeat="(key, val) in item | sortByColumn:columns track by $index">
+                    <span ng-if="key=='0'">{{val | capitalize}}</span>
+                    <span ng-if="key=='1'">{{val | capitalize}}</span>
+                    <span ng-if="key=='2'">{{val | date:'MM-dd-yyyy HH:mm' | capitalize}} <span ng-if="val">PST</span></span>
+                    <span ng-if="key=='3'">{{val}}</span>
+                </td>
+				<td ng-if="category == 'medicalhistory'" ng-repeat="(key, val) in item | sortByColumn:columns track by $index">
+                    <span ng-if="key=='0'">{{val | capitalize}}</span>
+                    <span ng-if="key=='1'">{{val | capitalize}}</span>
+                    <span ng-if="key=='2'">{{val | capitalize}}</span>
+                    <span ng-if="key=='3'">{{val | capitalize}}</span>
+                    <span ng-if="key=='4'">{{val | date:'MM-dd-yyyy HH:mm' | capitalize}} <span ng-if="val">PST</span></span>
+                    <span ng-if="key=='5'">{{val}}</span>
+                </td>
+                <td ng-if="category == 'sh'" ng-repeat="(key, val) in item | sortByColumn:columns track by $index">
+                    <span ng-if="key=='0'">{{val | capitalize}}</span>
+                    <span ng-if="key=='1'">{{val | capitalize}}</span>
+                    <span ng-if="key=='2'">{{val | date:'MM-dd-yyyy HH:mm' | capitalize}} <span ng-if="val">PST</span></span>
+                    <span ng-if="key=='3'">{{val}}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!--   </div>-->
+    <!--</div>-->
+    <!-- </div>-->
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">Ok</button>
+        <button class="btn btn-warning" ng-click="ok()">Cancel</button>
+    </div>
+</section>

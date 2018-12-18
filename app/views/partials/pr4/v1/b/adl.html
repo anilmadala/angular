@@ -1,0 +1,270 @@
+<!-- Start ADL Section-->
+<div ng-if="report.data['ActivitiesofDailyLiving'].disableradio!='-1' && report.data['ActivitiesofDailyLiving'].disableradio!='No'">
+    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLrootbtn=='Normal' || report.data['ActivitiesofDailyLiving'].ADLrootbtn=='Comment'">
+        <div class="DFRReportHeadingFontSize">
+            <br>
+            <strong>Activities of Daily Living</strong>
+            <br>
+        </div>
+
+        <div class="divMain">
+            <!--<div>The patient tells me about how {{report.data['bginfo'].gender=='Male'? 'his' : 'her'}} injury affects {{report.data['bginfo'].gender=='Male'? 'his' : 'her'}} activities of daily living.</div>-->
+            <div ng-if="report.data['ActivitiesofDailyLiving'].ADLactivityselfcare=='Comment' || report.data['ActivitiesofDailyLiving'].ADLactivitycomm=='Comment' || report.data['ActivitiesofDailyLiving'].ADLactivityphysical=='Comment' || report.data['ActivitiesofDailyLiving'].ADLactivitynonspec=='Comment' || report.data['ActivitiesofDailyLiving'].ADLactivitysensory=='Comment' || report.data['ActivitiesofDailyLiving'].ADLactivitytravel=='Comment' || report.data['ActivitiesofDailyLiving'].ADLactivitysexual=='Comment' || report.data['ActivitiesofDailyLiving'].ADLactivitysleep=='Comment'">We went over each of the 34 activities of daily living, self-care, personal hygiene, communication, physical activity, sensory function, non-specialized hand activities, travel, sexual functioning, and sleep.</div>
+            <div ng-if="report.data['ActivitiesofDailyLiving'].ADLactivityselfcare=='Normal' && report.data['ActivitiesofDailyLiving'].ADLactivitycomm=='Normal' && report.data['ActivitiesofDailyLiving'].ADLactivityphysical=='Normal' && report.data['ActivitiesofDailyLiving'].ADLactivitynonspec=='Normal' && report.data['ActivitiesofDailyLiving'].ADLactivitysensory=='Normal' && report.data['ActivitiesofDailyLiving'].ADLactivitytravel=='Normal' && report.data['ActivitiesofDailyLiving'].ADLactivitysexual=='Normal' && report.data['ActivitiesofDailyLiving'].ADLactivitysleep=='Normal'">{{report.data['bginfo'].gender=='Male'? 'Mr.' : 'Ms.'}} {{report.data['bginfo'].lastname}}'s injury is currently not affecting any part of {{report.data['bginfo'].gender=='Male'? 'his' : 'her'}} life. The AMA Guides Edition used for today's evaluation defines the activities of daily living as self care/personal hygiene, communication, physical activity, sensory function, non-specialized hand activities, travel, sexual functioning, and sleep.</div>
+            <div ng-if="report.data['ActivitiesofDailyLiving'].ADLrootbtn=='Comment'">
+                <div ng-if="report.data['ActivitiesofDailyLiving'].ADLactivityselfcare=='Comment'">
+                    <br>
+                    <br>
+                    <div class="DFRReportSubHeadingFontSize"><strong>Self-care, personal hygiene</strong></div>
+                    <br>
+                    <div ng-if="adlCheck('selfcare')">The employee's self-care and personal hygiene is unaffected by the injury. </div>
+                    <div ng-repeat="rdoItem in report.data['selectinjuries'].concatedbodypart">
+                        <div>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'selfcare','Cannot perform activity at all')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} limits the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'selfcare','Cannot perform activity at all')"></span>.</span>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'selfcare','Only Pain')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} causes pain during (but does not limit) the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'selfcare','Only Pain')"></span>.</span>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'selfcare','No limitations')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} does not limit or cause pain during the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'selfcare','No limitations')"></span>.</span>
+                        </div>
+                    </div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLselfcareurinatingtextarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLselfcareurinatingtextarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLdefecatingtextarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLdefecatingtextarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLbrushingteethtextarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLbrushingteethtextarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLcombinghairtextarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLcombinghairtextarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLdressingoneselftextarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLdressingoneselftextarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLbathingtextarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLbathingtextarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLeatingtextarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLeatingtextarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLselfCareComment" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLselfCareComment)"></div>
+                </div>
+                <div ng-if="report.data['ActivitiesofDailyLiving'].ADLactivitycomm=='Comment'">
+                    <br>
+                    <br>
+                    <div class="DFRReportSubHeadingFontSize"><strong>Communication</strong></div>
+                    <br>
+                    <div ng-if="adlCheck('communication')">The employee's communication is unaffected by the injury. </div>
+                    <div ng-repeat="rdoItem in report.data['selectinjuries'].concatedbodypart">
+                        <div>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'communication','Cannot perform activity at all')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} limits the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'communication','Cannot perform activity at all')"></span>.</span>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'communication','Only Pain')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} causes pain during (but does not limit) the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'communication','Only Pain')"></span>.</span>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'communication','No limitations')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} does not limit or cause pain during the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'communication','No limitations')"></span>.</span>
+                        </div>
+                    </div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLcommunication1textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLcommunication1textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLcommunication2textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLcommunication2textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLcommunication3textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLcommunication3textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLcommunication4textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLcommunication4textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLcommunication7textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLcommunication7textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLcommcomment" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLcommcomment)"></div>
+                </div>
+                <div ng-if="report.data['ActivitiesofDailyLiving'].ADLactivityphysical=='Comment'">
+                    <br>
+                    <br>
+                    <div class="DFRReportSubHeadingFontSize"><strong>Physical activity</strong></div>
+                    <br>
+                    <div ng-if="adlCheck('physical activity')">The employee's physical activity is unaffected by the injury. </div>
+                    <div ng-repeat="rdoItem in report.data['selectinjuries'].concatedbodypart">
+                        <div>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'physical activity','Cannot perform activity at all')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} limits the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'physical activity','Cannot perform activity at all')"></span>.</span>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'physical activity','Only Pain')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} causes pain during (but does not limit) the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'physical activity','Only Pain')"></span>.</span>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'physical activity','No limitations')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} does not limit or cause pain during the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'physical activity','No limitations')"></span>.</span>
+                        </div>
+                    </div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLphysicalactivity1textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLphysicalactivity1textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLphysicalactivity2textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLphysicalactivity2textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLphysicalactivity3textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLphysicalactivity3textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLphysicalactivity4textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLphysicalactivity4textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLphysicalactivity5textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLphysicalactivity5textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLphysicalActivityComment" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLphysicalActivityComment)"></div>
+                </div>
+                <div ng-if="report.data['ActivitiesofDailyLiving'].ADLactivitysensory=='Comment'">
+                    <br>
+                    <br>
+                    <div class="DFRReportSubHeadingFontSize"><strong>Sensory function</strong></div>
+                    <br>
+                    <div ng-if="adlCheck('sensory function')">The employee's sensory function is unaffected by the injury. </div>
+                    <div ng-repeat="rdoItem in report.data['selectinjuries'].concatedbodypart">
+                        <div>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sensory function','Cannot perform activity at all')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} limits the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sensory function','Cannot perform activity at all')"></span>.</span>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sensory function','Only Pain')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} causes pain during (but does not limit) the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sensory function','Only Pain')"></span>.</span>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sensory function','No limitations')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} does not limit or cause pain during the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sensory function','No limitations')"></span>.</span>
+                        </div>
+                    </div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLsensory1textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLsensory1textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLsensory2textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLsensory2textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLsensory3textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLsensory3textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLsensory6textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLsensory6textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLsensory7textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLsensory7textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLsensoryComment" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLsensoryComment)"></div>
+                </div>
+                <div ng-if="report.data['ActivitiesofDailyLiving'].ADLactivitynonspec=='Comment'">
+                    <br>
+                    <br>
+                    <div class="DFRReportSubHeadingFontSize"><strong>Non-specialized hand activities</strong></div>
+                    <br>
+                    <div ng-if="adlCheck('non-specialized hand activites')">The employee's non-specialized hand activities are unaffected by the injury. </div>
+                    <div ng-repeat="rdoItem in report.data['selectinjuries'].concatedbodypart">
+                        <div>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'non-specialized hand activites','Cannot perform activity at all')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} limits the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'non-specialized hand activites','Cannot perform activity at all')"></span>.</span>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'non-specialized hand activites','Only Pain')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} causes pain during (but does not limit) the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'non-specialized hand activites','Only Pain')"></span>.</span>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'non-specialized hand activites','No limitations')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} does not limit or cause pain during the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'non-specialized hand activites','No limitations')"></span>.</span>
+                        </div>
+                    </div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLnonspec1textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLnonspec1textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLnonspec2textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLnonspec2textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLnonspec3textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLnonspec3textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLnonSpecComment" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLnonSpecComment)"></div>
+                </div>
+                <div ng-if="report.data['ActivitiesofDailyLiving'].ADLactivitytravel=='Comment'">
+                    <br>
+                    <br>
+                    <div class="DFRReportSubHeadingFontSize"><strong>Travel</strong></div>
+                    <br>
+                    <div ng-if="adlCheck('travel')">The employee's travel is unaffected by the injury. </div>
+                    <div ng-repeat="rdoItem in report.data['selectinjuries'].concatedbodypart">
+                        <div>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'travel','Cannot perform activity at all')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} limits the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'travel','Cannot perform activity at all')"></span>.</span>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'travel','Only Pain')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} causes pain during (but does not limit) the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'travel','Only Pain')"></span>.</span>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'travel','No limitations')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} does not limit or cause pain during the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'travel','No limitations')"></span>.</span>
+                        </div>
+                    </div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLtravel1textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLtravel1textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLtravel2textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLtravel2textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLtravel3textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLtravel3textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLtravelComment" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLtravelComment)"></div>
+                </div>
+                <div ng-if="report.data['ActivitiesofDailyLiving'].ADLactivitysexual=='Comment'">
+                    <br>
+                    <br>
+                    <div class="DFRReportSubHeadingFontSize"><strong>Sexual functioning</strong></div>
+                    <br>
+                    <div ng-if="adlCheck('sexual functioning')">The employee's sexual functioning is unaffected by the injury. </div>
+                    <div ng-repeat="rdoItem in report.data['selectinjuries'].concatedbodypart">
+                        <div>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sexual functioning','Cannot perform activity at all')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} limits the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sexual functioning','Cannot perform activity at all')"></span>.</span>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sexual functioning','Only Pain')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} causes pain during (but does not limit) the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sexual functioning','Only Pain')"></span>.</span>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sexual functioning','No limitations')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} does not limit or cause pain during the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sexual functioning','No limitations')"></span>.</span>
+                        </div>
+                    </div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLsexual1textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLsexual1textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLsexual2textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLsexual2textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLsexual3textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLsexual3textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLsexual4textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLsexual4textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLsexualComment" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLsexualComment)"></div>
+                </div>
+                <div ng-if="report.data['ActivitiesofDailyLiving'].ADLactivitysleep=='Comment'">
+                    <br>
+                    <br>
+                    <div class="DFRReportSubHeadingFontSize"><strong>Sleep</strong></div>
+                    <br>
+                    <div ng-if="adlCheck('sleep')">The employee's sleep is unaffected by the injury. </div>
+                    <div ng-repeat="rdoItem in report.data['selectinjuries'].concatedbodypart">
+                        <div>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sleep','Cannot perform activity at all')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} limits the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sleep','Cannot perform activity at all')"></span>.</span>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sleep','Only Pain')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} causes pain during (but does not limit) the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sleep','Only Pain')"></span>.</span>
+                            <span ng-if="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sleep','No limitations')">The {{(rdoItem.bdsides == 'n/a' || rdoItem.bdsides == 'none')? '' : (rdoItem.bdsides|lowercase)}} {{rdoItem.text == 'Other' ? rdoItem.bdpartother : rdoItem.text | lowercase}} {{rdoItem.bodysystem == 'Spine' ? 'spine':''}} does not limit or cause pain during the <span ng-bind-html="adlTextFlavorA('ActivitiesofDailyLiving',rdoItem.concateId,'sleep','No limitations')"></span>.</span>
+                        </div>
+                    </div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLsleep1textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLsleep1textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLsleep2textarea" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLsleep2textarea)"></div>
+                    <div ng-if="report.data['ActivitiesofDailyLiving'].ADLsleepComment" ng-bind-html="appendPeriod(report.data['ActivitiesofDailyLiving'].ADLsleepComment)"></div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End ADL Section-->
+
+<!-- Start hip activity-->
+<div ng-repeat="rdoItem in report.data['selectinjuries'].concatedbodypart | unique:'id'">
+    <div>
+        <div ng-if="rdoItem.id =='pelviship'">
+            <div ng-if="report.data['hipactivities'].ADLhipActivities=='Normal' || report.data['hipactivities'].ADLhipActivities=='Comment' ">
+                <div ng-if="report.data['hipactivities'].ADLhipActivities=='Normal'">
+                    <br>
+                    <div class="DFRReportSubHeadingFontSize"><strong>Hip Activities</strong></div>
+                    The employee reports that hip-related activities are normal. {{report.data['bginfo'].gender=='Male'? 'He': 'She'}} can walk distances without limit, can climb stairs as usual, can sit in any chair for an hour or more, can easily put on shoes and socks, and can use public transportation.
+                </div>
+                <div ng-if="report.data['hipactivities'].ADLhipActivities=='Comment' && checkExistHip()">
+                    <br>
+                    <div class="DFRReportSubHeadingFontSize"><strong>Hip Activities</strong></div>
+                    <!--Walking Distance-->
+                    <div ng-if="report.data['hipactivities'].chkWalkingDistance">
+                        <div ng-if="report.data['hipactivities'].chkWalkingDistance[0]=='Walking distance'">
+                            <span ng-if="report.data['hipactivities'].ddlWalkingOptions">
+                                <span ng-if="report.data['hipactivities'].ddlWalkingOptions=='Normal'">{{report.data['bginfo'].gender=='Male'? 'He': 'She'}} can walk normally without limits from the hip injury.
+                                </span>
+                                <span ng-if="report.data['hipactivities'].ddlWalkingOptions=='Six blocks (660 yds)'">{{report.data['bginfo'].gender=='Male'? 'He': 'She'}} can walk up to six blocks (660 yds).
+                                </span>
+                                <span ng-if="report.data['hipactivities'].ddlWalkingOptions=='Three blocks (330 yds)'">{{report.data['bginfo'].gender=='Male'? 'He': 'She'}} can walk up to three blocks (330 yds).
+                                </span>
+                                <span ng-if="report.data['hipactivities'].ddlWalkingOptions=='Limited to indoors'">{{report.data['bginfo'].gender=='Male'? 'His': 'Her'}} walking distance is confined to indoors.
+                                </span>
+                                <span ng-if="report.data['hipactivities'].ddlWalkingOptions=='Limited to bed'">The hip injury limits activity to bedrest only.
+                                </span>
+                                <span ng-if="report.data['hipactivities'].ddlWalkingOptions=='Limited to chair'">The hip injury limits walking distance to chair-to-chair transfer only.
+                                </span>
+                            </span>
+                            <span ng-bind-html="appendPeriod(report.data['hipactivities'].ADLhipActivitiesWalkingTextarea)"></span>
+                        </div>
+                    </div>
+                    <!--Stair Climbing-->
+                    <div ng-if="report.data['hipactivities'].chkStairClimbing">
+                        <span ng-if="report.data['hipactivities'].chkStairClimbing[0]=='Stair Climbing'">
+                            <span ng-if="report.data['hipactivities'].ddlClimbingOptions=='Normal'">{{report.data['bginfo'].gender=='Male'? 'His': 'Her'}} ability to climb stairs is unaffected by the injury.
+                            </span>
+                            <span ng-if="report.data['hipactivities'].ddlClimbingOptions=='Must use railing'">To climb stairs, {{report.data['bginfo'].gender=='Male'? 'he': 'she'}} must use railing.                          
+                            </span>
+                            <span ng-if="report.data['hipactivities'].ddlClimbingOptions=='Cannot climb readily'">{{report.data['bginfo'].gender=='Male'? 'He': 'She'}} cannot climb stairs readily.
+                            </span>
+                            <span ng-if="report.data['hipactivities'].ddlClimbingOptions=='Unable to climb'">{{report.data['bginfo'].gender=='Male'? 'He': 'She'}} cannot climb stairs.
+                            </span>
+                            <span ng-bind-html="appendPeriod(report.data['hipactivities'].ADLhipActivitiesClimbingTextarea)"></span>
+                        </span>
+                    </div>
+                    <!--Sitting-->
+                    <div ng-if="report.data['hipactivities'].chkSitting">
+                        <span ng-if="report.data['hipactivities'].chkSitting[0]=='Sitting'">
+                            <span ng-if="report.data['hipactivities'].ddlSittingOptions">
+                                <span ng-if="report.data['hipactivities'].ddlSittingOptions=='Normal'">{{report.data['bginfo'].gender=='Male'? 'He': 'She'}} can sit normally.
+                                </span>
+                                <span ng-if="report.data['hipactivities'].ddlSittingOptions=='Can only sit on high chair'">{{report.data['bginfo'].gender=='Male'? 'He': 'She'}} can only sit on high chairs.
+                                </span>
+                                <span ng-if="report.data['hipactivities'].ddlSittingOptions=='Unable to sit comfortably'">{{report.data['bginfo'].gender=='Male'? 'He': 'She'}} cannot sit comfortably.
+                                </span>
+                            </span>
+                            <span ng-bind-html="appendPeriod(report.data['hipactivities'].ADLhipActivitiesSittingTextarea)"></span>
+                        </span>
+                    </div>
+                    <!--Putting on shoes and socks-->
+                    <div ng-if="report.data['hipactivities'].chkPuttingShoes">
+                        <span ng-if="report.data['hipactivities'].chkPuttingShoes[0]=='Putting on shoes and socks'">
+
+                            <span ng-if="report.data['hipactivities'].ddlPuttingShoesOptions=='Normal'">{{report.data['bginfo'].gender=='Male'? 'His': 'Her'}} ability to put on shoes and socks is not disrupted by the hip injury.
+                            </span>
+                            <span ng-if="report.data['hipactivities'].ddlPuttingShoesOptions=='Can perform with difficulty'">It is difficult for {{report.data['bginfo'].gender=='Male'? 'him': 'her'}} to put on shoes and socks.                            
+                            </span>
+                            <span ng-if="report.data['hipactivities'].ddlPuttingShoesOptions=='Unable to perform'">{{report.data['bginfo'].gender=='Male'? 'He': 'She'}} is unable to put on shoes and socks due to the hip injury.
+                            </span>
+
+                            <span ng-bind-html="appendPeriod(report.data['hipactivities'].ADLhipActivitiesPuttingShoesTextarea)"></span>
+                        </span>
+                    </div>
+                    <!--Public transportation-->
+                    <div ng-if="report.data['hipactivities'].chkPublicTransportation">
+                        <span ng-if="report.data['hipactivities'].chkPublicTransportation[0]=='Public transportation'">
+                            <span ng-if="report.data['hipactivities'].ddlPublicTransportationOptions">
+                                <span ng-if="report.data['hipactivities'].ddlPublicTransportationOptions=='Able to use (with or without difficulty)'">{{report.data['bginfo'].gender=='Male'? 'He': 'She'}} is capable of using public transit.
+                                </span>
+                                <span ng-if="report.data['hipactivities'].ddlPublicTransportationOptions=='Unable to use'">{{report.data['bginfo'].gender=='Male'? 'He': 'She'}} is unable to use public transit due to the hip injury.
+                                </span>
+                            </span>
+                            <span ng-bind-html="appendPeriod(report.data['hipactivities'].ADLhipActivitiesPublicTransportationTextarea)"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Hip activity -->
+
+<!-- End ADL Section-->

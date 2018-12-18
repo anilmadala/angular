@@ -1,0 +1,48 @@
+﻿<div ng-controller="addanothermrictdignostictestresultCtrl">
+    <label>{{label}}</label>
+	<span ng-if="label=='MRI'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    &nbsp;&nbsp;&nbsp;
+    <button type="button" ng-click="addTodos()" class="btn btn-default btn-circle btn-success">
+        <span class="glyphicon glyphicon-plus"></span>
+    </button>
+    <div ng-repeat="todo in todos.slice().reverse()" class="col-sm-12 checkbox" style="padding: 5px;">
+        <hr />
+        <div class="col-sm-12 margin-left-1">
+            <div class="col-sm-2">
+                <span>Date:</span>
+            </div>
+            <div class="col-sm-3">
+                <!--<input ui-date="dateOptions" style="cursor: pointer" class="form-control" ui-date-format="dd-MM-yy" placeholder="MM/DD/YYYY" ng-model="todo.dateofinjury" ng-required="true">-->
+                <input ui-date="dateOptions" style="cursor: pointer" class="form-control" placeholder="MM/DD/YYYY" ng-model="todo.dateofinjury" ng-required="true">                
+            </div>
+            <div class="text-center col-sm-4">
+                <button type="button" class="btn btn-info btn-xs" ng-click="clearbodypart($index+1,todos.length)">Clear</button>
+                <button type="button" class="btn btn-danger btn-xs" ng-click="deletebodypart($index+1,todos.length)">Delete</button>
+            </div>
+        </div>
+        <div class="clearer"></div>
+        <!--<div class="col-sm-7 margin-left-2">
+            <label><input type="checkbox" id="Normal{{$index}}" name="Normal" ng-model="todo.Normal" value="Normal" />&nbsp;Normal</label>
+        </div>
+        <div class="col-sm-7 margin-left-2">
+            <label><input type="checkbox" id="Checkbox1{{$index}}" name="Checkbox1" ng-model="todo.Fracture " value="Fracture" />&nbsp;Fracture</label>
+        </div>
+        <div class="col-sm-7 margin-left-2">
+            <label><input type="checkbox" id="Checkbox2{{$index}}" name="Checkbox2" ng-model="todo.Arthritis_degenerative_joint_changes" value="Arthritis/degenerative joint changes" />&nbsp;Arthritis/degenerative joint changes</label>
+        </div>
+        <div class="col-sm-7 margin-left-2">
+            <label><input type="checkbox" id="Checkbox3{{$index}}" name="Checkbox3" ng-model="todo.Alteration_of_segment_integrity" value="Alteration of segment integrity" />&nbsp;Alteration of segment integrity</label>
+        </div>
+        <div class="col-sm-7 margin-left-2">
+            <label><input type="checkbox" id="Checkbox4{{$index}}" name="Checkbox4" ng-model="todo.Disk_herniation" value="Disk herniation" />&nbsp;Disk herniation</label>
+        </div>-->
+        <div class="col-sm-11 margin-left-2">
+            <button type="button" class="btn btn-info btn-xs" ng-click="todo.isEdit=false">
+                Text
+            </button>
+            <div class="" ng-if="todo.isEdit==false">
+                <textarea ui-tinymce ng-model="todo.TextA"></textarea>
+            </div>
+        </div>
+    </div>
+</div>

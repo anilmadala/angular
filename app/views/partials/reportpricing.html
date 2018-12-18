@@ -1,0 +1,53 @@
+﻿<section id="login" class="visible">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 col-md-offset-3 col-sm-7 col-sm-offset-3">
+                <div class="login-box-plain">
+                    <div class="login-sign text-center">
+                        <h3>Report Pricing</h3>
+                        <a><span class="glyphicon glyphicon-user"></span></a>
+                    </div>
+                <div class="divide-40"></div>
+                <!--  <form role="form"> -->
+                <form class="form" name="form" ng-submit="reportPricing(form)">
+                    <!-- Form Type -->
+                    <div class="form-group" >
+                        <label for="exampleInputEmail1">Form Type</label>
+                        <i class="fa fa-envelope"></i>
+                        <select class="form-control" ng-model="pricing.formtype" required>
+                            <option value="">--Choose--</option>
+                            <option value="dfr">DFR</option>
+                            <option value="pr2">PR-2</option>
+                            <option value="pr4">PR-4</option>
+                        </select>
+                    </div>
+
+                    <!-- User Name -->
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">{{pricing.formtype | uppercase}} Price</label>
+                        <i class="fa fa-envelope"></i>
+                        <!-- <input type="email" class="form-control" id="exampleInputEmail1"> -->
+                        <input type="text" name="pricing" class="form-control" ng-model="pricing.pricing" required>
+                    </div>
+
+                    <div class="form-group has-error">
+                        <p class="help-block" ng-show="form.formtype.$error.required && form.pricing.$error.required  && submitted">
+                        </p>
+                        <p class="help-block">{{ errors.other }}</p>
+                    </div>
+
+                    <!-- <button type="submit" class="btn btn-lg btn-primary"> Sign in </button> -->
+                    <div class="form-actions text-center">
+                        <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+

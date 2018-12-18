@@ -1,0 +1,118 @@
+<style type="text/css">
+    .clearnone:after {
+        clear: none !important;
+    }
+
+    .form-group {
+        margin-bottom: 0px;
+    }
+
+    .panel {
+        background-color: #cee39b!important;
+        border: none!important;
+    }
+
+    .panel-body {
+        padding: 0!important;
+    }
+
+    .panel-default > .panel-heading {
+        background-color: #cee39b!important;
+        padding: 0!important;
+    }
+
+    .panel-group .panel-heading + .panel-collapse .panel-body {
+        border-top: none!important;
+    }
+
+    .panel-heading {
+        background: none!important;
+    }
+
+    .panel-title > a {
+        color: #1C2F3A;
+        font-size: 12px;
+        padding: 7px 15px;
+        margin: 0;
+        display: block;
+        border-bottom: 1px solid #a1cd3a;
+        text-decoration: none;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .form-horizontal .form-group {
+        margin-right: 0!important;
+        margin-left: 0!important;
+    }
+
+    .select2-container {
+        border-left: solid 1px rgb(158, 149, 149);        
+    }
+</style>
+<div class="row">
+    <section class="prev-head">
+        <div class="text-center">
+            {{formtitles}} Version {{formVersion}}
+            <div class="close">
+                <a ng-click="cancel()">
+                    <img src="/images/close.png" alt="Close" />
+                </a>
+            </div>
+        </div>
+    </section>
+    <div class="col-sm-3 left-bar">
+        <ul id="features-menu" class="sidebar nav-bar vertical">
+            <accordion close-others="true">
+            <div data-ng-repeat="section in report.sections">
+                <li ng-if="section.type == 'section'">
+                    <a class="section-head"
+                        ng-click="currentsectionchange(section, $index)">{{section.sectionname}}</a>
+                </li>               
+                <accordion-group ng-if="section.type == 'bodypart'" is-open="isopen" >
+                    <accordion-heading >
+                        <div ng-click="currentsectionchange(section, $index)" >{{section.sectionname}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+</div>
+                    </accordion-heading>
+                    <div ng-if="section.type == 'bodypart'">
+                        <li ng-repeat="s in getSection(section.modal)">
+                            <a ng-click="gettemplate(section,s,$index)">{{s}}</a>
+                        </li>
+                    </div>
+                 </accordion-group>
+            </div>
+            </accordion>
+        </ul>
+    </div>
+    <div class="col-sm-9">
+        <div class="col-sm-9">
+            <h4 class="section-current">{{currentsection}} <span ng-show="currentbodypart">- {{currentbodypart}}</span>
+            </h4>
+        </div>
+        <div class="col-sm-3" style="margin-top: 8px;">
+            <a class="btn btn-success btn-xs inline" ng-click="clearformData()">Clear Data</a>
+            <a class="btn btn-success btn-xs inline" ng-click="submit(currentsection)">Validate</a>
+        </div>
+        <div class="col-sm-12" style="height: 700px; overflow: auto;">
+            <form class="form-horizontal panel-body">
+                <div ng-repeat="s in report.sections | filter:currentsection:true">
+                    <div class="form-group" ng-if="!currentbodypart">
+                        <section ng-model="report.data[s.sectiondataid]" fb-form="{{s.sectiondataid}}" fb-default="defaultValue[s.sectiondataid]"></section>
+                    </div>
+                    <div ng-if="currentbodypart" ng-repeat="bodypart in getSection(s.modal) | filter:currentbodypart">
+                        <div ng-model="report.data[s.sectiondataid+bodypart]" fb-form="{{s.sectiondataid+bodypart}}" fb-default="defaultValue[s.sectiondataid+bodypart]"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--<div class="panel-footer clearer">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="isShowScope" />
+                Show scope
+            </label>
+        </div>
+        <pre ng-if="isShowScope" style="height: 400px; overflow: auto;">{{report.data | json}}</pre>
+    </div>-->
+</div>

@@ -1,0 +1,35 @@
+<div class="panel panel-default">
+    <div class="panel-heading text-center">
+        <h3 class="panel-title">Sections <span ng-click="open()"
+            class="glyphicon glyphicon-plus-sign pull-right"
+            style="cursor: pointer; color: #ccc"></span></h3>
+    </div>
+    <div class="panel-body text-center" ui-sortable ng-model="report.sections">
+        <div data-ng-repeat="section in report.sections | orderBy : index:true" class="col-md-offset-1">
+            <label ng-if="section.type == 'section' || 'bodypart'">
+                <a class="{{section.class}}" ng-class="$index == selectedIndex ? 'btn btn-info btn-xs' : 'btn btn-warning btn-xs'" ng-click="currentsectionchange(section,$index)">{{section.sectionname}}</a>
+            </label>
+            <label ng-show="section.type == 'label'" class="{{section.class}}" style="cursor: pointer;">
+                {{section.sectionname}}           
+            </label>
+            <label ng-show="section.type == 'blank'" style="cursor: pointer;">
+                <br />
+            </label>
+            <div class="pull-right">
+                <span class="glyphicon glyphicon-edit" style="cursor: pointer" ng-click="editsection(section)"></span>&nbsp;
+                <span class="glyphicon glyphicon-trash" style="cursor: pointer" ng-click="deletesection(section)"></span>
+            </div>
+        </div>
+    </div>
+    <ul ui-sortable="sortableOptions" ng-model="items">
+        <li ng-repeat="item in items">{{ item }}</li>
+    </ul>
+</div>
+
+<div class="floatleft" style="margin-left: 20px;">
+    <ul class="list logList">
+        <li ng-repeat="entry in sortingLog" class="logItem">{{entry}}
+        </li>
+    </ul>
+</div>
+

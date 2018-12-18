@@ -1,0 +1,80 @@
+<style type="text/css">
+    p {
+    font-size: 16px;
+    font-weight: 700;
+    }
+    .testimonial {
+    padding: 2em 0;
+    }
+    .testimonial div {
+    padding-bottom: 1em;
+    }
+
+    @media only screen and (min-width : 992px) {
+
+        .quote {
+            background-image: url('images/lquote.png');;
+            background-position: 0% 0%;
+            background-size: auto auto;
+            background-repeat: no-repeat;
+            background-origin: padding-box;
+            background-clip: border-box;
+            background-attachment: scroll;
+            background-color: transparent;
+            padding-left: 75px;
+
+        }
+    }
+    @media only screen and (max-width : 992px) {
+
+        .quote p:after, .quote p:before {
+            content: '"';
+        }
+    }
+    </style>
+<div class="blogs">
+    <div class="bright">
+        <section id="header-title">
+            <div class="container">
+                <div class="row">
+                    <h2>Testimonials</h2>
+                </div>
+            </div>
+        </section>
+        <div class="container">
+			 <div class="row">
+                <div class="col-sm-12">
+					<div class="col-sm-11"">						
+						<div class="col-sm-10 col-sm-offset-1">
+							<p>Here's what some of our current customers have to say about using RateFast.</p>
+							<p>If you would like to share your experience with RateFast, <a href="/contact">get in touch.</a></p>
+						</div>
+					</div>		
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-sm-11" data-ng-controller="TestimonialController" data-ng-init="findPaged(1)">						
+						<div class="col-sm-10 col-sm-offset-1 testimonial" data-ng-repeat="testimonial in testimonials">								
+							<div class="col-sm-8 quote">
+								<p>{{testimonial.content}}</p>
+							</div>
+							<div class="col-sm-4 text-center">
+								<img class="img-responsive center-block" src="images/{{testimonial.image}}" />
+								<h3><a href="{{testimonial.url}}" target="_blank">{{testimonial.author}}</a></h3>
+								<p>{{testimonial.specialization}}</p>
+							</div>
+						</div>
+						<h3 data-ng-hide="!testimonials || testimonials.length" class="alert alert-dismissable alert-warning">No testimonials yet.
+                        <br />
+                            Please visit next time to view our testimonials.
+                        </h3>
+                        <!--<div>
+                        <pagination total-items="totalItems" page="currentPage" items-per-page="itemsperpage" max-size="maxsize" on-select-page="findPaged(page)" class="pagination-sm" boundary-links="true"></pagination> 
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+﻿<div ng-controller="painassessmentloopCtrl" ng-init="initFunction()">
+    <br />
+    <div ng-if="populatedata">
+        <label>Effects of Medication</label>&nbsp;<a ng-click="popupMessage('Medication may impact the individual’s signs, symptoms, and ability to function. The physician may choose to increase the impairment estimate by a small percentage (1% to 3%) to account for effects of treatment.',300)"><b>(i)</b></a><br />
+    </div>
+    <div ng-repeat="item in populatedata">{{item.bodypartname}}: {{item.text}}<br />
+    </div>
+    <br />
+</div>

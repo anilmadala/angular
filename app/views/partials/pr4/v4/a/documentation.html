@@ -1,0 +1,27 @@
+<!--Documentation-->
+<div class="DFRReportHeadingFontSize">
+    <br />
+    <strong>Documentation</strong>
+</div>
+<div class="divMain">
+    <div ng-if="report.data['documentation'].docmedicalrecordchkbx.length>=1">{{report.data['documentation'].docmedicalrecordchkbx | map | capitalize}} were reviewed.</div>
+    <div ng-if="report.data['documentation'].medicalrecordsOtherText" ng-bind-html="appendPeriod(report.data['documentation'].medicalrecordsOtherText)"></div>
+    <div ng-if="report.data['documentation'].docmedicalrecordchkbx.length>0">This information was necessary for the formulation of medical opinions.</div>
+</div>
+<div>
+    <br>
+	I declare under penalty of perjury that: 1) I have not violated the provisions of California Labor Code Section 139.3 with regard to the evaluation of this patient or the preparation of this report; 2) I have reviewed the report for internal consistency and compliance with the {{report.data['bginfo']['administrativerule']}}; 3) My evaluation of the patient was performed and the time spent performing the evaluation was in compliance with the guidelines established by the Industrial Medical Council and/or the administrative director pursuant to paragraph (6) of subdivision (j) of Section 139.2 and Section 5307.6 of the California Labor Code; 4) I personally performed the evaluation of the patient and am responsible for the accuracy and completeness of the information and report; 5) I personally performed the cognitive services necessary to produce the report; 6) I have reviewed this report and if adopted as my opinion, I have done so based upon the exercise of my own independent medical judgment; 7) The information contained in this report and its attachments, if any, is true and correct to the best of my knowledge and belief; and 8) As to information that was provided by others, such information accurately describes the information provided to me and, except as noted here in, and I believe such information to be true. This report was composed, in part, using RateFast. RateFast is owned and operated by Alchemy Logic Systems, Inc. and was developed in part by John W. Alchemy M.D., President of Alchemy Logic Systems, Inc.
+	<br/>
+</div>
+
+<div ng-if="report.data['documentation'].doctdreview || report.data['documentation'].doctdface || report.data['documentation'].doctdprepare" class="DFRReportHeadingFontSize">
+    <br />
+    <strong>Time Disclaimer</strong><br />
+</div>
+
+<div ng-if="report.data['documentation'].doctdreview || report.data['documentation'].doctdface || report.data['documentation'].doctdprepare">I verify under penalty of perjury that the total time I spend on the following activities is true and correct:</div>
+<!--<div ng-if="report.data['documentation'].doctdreview">It took me <span ng-if="report.data['documentation'].doctdreview>1">{{getAbsValue(report.data['documentation'].doctdreview)}}&nbsp;minutes&nbsp;</span><span ng-if="report.data['documentation'].doctdreview==1">{{getAbsValue(report.data['documentation'].doctdreview)}}&nbsp;minute&nbsp;</span>to review the medical records.</div>-->
+<div ng-show="report.data['documentation'].doctdreview>0" ng-if="report.data['documentation'].doctdreview">It took me <span ng-if="report.data['documentation'].doctdreview>1">{{getAbsValue(report.data['documentation'].doctdreview)}}&nbsp;minutes&nbsp;</span><span ng-if="report.data['documentation'].doctdreview==1">{{getAbsValue(report.data['documentation'].doctdreview)}}&nbsp;minute&nbsp;</span>to review the medical records.</div>
+<div ng-if="report.data['documentation'].doctdface">I spent <span ng-if="report.data['documentation'].doctdface>1">{{getAbsValue(report.data['documentation'].doctdface)}}&nbsp;minutes&nbsp;</span><span ng-if="report.data['documentation'].doctdface==1">{{getAbsValue(report.data['documentation'].doctdface)}}&nbsp;minute&nbsp;</span>face-to-face time with the patient.</div>
+<div ng-if="report.data['documentation'].doctdprepare">Complete preparation of this entire report took me <span ng-if="report.data['documentation'].doctdprepare>1">{{getAbsValue(report.data['documentation'].doctdprepare)}}&nbsp;minutes.&nbsp;</span><span ng-if="report.data['documentation'].doctdprepare==1">{{getAbsValue(report.data['documentation'].doctdprepare)}}&nbsp;minute.</span></div>
+<!--Documentation-->

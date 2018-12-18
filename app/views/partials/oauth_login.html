@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>Page Title</title>
+	</head>
+	<body>
+		<div style="margin:0 auto;font-size:14px;width:300px;">
+			<h1>Welcome to RateFast.</h1>
+			<form action="/api/oauth2/authorize/login?client_id=<%= rebody.client_id %>&response_type=<%= rebody.response_type %>&redirect_uri=<%= rebody.redirect_uri %>" style="margin-left:40px;" method="post">
+				<div>
+					<label><div style="width:150px">Prcaticename:</div></label>
+					<input type="text" name="practicename"/><br/>
+				</div>
+				<div>
+					<label ><div style="width:150px">Username:</div></label>
+					<input type="text" name="username"/><br/>
+				</div>
+				<div>
+					<label ><div style="width:150px">Password:</div></label>
+					<input type="password" name="password"/>
+				</div>
+				<div>
+				<br/>
+				<input type="submit" value="Submit"/>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

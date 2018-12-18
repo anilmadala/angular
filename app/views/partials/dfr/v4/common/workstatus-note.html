@@ -1,0 +1,123 @@
+<!-- Work status note starts here -->
+<div ng-repeat="workStatusData in report.data.workStatusNote" style="padding:10px;margin-left:2px;margin-right:2px;border:2px solid #e8e8e8;margin-top:5px;margin-bottom:5px;">
+    <br clear="all" style="page-break-before:always" />
+    <div ng-if="workStatusData.faxHeader" style="padding:15px;margin-bottom:25px;">
+        <div>
+            <h1 style="text-align:center">Employee Work Status</h1>
+            <br/>
+            <br/>
+            <div style="width:100%;text-align:right">Date: {{workStatusData.faxHeader.currentDate}}</div>
+            <div style="width:100%;text-align:right">Time: {{workStatusData.faxHeader.currentTime}}</div>
+            <br/>
+            <br/>
+            <div style="width:100%;text-align:left" > {{workStatusData.faxHeader.toHeader}} 
+				<br/> {{workStatusData.faxHeader.recipientName}}
+				<span ng-if="workStatusData.faxHeader.company"> {{workStatusData.faxHeader.company}} </span>
+				<span ng-if="workStatusData.faxHeader.recipientfaxnumber">, {{workStatusData.faxHeader.recipientfaxnumber}} </span>	
+			</div>
+            <br/>
+            <br/>
+            <div style="width:100%;text-align:right" ></div>
+            <div>
+                <span ng-if="workStatusData.faxHeader.recipientRemark">Comment : 
+                    <br/> {{workStatusData.faxHeader.recipientRemark}}
+                </span>
+            </div>
+            <br/>
+            <div>
+                <span ng-if="workStatusData.faxHeader.sendername">From: {{workStatusData.faxHeader.sendername}}</span>
+            </div>
+            <div> {{workStatusData.faxHeader.senderlocationname}}</div>            
+            <div>{{workStatusData.faxHeader.currentSelCliniclocation.street}}</div>
+            <div>{{workStatusData.faxHeader.currentSelCliniclocation.city}},&nbsp;{{workStatusData.faxHeader.currentSelCliniclocation.state}},&nbsp;{{workStatusData.faxHeader.currentSelCliniclocation.zipcode}}</div>
+            <br/>
+            <div>
+                <span ng-if="workStatusData.faxHeader.senderphonenumber">Phone: {{workStatusData.faxHeader.senderphonenumber}} 
+                    <span ng-if="workStatusData.faxHeader.senderphoneextension"> &nbsp;&nbsp;ext.{{workStatusData.faxHeader.senderphoneextension}}</span>
+                </span>
+            </div>
+            <br/>
+            <div>
+                <span ng-if="workStatusData.faxHeader.senderemail">Email: {{workStatusData.faxHeader.senderemail}}</span>
+            </div>
+            <br/>
+            <div>
+                <span ng-if="workStatusData.faxHeader.senderfaxnumber">Sender Fax Number:  {{workStatusData.faxHeader.senderfaxnumber}}</span>
+            </div>
+            <br/>
+            <br/>
+            <div> This fax contains confidential information. If you are not the intended recipient, you are hereby notified that any dissemination, distribution, copying, or taking any action based on it is strictly prohibited and may have legal consequences. If you have received this fax in error, please notify the sender and destroy the original message and all copies. </div>
+        </div>
+        <br clear="all" style="page-break-before:always" />
+    </div>
+    <div>
+        <div style="font-size: 14px; text-align: center;" class="row">
+            <div class="col-md-12 text-center"></div>
+            <div class="col-md-12 text-center sectionToDelFromDocx">{{workStatusData.cliniclocationobj.street}}</div>
+            <div class="col-md-12 text-center sectionToDelFromDocx">{{workStatusData.cliniclocationobj.city}}, {{workStatusData.cliniclocationobj.state}} {{workStatusData.cliniclocationobj.zipcode}}</div>
+            <div class="col-md-12 text-center sectionToDelFromDocx" >{{workStatusData.phonenumber | phonenumberFormat}}
+                <span ng-if="workStatusData.extension"> &nbsp;&nbsp;ext. {{workStatusData.extension}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12"></div>
+            <div class="col-md-12">{{workStatusData.patientFirstname}}&nbsp;{{workStatusData.patientMiddlename?' ' + workStatusData.patientMiddlename : ''}}&nbsp;{{workStatusData.patientLastname}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h5>
+                    <span>
+                        <strong>Work Status</strong>
+                    </span>
+                </h5>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">{{workStatusData.wsPublishSectionRoot}}</div>
+            <div style="margin-top: 20px; margin-bottom: 20px;" class="col-md-12">{{workStatusData.wsPubSecWorkRest}}</div>
+            <div style="margin-bottom: 20px;" class="col-md-12">{{workStatusData.wsPubSecEnvRest}}</div>
+            <div class="col-md-12">{{workStatusData.wsClinicFollowUpPlan}}</div>
+        </div>
+        <table style="clear: both;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
+            <tbody>
+                <tr>
+                    <td style="width: 100%;">
+                        <table border="0" width="100%" cellspacing="0" cellpadding="0">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 30%;">
+                                        <table border="0" width="100%" cellspacing="0" cellpadding="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width: 100%; text-align: left;">
+                                                        <div style="text-align: left;" class="col-md-12">Work status note printed by: {{workStatusData.currentUser.firstname}} {{workStatusData.currentUser.lastname}}
+                                                            <span ng-if="workStatusData.currentDate!=''"> on {{workStatusData.currentDate | date:'MM/dd/yyyy'}} at {{workStatusData.currentDate | date:'hh:mm a'}}</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 100%; text-align: left;">
+                                                        <div style="text-align: left;" class="col-md-12">
+                                                            <div ng-if="workStatusData.doctorInfo">Treating physician: {{workStatusData.doctorInfo.firstname}} {{workStatusData.doctorInfo.lastname}} {{workStatusData.doctorProfession}}</div>Date of exam: 
+                                                            <span ng-bind="(workStatusData.currentexamdate | date:'MMMM d, y')"></span>
+                                                            <div ng-if="workStatusData.phonenumber">Phone: {{workStatusData.phonenumber | phonenumberFormat}}
+                                                                <span ng-if="workStatusData.extension"> &nbsp;&nbsp;ext. {{workStatusData.extension}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div ng-init="loader_handler(false)"></div>
+<!-- Work status note ends here -->

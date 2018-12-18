@@ -1,0 +1,115 @@
+<div class="patient" data-ng-controller="PatientCtrl">
+    <div class="bright">
+        <section id="header-title" style="margin-bottom: 0;">
+            <div class="container">
+                <div class="row">
+                    <h2 style="text-align: left;">Oauth Settings</h2>
+                </div>
+            </div>
+        </section>
+        <!----    Create New Patient    ---->
+        <section style="margin-top: 15px;">
+            <div class="container">
+              <div class="row">
+                        <div id="serverresponse"  style="display:none;" class="alert alert-danger alert-dismissible fade in" role="alert"> 
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button> 
+                            <h4>{{alertHeader}}</h4>
+                            <p>{{alertBody}}</p> 
+												</div>
+												<div id="serverresponseSuccess"  style="display:none;" class="alert alert-success alert-dismissible fade in" role="alert"> 
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button> 
+                            <h4>{{alertHeader}}</h4>
+                            <p>{{alertBody}}</p> 
+												</div>
+                  
+                  <!-- start here client creation-->
+                  <!--<form role="form" class="form col-md-4" name="form" ng-submit="createClient(form)" novalidate>
+                    <div class="box-body">
+                        
+                        
+                        <div class="form-group has-feedback" ng-class="{ 'has-success': form.username.$valid && submitted,'has-error': form.username.$invalid && submitted }">
+                            <input type="text" class="form-control" placeholder="username" name="username" ng-model="client.name" required>
+                            
+                        </div>
+                        <p class="help-block error" ng-show="form.username.$error.required && submitted">
+                                * Please enter user_name
+                        </p>
+                        
+                        <div class="form-group has-feedback" ng-class="{ 'has-success': form.secret.$valid && submitted,'has-error': form.secret.$invalid && submitted }" >
+                            <input type="text" class="form-control" placeholder="secret" name="secret" ng-model="client.secret" required>
+                            
+                        </div>
+                        <p class="help-block error" ng-show="form.secret.$error.required && submitted">
+                                * Please enter secret
+                        </p>
+                        
+                        <div class="form-group has-feedback" ng-class="{ 'has-success': form.id.$valid && submitted,'has-error': form.id.$invalid && submitted }" >
+                            <input type="text" class="form-control" placeholder="id" name="id" ng-model="client.id" required>
+                            
+                        </div>
+                        <p class="help-block error" ng-show="form.id.$error.required && submitted">
+                                * Please enter id
+                        </p>
+                                     
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn rc-buttons btn-flat btn-lg">Create Client</button>
+                        <button type="reset" ng-click="restForm()" class="btn rc-buttons  btn-flat">Reset</button>
+                    </div>
+                </form>-->
+                <div class="panel panel-default" ng-show="clientsList.length==0">
+                    <div class="panel-heading"><h4>Enable Oauth</h4></div>
+                    <div class="panel-body">
+                        <form role="form" class="form col-md-4" name="form" ng-submit="createClient(form)" novalidate>
+                            <div class="form-group has-feedback" ng-class="{ 'has-success': form.appname.$valid && submitted,'has-error': form.appname.$invalid && submitted }" >
+                                <input type="text" class="form-control" placeholder="appname" name="appname" ng-model="client.appname" required>
+                            </div>
+                            <p class="help-block error" ng-show="form.appname.$error.required && submitted">
+                                    * Please enter Application Name
+                            </p>
+                            <button type="submit" class="btn rc-buttons btn-flat">Enable Oauth</button>
+                        </form>
+                    </div>
+                </div>
+									<div ng-show="clientsList.length>0" class="alert alert-success alert-dismissible fade in" role="alert"> 
+											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+													<span aria-hidden="true">×</span>
+											</button> 
+											<h4>Enable Oauth</h4>
+											<p>Oauth is enabled for this user.</p> 
+									</div>
+              </div>
+            </div>
+        </section>
+        <section style="margin-top: 15px;">
+            <div class="container" ng-show="clientsList.length>0">
+                <table class="table table-bordered table-condensed" >
+                    <thead class="">
+                        <tr>
+                            <th><b>Name</b></th>
+														<th><b>App ID/ Client Id</b></th>
+                            <th><b>Secret</b></th>
+                            <th><b>Deactivate</b></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="cli in clientsList">
+                            <td>{{cli.name}}</td>
+														<td>{{cli.id}}</td>
+                            <td>{{cli.secret}}</td>
+                            <td> 
+                                <span >
+                                    <button class="rc-buttons" ng-click="deleteClient(cli)">Delete</button>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>

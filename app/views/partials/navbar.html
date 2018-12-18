@@ -1,0 +1,207 @@
+<div id="disableNavbar" class="navbar navbar-fixed-top navbar-bold top-head" style="position:relative" data-spy="affix" data-offset-top="1000"
+    ng-controller="NavbarCtrl" ng-hide="hideHeaderMenu">
+	<!-- Navigation for new pages added by Shridhar -->
+	 <!-- <div  ng-if="checkWebsitePages()==true" style="height: 40px; background-color: black; color: white;"> -->
+	 <div  ng-if="checkWebsitePages()==true" style="background-color: black; color: white;" ng-hide="hideHeaderMenu">
+			<div class="container" >
+				<div class="row"> 
+					<!-- <div class="col-sm-8 col-md-8" style="font-family:Helvetica Neue,Helvetica,Arial,sans-serif">
+						<h6 style="font-size:15px; font-weight: bold;">
+						<span ng-hide="currentUser">Questions?</span>
+						<span ng-show="currentUser">Need Help?</span>							
+						<span class="glyphicon glyphicon-earphone" style="margin-left: 30px">
+							 </span>&nbsp;<span>707.304.5949</span>
+							<span style="margin-left: 30px; font-weight: bold;" class="glyphicon glyphicon-envelope"></span>
+							<span>&nbsp;<a href="mailto:info@rate-fast.com" style="color:#fff">info@rate-fast.com</a></span>								
+						</h6>															
+					</div> -->
+					<div class="col-sm-8 col-md-8 col-xs-12" style="font-size:15px; font-weight: bold">
+						<div class="row hidden-md hidden-lg visible-xs-* visible-sm-*" style="margin:10px 0px 10px 0px">
+							<div class="col-sm-3 col-md-3 col-xs-12 text-center">
+								<span ng-hide="currentUser" class="">Questions?</span>
+								<span ng-show="currentUser" class="ng-hide">Need Help?</span>
+							</div>
+							<div class="col-sm-4 col-md-4 col-xs-12 text-center">
+								<span><i style="" class="glyphicon glyphicon-earphone">
+							 	</i>&nbsp;707.304.5949</span>
+							</div>
+							<div class="col-sm-4 col-md-4 col-xs-12 text-center">
+								<span><i class="glyphicon glyphicon-envelope"></i>&nbsp;<a style="color:#fff" href="mailto:info@rate-fast.com">info@rate-fast.com</a></span>
+							</div>
+						</div>	
+						<div class="row hidden-xs hidden-sm visible-lg-* visible-md-*" >
+							<h6 style="font-size:15px; font-weight: bold">
+								<span ng-hide="currentUser" class="">Questions?</span>
+								<span ng-show="currentUser" class="ng-hide">Need Help?</span>							
+								<span style="margin-left: 30px" class="glyphicon glyphicon-earphone">
+									 </span>&nbsp;<span>707.304.5949</span>
+									<span class="glyphicon glyphicon-envelope" style="margin-left: 30px; font-weight: bold"></span>
+									<span>&nbsp;<a style="color:#fff" href="mailto:info@rate-fast.com">info@rate-fast.com</a></span>								
+							</h6>
+						</div>														
+					</div>					
+					<!-- <div class="col-sm-4 col-md-4" style="font-family:Helvetica Neue,Helvetica,Arial,sans-serif"> -->
+					<div class="col-sm-4 col-md-4 col-xs-12 text-center" style="font-family:Helvetica Neue,Helvetica,Arial,sans-serif">
+						<div class="text-center" style="margin-top: 1px">
+						<h5>
+							<span ng-hide="currentUser" ng-class="{active: isActive('/login')}" style="margin-right: 30px">
+								<a href="/login" style="color: white; font-weight: bold;">Log In</a></span>			                    	
+							<span ng-hide="currentUser" ng-class="{active: isActive('/signup')}">
+								<a href="/signup" style="color: white; font-weight: bold;">Sign Up</a></span>
+							<span ng-show="currentUser" style="margin-right: 20px">
+								<a href="" style="color: white; font-weight: bold;" ng-click="backtoRatefast()">Back to RateFast App</a></span>
+							<span ng-show="currentUser" ng-class="{active: isActive('/logout')}">
+								<a href="" style="color: white; font-weight: bold;"  ng-click="logout()">Sign Out</a></span>			                    	
+						 </h5>
+						</div>				
+					</div>
+				</div>
+			</div>  
+	  </div> 
+	  <!-- End of Navigation for new pages by Shridhar -->
+    <div class="container">
+        <div class="navbar-header" style="position: relative;">
+            <a href="javascript:void(0)" ng-show="currentUser" class="navbar-brand">
+                <span ng-if="currentUser.practicename=='kmdsample' || currentUser.practicename=='kuramd'">
+					<img src="/images/kuramd.png" style="height: 52px"/><img src="/images/ratefastKura.png" style="height: 52px; margin-left: 20px"/>
+				</span>  
+				<span ng-if="currentUser.practicename!='kmdsample' && currentUser.practicename!='kuramd'">
+					<img src="/images/RateFast-Logo.png" />
+				</span>
+			</a>
+			<a ng-hide="currentUser" href="/" class="navbar-brand">
+                <img src="/images/RateFast-Logo.png" />
+			</a> 
+			<a class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false">
+				<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+			</a>
+            <!--<div id="changeState" class="select-state" id="selectState" ng-click="changeState()" ng-show="currentUser">
+                {{currentState}}
+            </div>-->
+			<span ng-if="currentUser.practicename!='kmdsample' && currentUser.practicename!='kuramd'">
+				<div class="select-state" ng-show="currentUser">
+					{{currentState}}
+				</div>
+			</span>
+            <!--<div class="select-state" ng-click="changeState()" ng-show="!checkStateSelected() && currentUser">
+                Select State
+            </div>-->
+        </div>
+		<div class="pull-right" id="data_save_msg_box" style="display:none">
+		  <h5 class="section-current" style="font-size:21px;margin-top:30px;">Your data has been saved</h5>
+		</div>		
+        <div id="hideNavbar">
+            <div class="navbar-collapse collapse" id="navbar">
+                 <div ng-show="checkWebsitePages()==true">
+                		<ul class="nav navbar-nav" style="font-weight: bold;">                		
+ 				<!--      <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}"><a ng-href="{{item.link}}">{{item.title}}</a> </li> -->
+		                    <li><a href="/">Home</a></li>
+		                    <li><a href="provider">Providers</a></li>                    
+		                    <li><a href="attorneys">Attorneys</a></li>
+		                    <li><a href="insurance">Insurance</a></li>
+		                    <li><a href="about">About</a></li>  
+		                    <li><a href="faq">FAQ</a></li>      							    
+		                    
+		                     <li><a class="dropdown-toggle" data-toggle="dropdown">Resources<b class="caret"></b></a>
+		                        <ul class="dropdown-menu">
+		                            <li><a href="inclinometer">Inclinometer</a></li>
+									 <li><a href="goniometer">Goniometer</a></li> 							                          
+		                            <!--<li><a href="sample">Sample</a></li>-->
+									<li><a href="testimonial">Testimonials</a></li>
+									<li><a href="security">Security</a></li>									
+		                        </ul>
+		                    </li>
+		                                                    
+		               		<li><a ng-href="http://blog.rate-fast.com" target="_blank">Blog</a> </li>
+		               		<li><a href="contact">Contact</a></li>   
+                		</ul>
+                 </div>
+				 <div ng-show="currentUser &&  checkWebsitePages()==false"> 
+                 <ul ng-show="currentUser && checkStateSelected()" class="nav navbar-nav">
+                    <li ng-if="!checkrole(['rater1','rater2'])"><a href="/admin/dashboard">
+                        <img src="/images/menu-home.png" alt="Home" title="Home" /></a></li>
+                    <li ng-if="checkrole(['rater1','rater2']) && currentState"><a href="/submittedreport">
+                        <img src="/images/menu-home.png" alt="Home" title="Home" /></a></li>
+                    <li ng-show="checkrole(['superadmin','siteadmin', 'admin level4', 'nonadmin level4']) && currentState"><a href="/unsignedreports">
+                        <img src="/images/menu-unsigned.png" alt="Unsigned Reports" title="Unsigned Reports" /></a></li>						
+                    <!--<li ng-show="!checkrole(['rater1','rater2']) && currentState"><a href="/addpatient">
+                        <img src="/images/menu-add-patient.png" alt="Add Patient" title="Add Patient" /></a></li>-->
+					
+					<!-- Athena changes -->	
+					<li ng-show="!checkrole(['rater1','rater2']) && currentState"><a href="" ng-click="checkPractice()">
+                       <img src="/images/menu-add-patient.png" alt="Add Patient" title="Add Patient" /></a></li>
+					<!-- Athena changes -->	
+
+					
+						<!-- Following code commented as the button needs to show up for all users (dated 02.08.2016) -->
+                    <!--<li ng-show="checkrole(['superadmin','siteadmin', 'admin level4', 'nonadmin level4']) && currentState">-->
+					<li ng-show="currentState">
+						<a href="/completedpr4report">
+							<img src="/images/check_green.png" alt="Submitted Reports" title="Submitted Reports" />
+						</a>
+					</li>
+                </ul>
+                <ul ng-show="currentUser" class="nav nav-pills pull-right menu-right dropdown">
+                    <li><a ng-class="{active: isActive('/logout')}" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu1">Welcome {{currentUser.username | capitalize}}
+                    <img src="/images/menu-settings.png" alt="Settings" title="Settings" /><b class="caret"></b><br />
+                        <span ng-if="currentUser.role" class="" style="text-transform: capitalize">{{currentUser.rolename | capitalize}}</span>
+                        <span ng-if="currentUser.role != 'superadmin' && currentUser.role!='siteadmin' && currentUser.role!='rater1'  && currentUser.role!=''">
+                            <span ng-if="currentUser.level == 'level1'" class="" style="text-transform: capitalize">Staff</span>
+                            <span ng-if="currentUser.level == 'level2'" class="" style="text-transform: capitalize">Nurse</span>
+                            <span ng-if="currentUser.level == 'level3'" class="" style="text-transform: capitalize">NP / PA</span>
+                            <span ng-if="currentUser.level == 'level4'" class="" style="text-transform: capitalize">Phys./ MD / DO</span>
+                        </span>
+                    </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <!--<li style="padding: 5px 10px; color: #808080">Profile Management</li>-->
+                            <li><a ng-click="goPracticeProfileSetting('/myprofile','myprofile')"  ng-class="{active: isActive('/logout')}">My Profile</a></li>
+                            <li><a ng-click="goPracticeProfileSetting('/userprofile','allusers')"  ng-class="{active: isActive('/logout')}">Users</a></li>
+							<li ng-show="checkrole(['superadmin','siteadmin','admin level1','admin level2','admin level3','admin level4'])"  ng-class="{active: isActive('/logout')}">
+								<a ng-click="goPracticeProfileSetting('/inviteuser','inviteuser')">Invite Users</a>
+							</li>
+                            <li ng-show="!checkrole(['rater1','rater2'])"
+                                ng-class="{active: isActive('/logout')}"><a href="/practiceprofile">Practice Settings</a></li>
+                            <li ng-show="checkrole(['siteadmin'])" ng-class="{active: isActive('/logout')}"><a
+                                href="/salesperson">Salesperson Profile</a></li>
+							<li ng-show="checkrole(['siteadmin'])" ng-class="{active: isActive('/logout')}" style="padding: 5px 10px; color: #808080">Reporting</li>
+							<li ng-show="checkrole(['siteadmin'])" ng-class="{active: isActive('/logout')}"><a
+								href="/chargereport">Charge Report</a></li>
+							<li ng-show="checkrole(['siteadmin'])" ng-class="{active: isActive('/logout')}"><a
+								href="/useractivity">User Activity</a></li>	
+                            <li ng-show="checkrole(['siteadmin'])" ng-class="{active: isActive('/logout')}" style="padding: 5px 10px; color: #808080">Designer</li>
+                            <li ng-show="checkrole(['siteadmin'])" ng-class="{active: isActive('/logout')}"><a
+                                href="/form">Forms</a></li>
+                            <li ng-show="checkrole(['siteadmin'])" ng-class="{active: isActive('/logout')}"><a
+                                href="/reportlist">Reports</a></li>
+                            <li ng-show="checkrole(['siteadmin'])" ng-class="{active: isActive('/logout')}"><a
+                                href="/templates">Templates</a></li>	
+                            <li ng-show="checkrole(['siteadmin'])" style="padding: 5px 10px; color: #808080">Other</li>
+                            <li ng-show="checkrole(['siteadmin'])" ng-class="{active: isActive('/logout')}"><a
+                                href="/admin/pricing">Pricing</a></li>
+							<li ><a ng-show="checkrole(['superadmin']) && currentUser.enableOauth==true" href="/oauth">OAuth Settings</a></li>	
+                            <li ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+			</div>
+                <!-- <ul class="nav nav-pills pull-right menu-right">
+                    <li ng-hide="currentUser" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
+                    <li ng-hide="currentUser" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
+                </ul> -->
+                <!--<img src="/images/FEEDBACK-ICON.png" ng-show="currentUser" class="pull-right" height="60" style="margin-top:2%;cursor:pointer;margin-right:1%;" ng-click="sendFeedback()" />-->
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$( document ).ready(function() {
+	$(document).on('click','.navbar-collapse.in',function(e) {
+	    if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
+	        $(this).collapse('hide');
+	    }
+	});
+});
+
+
+</script>
+

@@ -1,0 +1,21 @@
+﻿<div ng-if="report.data.bc.length > 0" class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <th width="300px"></th>
+            <th width="100px">Level</th>
+            <th width="100px">Unit(s)</th>
+            <th width="100px">OMFS Code</th>
+            <th width="100px">Fee</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in report.data.bc" >
+                <td><b>{{report.data.bc[$index].label}}</b></td>
+                <td>{{report.data.bc[$index].level}}</td>
+                <td>{{report.data.bc[$index].unit}}</td>
+                <td>{{report.data.bc[$index].billingcode}}</td>
+                <td>$ {{report.data.bc[$index].price}}</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>

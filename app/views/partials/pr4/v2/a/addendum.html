@@ -1,0 +1,8 @@
+<br clear="all" style="page-break-before:always" />
+<div ng-repeat="addendum in report.data.addendum" style="padding:10px;margin-left:2px;margin-right:2px;border:2px solid #e8e8e8;margin-top:5px;margin-bottom:5px;">	
+		<div style="padding:15px;margin-bottom:25px;">
+		<p>Correction made by {{addendum.user.firstname}} {{addendum.user.lastname}} on  {{addendum.creation_date | date:'yyyy-MM-dd'}}  at {{addendum.creation_date | date:'hh:mm:ss a'}}:</p>
+				
+		<p>{{addendum.comment}}</p>
+		</div>
+</div>

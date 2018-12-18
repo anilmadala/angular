@@ -1,0 +1,176 @@
+<div class="modal-header" style="padding: 5px 5px 5px 15px">
+    <h3>Ratefast</h3>
+</div>
+<div class="modal-body" style="padding: 5px 5px 5px 15px">
+	<div class="login-sign">
+	   <div ng-bind-html="dispalyMessage">	   
+	   </div>	
+	   
+	   <!-- home phone -->
+	   <div>	   		
+	   		 <div class="col-sm-12">                       
+		          <div class="container">
+					 <div class="row">
+						  <div class="col-sm-2">
+							<span style= "color: #0e80c7; font-family: Open Sans; font-size: 14px; font-weight: bold;">Employer Phone:</span>
+						  </div>						  
+					 </div>
+					 <div class="row">
+						<div class="col-sm-12">
+							&nbsp;
+						</div>
+					 </div>
+				     <div class="row">						 
+				          <div class="col-sm-2">
+								<span style= "color: #0e80c7; font-family: Open Sans; font-size: 14px;">Number in Athena: </span>		     		
+				           </div>
+				           <div class="col-sm-3">
+                                <span style= "color: #0e80c7; font-family: Open Sans; font-size: 14px;">
+                                    <span ng-if="CurrentphoneValues.employerContact == ''">Number not present in Athena.</span>
+                                        {{CurrentphoneValues.employerContact}}
+                                </span>                  
+                           </div>
+				      </div>
+				      <div class="row" style="height:8px">
+				           	<div class="clearer">&nbsp;</div>
+				       </div>
+		       	</div>
+	       </div> 			   
+		   <div class="col-sm-12">                       
+	          <div class="container">
+				 <div class="row">
+			           <div class="col-sm-2">
+							<span style= "color: #0e80c7; font-family: Open Sans; font-size: 14px;">Number to import: </span>				     		
+			           </div>
+			                               
+			           <div class="col-sm-3">
+							<input pattern="[0-9]*" type="tel" class="form-control" id="employerContact" name="employerContact" ng-model="phoneValues.employerContact" maxlength="10" numbers-only="numbers-only" ui-mask="(999) 999-9999" />                   
+			           </div>
+			   	 </div>
+			  </div>
+		   	</div>
+		   	<div class="col-sm-12">    
+		   		<hr />
+		   	</div>					   	
+	   </div>
+	   
+	   
+	   <!-- mobile phone -->
+	    <div>	   		
+	   		 <div class="col-sm-12">                       
+		          <div class="container">
+				     <div class="row">
+							  <div class="col-sm-2">
+								<span style= "color: #0e80c7; font-family: Open Sans; font-size: 14px; font-weight: bold;">Adjuster Fax:</span>
+							  </div>						  
+					 </div>
+					 <div class="row">
+						<div class="col-sm-12">
+							&nbsp;
+						</div>
+					 </div>
+					 <div class="row">
+				          <div class="col-sm-2">
+								<span style= "color: #0e80c7; font-family: Open Sans; font-size: 14px;">Number in Athena: </span>				     		
+				           </div>
+				              
+							<div class="col-sm-3">
+                                <span style= "color: #0e80c7; font-family: Open Sans; font-size: 14px;">
+                                    <span ng-if="CurrentphoneValues.adjusterFax == ''">Number not present in Athena.</span>
+                                        {{CurrentphoneValues.adjusterFax}}
+                                </span>                  
+                           </div>  
+				          
+				      </div>
+				      <div class="row" style="height:8px">
+				           	<div class="clearer">&nbsp;</div>
+				       </div>
+		       	</div>
+	       </div> 		
+		   <div class="col-sm-12">                       
+	          <div class="container">
+				 <div class="row">
+			           <div class="col-sm-2">
+							<span style= "color: #0e80c7; font-family: Open Sans; font-size: 14px;">Number to import: </span>				     		
+			           </div>
+			                               
+			           <div class="col-sm-3">
+							<input pattern="[0-9]*" type="tel" class="form-control" id="adjusterFax" name="adjusterFax" ng-model="phoneValues.adjusterFax" maxlength="10" numbers-only="numbers-only" ui-mask="(999) 999-9999" />                   
+			           </div>
+			   	 </div>
+			  </div>
+		   	</div>
+		   	<div class="col-sm-12">    
+		   		<hr />
+		   	</div>
+	   </div>
+	  
+	    <!-- work phone -->
+	   <div>	   		
+	   		 <div class="col-sm-12">                       
+		          <div class="container">
+				     <div class="row">
+							  <div class="col-sm-2">
+								<span style= "color: #0e80c7; font-family: Open Sans; font-size: 14px; font-weight: bold;">Adjuster Phone:</span>
+							  </div>						  
+					 </div>
+					 <div class="row">
+						<div class="col-sm-12">
+							&nbsp;
+						</div>
+					 </div>
+					 <div class="row">
+				          <div class="col-sm-2">
+								<span style= "color: #0e80c7; font-family: Open Sans; font-size: 14px;">Number in Athena: </span>				     		
+				           </div>
+				              
+							 <div class="col-sm-3">
+                                <span style= "color: #0e80c7; font-family: Open Sans; font-size: 14px;">
+                                    <span ng-if="CurrentphoneValues.adjusterPhone == ''">Number not present in Athena.</span>
+                                        {{CurrentphoneValues.adjusterPhone}}
+                                </span>                  
+                           </div>  				           
+				      </div>
+				      <div class="row" style="height:8px">
+				           	<div class="clearer">&nbsp;</div>
+				       </div>
+		       	</div>
+	       </div> 		
+		   <div class="col-sm-12">                       
+	          <div class="container">
+				 <div class="row">
+			           <div class="col-sm-2">
+							<span style= "color: #0e80c7; font-family: Open Sans; font-size: 14px;">Number to import: </span>				     		
+			           </div>
+			                               
+			           <div class="col-sm-3">
+							<input pattern="[0-9]*" type="tel" class="form-control"  id="adjusterPhone" name="adjusterPhone" ng-model="phoneValues.adjusterPhone" maxlength="10" numbers-only="numbers-only" ui-mask="(999) 999-9999" />							
+							                 
+			           </div>
+			   	 </div>
+				 <div class="row" style="height:8px">
+					&nbsp;
+				 </div>
+				 <div class="row">
+			           <div class="col-sm-2">
+							<span style= "color: #0e80c7; font-family: Open Sans; font-size: 14px;">Extension to import: </span>	     		
+			           </div>			                               
+			           <div class="col-sm-3">
+							<input pattern="[0-9]*" type="tel" class="form-control"  id="adjusterPhoneExtension" name="adjusterPhoneExtension" ng-model="phoneValues.adjusterPhoneExtension" maxlength="7" numbers-only="numbers-only" />                 
+			           </div>
+			   	 </div>
+			  </div>
+		   	</div>
+		   	<div class="col-sm-12">    		   		
+				&nbsp;
+		   	</div>
+			<div class="col-sm-12">
+				<hr />
+			</div>	
+	   </div>	   
+</div>
+</div>
+<div class="modal-footer">
+    <a type="button" class="btn btn-primary" ng-click="proceed('confirm1')">{{confirmButtonText}}</a>
+    <a type="button" class="btn btn-default" ng-click="cancel('cancel')">{{cancelButtonText}}</a>
+</div>

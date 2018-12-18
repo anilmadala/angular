@@ -1,0 +1,59 @@
+<!--Start Impairment Rating-->
+<div ng-if="currentReportStatus!='open' || currentUser.rolename == 'siteadmin'">
+    <div ng-if="checkImpairmentExistAll()">
+        <br>
+        <span class="DFRReportHeadingFontSize"><strong>Whole Person Impairment (WPI) rating using the {{report.data['bginfo'].administrativerule}}</strong></span>
+        <br>
+        <div ng-repeat="item in report.data['selectinjuries'].concatedbodypart">
+            <div ng-if="checkImpairmentExist(item,'impairmentrating')">
+                <br>
+                <div ng-if="item.id!='other'">
+                    <!--<div class="DFRReportSubHeadingFontSize col-sm-12"><span class="col-sm-12">{{item.text|capitalize}} {{item.bodysystem=='Spine'? item.bodysystem: ''}} {{item.bdsides=='n/a' || item.bdsides=='none'? '' : '- ' + (item.bdsides|capitalize)}}</span></div>-->
+                    <span class="DFRReportSubHeadingFontSize"><strong>{{displayBodyPartName(item)}}</strong></span>
+                </div>
+                <div ng-if="item.id=='other'">
+                    <!--<div class="DFRReportSubHeadingFontSize col-sm-12"><span class="col-sm-12">{{item.bdsystemother|capitalize}} - {{item.bdpartother|capitalize}} {{item.bdsides=='n/a' || item.bdsides=='none'? '' : (item.bdsides|capitalize)}}</span></div>-->
+                    <span class="DFRReportSubHeadingFontSize"><strong>{{displayBodyPartName(item)}}</strong></span>
+                </div>
+                <div ng-if="report.data['impairmentrating' + item.concateId].txtUsrInput">
+                    <div ng-bind-html="appendPeriod(report.data['impairmentrating' + item.concateId].txtUsrInput)"></div>
+                    <br>
+                </div>
+                <div ng-if="report.data['impairmentrating' + item.concateId].txtAlmaraz!=''">
+                    <div><span style="width: 70%">{{report.data['impairmentrating' + item.concateId].txtWholePerson!=''? report.data['impairmentrating' + item.concateId].txtWholePerson + ':&nbsp;' : 'Whole Person Impairment:&nbsp;'}}</span><span style="width: 30%">{{getAbsValue(report.data['impairmentrating' + item.concateId].txtAlmaraz)}}%</span> WPI</div>
+                </div>
+                <div ng-if="report.data['impairmentrating' + item.concateId].txtAlmarazWPI!=''">
+                    <div><span style="width: 70%">{{report.data['impairmentrating' + item.concateId].txtWholePersonWPI!=''? report.data['impairmentrating' + item.concateId].txtWholePersonWPI + ':&nbsp;' :  'Almaraz-Guzman adjustment:&nbsp;'}}</span><span style="width: 30%">{{getAbsValue(report.data['impairmentrating' + item.concateId].txtAlmarazWPI)}}%</span> WPI</div>
+                </div>
+                <div class="DFRReportSubHeadingFontSize">
+                    <span style="width: 70%"><strong>{{displayBodyPartName(item)}} total:</strong>&nbsp;</span><strong><span style="width: 30%" ng-bind="addNums(report.data['impairmentrating' + item.concateId].txtAlmaraz,report.data['impairmentrating' + item.concateId].txtAlmarazWPI)"></span></strong>  <strong>WPI</strong>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="checkImpairmentExistAll()">
+        <span class="DFRReportHeadingFontSize">
+            <br>
+            <strong>Final Claim Summary</strong></span><br>
+        <div ng-repeat="item in report.data['selectinjuries'].concatedbodypart">
+            <div ng-if="checkImpairmentExist(item,'impairmentrating')">
+
+                <div><span style="width: 70%">{{displayBodyPartName(item)}}:&nbsp;</span><span style="width: 30%" ng-bind="addNums(report.data['impairmentrating' + item.concateId].txtAlmaraz,report.data['impairmentrating' + item.concateId].txtAlmarazWPI)"></span> WPI</div>
+
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="report.data['impairmentratingfinalclaim'].txtAlmaraz!=''">
+        <br>
+        <div><span class="DFRReportHeadingFontSize" style="width: 70%"><strong>Final Impairment Rating:&nbsp;</strong></span><span class="DFRReportHeadingFontSize" style="width: 30%"><strong>{{getAbsValue(report.data['impairmentratingfinalclaim'].txtAlmaraz)}}%</strong></span><strong>&nbsp;WPI</strong></div>
+    </div>
+    <div ng-if="report.data['impairmentratingfinalclaim'].txtUsrInput">
+        <br>
+        <div ng-bind-html="appendPeriod(report.data['impairmentratingfinalclaim'].txtUsrInput)"></div>
+    </div>
+
+</div>
+<!--End Impairment Rating-->

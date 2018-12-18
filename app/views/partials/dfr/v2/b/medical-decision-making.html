@@ -1,0 +1,35 @@
+	<!--Start Medical Decision Making-->
+    <div ng-if="report.data['decisionmaking'].mdmq1opt.length>0 || report.data['decisionmaking'].mdmq1optYesText || report.data['decisionmaking'].mdmq5.length>0">
+        <br />
+        <div class="DFRReportHeadingFontSize"><strong>Medical Decision Making</strong></div>
+        <div ng-if="report.data['decisionmaking'].mdmq1opt.length>0">
+            <span class="DFRReportSubHeadingFontSize"><strong>Section 21.</strong></span>
+            <div class="divMain">
+                <div ng-if="report.data['decisionmaking'].mdmq1opt == 'Yes'">My findings and diagnoses are consistent with patient&apos;s account of injury/illness.</div>
+                <div ng-if="report.data['decisionmaking'].mdmq1opt == 'No'">My findings and diagnoses are not consistent with patient&apos;s account of injury/illness.</div>
+				<div ng-if="report.data['decisionmaking'].mdmq1opt == 'Deferred'">
+					Regarding whether or not findings and diagnosis are consistent with patient&apos;s account of injury/onset of illness: evaluation of consistency is deferred.					                    	
+					<div ng-if="report.data['decisionmaking'].chk1mdmq1optReferral.length>0">Referral to specialty is required for AOE/COE.&nbsp;<span ng-bind-html="appendPeriod(report.data['decisionmaking'].text1chk1mdmq1optReferral)"></span></div>              			
+					<div ng-if="report.data['decisionmaking'].chk2mdmq1optAdditional.length>0">Additional medical documentation is required.&nbsp;<span ng-bind-html="appendPeriod(report.data['decisionmaking'].text2chk2mdmq1optAdditional)"></span></div>
+					<div ng-bind-html="appendPeriod(report.data['decisionmaking'].text3chk3mdmq1optOther)"></div>             			
+                </div>				
+                <div ng-bind-html="appendPeriod(report.data['decisionmaking'].mdmq1optYesText)"></div>
+            </div>
+        </div>
+        <div ng-if="report.data['decisionmaking'].mdmq5 == 'No'">
+            <br />
+            <span class="DFRReportSubHeadingFontSize"><strong>Section 22.</strong></span>
+            There are no other current conditions that will impede or delay the patient&apos;s recovery.
+        </div>
+        <div ng-if="report.data['decisionmaking'].mdmq5 == 'Yes'">
+            <br />
+            <span class="DFRReportSubHeadingFontSize"><strong>Section 22.</strong></span>
+            <span ng-if="report.data['decisionmaking'].mdmq6optyes.length>0 || report.data['decisionmaking'].mdmq5check3.length>0 || report.data['decisionmaking'].mdmq5check4.length>0">There are other current conditions that will impede or delay the patient&apos;s recovery: 
+ <span ng-bind-html="makeStatement(report.data['decisionmaking'].mdmq6optyes[0] + '~' + report.data['decisionmaking'].mdmq5check2[0] + '~' + report.data['decisionmaking'].mdmq5check3[0] + '~' + report.data['decisionmaking'].mdmq5check3[1] + '~' + report.data['decisionmaking'].mdmq5check3[2] + '~' + report.data['decisionmaking'].mdmq5check3[3] + '~' + report.data['decisionmaking'].mdmq5check3[4] + '~' + report.data['decisionmaking'].mdmq5check4[0] + '~' + report.data['decisionmaking'].mdmq5check5[0]+ '~' + report.data['decisionmaking'].mdmq5check5[1])"></span>
+            </span>
+            <span ng-if="(report.data['decisionmaking'].mdmq6optyes.length==0 && report.data['decisionmaking'].mdmq5check3.length==0 && report.data['decisionmaking'].mdmq5check4.length==0)">There are other current conditions that will impede or delay the patient&apos;s recovery.
+            </span>
+            <span ng-bind-html="appendPeriod(report.data['decisionmaking'].mdmq5check6)"></span>
+        </div>
+    </div>
+    <!--End Medical Decision Making-->

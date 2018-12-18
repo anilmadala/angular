@@ -1,0 +1,1602 @@
+<div ng-controller="addanotherTreatmentChildCtrl">
+    <input type="button" ng-click="addNsaids('{{childid}}')" class="btn btn-info" style="margin-left: 4px" value="{{childLabel}}">
+    <div class="col-sm-12 margin-left-3 clearer" ng-if="nsaids && formType != 'pr4'" ng-repeat="nsaid in nsaids.slice().reverse() track by $index" style="padding: 5px">
+        <div class="col-sm-12" ng-if="childid !='treatmentother'">
+            <select ng-if="nsaidselects.length > 0" ng-model="nsaid.selectnsaids" class="form-control" style="width: 30%" ng-change="newArray(nsaid.selectnsaids,$index+1,nsaids.length)">
+                <option value="">--Choose--</option>
+                <option ng-repeat="item in nsaidselects track by $index" ng-hide="selectedArray.indexOf(item)!=-1">{{item}}</option>
+            </select>
+            <!--GT:RISHU 30th November 2014 For Cortisone directions Text-->
+            <div ng-if="!nsaidselects.length" class="col-sm-8 removePadding clearer top-buffer">
+                <label>Directions: &nbsp;</label><input type="button" value="Text" ng-click="showhideeditor = true" class="btn btn-info btn-xs">
+                <div ng-hide="showhideeditor"><span ng-bind-html="nsaid.nsaidsdirectiontext"></span></div>
+                <div ng-show="showhideeditor" style="width:450px">
+                    <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.nsaidsdirectiontext"></textarea>
+                </div>
+            </div>
+            <!-- GT:RISHU 30th June 2014 Code for Medical Dosage-->
+            <div ng-if="nsaid.selectnsaids != 'Other'" class="clearer">
+                <!--<div class="top-buffer" ng-if="childid != 'cortisone'">
+                    <label>{{nsaid.selectnsaids}}</label>
+                </div>-->
+                <div class="top-buffer">
+                    <span ng-if="nsaid.selectnsaids == 'Ibuprofen (Motrin, Advil)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidibuprofendosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidibuprofendosage" value="800">
+                                800 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidibuprofendosage2" ng-model="nsaid.selectnsaidDosage" name="selectnsaidibuprofendosage" value="600">
+                                600 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidibuprofendosage3" ng-model="nsaid.selectnsaidDosage" name="selectnsaidibuprofendosage" value="400">
+                                400 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidibuprofendosage4" ng-model="nsaid.selectnsaidDosage" name="selectnsaidibuprofendosage" value="200">
+                                200 mg OTC</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Naproxen (Naprosyn, Aleve)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidnaproxendosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidnaproxendosage" value="375">
+                                375 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidnaproxendosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidnaproxendosage" value="500">
+                                500 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidnaproxendosage2" ng-model="nsaid.selectnsaidDosage" name="selectnsaidnaproxendosage" value="550">
+                                550 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidnaproxendosage3" ng-model="nsaid.selectnsaidDosage" name="selectnsaidnaproxendosage" value="200">
+                                200 mg OTC</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Etodolac (Lodine)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidetodolacdosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidetodolacdosage" value="300">
+                                300 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidetodolacdosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidetodolacdosage" value="400">
+                                400 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidetodolacdosage2" ng-model="nsaid.selectnsaidDosage" name="selectnsaidetodolacdosage" value="500">
+                                500 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Ketorolac (Toradol)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidketorolacdosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidketorolacdosage" value="IV">
+                                IV</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidketorolacdosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidketorolacdosage" value="IM">
+                                IM</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidketorolacdosage2" ng-model="nsaid.selectnsaidDosage" name="selectnsaidketorolacdosage" value="30">
+                                30 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidketorolacdosage3" ng-model="nsaid.selectnsaidDosage" name="selectnsaidketorolacdosage" value="60">
+                                60 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Celecoxib (Celebrex)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidcelecoxibdosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcelecoxibdosage" value="100">
+                                100 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidcelecoxibdosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcelecoxibdosage" value="200">
+                                200 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Baclofen'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidbacklofendosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidbacklofendosage" value="10">
+                                10 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidbacklofendosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidbacklofendosage" value="20">
+                                20 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Cyclobenzaprine (Flexeril)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidcyclobenzaprinedosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcyclobenzaprinedosage" value="5">
+                                5 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidcyclobenzaprinedosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcyclobenzaprinedosage" value="10">
+                                10 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Tizanidine (Zanaflex)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidtizanidinedosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtizanidinedosage" value="2">
+                                2 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidtizanidinedosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtizanidinedosage" value="4">
+                                4 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidtizanidinedosage2" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtizanidinedosage" value="6">
+                                6 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Metaxalone (Skelaxin)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="checkbox" id="selectnsaidmetaxalonedosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidmetaxalonedosage" ng-true-value="800">
+                                800 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Diazepam (Valium)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidmetaxalonedosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaiddiazepamdosage" value="2">
+                                2 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidmetaxalonedosage2" ng-model="nsaid.selectnsaidDosage" name="selectnsaiddiazepamdosage" value="5">
+                                5 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidmetaxalonedosage3" ng-model="nsaid.selectnsaidDosage" name="selectnsaiddiazepamdosage" value="10">
+                                10 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Norco (hydrocodone + acetaminophen)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidnorcodosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidnorcodosage" value="5">
+                                5 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidnorcodosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidnorcodosage" value="7.5">
+                                7.5 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidnorcodosage2" ng-model="nsaid.selectnsaidDosage" name="selectnsaidnorcodosage" value="10">
+                                10 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Percocet (oxycodone + acetaminophen)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidprecocetdosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidprecocetdosage" value="5/325">
+                                5/325 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="nsaid.selectnsaidpercocetdosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidprecocetdosage" value="7.5/500">
+                                7.5/325 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidprecocetdosage2" ng-model="nsaid.selectnsaidDosage" name="selectnsaidprecocetdosage" value="10/650">
+                                10/325 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Tylenol with Codeine (acetaminophen + codeine)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidtylenoldosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtylenoldosage" value="30/300">
+                                30/300 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidtylenoldosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtylenoldosage" value="60/300">
+                                60/300 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Tramadol (Ultram)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidtramadoldosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtramadoldosage" value="50">
+                                50 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidtramadoldosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtramadoldosage" value="100">
+                                100 mg ER</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidtramadoldosage2" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtramadoldosage" value="200">
+                                200 mg ER</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidtramadoldosage3" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtramadoldosage" value="300">
+                                300 mg ER</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Tramadol + acetaminophen (Ultracet)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="checkbox" id="selectnsaidtramadolultracetdosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtramadolultracetdosage" value="37.5/325">
+                                37.5 mg/325 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Elavil'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidelavildosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidelavildosage" value="10">
+                                10 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidelavildosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidelavildosage" value="25">
+                                25 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidelavildosage2" ng-model="nsaid.selectnsaidDosage" name="selectnsaidelavildosage" value="50">
+                                50 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidelavildosage3" ng-model="nsaid.selectnsaidDosage" name="selectnsaidelavildosage" value="75">
+                                75 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidelavildosage4" ng-model="nsaid.selectnsaidDosage" name="selectnsaidelavildosage" value="100">
+                                100 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidelavildosage5" ng-model="nsaid.selectnsaidDosage" name="selectnsaidelavildosage" value="150">
+                                150 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Gabapentin (Neurontin)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidgabapentindosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidgabapentindosage" value="100">
+                                100 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidgabapentindosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidgabapentindosage" value="300">
+                                300 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidgabapentindosage2" ng-model="nsaid.selectnsaidDosage" name="selectnsaidgabapentindosage" value="400">
+                                400 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Amoxicillin'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidamoxicillindosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidamoxicillindosage" value="250">
+                                250 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidamoxicillindosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidamoxicillindosage" value="500">
+                                500 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidamoxicillindosage2" ng-model="nsaid.selectnsaidDosage" name="selectnsaidamoxicillindosage" value="875">
+                                875 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Augmentin'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidaugmentindosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidaugmentindosage" value="500">
+                                500 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidaugmentindosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidaugmentindosage" value="875">
+                                875 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Azithromycin'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" ng-model="nsaid.selectnsaidDosage" name="selectnsaidazithromycindosage" value="250">
+                                250 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidazithromycindosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidazithromycindosage" value="500">
+                                500 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Bactrim DS (Trimethoprim-sulfamethoxazole)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidbactrimdosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidbactrimdosage" value="160/800">
+                                160/800 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Cefazolin (Ancef)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidcefazolindosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcefazolindosage" value="IV">
+                                IV</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidcefazolindosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcefazolindosage" value="IM">
+                                IM</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidcefazolindosage2" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcefazolindosage" value="0.5">
+                                0.5 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidcefazolindosage3" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcefazolindosage" value="1">
+                                1 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidcefazolindosage4" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcefazolindosage" value="1.5">
+                                1.5 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Doxycycline'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidoxycyclinedosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidoxycyclinedosage" value="50">
+                                50 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidoxycyclinedosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidoxycyclinedosage" value="75">
+                                75 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" ng-model="nsaid.selectnsaidDosage" name="selectnsaidoxycyclinedosage" value="100">
+                                100 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Cephalexin (Keflex)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidcephalexindosage" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcephalexindosage" value="250">
+                                250 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="selectnsaidcephalexindosage1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcephalexindosage" value="500">
+                                500 mg</label>
+                        </div>
+                    </span>
+
+                </div>
+            </div>
+            <!--Ends Here-->
+            <!-- GT:RISHU 30th June 2014 Code for Medical Question-->
+            <div class="col-sm-8 removePadding clearer top-buffer" ng-if="childid != 'cortisone' && nsaid.selectnsaids != 'Other' && childid != 'immunizations' && childid != 'therapy' && childid != 'injections' && childid != 'referral' && childid != 'diagnostic'">
+                <label>Directions:</label>&nbsp;<input type="button" value="Text" ng-click="showtextareaeditor = true" class="btn btn-info btn-xs">
+                <div ng-hide="showtextareaeditor"><span ng-bind-html="nsaid.commondirectionstext"></span></div>
+                <div ng-show="showtextareaeditor" style="width:450px">
+                    <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.commondirectionstext"></textarea>
+                </div>
+                <div style="display: block; overflow: hidden">
+                    <label class="col-sm-3 removePadding clearer">Number dispense: &nbsp;</label>
+                    <div class="col-sm-3 removePadding">
+                        <select ng-model="nsaid.selectnumberdispensecommon" class="form-control" ng-change="nsaid.selectnumberdispensecommontext=''">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in [1, 5, 10, 30, 60, 90, 'Other']">{{n}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 removePadding col-sm-offset-1">
+                        <input type="text" class="form-control" ng-if="nsaid.selectnumberdispensecommon == 'Other'" ng-model="nsaid.selectnumberdispensecommontext">
+                    </div>
+                </div>
+
+                <div class="top-buffer-2">
+                    <label class="col-sm-3 removePadding clearer">Refills: &nbsp;</label>
+                    <div class="col-sm-3 removePadding">
+                        <select ng-model="nsaid.selectcommonrefills" class="form-control">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in [0, 1, 2, 3, 4, 5, 6]">{{n}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-12 removePadding clearer top-buffer">
+                    <label>&nbsp;</label><input type="button" value="Text" ng-click="showtexteditorothertext = true" class="btn btn-info btn-xs">
+                    <div ng-hide="showtexteditorothertext"><span ng-bind-html="nsaid.othertextfortextarea"></span></div>
+                    <div ng-show="showtexteditorothertext" style="width:450px">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.othertextfortextarea"></textarea>
+                    </div>
+                </div>
+            </div>
+            <!--Ends Here-->
+            <!-- GT:RISHU 30th June 2014 Code for Injections-->
+            <div ng-if="childid == 'injections'">
+                <!--<div ng-if="nsaid.selectnsaids && nsaid.selectnsaids !='Other'" class="col-sm-4 removePadding">
+                    <input type="text" class="form-control" ng-model="nsaid.injectionstextinput" />
+                </div>-->
+                <div ng-if="nsaid.selectnsaids && nsaid.selectnsaids =='Other'" class="col-sm-4 removePadding top-buffer">
+                    <input type="text" class="form-control" ng-model="nsaid.injectionstextinput">
+                </div>
+                <div class="col-sm-8 removePadding clearer top-buffer">
+                    <label>&nbsp;</label><input type="button" value="Text" ng-click="showtexteditorinjections = true" class="btn btn-info btn-xs">
+                    <div ng-hide="showtexteditorinjections"><span ng-bind-html="nsaid.othertextareainjectionstext"></span></div>
+                    <div ng-show="showtexteditorinjections" style="width:450px">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.othertextareainjectionstext"></textarea>
+                    </div>
+                </div>
+            </div>
+            <!--Ends Here-->
+            <!-- GT:RISHU 30th June 2014 Code for Therapy -->
+            <div class="col-sm-10 removePadding clearer top-buffer" ng-if="childid == 'therapy' ">
+                <div ng-if="nsaid.selectnsaids != 'Other'">
+                    <div style="display: block; overflow: hidden">
+                        <div class="removePadding">
+                            <select ng-model="nsaid.selecttimesfortherapy" class="form-control" style="width: 20%; float: left">
+                                <option value="">--Choose--</option>
+                                <option ng-repeat="n in [1, 2, 3, 4, 5, 6]">{{n}}</option>
+                            </select>
+                            <label style="width: 25%; float: left">&nbsp;&nbsp; times per week for&nbsp;</label>
+                            <select ng-model="nsaid.selectweeksfortherapy" class="form-control" style="width: 20%; float: left">
+                                <option value="">--Choose--</option>
+                                <option ng-repeat="n in [1, 2, 3, 4, 5, 6]">{{n}}</option>
+                            </select>
+                            <label style="width: 30%; float: left">&nbsp;&nbsp;weeks&nbsp;</label>
+                        </div>
+                        <div class="col-sm-8 removePadding clearer top-buffer">
+                            <label>&nbsp;</label><input type="button" value="Text" ng-click="showtexteditorTherapy = true" class="btn btn-info btn-xs">
+                            <div ng-hide="showtexteditorTherapy"><span ng-bind-html="nsaid.othertextareaTherapytext"></span></div>
+                            <div ng-show="showtexteditorTherapy" style="width:450px">
+                                <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.othertextareaTherapytext"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Ends Here-->
+        </div>
+        <div class="col-sm-12 removePadding top-buffer" ng-if="childid =='treatmentother'">
+            <div class="col-sm-3 removePadding">
+                <label>Treatment Name:</label>
+            </div>
+            <div class="col-sm-3 removePadding">
+                <input type="text" class="form-control" ng-model="nsaid.selectnsaids">
+            </div>
+        </div>
+        <!--GT:RISHU 30th June 2014 For medications other selection from dropdown code-->
+        <div ng-if="nsaid.selectnsaids == 'Other' && childid != 'therapy' && childid != 'immunizations' && childid != 'injections' && childid != 'referral' && childid != 'diagnostic'" class="col-sm-12">
+            <div class="col-sm-4 removePadding clearer top-buffer">
+                <input type="text" class="form-control" ng-model="nsaid.selectnsaidstext">
+            </div>
+            <div class="col-sm-8 removePadding clearer top-buffer">
+                <label>Directions: &nbsp;</label><input type="button" value="Text" ng-click="showhideeditor = true" class="btn btn-info btn-xs">
+                <div ng-hide="showhideeditor"><span ng-bind-html="nsaid.commondirectionstext"></span></div>
+                <div ng-show="showhideeditor" style="width:450px">
+                    <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.commondirectionstext"></textarea>
+                </div>
+                <div style="display: block; overflow: hidden" ng-if="childid != 'cortisone'">
+                    <label class="col-sm-3 removePadding clearer">Number dispense: &nbsp;</label>
+                    <div class="col-sm-3 removePadding {{nsaid.selectnumberdispensecommon}}">
+                        <select ng-model="nsaid.selectnumberdispensecommon" ng-change="nsaid.selectnumberdispensecommontext=''" class="form-control">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in [1, 5, 10, 30, 60, 90, 'Other']">{{n}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 removePadding col-sm-offset-1">
+                        <input type="text" class="form-control" ng-if="nsaid.selectnumberdispensecommon == 'Other'" ng-model="nsaid.selectnumberdispensecommontext">
+                    </div>
+                </div>
+
+                <div class="top-buffer-2" ng-if="childid != 'cortisone'">
+                    <label class="col-sm-3 removePadding clearer">Refills: &nbsp;</label>
+                    <div class="col-sm-3 removePadding">
+                        <select ng-model="nsaid.selectrefills" class="form-control">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in [0, 1, 2, 3, 4, 5, 6]">{{n}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 removePadding clearer top-buffer" ng-if="childid != 'cortisone'">
+                    <label>&nbsp;</label><input type="button" value="Text" ng-click="showhidetexteditor = true" class="btn btn-info btn-xs">
+                    <div ng-hide="showhidetexteditor"><span ng-bind-html="nsaid.othertextfortextarea"></span></div>
+                    <div ng-show="showhidetexteditor" style="width:450px">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.othertextfortextarea"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Ends Here-->
+        <!--GT:RISHU 30th June 2014 For therapy other selection code-->
+        <div ng-if="nsaid.selectnsaids == 'Other' && childid == 'therapy'" class="col-sm-12">
+            <div class="col-sm-8 removePadding clearer top-buffer">
+                <div class="col-sm-5 clearer removePadding">
+                    <input type="text" ng-model="nsaid.therapyinputother" class="form-control">
+                </div>
+                <div class="clearer" style="display: block; overflow: hidden">
+                    <div class="removePadding top-buffer clearer">
+                        <select ng-model="nsaid.selecttimesfortherapyother" class="form-control" style="width: 25%; float: left">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in [1, 2, 3, 4, 5, 6]">{{n}}</option>
+                        </select>
+                        <label style="width: 29%; float: left">&nbsp;&nbsp; times per week for&nbsp;</label>
+                        <select ng-model="nsaid.selectweeksfortherapyother" class="form-control" style="width: 25%; float: left">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in [1, 2, 3, 4, 5, 6]">{{n}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Ends Here-->
+        <!-- GT:RISHU 30th June 2014 Code for Referral to Speciality -->
+        <div class="col-sm-12 removePadding clearer col-sm-offset-1" ng-if="childid == 'referral' ">
+            <div ng-if="nsaid.selectnsaids == 'Dental' || nsaid.selectnsaids == 'Dermatology' || nsaid.selectnsaids == 'General Surgery' || nsaid.selectnsaids == 'Neurology' || nsaid.selectnsaids == 'Ophthalmology' || nsaid.selectnsaids == 'Physical medicine' || nsaid.selectnsaids == 'Psychiatry' || nsaid.selectnsaids == 'Podiatry'">
+                <div class="clearer" style="display: block; overflow: hidden">
+                    <div class="removePadding clearer">
+                        <select ng-model="nsaid.selectreferraldropdown" class="form-control" style="width: 29%; float: left; margin-right: 10px">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                        </select>
+                        <input type="text" ng-if="nsaid.selectreferraldropdown == 'Other'" class="form-control col-sm-offset-1" style="width: 30%" ng-model="nsaid.selectreferraldropdownforother">
+                    </div>
+                </div>
+            </div>
+
+            <!--GT:RISHU 1st July 14 Code for Internal medicine specialty-->
+            <div ng-if="nsaid.selectnsaids == 'Internal medicine specialty'">
+                <div style="display: block; overflow: hidden">
+                    <!--<div class="ck-button btn btn-info removePadding">
+                        <label>
+                            <input type="checkbox" ng-model="nsaid.treatmentinternalmedicinebtn" class="hide" />Internal medicine specialty
+                        </label>
+                    </div>-->
+                    <div class="clearer margin-left-1 top-buffer">
+                        <select ng-model="nsaid.treatmentinternalmedicineselectoption" class="form-control" style="width: 29%; float: left; margin-right: 10px; margin-bottom: 10px">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in ['Allergy/immunology', 'Cardiology', 'Endocrinology', 'Gastroenterology', 'Hematology/Oncology', 'Internal Medicine (general)', 'Pulmonary', 'Rheumatology', 'Toxicology', 'Other']">{{n}}</option>
+                        </select>
+
+                        <!--for selection of other-->
+                        <input type="text" ng-if="nsaid.treatmentinternalmedicineselectoption == 'Other'" class="form-control col-sm-offset-1 clearer" style="width: 30%" ng-model="nsaid.treatmentinternalmedicineselectoptionothertext">
+                        <select ng-if="nsaid.treatmentinternalmedicineselectoption == 'Other'" ng-model="nsaid.internalmedicineselectotheroptions" class="form-control clearer top-buffer" style="width: 29%; float: left; margin-right: 10px; margin-bottom: 10px">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                        </select>
+                        <input type="text" ng-if="nsaid.internalmedicineselectotheroptions == 'Other'" class="form-control clearer col-sm-offset-1 top-buffer" style="width: 30%" ng-model="nsaid.internalmedicineselectotheroptionsothertext">
+                        <!--Ends Here-->
+
+                        <!--For select options selection other than 'Other' Option-->
+                        <label ng-if="nsaid.treatmentinternalmedicineselectoption && nsaid.treatmentinternalmedicineselectoption != 'Other'" class="clearer" style="display: block; margin-top: 10px">{{nsaid.treatmentinternalmedicineselectoption}}</label>
+                        <select ng-if="nsaid.treatmentinternalmedicineselectoption && nsaid.treatmentinternalmedicineselectoption != 'Other'" ng-model="nsaid.internalmedicineselectedoption" class="form-control clearer" style="width: 29%; float: left; margin-right: 10px; margin-bottom: 10px">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                        </select>
+                        <input type="text" ng-if="nsaid.internalmedicineselectedoption == 'Other'" class="form-control col-sm-offset-1 top-buffer clearer" style="width: 30%; display: block" ng-model="nsaid.internalmedicineselectedoptionothertext">
+                        <!--Ends Here-->
+                    </div>
+                </div>
+            </div>
+            <!--Ends Here-->
+            <!--GT:RISHU 1st July 14 Code for Pain management-->
+            <div ng-if="nsaid.selectnsaids == 'Pain management'">
+                <div class="col-sm-8 clearer">
+                    <input type="radio" id="selectpainmanagmentradioradio1" ng-model="nsaid.selectpainmanagmentradio" name="selectpainmanagmentradio" value="Anesthesia">
+                    <label for="selectpainmanagmentradioradio1">Anesthesia</label>
+                </div>
+                <div class="col-sm-8 clearer">
+                    <input type="radio" id="selectpainmanagmentradioradio2" ng-model="nsaid.selectpainmanagmentradio" name="selectpainmanagmentradio" value="Physical Medicine">
+                    <label for="selectpainmanagmentradioradio2">Physical Medicine</label>
+                </div>
+
+                <select ng-model="nsaid.selectpainmanagmentoptions" class="form-control clearer" style="width: 29%; float: left; margin-right: 10px">
+                    <option value="">--Choose--</option>
+                    <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                </select>
+                <input type="text" ng-if="nsaid.selectpainmanagmentoptions == 'Other'" class="form-control col-sm-offset-1" style="width: 30%; float: left" ng-model="nsaid.selectpainmanagmentoptionstext">
+            </div>
+            <!--Ends Here-->
+            <!--GT:RISHU 1st July 14 Code for Surgery-->
+            <div ng-if="nsaid.selectnsaids == 'Surgery'">
+                <!--<div class="ck-button btn btn-info removePadding">
+                    <label>
+                        <input type="checkbox" ng-model="nsaid.surgerybutton" class="hide" />Surgery
+                    </label>
+                </div>-->
+                <div class="clearer">
+                    <select ng-model="nsaid.surgeryselectoptions" class="form-control" style="width: 29%; float: left; margin-right: 10px; margin-bottom: 10px">
+                        <option value="">--Choose--</option>
+                        <option ng-repeat="n in ['General', 'Head and Neck', 'Neurosurgery', 'Orthopedics', 'Urology', 'Other']">{{n}}</option>
+                    </select>
+                    <!--Code for Orthopedics-->
+                    <div ng-if="nsaid.surgeryselectoptions == 'Orthopedics'" class="clearer">
+                        <select ng-if="nsaid.surgeryselectoptions == 'Orthopedics'" ng-model="nsaid.surgeryorthopedicselectoptions" class="form-control" style="width: 29%; float: left; margin-right: 10px">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in ['General', 'Upper extremity/hand', 'Major joint (shoulder, hip, knee)', 'Spine', 'Other']">{{n}}</option>
+                        </select>
+                        <div class="clearer">
+                            <!--Code for other selection-->
+                            <input type="text" ng-if="nsaid.surgeryorthopedicselectoptions == 'Other'" class="form-control col-sm-offset-1" style="width: 30%" ng-model="nsaid.surgeryorthopedicselectoptionstext">
+                            <select ng-if="nsaid.surgeryorthopedicselectoptions == 'Other'" ng-model="nsaid.surgeryorthopedicselectoptionsselectionoption" class="form-control clearer top-buffer" style="width: 29%; float: left; margin-right: 10px">
+                                <option value="">--Choose--</option>
+                                <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                            </select>
+                            <input type="text" ng-if="nsaid.surgeryorthopedicselectoptionsselectionoption == 'Other'" class="form-control col-sm-offset-1 top-buffer" style="width: 30%" ng-model="nsaid.surgeryorthopedicselectoptionsselectionoptionothertext">
+                            <!--Ends Here-->
+
+                            <!--Code for other than 'other' selection-->
+                            <!--<label ng-if="nsaid.surgeryorthopedicselectoptions && nsaid.surgeryorthopedicselectoptions != 'Other'">{{nsaid.surgeryorthopedicselectoptions}}</label>-->
+                            <select ng-if="nsaid.surgeryorthopedicselectoptions && nsaid.surgeryorthopedicselectoptions != 'Other'" ng-model="nsaid.surgeryorthopedicselectoptionselection" class="form-control clearer top-buffer" style="width: 29%; float: left; margin-right: 10px">
+                                <option value="">--Choose--</option>
+                                <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                            </select>
+                            <input type="text" ng-if="nsaid.surgeryorthopedicselectoptionselection == 'Other'" class="form-control col-sm-offset-1 top-buffer" style="width: 30%" ng-model="nsaid.surgeryorthopedicselectoptionselectionothertext">
+                            <!--Ends Here-->
+                        </div>
+                    </div>
+                    <!--Ends Here-->
+                    <!--Code for selection other than orthopedics-->
+                    <div class="clearer">
+                        <label ng-if="nsaid.surgeryselectoptions && nsaid.surgeryselectoptions != 'Other' && nsaid.surgeryselectoptions != 'Orthopedics'" class="clearer top-buffer">{{nsaid.surgeryselectoptions}}</label>
+                        <select ng-if="nsaid.surgeryselectoptions && nsaid.surgeryselectoptions != 'Other' && nsaid.surgeryselectoptions != 'Orthopedics'" ng-model="nsaid.surgeryselectoptionsselection" class="form-control clearer top-buffer" style="width: 29%; margin-right: 10px">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                        </select>
+                        <input type="text" ng-if="nsaid.surgeryselectoptionsselection == 'Other'" class="form-control col-sm-offset-1 top-buffer" style="width: 30%" ng-model="nsaid.surgeryselectoptionsselectionothertext">
+                    </div>
+                    <!--Ends Here-->
+                    <!--Code for other selection-->
+                    <div class="clearer">
+                        <input type="text" ng-if="nsaid.surgeryselectoptions == 'Other'" class="form-control col-sm-offset-1 clearer" style="width: 30%" ng-model="nsaid.surgeryselectoptionsothertext">
+                        <select ng-if="nsaid.surgeryselectoptions == 'Other'" ng-model="nsaid.surgeryselectoptionsotherselectionoptions" class="form-control clearer top-buffer" style="width: 29%; margin-right: 10px">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                        </select>
+                        <input type="text" ng-if="nsaid.surgeryselectoptionsotherselectionoptions == 'Other'" class="form-control col-sm-offset-1 top-buffer" style="width: 30%" ng-model="nsaid.surgeryselectoptionsotherselectionoptionsothertext">
+                    </div>
+                    <!--Ends Here-->
+                </div>
+            </div>
+        </div>
+        <!--Ends Here-->
+        <!--GT:RISHU 30th June 2014 For Referral to Speciality other selection code-->
+        <div ng-if="nsaid.selectnsaids == 'Other' && childid == 'referral'" class="col-sm-12">
+            <div class="col-sm-12 removePadding clearer top-buffer">
+                <div class="col-sm-4 clearer removePadding">
+                    <input type="text" ng-model="nsaid.referralinputother" class="form-control" validator-required="required">
+                </div>
+                <div class="clearer" style="display: block; overflow: hidden">
+                    <div class="removePadding top-buffer clearer">
+                        <select ng-model="nsaid.selectreferralforreferralother" class="form-control" style="width: 25%; float: left; margin-right: 10px">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                        </select>
+                        <input type="text" ng-if="nsaid.selectreferralforreferralother == 'Other'" class="form-control top-buffer col-sm-offset-1" style="width: 30%" ng-model="nsaid.othertextforreferralother">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Ends Here-->
+
+        <!--GT:PSHA 30th Mar 2015 For Diagnostic Tests other selection code-->
+        <div ng-if="nsaid.selectnsaids == 'Other' && childid == 'diagnostic'" class="col-sm-12">
+            <div class="col-sm-12 removePadding clearer top-buffer">
+                <div class="col-sm-4 clearer removePadding">
+                    <input type="text" ng-model="nsaid.diagnosticinputother" class="form-control" validator-required="required">
+                </div>
+            </div>
+        </div>
+        <!--Ends Here-->
+
+        <!--GT:RISHU 8th Oct 2014 Code for Immunizations-->
+        <div class="col-sm-8 removePadding clearer top-buffer" ng-if="childid == 'immunizations' || childid == 'referral' || childid == 'diagnostic' || childid == 'treatmentother'">
+            <div class="col-sm-8 removePadding clearer top-buffer">
+                <label>&nbsp;</label><input type="button" value="Text" ng-click="showtexteditorothertext = true" class="btn btn-info btn-xs">
+                <div ng-hide="showtexteditorothertext"><span ng-bind-html="nsaid.othertextfortextarea"></span></div>
+                <div ng-show="showtexteditorothertext" style="width:450px">
+                    <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.othertextfortextarea"></textarea>
+                </div>
+            </div>
+        </div>
+        <!--Ends Here-->
+
+        <div class="col-sm-10 top-buffer text-right">
+            <button type="button" class="btn btn-info btn-xs" ng-click="clearbodypart($index+1,nsaids.length, nsaid.selectnsaids)">Clear</button>
+            <button type="button" class="btn btn-danger btn-xs" ng-click="deletebodypart($index+1,nsaids.length,nsaid.selectnsaids)">Delete</button>
+        </div>
+        <div class="clearer"></div>
+        <hr>
+    </div>
+
+    <!-- GT:RISHU 31st October 2014 Code for PR4 therapy and Other -->
+
+    <div class="col-sm-12 margin-left-3 clearer" ng-if="nsaids && formType == 'pr4'" ng-repeat="nsaid in nsaids.slice().reverse() track by $index" style="padding: 5px">
+        <div class="col-sm-12">
+            <div ng-if="childid == 'therapy'">
+                <div>
+                    <label>Is referral to therapy necessary today? <a ng-click="popupMessage()">(i)</a> </label>
+                    <br>
+                    <label><input type="radio" name="therapynecessaryYes{{$index}}" value="Yes" ng-model="nsaid.therapynecessary" id="therapynecessaryYes{{$index}}">&nbsp;Yes</label>
+                    <label><input type="radio" name="therapynecessaryYes{{$index}}" value="No" ng-model="nsaid.therapynecessary" id="therapynecessaryNo{{$index}}" ng-click="nsaid.selectnsaids = ''">&nbsp;No</label>
+                </div>
+                <select ng-model="nsaid.selectnsaids" ng-if="nsaid.therapynecessary == 'Yes'" class="form-control" style="width: 30%" ng-change="newArray(nsaid.selectnsaids,$index+1,nsaids.length);nsaid.selectnsaidDosage='';nsaid.selectnumberdispensecommon='';nsaid.selectcommonrefills='';nsaid.selectnumberdispense='';nsaid.selectrefills=''">
+                    <option value="">--Choose--</option>
+                    <option ng-repeat="item in nsaidselects track by $index" ng-hide="selectedArray.indexOf(item)!=-1">{{item}}</option>
+                </select>
+            </div>
+            <div ng-if="childid == 'injections'">
+                <div>
+                    <label>Are injections necessary today? <a ng-click="popupMessage()">(i)</a></label>
+                    <br>
+                    <label><input type="radio" name="injectionsnecessaryYes{{$index}}" value="Yes" ng-model="nsaid.injectionsnecessary" id="injectionsnecessaryYes{{$index}}">&nbsp;Yes</label>
+                    <label><input type="radio" name="injectionsnecessaryYes{{$index}}" value="No" ng-model="nsaid.injectionsnecessary" id="injectionsnecessaryNo{{$index}}" ng-click="nsaid.selectnsaids = ''">&nbsp;No</label>
+                </div>
+
+                <select ng-model="nsaid.selectnsaids" ng-if="nsaid.injectionsnecessary == 'Yes'" class="form-control" style="width: 30%" ng-change="newArray(nsaid.selectnsaids,$index+1,nsaids.length);nsaid.injectionstextinput='';nsaid.selectnsaidDosage='';nsaid.selectnumberdispensecommon='';nsaid.selectcommonrefills='';nsaid.selectnumberdispense='';nsaid.selectrefills=''">
+                    <option value="">--Choose--</option>
+                    <option ng-repeat="item in nsaidselects track by $index" ng-hide="selectedArray.indexOf(item)!=-1">{{item}}</option>
+                </select>
+            </div>
+			<div ng-if="childid == 'diagnostic'">
+                <div>
+                    <label>Are diagnostic tests necessary today? <a ng-click="popupMessage()">(i)</a></label>
+                    <br>
+                    <label><input type="radio" name="diagnosticnecessaryYes{{$index}}" value="Yes" ng-model="nsaid.diagnosticnecessary" id="diagnosticnecessaryYes{{$index}}">&nbsp;Yes</label>
+                    <label><input type="radio" name="diagnosticnecessaryYes{{$index}}" value="No" ng-model="nsaid.diagnosticnecessary" id="diagnosticnecessaryNo{{$index}}" ng-click="nsaid.selectnsaids = ''">&nbsp;No</label>
+                </div>
+				<select ng-model="nsaid.selectnsaids" ng-if="nsaid.diagnosticnecessary == 'Yes'" class="form-control" style="width: 30%">
+                    <option value="">--Choose--</option>
+                    <option ng-repeat="item in nsaidselects track by $index" ng-hide="selectedArray.indexOf(item)!=-1">{{item}}</option>
+                </select>
+			</div>	
+            <select ng-model="nsaid.selectnsaids" ng-if="nsaidselects.length > 0 && !(childid == 'therapy' || childid == 'diagnostic' || childid == 'injections') && childid !='treatmentother'" class="form-control" style="width: 30%" ng-change="newArray(nsaid.selectnsaids,$index+1,nsaids.length);nsaid.selectnsaidDosage='';nsaid.selectnsaidstext='';nsaid.selectreferraldropdown='';nsaid.selectnsaidDosage='';nsaid.selectnumberdispensecommon='';nsaid.selectcommonrefills='';nsaid.selectnumberdispense='';nsaid.selectrefills='';nsaid.referalnecessaryother='';nsaid.referalnecessary='';nsaid.referralinputother=''">
+                <option value="">--Choose--</option>
+                <option ng-repeat="item in nsaidselects track by $index" ng-hide="selectedArray.indexOf(item)!=-1">{{item}}</option>
+            </select>
+            <!--GT:RISHU 30th November 2014 For Cortisone directions Text-->
+            <div ng-if="!nsaidselects.length" class="col-sm-8 removePadding clearer top-buffer">
+                <label>Directions: &nbsp;</label><input type="button" value="Text" ng-click="showhideeditor = true" class="btn btn-info btn-xs">
+                <div ng-hide="showhideeditor"><span ng-bind-html="nsaid.nsaidsdirectiontext"></span></div>
+                <div ng-show="showhideeditor" style="width:450px">
+                    <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.nsaidsdirectiontext"></textarea>
+                </div>
+            </div>
+            <!-- GT:RISHU 30th June 2014 Code for Medical Dosage-->
+            <div ng-if="nsaid.selectnsaids != 'Other'" class="clearer">
+                <!--<div class="top-buffer" ng-if="childid != 'cortisone'">
+                    <label>{{nsaid.selectnsaids}}</label>
+                </div>-->
+                <div class="top-buffer">
+                    <span ng-if="nsaid.selectnsaids == 'Ibuprofen (Motrin, Advil)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio1" ng-model="nsaid.selectnsaidDosage" name="selectnsaidibuprofendosage" value="800">
+                                800 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio2" ng-model="nsaid.selectnsaidDosage" name="selectnsaidibuprofendosage" value="600">
+                                600 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <input type="radio" id="Radio3" ng-model="nsaid.selectnsaidDosage" name="selectnsaidibuprofendosage" value="400">
+                            <label for="selectnsaidibuprofendosage3">400 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio4" ng-model="nsaid.selectnsaidDosage" name="selectnsaidibuprofendosage" value="200">
+                                200 mg OTC</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Naproxen (Naprosyn, Aleve)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio5" ng-model="nsaid.selectnsaidDosage" name="selectnsaidnaproxendosage" value="375">
+                                375 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio6" ng-model="nsaid.selectnsaidDosage" name="selectnsaidnaproxendosage" value="500">
+                                500 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio7" ng-model="nsaid.selectnsaidDosage" name="selectnsaidnaproxendosage" value="550">
+                                550 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio8" ng-model="nsaid.selectnsaidDosage" name="selectnsaidnaproxendosage" value="200">
+                                200 mg OTC</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Etodolac (Lodine)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio9" ng-model="nsaid.selectnsaidDosage" name="selectnsaidetodolacdosage" value="300">
+                                300 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio10" ng-model="nsaid.selectnsaidDosage" name="selectnsaidetodolacdosage" value="400">
+                                400 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio11" ng-model="nsaid.selectnsaidDosage" name="selectnsaidetodolacdosage" value="500">
+                                500 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Ketorolac (Toradol)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio12" ng-model="nsaid.selectnsaidDosage" name="selectnsaidketorolacdosage" value="IV">
+                                IV</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio13" ng-model="nsaid.selectnsaidDosage" name="selectnsaidketorolacdosage" value="IM">
+                                IM</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio14" ng-model="nsaid.selectnsaidDosage" name="selectnsaidketorolacdosage" value="30">
+                                30 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio15" ng-model="nsaid.selectnsaidDosage" name="selectnsaidketorolacdosage" value="60">
+                                60 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Celecoxib (Celebrex)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio16" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcelecoxibdosage" value="100">
+                                100 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio17" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcelecoxibdosage" value="200">
+                                200 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Baclofen'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio18" ng-model="nsaid.selectnsaidDosage" name="selectnsaidbacklofendosage" value="10">
+                                10 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio19" ng-model="nsaid.selectnsaidDosage" name="selectnsaidbacklofendosage" value="20">
+                                20 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Cyclobenzaprine (Flexeril)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio20" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcyclobenzaprinedosage" value="5">
+                                5 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio21" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcyclobenzaprinedosage" value="10">
+                                10 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Tizanidine (Zanaflex)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio22" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtizanidinedosage" value="2">
+                                2 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio23" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtizanidinedosage" value="4">
+                                4 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio24" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtizanidinedosage" value="6">
+                                6 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Metaxalone (Skelaxin)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio25" ng-model="nsaid.selectnsaidDosage" name="selectnsaidmetaxalonedosage" value="800">
+                                800 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Diazepam (Valium)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio26" ng-model="nsaid.selectnsaidDosage" name="selectnsaiddiazepamdosage" value="2">
+                                2 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio27" ng-model="nsaid.selectnsaidDosage" name="selectnsaiddiazepamdosage" value="5">
+                                5 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio28" ng-model="nsaid.selectnsaidDosage" name="selectnsaiddiazepamdosage" value="10">
+                                10 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Norco (hydrocodone + acetaminophen)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio29" ng-model="nsaid.selectnsaidDosage" name="selectnsaidnorcodosage" value="5">
+                                5 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio30" ng-model="nsaid.selectnsaidDosage" name="selectnsaidnorcodosage" value="7.5">
+                                7.5 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio31" ng-model="nsaid.selectnsaidDosage" name="selectnsaidnorcodosage" value="10">
+                                10 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Percocet (oxycodone + acetaminophen)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio32" ng-model="nsaid.selectnsaidDosage" name="selectnsaidprecocetdosage" value="5/325">
+                                5/325 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" ng-model="nsaid.selectnsaidDosage" id="Radio33" name="selectnsaidprecocetdosage" value="7.5/500">
+                                7.5/325 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio34" ng-model="nsaid.selectnsaidDosage" name="selectnsaidprecocetdosage" value="10/650">
+                                10/325 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Tylenol with Codeine (acetaminophen + codeine)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio35" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtylenoldosage" value="30/300">
+                                30/300 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio36" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtylenoldosage" value="60/300">
+                                60/300 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Tramadol (Ultram)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio37" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtramadoldosage" value="50">
+                                50 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio38" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtramadoldosage" value="100">
+                                100 mg ER</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio39" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtramadoldosage" value="200">
+                                200 mg ER</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <input type="radio" id="Radio40" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtramadoldosage" value="300">
+                            <label for="selectnsaidtramadoldosage3">300 mg ER</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Tramadol + acetaminophen (Ultracet)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="checkbox" id="Radio41" ng-model="nsaid.selectnsaidDosage" name="selectnsaidtramadolultracetdosage" value="37.5/325">
+                                37.5 mg/325 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Elavil'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio42" ng-model="nsaid.selectnsaidDosage" name="selectnsaidelavildosage" value="10">
+                                10 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio43" ng-model="nsaid.selectnsaidDosage" name="selectnsaidelavildosage" value="25">
+                                25 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio44" ng-model="nsaid.selectnsaidDosage" name="selectnsaidelavildosage" value="50">
+                                50 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio45" ng-model="nsaid.selectnsaidDosage" name="selectnsaidelavildosage" value="75">
+                                75 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio46" ng-model="nsaid.selectnsaidDosage" name="selectnsaidelavildosage" value="100">
+                                100 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio47" ng-model="nsaid.selectnsaidDosage" name="selectnsaidelavildosage" value="150">
+                                150 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Gabapentin (Neurontin)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio48" ng-model="nsaid.selectnsaidDosage" name="selectnsaidgabapentindosage" value="100">
+                                100 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio49" ng-model="nsaid.selectnsaidDosage" name="selectnsaidgabapentindosage" value="300">
+                                300 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio50" ng-model="nsaid.selectnsaidDosage" name="selectnsaidgabapentindosage" value="400">
+                                400 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Amoxicillin'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio51" ng-model="nsaid.selectnsaidDosage" name="selectnsaidamoxicillindosage" value="250">
+                                250 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio52" ng-model="nsaid.selectnsaidDosage" name="selectnsaidamoxicillindosage" value="500">
+                                500 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio53" ng-model="nsaid.selectnsaidDosage" name="selectnsaidamoxicillindosage" value="875">
+                                875 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Augmentin'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio54" ng-model="nsaid.selectnsaidDosage" name="selectnsaidaugmentindosage" value="500">
+                                500 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio55" ng-model="nsaid.selectnsaidDosage" name="selectnsaidaugmentindosage" value="875">
+                                875 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Azithromycin'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" ng-model="nsaid.selectnsaidDosage" name="selectnsaidazithromycindosage" value="250">
+                                250 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio56" ng-model="nsaid.selectnsaidDosage" name="selectnsaidazithromycindosage" value="500">
+                                500 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Bactrim DS (Trimethoprim-sulfamethoxazole)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio57" ng-model="nsaid.selectnsaidDosage" name="selectnsaidbactrimdosage" value="160/800">
+                                160/800 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Cefazolin (Ancef)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio58" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcefazolindosage" value="IV">
+                                IV</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio59" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcefazolindosage" value="IM">
+                                IM</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio60" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcefazolindosage" value="0.5">
+                                0.5 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio61" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcefazolindosage" value="1">
+                                1 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio62" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcefazolindosage" value="1.5">
+                                1.5 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Doxycycline'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio63" ng-model="nsaid.selectnsaidDosage" name="selectnsaidoxycyclinedosage" value="50">
+                                50 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio64" ng-model="nsaid.selectnsaidDosage" name="selectnsaidoxycyclinedosage" value="75">
+                                75 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" ng-model="nsaid.selectnsaidDosage" name="selectnsaidoxycyclinedosage" value="100">
+                                100 mg</label>
+                        </div>
+                    </span>
+                    <span ng-if="nsaid.selectnsaids == 'Cephalexin (Keflex)'">
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio65" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcephalexindosage" value="250">
+                                250 mg</label>
+                        </div>
+                        <div class="col-sm-8 clearer">
+                            <label>
+                                <input type="radio" id="Radio66" ng-model="nsaid.selectnsaidDosage" name="selectnsaidcephalexindosage" value="500">
+                                500 mg</label>
+                        </div>
+                    </span>
+
+                </div>
+            </div>
+            <!--Ends Here-->
+            <!-- GT:RISHU 30th June 2014 Code for Medical Question-->
+            <div class="col-sm-8 removePadding clearer top-buffer" ng-if="childid != 'cortisone' && nsaid.selectnsaids != 'Other' && childid != 'immunizations' && childid != 'therapy' && childid != 'injections' && childid != 'referral' && childid != 'diagnostic' && childid != 'treatmentother'">
+                <label>Directions:</label>&nbsp;<input type="button" value="Text" ng-click="showtextareaeditor = true" class="btn btn-info btn-xs">
+                <div ng-hide="showtextareaeditor"><span ng-bind-html="nsaid.commondirectionstext"></span></div>               
+				<div ng-show="showtextareaeditor" style="width:450px">
+                    <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.commondirectionstext"></textarea>
+                </div>
+                <div style="display: block; overflow: hidden">
+                    <label class="col-sm-3 removePadding clearer">Number dispense: &nbsp;</label>
+                    <div class="col-sm-3 removePadding">
+                        <select ng-model="nsaid.selectnumberdispensecommon" ng-change="nsaid.selectnumberdispensecommontext=''" class="form-control">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in [1, 5, 10, 30, 60, 90, 'Other']">{{n}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 removePadding col-sm-offset-1">
+                        <input type="text" class="form-control" ng-if="nsaid.selectnumberdispensecommon == 'Other'" ng-model="nsaid.selectnumberdispensecommontext">
+                    </div>
+                </div>
+                <div class="top-buffer-2">
+                    <label class="col-sm-3 removePadding clearer">Refills: &nbsp;</label>
+                    <div class="col-sm-3 removePadding">
+                        <select ng-model="nsaid.selectcommonrefills" class="form-control">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in [0, 1, 2, 3, 4, 5, 6]">{{n}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-12 removePadding clearer top-buffer">
+                    <label>&nbsp;</label><input type="button" value="Text" ng-click="showtexteditorothertext = true" class="btn btn-info btn-xs">
+                    <div ng-hide="showtexteditorothertext"><span ng-bind-html="nsaid.othertextfortextarea"></span></div>
+                    <div ng-show="showtexteditorothertext" style="width:450px">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.othertextfortextarea"></textarea>
+                    </div>
+                </div>
+            </div>
+            <!--Ends Here-->
+            <!-- GT:RISHU 30th June 2014 Code for Injections-->
+
+
+            <div ng-if="childid == 'injections' && nsaid.injectionsnecessary == 'Yes'">
+                <!--<div ng-if="nsaid.selectnsaids && nsaid.selectnsaids !='Other'" class="col-sm-4 removePadding">
+                    <input type="text"  class="form-control" ng-model="nsaid.injectionstextinput" />
+                </div>-->
+                <div ng-if="nsaid.selectnsaids && nsaid.selectnsaids =='Other'" class="col-sm-4 removePadding top-buffer">
+                    <input type="text" class="form-control" ng-model="nsaid.injectionstextinput">
+                </div>
+                <div class="col-sm-8 removePadding clearer top-buffer">
+                    <label>&nbsp;</label><input type="button" value="Text" ng-click="showtexteditorinjections = true" class="btn btn-info btn-xs">
+                    <div ng-hide="showtexteditorinjections"><span ng-bind-html="nsaid.othertextareainjectionstext"></span></div>
+                    <div ng-show="showtexteditorinjections" style="width:450px">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.othertextareainjectionstext"></textarea>
+                    </div>
+                </div>
+            </div>
+            <!--Ends Here-->
+            <!-- GT:RISHU 30th June 2014 Code for Therapy -->
+            <div class="col-sm-10 removePadding clearer top-buffer" ng-if="childid == 'therapy' && nsaid.therapynecessary == 'Yes'">
+                <div ng-if="nsaid.selectnsaids != 'Other'">
+                    <div style="display: block; overflow: hidden">
+                        <div class="removePadding">
+                            <select ng-model="nsaid.selecttimesfortherapy" class="form-control" style="width: 20%; float: left">
+                                <option value="">--Choose--</option>
+                                <option ng-repeat="n in [1, 2, 3, 4, 5, 6]">{{n}}</option>
+                            </select>
+                            <label style="width: 25%; float: left">&nbsp;&nbsp; times per week for&nbsp;</label>
+                            <select ng-model="nsaid.selectweeksfortherapy" class="form-control" style="width: 20%; float: left">
+                                <option value="">--Choose--</option>
+                                <option ng-repeat="n in [1, 2, 3, 4, 5, 6]">{{n}}</option>
+                            </select>
+                            <label style="width: 30%; float: left">&nbsp;&nbsp;weeks&nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 removePadding clearer top-buffer">
+                        <label>&nbsp;</label><input type="button" value="Text" ng-click="showtexteditorTherapy = true" class="btn btn-info btn-xs">
+                        <div ng-hide="showtexteditorTherapy"><span ng-bind-html="nsaid.othertextareaTherapytext"></span></div>
+                        <div ng-show="showtexteditorTherapy" style="width:450px">
+                            <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.othertextareaTherapytext"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Ends Here-->
+            <!--GT:PSHA 30th Mar 2015 For Diagnostic Tests selection code-->
+            <div ng-if="nsaid.selectnsaids == 'Other' && childid == 'diagnostic'" class="col-sm-12 removePadding">
+                <div class="removePadding clearer top-buffer">
+                    <div class="col-sm-4 clearer removePadding">
+                        <input type="text" ng-model="nsaid.diagnosticinputother" class="form-control" validator-required="required">
+                    </div>
+                </div>
+            </div>
+            <!--Ends Here-->
+            <!-- GT:PSHA 6th April 2015 Code for Other button -->
+            <div class="col-sm-12 removePadding top-buffer" ng-if="childid =='treatmentother'">
+                <div class="col-sm-3 removePadding">
+                    <label>Treatment Name:</label>
+                </div>
+                <div class="col-sm-3 removePadding">
+                    <input type="text" class="form-control" ng-model="nsaid.selectnsaids">
+                </div>
+            </div>
+            <!--Ends Here-->
+            <!--GT:PSHA 6th April 2015 For Diagnostic Tests other selection code-->
+            <div class="col-sm-8 removePadding clearer top-buffer" ng-if="childid == 'diagnostic' || childid == 'treatmentother'">
+                <div class="col-sm-8 removePadding clearer top-buffer">
+                    <label>&nbsp;</label><input type="button" value="Text" ng-click="showtexteditorothertext = true" class="btn btn-info btn-xs">
+                    <div ng-hide="showtexteditorothertext"><span ng-bind-html="nsaid.othertextfortextarea"></span></div>
+                    <div ng-show="showtexteditorothertext" style="width:450px">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.othertextfortextarea"></textarea>
+                    </div>
+                </div>
+            </div>
+			  <div class="col-sm-12 removePadding" ng-if="childid =='treatmentother'">
+               		<br>  
+                    <label>Is this treatment necessary today?</label>
+                    <br>
+                    <label><input type="radio" name="othertreatmentnecessaryYes{{$index}}" value="Yes" ng-model="nsaid.othertreatmentnecessary" id="othertreatmentnecessaryYes{{$index}}">&nbsp;Yes</label>
+                    <label><input type="radio" name="othertreatmentnecessaryYes{{$index}}" value="No" ng-model="nsaid.othertreatmentnecessary" id="othertreatmentnecessaryNo{{$index}}">&nbsp;No</label>
+              </div>
+			
+            <!--Ends Here-->
+        </div>
+        <!--GT:RISHU 30th June 2014 For medications other selection from dropdown code-->
+        <div ng-if="nsaid.selectnsaids == 'Other' && childid != 'therapy' && childid != 'immunizations' && childid != 'injections' && childid != 'referral' && childid != 'diagnostic' && childid != 'treatmentother'" class="col-sm-12">
+            <div class="col-sm-4 removePadding clearer top-buffer">
+                <input type="text" class="form-control" ng-model="nsaid.selectnsaidstext">
+            </div>
+            <div class="col-sm-8 removePadding clearer top-buffer">
+                <label>Directions: &nbsp;</label><input type="button" value="Text" ng-click="showhideeditor = true" class="btn btn-info btn-xs">
+                <div ng-hide="showhideeditor"><span ng-bind-html="nsaid.commondirectionstext"></span></div>
+                <div ng-show="showhideeditor" style="width:450px">
+                    <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.commondirectionstext"></textarea>
+                </div>
+                <div style="display: block; overflow: hidden" ng-if="childid != 'cortisone'">
+                    <label class="col-sm-3 removePadding clearer">Number dispense: &nbsp;</label>
+                    <div class="col-sm-3 removePadding {{nsaid.selectnumberdispense}}">
+                        <select ng-model="nsaid.selectnumberdispense" class="form-control">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in [1, 5, 10, 30, 60, 90, 'Other']">{{n}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 removePadding col-sm-offset-1">
+                        <input type="text" class="form-control" ng-if="nsaid.selectnumberdispense == 'Other'" ng-model="nsaid.selectnumberdispensetext">
+                    </div>
+                </div>
+
+                <div class="top-buffer-2" ng-if="childid != 'cortisone'">
+                    <label class="col-sm-3 removePadding clearer">Refills: &nbsp;</label>
+                    <div class="col-sm-3 removePadding">
+                        <select ng-model="nsaid.selectrefills" class="form-control">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in [0, 1, 2, 3, 4, 5, 6]">{{n}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-12 removePadding clearer top-buffer">
+                    <label>&nbsp;</label><input type="button" value="Text" ng-click="showhidetexteditor = true" class="btn btn-info btn-xs">
+                    <div ng-hide="showhidetexteditor"><span ng-bind-html="nsaid.testingtextarea"></span></div>
+                    <div ng-show="showhidetexteditor" style="width:450px">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.testingtextarea"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Ends Here-->
+        <!--GT:RISHU 30th June 2014 For therapy other selection code-->
+        <div ng-if="nsaid.selectnsaids == 'Other' && childid == 'therapy' && nsaid.therapynecessary == 'Yes'" class="col-sm-12">
+            <div class="col-sm-8 removePadding clearer top-buffer">
+                <div class="col-sm-5 clearer removePadding">
+                    <input type="text" ng-model="nsaid.therapyinputother" class="form-control">
+                </div>
+                <div class="clearer" style="display: block; overflow: hidden">
+                    <div class="removePadding top-buffer clearer">
+                        <select ng-model="nsaid.selecttimesfortherapyother" class="form-control" style="width: 25%; float: left">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in [1, 2, 3, 4, 5, 6]">{{n}}</option>
+                        </select>
+                        <label style="width: 29%; float: left">&nbsp;&nbsp; times per week for&nbsp;</label>
+                        <select ng-model="nsaid.selectweeksfortherapyother" class="form-control" style="width: 25%; float: left">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in [1, 2, 3, 4, 5, 6]">{{n}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-8 removePadding clearer top-buffer">
+                        <label>&nbsp;</label><input type="button" value="Text" ng-click="showtexteditorTherapy = true" class="btn btn-info btn-xs">
+                        <div ng-hide="showtexteditorTherapy"><span ng-bind-html="nsaid.othertextareaTherapytext"></span></div>
+                        <div ng-show="showtexteditorTherapy" style="width:450px">
+                            <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.othertextareaTherapytext"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Ends Here-->
+        <!-- GT:RISHU 30th June 2014 Code for Referral to Speciality -->
+        <div class="col-sm-12 removePadding clearer col-sm-offset-1" ng-if="childid == 'referral' ">
+            <div ng-if="nsaid.selectnsaids == 'Dental' || nsaid.selectnsaids == 'Dermatology' || nsaid.selectnsaids == 'General Surgery' || nsaid.selectnsaids == 'Neurology' || nsaid.selectnsaids == 'Ophthalmology' || nsaid.selectnsaids == 'Physical medicine' || nsaid.selectnsaids == 'Psychiatry' || nsaid.selectnsaids == 'Podiatry'">
+                <div class="clearer" style="display: block; overflow: hidden">
+                    <div>
+                        <label>Is referral to this specialty necessary today? <a ng-click="popupMessage()">(i)</a> </label>
+                        <br>
+                        <input type="radio" name="referalnecessaryYes{{$index}}" value="Yes" ng-model="nsaid.referalnecessary" id="referalnecessaryYes{{$index}}"><label for="referalnecessaryYes{{$index}}">Yes</label>
+                        <input type="radio" name="referalnecessaryYes{{$index}}" value="No" ng-model="nsaid.referalnecessary" id="referalnecessaryNo{{$index}}" ng-click="nsaid.selectreferraldropdown = ''"><label for="referalnecessaryNo{{$index}}">No</label>
+                    </div>
+                    <div class="removePadding clearer" ng-if="nsaid.referalnecessary == 'Yes'">
+                        <select ng-model="nsaid.selectreferraldropdown" class="form-control" ng-change="nsaid.selectreferraldropdownforother=''" style="width: 29%; float: left; margin-right: 10px">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                        </select>
+                        <input type="text" ng-if="nsaid.selectreferraldropdown == 'Other'" class="form-control col-sm-offset-1" style="width: 30%" ng-model="nsaid.selectreferraldropdownforother">
+                    </div>
+                </div>
+            </div>
+
+            <!--GT:RISHU 1st July 14 Code for Internal medicine specialty-->
+            <div ng-if="nsaid.selectnsaids == 'Internal medicine specialty'">
+                <div style="display: block; overflow: hidden">
+
+                    <div>
+                        <label>Is referral to this specialty necessary today? <a ng-click="popupMessage()">(i)</a> </label>
+                        <br>
+                        <input type="radio" name="referalnecessaryYes{{$index}}" value="Yes" ng-model="nsaid.referalnecessary" id="Radio71"><label for="referalnecessaryYes{{$index}}">Yes</label>
+                        <input type="radio" name="referalnecessaryYes{{$index}}" value="No" ng-model="nsaid.referalnecessary" id="Radio72" ng-click="nsaid.treatmentinternalmedicinebtn = ''"><label for="referalnecessaryNo{{$index}}">No</label>
+                    </div>
+                    <div ng-if="nsaid.referalnecessary == 'Yes'">
+                        <div class="ck-button btn btn-info removePadding">
+                            <label>
+                                <input type="checkbox" ng-model="nsaid.treatmentinternalmedicinebtn" class="hide" ng-click="nsaid.treatmentinternalmedicineselectoption=''">Internal medicine specialty
+                            </label>
+                        </div>
+                        <div ng-if="nsaid.treatmentinternalmedicinebtn" class="clearer margin-left-1 top-buffer">
+                            <select ng-if="nsaid.treatmentinternalmedicinebtn" ng-model="nsaid.treatmentinternalmedicineselectoption" class="form-control" ng-change="nsaid.treatmentinternalmedicineselectoptionothertext='';nsaid.internalmedicineselectedoption=''" style="width: 29%; float: left; margin-right: 10px; margin-bottom: 10px">
+                                <option value="">--Choose--</option>
+                                <option ng-repeat="n in ['Allergy/immunology', 'Cardiology', 'Endocrinology', 'Gastroenterology', 'Hematology/Oncology', 'Internal Medicine (general)', 'Pulmonary', 'Rheumatology', 'Toxicology', 'Other']">{{n}}</option>
+                            </select>
+
+                            <!--for selection of other-->
+                            <input type="text" ng-if="nsaid.treatmentinternalmedicineselectoption == 'Other'" class="form-control col-sm-offset-1 clearer" style="width: 30%" ng-model="nsaid.treatmentinternalmedicineselectoptionothertext">
+                            <select ng-if="nsaid.treatmentinternalmedicineselectoption == 'Other'" ng-model="nsaid.internalmedicineselectotheroptions" class="form-control clearer top-buffer" ng-change="nsaid.internalmedicineselectotheroptionsothertext=''" style="width: 29%; float: left; margin-right: 10px; margin-bottom: 10px">
+                                <option value="">--Choose--</option>
+                                <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                            </select>
+                            <input type="text" ng-if="nsaid.internalmedicineselectotheroptions == 'Other'" class="form-control clearer col-sm-offset-1 top-buffer" style="width: 30%" ng-model="nsaid.internalmedicineselectotheroptionsothertext">
+                            <!--Ends Here-->
+
+                            <!--For select options selection other than 'Other' Option-->
+                            <label ng-if="nsaid.treatmentinternalmedicineselectoption && nsaid.treatmentinternalmedicineselectoption != 'Other'" class="clearer" style="display: block; margin-top: 10px">{{nsaid.treatmentinternalmedicineselectoption}}</label>
+                            <select ng-if="nsaid.treatmentinternalmedicineselectoption && nsaid.treatmentinternalmedicineselectoption != 'Other'" ng-model="nsaid.internalmedicineselectedoption" ng-change="nsaid.internalmedicineselectedoptionothertext=''" class="form-control clearer" style="width: 29%; float: left; margin-right: 10px; margin-bottom: 10px">
+                                <option value="">--Choose--</option>
+                                <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                            </select>
+                            <input type="text" ng-if="nsaid.internalmedicineselectedoption == 'Other'" class="form-control col-sm-offset-1 top-buffer clearer" style="width: 30%; display: block" ng-model="nsaid.internalmedicineselectedoptionothertext">
+                            <!--Ends Here-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Ends Here-->
+            <!--GT:RISHU 1st July 14 Code for Pain management-->
+            <div ng-if="nsaid.selectnsaids == 'Pain management'">
+                <div class="clearer">
+                    <label>Is referral to this specialty necessary today? <a ng-click="popupMessage()">(i)</a> </label>
+                    <br>
+                    <input type="radio" name="referalnecessaryYes{{$index}}" value="Yes" ng-model="nsaid.referalnecessary" id="referalnecessaryYes{{$index}}"><label for="referalnecessaryYes{{$index}}">Yes</label>
+                    <input type="radio" name="referalnecessaryYes{{$index}}" value="No" ng-model="nsaid.referalnecessary" id="referalnecessaryNo{{$index}}" ng-click="nsaid.selectpainmanagmentradio = ''"><label for="referalnecessaryNo{{$index}}">No</label>
+                </div>
+                <div class="col-sm-8 clearer" ng-if="nsaid.referalnecessary == 'Yes'">
+                    <input type="radio" id="Radio67" ng-model="nsaid.selectpainmanagmentradio" name="selectpainmanagmentradio" value="Anesthesia">
+                    <label for="selectpainmanagmentradioradio1">Anesthesia</label>
+                </div>
+                <div class="col-sm-8 clearer" ng-if="nsaid.referalnecessary == 'Yes'">
+                    <input type="radio" id="Radio68" ng-model="nsaid.selectpainmanagmentradio" name="selectpainmanagmentradio" value="Physical Medicine">
+                    <label for="selectpainmanagmentradioradio2">Physical Medicine</label>
+                </div>
+
+                <select ng-if="nsaid.referalnecessary == 'Yes'" ng-model="nsaid.selectpainmanagmentoptions" class="form-control clearer" style="width: 29%; float: left; margin-right: 10px">
+                    <option value="">--Choose--</option>
+                    <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                </select>
+                <input type="text" ng-if="nsaid.selectpainmanagmentoptions == 'Other'" class="form-control col-sm-offset-1" style="width: 30%; float: left" ng-model="nsaid.selectpainmanagmentoptionstext">
+            </div>
+            <!--Ends Here-->
+            <!--GT:RISHU 1st July 14 Code for Surgery-->
+            <div ng-if="nsaid.selectnsaids == 'Surgery'">
+                <!--<div class="ck-button btn btn-info removePadding">
+                    <label>
+                        <input type="checkbox" ng-model="nsaid.surgerybutton" class="hide" />Surgery
+                    </label>
+                </div>-->
+                <div class="clearer">
+                    <label>Is referral to this specialty necessary today? <a ng-click="popupMessage()">(i)</a> </label>
+                    <br>
+                    <input type="radio" name="referalnecessaryYes{{$index}}" value="Yes" ng-model="nsaid.referalnecessary" id="Radio69"><label for="referalnecessaryYes{{$index}}">Yes</label>
+                    <input type="radio" name="referalnecessaryYes{{$index}}" value="No" ng-model="nsaid.referalnecessary" id="Radio70" ng-click="nsaid.surgeryselectoptions = ''"><label for="referalnecessaryNo{{$index}}">No</label>
+                </div>
+                <div class="clearer" ng-if="nsaid.referalnecessary == 'Yes'">
+                    <select ng-model="nsaid.surgeryselectoptions" ng-if="nsaid.referalnecessary == 'Yes'" ng-change="nsaid.surgeryselectoptionsotherselectionoptions=''" class="form-control" style="width: 29%; float: left; margin-right: 10px; margin-bottom: 10px">
+                        <option value="">--Choose--</option>
+                        <option ng-repeat="n in ['General', 'Head and Neck', 'Neurosurgery', 'Orthopedics', 'Urology', 'Other']">{{n}}</option>
+                    </select>
+                    <!--Code for Orthopedics-->
+                    <div ng-if="nsaid.surgeryselectoptions == 'Orthopedics'" class="clearer">
+                        <select ng-if="nsaid.surgeryselectoptions == 'Orthopedics'" ng-model="nsaid.surgeryorthopedicselectoptions" class="form-control" style="width: 29%; float: left; margin-right: 10px">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in ['General', 'Upper extremity/hand', 'Major joint (shoulder, hip, knee)', 'Spine', 'Other']">{{n}}</option>
+                        </select>
+                        <div class="clearer">
+                            <!--Code for other selection-->
+                            <input type="text" ng-if="nsaid.surgeryorthopedicselectoptions == 'Other'" class="form-control col-sm-offset-1" style="width: 30%" ng-model="nsaid.surgeryorthopedicselectoptionstext">
+                            <select ng-if="nsaid.surgeryorthopedicselectoptions == 'Other'" ng-model="nsaid.surgeryorthopedicselectoptionsselectionoption" class="form-control clearer top-buffer" style="width: 29%; float: left; margin-right: 10px">
+                                <option value="">--Choose--</option>
+                                <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                            </select>
+                            <input type="text" ng-if="nsaid.surgeryorthopedicselectoptionsselectionoption == 'Other'" class="form-control col-sm-offset-1 top-buffer" style="width: 30%" ng-model="nsaid.surgeryorthopedicselectoptionsselectionoptionothertext">
+                            <!--Ends Here-->
+
+                            <!--Code for other than 'other' selection-->
+                            <!--<label ng-if="nsaid.surgeryorthopedicselectoptions && nsaid.surgeryorthopedicselectoptions != 'Other'">{{nsaid.surgeryorthopedicselectoptions}}</label>-->
+                            <select ng-if="nsaid.surgeryorthopedicselectoptions && nsaid.surgeryorthopedicselectoptions != 'Other'" ng-model="nsaid.surgeryorthopedicselectoptionselection" class="form-control clearer top-buffer" style="width: 29%; float: left; margin-right: 10px">
+                                <option value="">--Choose--</option>
+                                <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                            </select>
+                            <input type="text" ng-if="nsaid.surgeryorthopedicselectoptionselection == 'Other'" class="form-control col-sm-offset-1 top-buffer" style="width: 30%" ng-model="nsaid.surgeryorthopedicselectoptionselectionothertext">
+                            <!--Ends Here-->
+                        </div>
+                    </div>
+                    <!--Ends Here-->
+                    <!--Code for selection other than orthopedics-->
+                    <div class="clearer">
+                        <label ng-if="nsaid.surgeryselectoptions && nsaid.surgeryselectoptions != 'Other' && nsaid.surgeryselectoptions != 'Orthopedics'" class="clearer top-buffer">{{nsaid.surgeryselectoptions}}</label>
+                        <select ng-if="nsaid.surgeryselectoptions && nsaid.surgeryselectoptions != 'Other' && nsaid.surgeryselectoptions != 'Orthopedics'" ng-model="nsaid.surgeryselectoptionsselection" class="form-control clearer top-buffer" style="width: 29%; margin-right: 10px">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                        </select>
+                        <input type="text" ng-if="nsaid.surgeryselectoptionsselection == 'Other'" class="form-control col-sm-offset-1 top-buffer" style="width: 30%" ng-model="nsaid.surgeryselectoptionsselectionothertext">
+                    </div>
+                    <!--Ends Here-->
+                    <!--Code for other selection-->
+                    <div class="clearer">
+                        <input type="text" ng-if="nsaid.surgeryselectoptions == 'Other'" class="form-control col-sm-offset-1 clearer" style="width: 30%" ng-model="nsaid.surgeryselectoptionsothertext">
+                        <select ng-if="nsaid.surgeryselectoptions == 'Other'" ng-model="nsaid.surgeryselectoptionsotherselectionoptions" class="form-control clearer top-buffer" style="width: 29%; margin-right: 10px">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                        </select>
+                        <input type="text" ng-if="nsaid.surgeryselectoptionsotherselectionoptions == 'Other'" class="form-control col-sm-offset-1 top-buffer" style="width: 30%" ng-model="nsaid.surgeryselectoptionsotherselectionoptionsothertext">
+                    </div>
+                    <!--Ends Here-->
+                </div>
+            </div>
+        </div>
+        <!--Ends Here-->
+        <!--GT:RISHU 30th June 2014 For Referral to Speciality other selection code-->
+        <div ng-if="nsaid.selectnsaids == 'Other' && childid == 'referral'" class="col-sm-12">
+            <div class="col-sm-12 removePadding clearer top-buffer">
+                <div class="col-sm-4 clearer removePadding">
+                    <input type="text" ng-model="nsaid.referralinputother" class="form-control" validator-required="required">
+                </div>
+                <div class="clearer" style="display: block; overflow: hidden">
+                    <div>
+                        <label>Is referral to this specialty necessary today? <a ng-click="popupMessage()">(i)</a> </label>
+                        <br>
+                        <label><input type="radio" name="referalnecessaryYes{{$index}}" value="Yes" ng-model="nsaid.referalnecessaryother" id="Radio73">&nbsp;Yes</label>
+                        <label><input type="radio" name="referalnecessaryYes{{$index}}" value="No" ng-model="nsaid.referalnecessaryother" id="Radio74" ng-click="nsaid.selectreferralforreferralother = ''">&nbsp;No</label>
+                    </div>
+                    <div class="removePadding top-buffer clearer" ng-if="nsaid.referalnecessaryother == 'Yes'">
+                        <select ng-model="nsaid.selectreferralforreferralother" class="form-control" style="width: 25%; float: left; margin-right: 10px">
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="n in ['One time consult', 'Evaluate and treat', 'Other']">{{n}}</option>
+                        </select>
+                        <input type="text" ng-if="nsaid.selectreferralforreferralother == 'Other'" class="form-control top-buffer col-sm-offset-1" style="width: 30%" ng-model="nsaid.othertextforreferralother">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Ends Here-->
+
+        <!--GT:RISHU 8th Oct 2014 Code for Immunizations-->
+        <div class="col-sm-12 removePadding clearer top-buffer" ng-if="childid == 'immunizations' || childid == 'referral'">
+            <div class="col-sm-8 removePadding clearer top-buffer">
+                <div class="col-sm-8">
+                    <input type="text" ng-if="nsaid.selectnsaids=='Other'" class="form-control" ng-model="nsaid.selectnsaidstext">
+                </div>
+                <div class="col-sm-12 removePadding clearer top-buffer">
+                    <label>&nbsp;</label><input type="button" value="Text" ng-click="showtexteditorothertext = true" class="btn btn-info btn-xs">
+                    <div ng-hide="showtexteditorothertext"><span ng-bind-html="nsaid.othertextfortextarea"></span></div>
+                    <div ng-show="showtexteditorothertext" style="width:450px">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="nsaid.othertextfortextarea"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Ends Here-->
+
+        <div class="col-sm-10 top-buffer text-right">
+            <button type="button" class="btn btn-info btn-xs" ng-click="clearbodypart($index+1,nsaids.length, nsaid.selectnsaids)">Clear</button>
+            <button type="button" class="btn btn-danger btn-xs" ng-click="deletebodypart($index+1,nsaids.length,nsaid.selectnsaids)">Delete</button>
+        </div>
+        <div class="clearer"></div>
+        <hr>
+    </div>
+    <!-- Ends Here -->
+    <div class="clearer top-buffer"></div>
+</div>

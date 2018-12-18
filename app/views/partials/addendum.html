@@ -1,0 +1,94 @@
+<div class="contactus">
+  <div class="bright">
+		<section id="header-title" style="margin-bottom: 0">
+        <div class="container">
+            <div class="row" style="vertical-align: middle">
+                <h2 ng-if="!fieldDisable" style="text-align: left; display: inline-block; font-family: Arial; font-weight: normal; text-transform: capitalize">
+                    <input type="button" ng-if="patientName" class="btn-header btn btn-info btn-sm"  value="{{patientName}}">&nbsp;<span ng-if="createdDate">DOI: <span ng-bind="datenewFormat(createdDate)"></span>- </span>{{formTypeName}}</h2>
+                <h2 ng-if="fieldDisable" style="text-align: left; display: inline-block; font-family: Arial; font-weight: normal; text-transform: capitalize">
+                    <a href="/patient/createinjury" ng-if="patientName" class="btn-header btn btn-info btn-sm">{{patientName}} </a>&nbsp;<span ng-if="createdDate">DOI: {{datenewFormat(createdDate)}} - </span>{{formTypeName}}</h2>
+                <span style="float: right; font-size: 15px; padding-top: 20px">Report ID: {{reportid ? reportid : 'New'}}</span>
+            </div>
+        </div>
+    </section>
+	<!-- 	<section id="header-title">
+      <div class="section">
+	      <div class="container">
+	        <div class="row">
+	          <h2 style="text-align: left; display: inline-block; font-family: Arial; font-weight: normal; text-transform: capitalize;">Addendum</h2>
+						<span class="pull-right" style="font-size: 15px; padding-top: 20px">Report ID: {{reportid ? reportid : 'New'}}</span>
+	        </div>
+	      </div>
+      </div>
+    </section> -->
+	<div class="section">
+		<div class="container">
+			<div class="row">
+					<div ng-show="dispayProgress" class="ng-scope">
+							<div class="overlayBackground"></div>
+							<div class="overlayContent">
+									<img src="/images/spinner.gif"><span>&nbsp;&nbsp;Loading</span>
+							</div>
+					</div>
+					<div class="col-sm-12 col-md-12 col-xs-12" >
+						<form class="simple-form" name="addendum" ng-submit="submitForm(addendum)" novalidate>
+						
+								<div class="row">
+									<div class="col-sm-12 col-md-12 col-xs-12" >
+										<div class="form-group " >
+												<h3><p>Make an Addendum to This Report</h3>
+												<p>If you have made an error in this report, then you can write an addendum that will
+												be permanently attached to the end of your report.</p>	
+											</div>
+										
+									</div>
+									
+								</div>
+
+					
+								<div class="row">
+									<div class="col-sm-6 col-md-6 col-xs-12" >
+										<div class="form-group " >
+												<label class="form-label" >Enter the desired text in your addendum here:</label>
+												<textarea ng-model="addendumText" name="addendumText" rows="10" cols="70" ng-required="true"></textarea>
+											</div>
+									</div>
+								</div>
+							<div class="row">
+								<div class="col-sm-6 col-md-6 col-xs-12" >
+									<h3>	Preview</h3>	
+
+									Your addendum will appear at the end of your report in the following format:
+									<br/>
+									<br/>
+								<br/>
+									<div class="well well-lg col-sm-offset-1" >
+
+									<p>Addendum made by {{currentUser.firstname}} {{currentUser.lastname}} on  {{date | date:'yyyy-MM-dd'}}  at {{date | date:'hh:mm:ss a'}}:</p>
+											
+									<p ng-bind-html="addendumText"></p>
+
+									</div>
+						
+								</div>
+							</div>
+							
+							
+							<div class="row">
+								<div class="col-sm-6 col-md-6 col-xs-12" >
+									<button type="submit" class="btn btn-primary btn-large" ng-click="previewReport()">Preview</button>
+									<button type="button" class="btn  btn-danger btn-large" ng-click="saveAddendum()">Add Addendum</button>
+									<button type="button" class="btn  btn-danger btn-large" ng-click="cancelExit()">Cancel and Exit</button>
+								</div>
+								<div class="col-sm-6 col-md-6 col-xs-12" >
+									
+
+								</div>
+							</div>
+						</form>
+					</div>
+			</div>
+		</div>
+		</div>
+	</div>
+</div>

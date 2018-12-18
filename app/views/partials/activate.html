@@ -1,0 +1,29 @@
+<section id="page" data-ng-init="checkaccoutstatus()">
+		<div class="bright">
+		<div class="row" style="min-height: 400px;">
+            <div class="login-sign text-center" style="margin-bottom: 12px;">
+                <h1 style="color: #0E80C7">{{headingMsg}}</h1>
+                <a><span class="glyphicon glyphicon-user"></span></a>
+            </div>
+
+			<div class="col-sm-10 col-sm-offset-modified text-center">
+
+				<div ng-show="showActivationErr">
+
+					<h3>{{ msg }}</h3>
+
+					<a href="/login" class="btn btn-danger"><i class="fa fa-chevron-left"></i> Login</a>
+						<a href="/" class="btn btn-info">Home</a>
+				</div>
+
+				<div ng-hide="showActivationErr">
+					<h3>{{ msg }} <a href="/contact">Contact us.</a>	</h3>				
+					
+				</div>
+				
+			</div>
+						
+		</div>
+	</div>
+
+</section>

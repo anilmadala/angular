@@ -1,0 +1,35 @@
+connect called
+
+
+Express server listening on 3000, in development mode
+  Tests for report related APIs
+connected successfully
+[90mPOST /api/session [32m200 [90m119ms - 2.25kb[0m
+    √ It should successfully log in (155ms)
+
+  Tests for patient details API
+    1) changes the status of selected injury from archive to current for a given injury
+connect called
+
+
+Express server listening on 3000, in development mode
+  Tests for report related APIs
+connected successfully
+[90mPOST /api/session [32m200 [90m132ms - 2.25kb[0m
+    √ It should successfully log in (177ms)
+
+  Tests for patient details API
+    1) changes the status of selected injury from archive to current for a given injury
+Terminate batch job (Y/N)? 
+connect called
+
+
+Express server listening on 3000, in development mode
+  Tests for report related APIs
+connected successfully
+[90mPOST /api/session [32m200 [90m121ms - 2.25kb[0m
+    √ It should successfully log in (158ms)
+
+  Tests for patient details API
+    1) changes the status of selected injury from archive to current for a given injury
+Terminate batch job (Y/N)? 

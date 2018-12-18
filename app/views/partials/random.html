@@ -1,0 +1,13 @@
+ <section data-ng-controller="TestimonialController" data-ng-init="findRandom()">
+          <div class="col-lg-4 testimonial-front" style="border:0px solid red;">
+           <span>{{random.content | limitTo:200}}</span><br>  
+
+               <span>
+                  <p>
+                      <img src="../images/ratefast/quotes_inv.png" />
+                  </p>
+                </span>
+
+          <span><p>- {{random.author}}</p></span>
+        </div>
+</section>

@@ -1,0 +1,719 @@
+<div class="patient"> <!--data-ng-controller="PatientCtrl"-->
+    <div class="bright">
+        <section id="header-title" style="margin-bottom: 0;">
+            <div class="container">
+                <div class="row">
+                    <h2 style="text-align: left;">Add Patient</h2>
+                </div>
+            </div>
+        </section>
+        <!----    Create New Patient    ---->
+        <section style="margin-top: 15px;">
+            <div class="container">
+                <!----    Step 1    ---->
+                <div class="row step1" ng-form="step1form" ng-show="step == 1">
+                    <div class="col-sm-4">
+                        <div class="pt-boxes">
+                            <h4 class="pt-titles">Basic Information</h4>
+                            <div class="control-group" ng-class="{'has-error': step1form.basicfirstname.$invalid && submitted }">
+                                First Name <span class="error">*</span>
+                                <input type="text" class="form-control" id="basicfirstname" name="basicfirstname" ng-model="patient.basicinformation[0].firstname"
+                                       maxlength="40"
+                                       required /><!--only-num-no-special-char-except-hyphen-->
+                                <p class="error" ng-show="step1form.basicfirstname.$invalid && submitted">
+                                    Field is required.
+                                </p>
+                            </div>
+                            <div class="control-group">
+                                Middle Initial
+                                <input type="text" class="form-control" id="basicmiddlename" name="basicmiddlename" ng-model="patient.basicinformation[0].middlename"
+                                       maxlength="1" />
+                            </div>
+                            <div class="control-group" ng-class="{'has-error': step1form.basiclastname.$invalid && submitted }">
+                                Last Name <span class="error">*</span>
+                                <input type="text" class="form-control" id="basiclastname" name="basiclastname" ng-model="patient.basicinformation[0].lastname"
+                                       maxlength="40"
+                                       required /><!--only-num-no-special-char-except-hyphen -->
+                                <p class="error" ng-show="step1form.basiclastname.$invalid && submitted">
+                                    Field is required.
+                                </p>
+                            </div>
+                            <div class="control-group">
+                                <span class="pt-gender">Biological Gender <span class="error">*</span></span>
+                                <label class="radio-inline">
+                                    <input type="radio" value="Male" id="basicgender" name="basicgender" ng-model="patient.basicinformation[0].gender" required />Male
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="Female" id="basicgender" name="basicgender" ng-model="patient.basicinformation[0].gender" required />Female
+                                </label>
+								<p class="error" ng-show="step1form.basicgender.$invalid && submitted">
+                                    Field is required.
+                                </p>
+                            </div>
+                             <div class="control-group" ng-class="{'has-error': step1form.basicdateofbirth.$invalid && submitted }">
+								Date of Birth <span class="error">*</span>
+                                <input id="basicdateofbirth" name="basicdateofbirth" birth-datepicker class="form-control" date-format="dd-MM-yy" ng-model="patient.basicinformation[0].dateofbirth" maxlength="10" required>
+                                <p class="error" ng-show="step1form.basicdateofbirth.$invalid && submitted" >
+                                    Field is required.
+                                </p>
+                            </div>
+                            <!--<div class="control-group">
+                                Date of Death
+                                <input id="basicdateofdeath" name="basicdateofdeath" date-options="dateOptions" custom-datepicker class="form-control" date-format="dd-MM-yy" ng-model="patient.basicinformation[0].dateofdeath" maxlength="10">
+                            </div>-->
+                            <div class="control-group">
+                                Social Security Number <!--<span class="error">*</span>-->
+                                <input pattern="[0-9]*" type="tel" class="form-control" id="basicsocialsecurity" name="basicsocialsecurity" ng-model="patient.basicinformation[0].socialsecurityno"
+                                       minlength="8"
+                                       maxlength="8"
+                                       numbers-only="numbers-only"
+                                       ui-mask="{{'999-99-9999'}}" />
+                            </div>
+                            <div class="control-group">
+                                Employee Handedness <!--<span class="error">*</span>-->
+                                <select class="form-control" id="basicemployeehandedness" name="basicemployeehandedness" ng-model="patient.basicinformation[0].employeehandedness"> <!-- required -->
+                                    <option value="">-- Choose --</option>
+                                    <option value="Right">Right</option>
+                                    <option value="Left">Left</option>
+                                    <option value="Ambidextrous">Ambidextrous</option>
+                                </select>
+								<!--<p class="error" ng-show="step1form.basicemployeehandedness.$invalid && submitted" >
+                                    Field is required.
+                                </p>-->
+                            </div>
+							<div class="control-group">
+                                Current Occupation
+                                <select class="form-control" id="occupcurrent" name="occupcurrent" ng-model="patient.occupation[0].currentoccupation">
+                                    <option value="">--Choose Occupation--</option>
+                                    <option value="Agriculture">Agriculture</option>
+                                    <option value="Computer/Tech">Computer/Tech</option>
+                                    <option value="Construction">Construction</option>
+                                    <option value="Finance">Finance</option>
+                                    <option value="Healthcare">Healthcare</option>
+                                    <option value="Retail">Retail</option>
+                                    <option value="Hospitality/Restaurant">Hospitality/Restaurant</option>
+                                    <option value="Manufacturing">Manufacturing</option>
+                                    <option value="Mechanic/Automotive">Mechanic/Automotive</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <div ng-show="patient.occupation[0].currentoccupation == 'Other'">
+                                    Other
+                                    <input type="text" class="form-control" id="currentoccupationother" name="currentoccupationother" ng-model="patient.occupation[0].currentoccupationother" />
+                                </div>
+                                
+                            </div>
+							
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="pt-boxes">
+                            <h4 class="pt-titles">Contact Information</h4>
+                            <div class="control-group" ng-class="{'has-success': step1form.contactemail.$valid && submitted,'has-error': step1form.contactemail.$invalid && submitted }">
+                                Email
+                                <input type="email" class="form-control" id="contactemail" name="contactemail" ng-model="patient.contactinformation[0].email" maxlength="100" />
+                                <p class="error" ng-show="contactinformationform.contactemail.$error.email && validate">
+                                    Not a valid email!
+                                </p>
+                            </div>
+                            <div class="control-group top-buffer">
+                                <span>Home Phone</span>
+                                <div class="control-group top-buffer" ng-class="">
+                                    <input pattern="[0-9]*" type="tel" class="form-control" id="contacthomephone" name="contacthomephone" ng-model="patient.contactinformation[0].homephone" maxlength="10" numbers-only="numbers-only" ui-mask="(999) 999-9999" />
+
+                                </div>
+                                <div class="top-buffer" ng-if="patient.contactinformation[0].homephone.length == '10'">
+                                    <label>Consent to leave voicemail obtained?</label><br />
+                                    <div class="margin-left-1">
+                                        <input type="radio" name="voicemailradio" value="Yes" ng-model="patient.contactinformation[0].voicemailradio">Yes
+                                        <input type="radio" name="voicemailradio" value="No" ng-model="patient.contactinformation[0].voicemailradio">No
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group top-buffer">
+                                <span>Cell Phone</span>
+                                <div class="control-group top-buffer" ng-class="">
+                                    <input pattern="[0-9]*" type="tel" class="form-control" id="contactcellphone" name="contactcellphone" ng-model="patient.contactinformation[0].cellphone" maxlength="10"
+                                           numbers-only="numbers-only" ui-mask="(999) 999-9999" />
+                                </div>
+                                <div class="top-buffer" ng-if="patient.contactinformation[0].cellphone.length == '10'">
+                                    <label>Consent to leave voicemail obtained?</label><br />
+                                    <div class="margin-left-1">
+                                        <input type="radio" name="voicemailsecondradio" value="Yes" ng-model="patient.contactinformation[0].voicemailsecondradio">Yes
+                                        <input type="radio" name="voicemailsecondradio" value="No" ng-model="patient.contactinformation[0].voicemailsecondradio">No
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group top-buffer">
+                                <span>Work Phone</span>
+                                <div class="control-group top-buffer" ng-class="">
+                                    <input pattern="[0-9]*" type="tel" class="form-control" id="contactworkphone" name="contactworkphone" ng-model="patient.contactinformation[0].workphone" maxlength="10" numbers-only="numbers-only" ui-mask="(999) 999-9999" />
+                                </div>
+                                <div class="control-group clearer top-buffer" ng-show="patient.contactinformation[0].workphone.length==10">
+                                    Extension
+                                    <input pattern="[0-9]*" type="tel" class="form-control" id="contactextension" name="contactextension" ng-model="patient.contactinformation[0].extension" maxlength="7" numbers-only="numbers-only" />
+                                </div>
+                                <div class="top-buffer" ng-if="patient.contactinformation[0].workphone.length == '10'">
+                                    <label>Consent to leave voicemail obtained?</label><br />
+                                    <div class="margin-left-1">
+                                        <input type="radio" name="voicemailthirdradio" value="Yes" ng-model="patient.contactinformation[0].voicemailthirdradio">Yes
+                                        <input type="radio" name="voicemailthirdradio" value="No" ng-model="patient.contactinformation[0].voicemailthirdradio">No
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                Preferred method of communication
+                                <select class="form-control" id="contactprefcomm" name="contactprefcomm" ng-model="patient.contactinformation[0].preferredcommunication">
+                                    <option value="">--Choose Method--</option>
+                                    <option value="Home phone">Home phone</option>
+                                    <option value="Cell phone">Cell phone</option>
+									<option value="Work phone">Work phone</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <div ng-if="patient.contactinformation[0].preferredcommunication == 'Other'">
+                                    Other Preferred method of communication
+                                    <div class="control-group top-buffer" ng-class="{'has-success': step1form.preferredcommunicationother.$valid && submitted,'has-error': step1form.preferredcommunicationother.$invalid && submitted }">
+                                        <input type="text" class="form-control" id="preferredcommunicationother" name="preferredcommunicationother" ng-model="patient.contactinformation[0].preferredcommunicationother" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="pt-boxes" ng-form="addressform">
+
+                            <h4 class="pt-titles">Address</h4>
+                            <div class="control-group">
+                                Address Line 1
+                                <input type="text" class="form-control" id="addline1" name="addline1" ng-model="patient.address[0].addressline1" />
+                            </div>
+                            <div class="control-group">
+                                Address Line 2
+                                <input type="text" class="form-control" id="addline2" name="addline2" ng-model="patient.address[0].addressline2" />
+                            </div>
+                            <div class="control-group">
+                                City
+                                <input type="text" class="form-control" id="addcity" name="addcity" ng-model="patient.address[0].city" />
+                            </div>
+                            <div class="control-group" data-ng-init="statesList()">
+                                State <!--<span class="error">*</span>-->
+                                <select class="form-control" id="addstate" name="addstate" ng-model="patient.address[0].state" ng-options="obj.state as obj.state for obj in states"></select>
+                                <!--<p class="error" ng-show="addressform.addstate.$invalid && submitted">
+                                    Field is required.
+                                </p>-->
+                            </div>
+                            <div class="control-group">
+                                Zip/Postal Code <!--<span class="error">*</span>-->
+								<dynamic-zipcode ng-model="patient.address[0].zipcode"></dynamic-zipcode>	
+                                <!--<input type="tel" class="form-control" id="addzip" name="addzip" ng-model="patient.address[0].zipcode"
+                                       numbers-only="numbers-only"
+                                       minlength="5"
+                                       maxlength="9" ng-blur="formatZip()" />-->
+                                <!--<p class="error" ng-show="addressform.addzip.$invalid && submitted">
+                                    Field is required.
+                                </p>-->
+                            </div>
+                            <!--<p class="help-block" ng-show="submitted && addressform.$invalid">
+                                <input type="checkbox" id="addressunknown" name="addressunknown" ng-click="checkaddressunknown(addressform)" />
+                                Address Unknown
+                            </p>
+                            <p class="help-block" ng-show="addressform.$valid && flagSocial">
+                                <input type="checkbox" id="addressvalid" name="addressvalid" checked />
+                                Address Unknown
+                            </p>-->
+                        </div>
+                    </div>
+                    <!--<div class="col-sm-12 text-center">
+                        <button class="btn btn-warning btn-sm spacing-right-12" ng-click="validateform1(step1form)" title="Next"><span class="glyphicon glyphicon-arrow-right"></span></button>
+                        <button class="btn btn-info btn-sm spacing-right-12" ng-click="clearForm('step1form')" title="Refresh"><span class="glyphicon glyphicon-repeat"></span></button>
+                        <button class="btn btn-danger btn-sm " ng-click="cancelForm()" title="Cancel"><span class="glyphicon glyphicon-remove"></span></button>
+                    </div>-->
+					<div class="col-sm-12 text-center">                    
+                        <button class="btn btn-success btn-sm spacing-right-12" ng-click="createPatient(step1form)" id="btnCreatePatient" >Done</button>                       
+                        <button class="btn btn-danger btn-sm " ng-click="cancelForm()" title="Cancel"><span class="glyphicon glyphicon-remove"></span></button>
+                    </div>
+                </div>
+                <!----    Step 2    ---->
+                <div class="row step2" ng-form="step2form" ng-show="step == 2">
+                    <div class="col-sm-8">
+                        <div class="pt-boxes" style="min-height: 480px;">
+                            <h4 class="pt-titles">Emergency Contact Information</h4>
+                            <div class="col-sm-6">
+                                <div class="control-group">
+                                    Relationship
+                                    <select id="emergencyrelation" class="form-control" name="emergencyrelation" ng-model="patient.emergencycontactinfo[0].relationship">
+                                        <option value="">--Choose Relationship--</option>
+                                        <option value="Family">Family</option>
+                                        <option value="Friend">Friend</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <div ng-if="patient.emergencycontactinfo[0].relationship == 'Other'" ng-class="{'has-success': step2form.emergencyrelationother.$valid && submitted,'has-error': step2form.emergencyrelationother.$invalid && submitted }">
+                                        Other
+                                        <input type="text" class="form-control" id="emergencyrelationother" name="emergencyrelationother" ng-model="patient.emergencycontactinfo[0].emergencyrelationother" />
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    First Name
+                                    <input type="text" class="form-control" id="emergencyfname" name="emergencyfname" ng-model="patient.emergencycontactinfo[0].firstname"
+                                           maxlength="40" />
+                                </div>
+                                <div class="control-group">
+                                    Last Name
+                                    <input type="text" class="form-control" id="emergencylname" name="emergencylname" ng-model="patient.emergencycontactinfo[0].lastname"
+                                           maxlength="40" />
+                                </div>
+                                <div class="control-group" ng-class="{'has-success': step1form.emergencyemail.$valid && submitted,'has-error': step2form.emergencyemail.$invalid && submitted }">
+                                    Email
+                                    <input type="text" class="form-control" id="emergencyemail" name="emergencyemail" ng-model="patient.emergencycontactinfo[0].email" maxlength="100" />
+                                    <p class="error" ng-show="submitted && step2form.emergencyemail.$error.required">
+                                        Not valid email!
+                                    </p>
+                                </div>
+                                <div class="control-group">
+                                    Home Phone
+                                    <input type="tel" class="form-control" id="emergencyhomephone" name="emergencyhomephone" ng-model="patient.emergencycontactinfo[0].homephone" maxlength="10" numbers-only="numbers-only" ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" />
+                                </div>
+                                <div class="control-group">
+                                    Cell Phone
+                                    <input type="tel" class="form-control" id="emergencycellphone" name="emergencycellphone" ng-model="patient.emergencycontactinfo[0].cellphone"
+                                           maxlength="10"
+                                           numbers-only="numbers-only" ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" />
+                                </div>
+                                <div class="control-group">
+                                    Work Phone
+                                    <input type="tel" class="form-control" id="emergencyworkphone" name="emergencyworkphone" ng-model="patient.emergencycontactinfo[0].workphone"
+                                           maxlength="10"
+                                           numbers-only="numbers-only" ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" />
+                                </div>
+                                <div class="control-group" ng-show="patient.emergencycontactinfo[0].workphone.length==10">
+                                    Extension
+                                    <input type="tel" class="form-control" id="emergencyext" name="emergencyext" ng-model="patient.emergencycontactinfo[0].extension"
+                                           maxlength="7"
+                                           numbers-only="numbers-only" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="control-group">
+                                    Address Line 1
+                                    <input type="text" class="form-control" id="emergencyaddline1" name="emergencyaddline1" ng-model="patient.emergencycontactinfo[0].address[0].addressline1" />
+                                </div>
+                                <div class="control-group">
+                                    Address Line 2
+                                    <input type="text" class="form-control" id="emergencyaddline2" name="emergencyaddline2" ng-model="patient.emergencycontactinfo[0].address[0].addressline2" />
+                                </div>
+                                <div class="control-group">
+                                    City
+                                    <input type="text" class="form-control" id="emergencyaddcity" name="emergencyaddcity" ng-model="patient.emergencycontactinfo[0].address[0].city" />
+                                </div>
+                                <div class="control-group" data-ng-init="statesList()">
+                                    State
+                                    <select class="form-control" id="emergencyaddstate" name="emergencyaddstate" ng-model="patient.emergencycontactinfo[0].address[0].state" ng-options="obj.state as obj.state for obj in states"></select>
+                                </div>
+                                <div class="control-group">
+                                    Zip/Postal Code
+                                    <dynamic-zipcode ng-model="patient.emergencycontactinfo[0].address[0].zipcode"></dynamic-zipcode>	
+                                    <!--<input type="tel" class="form-control" id="emergencyaddzip" name="emergencyaddzip" ng-model="patient.emergencycontactinfo[0].address[0].zipcode"
+                                           numbers-only="numbers-only"
+                                           minlength="5"
+                                           maxlength="9" ui-mask="99999-9999" />-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="pt-boxes" style="min-height: 100px; margin-bottom: 20px;">
+                            <h4 class="pt-titles">Cultural Information</h4>
+                            <div class="control-group">
+                                Preferred Language
+                                <select class="form-control" id="demopreflang" name="demopreflang" ng-model="patient.demographics[0].preferredlanguage">
+                                    <option value="">--Choose Language--</option>
+                                    <option value="English">English</option>
+                                    <option value="Spanish">Spanish</option>
+                                    <option value="Cantonese">Cantonese</option>
+                                    <option value="Other">Other Language</option>
+                                </select>
+                                <div ng-show="patient.demographics[0].preferredlanguage == 'Other'" ng-class="{'has-success': step2form.demopreflangother.$valid && submitted,'has-error': step2form.demopreflangother.$invalid && submitted }">
+                                    Other Language
+                                    <input type="text" class="form-control" id="demopreflangother" name="demopreflangother" ng-model="patient.demographics[0].preferredlanguageother" maxlength="100" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                Nationality
+                                <select class="form-control" id="demoethnicity" name="demoethnicity" ng-model="patient.demographics[0].ethnicity">
+                                    <option value="">--Choose Nationality--</option>
+                                    <option value="United States">United States</option>
+                                    <option value="United Kingdom">United Kingdom</option>
+                                    <option value="Afghanistan">Afghanistan</option>
+                                    <option value="Albania">Albania</option>
+                                    <option value="Algeria">Algeria</option>
+                                    <option value="American Samoa">American Samoa</option>
+                                    <option value="Andorra">Andorra</option>
+                                    <option value="Angola">Angola</option>
+                                    <option value="Anguilla">Anguilla</option>
+                                    <option value="Antarctica">Antarctica</option>
+                                    <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+                                    <option value="Argentina">Argentina</option>
+                                    <option value="Armenia">Armenia</option>
+                                    <option value="Aruba">Aruba</option>
+                                    <option value="Australia">Australia</option>
+                                    <option value="Austria">Austria</option>
+                                    <option value="Azerbaijan">Azerbaijan</option>
+                                    <option value="Bahamas">Bahamas</option>
+                                    <option value="Bahrain">Bahrain</option>
+                                    <option value="Bangladesh">Bangladesh</option>
+                                    <option value="Barbados">Barbados</option>
+                                    <option value="Belarus">Belarus</option>
+                                    <option value="Belgium">Belgium</option>
+                                    <option value="Belize">Belize</option>
+                                    <option value="Benin">Benin</option>
+                                    <option value="Bermuda">Bermuda</option>
+                                    <option value="Bhutan">Bhutan</option>
+                                    <option value="Bolivia">Bolivia</option>
+                                    <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                                    <option value="Botswana">Botswana</option>
+                                    <option value="Bouvet Island">Bouvet Island</option>
+                                    <option value="Brazil">Brazil</option>
+                                    <option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
+                                    <option value="Brunei Darussalam">Brunei Darussalam</option>
+                                    <option value="Bulgaria">Bulgaria</option>
+                                    <option value="Burkina Faso">Burkina Faso</option>
+                                    <option value="Burundi">Burundi</option>
+                                    <option value="Cambodia">Cambodia</option>
+                                    <option value="Cameroon">Cameroon</option>
+                                    <option value="Canada">Canada</option>
+                                    <option value="Cape Verde">Cape Verde</option>
+                                    <option value="Cayman Islands">Cayman Islands</option>
+                                    <option value="Central African Republic">Central African Republic</option>
+                                    <option value="Chad">Chad</option>
+                                    <option value="Chile">Chile</option>
+                                    <option value="China">China</option>
+                                    <option value="Christmas Island">Christmas Island</option>
+                                    <option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
+                                    <option value="Colombia">Colombia</option>
+                                    <option value="Comoros">Comoros</option>
+                                    <option value="Congo">Congo</option>
+                                    <option value="Congo, The Democratic Republic of The">Congo, The Democratic Republic of The</option>
+                                    <option value="Cook Islands">Cook Islands</option>
+                                    <option value="Costa Rica">Costa Rica</option>
+                                    <option value="Cote D'ivoire">Cote D'ivoire</option>
+                                    <option value="Croatia">Croatia</option>
+                                    <option value="Cuba">Cuba</option>
+                                    <option value="Cyprus">Cyprus</option>
+                                    <option value="Czech Republic">Czech Republic</option>
+                                    <option value="Denmark">Denmark</option>
+                                    <option value="Djibouti">Djibouti</option>
+                                    <option value="Dominica">Dominica</option>
+                                    <option value="Dominican Republic">Dominican Republic</option>
+                                    <option value="Ecuador">Ecuador</option>
+                                    <option value="Egypt">Egypt</option>
+                                    <option value="El Salvador">El Salvador</option>
+                                    <option value="Equatorial Guinea">Equatorial Guinea</option>
+                                    <option value="Eritrea">Eritrea</option>
+                                    <option value="Estonia">Estonia</option>
+                                    <option value="Ethiopia">Ethiopia</option>
+                                    <option value="Falkland Islands (Malvinas)">Falkland Islands (Malvinas)</option>
+                                    <option value="Faroe Islands">Faroe Islands</option>
+                                    <option value="Fiji">Fiji</option>
+                                    <option value="Finland">Finland</option>
+                                    <option value="France">France</option>
+                                    <option value="French Guiana">French Guiana</option>
+                                    <option value="French Polynesia">French Polynesia</option>
+                                    <option value="French Southern Territories">French Southern Territories</option>
+                                    <option value="Gabon">Gabon</option>
+                                    <option value="Gambia">Gambia</option>
+                                    <option value="Georgia">Georgia</option>
+                                    <option value="Germany">Germany</option>
+                                    <option value="Ghana">Ghana</option>
+                                    <option value="Gibraltar">Gibraltar</option>
+                                    <option value="Greece">Greece</option>
+                                    <option value="Greenland">Greenland</option>
+                                    <option value="Grenada">Grenada</option>
+                                    <option value="Guadeloupe">Guadeloupe</option>
+                                    <option value="Guam">Guam</option>
+                                    <option value="Guatemala">Guatemala</option>
+                                    <option value="Guinea">Guinea</option>
+                                    <option value="Guinea-bissau">Guinea-bissau</option>
+                                    <option value="Guyana">Guyana</option>
+                                    <option value="Haiti">Haiti</option>
+                                    <option value="Heard Island and Mcdonald Islands">Heard Island and Mcdonald Islands</option>
+                                    <option value="Holy See (Vatican City State)">Holy See (Vatican City State)</option>
+                                    <option value="Honduras">Honduras</option>
+                                    <option value="Hong Kong">Hong Kong</option>
+                                    <option value="Hungary">Hungary</option>
+                                    <option value="Iceland">Iceland</option>
+                                    <option value="India">India</option>
+                                    <option value="Indonesia">Indonesia</option>
+                                    <option value="Iran, Islamic Republic of">Iran, Islamic Republic of</option>
+                                    <option value="Iraq">Iraq</option>
+                                    <option value="Ireland">Ireland</option>
+                                    <option value="Israel">Israel</option>
+                                    <option value="Italy">Italy</option>
+                                    <option value="Jamaica">Jamaica</option>
+                                    <option value="Japan">Japan</option>
+                                    <option value="Jordan">Jordan</option>
+                                    <option value="Kazakhstan">Kazakhstan</option>
+                                    <option value="Kenya">Kenya</option>
+                                    <option value="Kiribati">Kiribati</option>
+                                    <option value="Korea, Democratic People's Republic of">Korea, Democratic People's Republic of</option>
+                                    <option value="Korea, Republic of">Korea, Republic of</option>
+                                    <option value="Kuwait">Kuwait</option>
+                                    <option value="Kyrgyzstan">Kyrgyzstan</option>
+                                    <option value="Lao People's Democratic Republic">Lao People's Democratic Republic</option>
+                                    <option value="Latvia">Latvia</option>
+                                    <option value="Lebanon">Lebanon</option>
+                                    <option value="Lesotho">Lesotho</option>
+                                    <option value="Liberia">Liberia</option>
+                                    <option value="Libyan Arab Jamahiriya">Libyan Arab Jamahiriya</option>
+                                    <option value="Liechtenstein">Liechtenstein</option>
+                                    <option value="Lithuania">Lithuania</option>
+                                    <option value="Luxembourg">Luxembourg</option>
+                                    <option value="Macao">Macao</option>
+                                    <option value="Macedonia, The Former Yugoslav Republic of">Macedonia, The Former Yugoslav Republic of</option>
+                                    <option value="Madagascar">Madagascar</option>
+                                    <option value="Malawi">Malawi</option>
+                                    <option value="Malaysia">Malaysia</option>
+                                    <option value="Maldives">Maldives</option>
+                                    <option value="Mali">Mali</option>
+                                    <option value="Malta">Malta</option>
+                                    <option value="Marshall Islands">Marshall Islands</option>
+                                    <option value="Martinique">Martinique</option>
+                                    <option value="Mauritania">Mauritania</option>
+                                    <option value="Mauritius">Mauritius</option>
+                                    <option value="Mayotte">Mayotte</option>
+                                    <option value="Mexico">Mexico</option>
+                                    <option value="Micronesia, Federated States of">Micronesia, Federated States of</option>
+                                    <option value="Moldova, Republic of">Moldova, Republic of</option>
+                                    <option value="Monaco">Monaco</option>
+                                    <option value="Mongolia">Mongolia</option>
+                                    <option value="Montserrat">Montserrat</option>
+                                    <option value="Morocco">Morocco</option>
+                                    <option value="Mozambique">Mozambique</option>
+                                    <option value="Myanmar">Myanmar</option>
+                                    <option value="Namibia">Namibia</option>
+                                    <option value="Nauru">Nauru</option>
+                                    <option value="Nepal">Nepal</option>
+                                    <option value="Netherlands">Netherlands</option>
+                                    <option value="Netherlands Antilles">Netherlands Antilles</option>
+                                    <option value="New Caledonia">New Caledonia</option>
+                                    <option value="New Zealand">New Zealand</option>
+                                    <option value="Nicaragua">Nicaragua</option>
+                                    <option value="Niger">Niger</option>
+                                    <option value="Nigeria">Nigeria</option>
+                                    <option value="Niue">Niue</option>
+                                    <option value="Norfolk Island">Norfolk Island</option>
+                                    <option value="Northern Mariana Islands">Northern Mariana Islands</option>
+                                    <option value="Norway">Norway</option>
+                                    <option value="Oman">Oman</option>
+                                    <option value="Pakistan">Pakistan</option>
+                                    <option value="Palau">Palau</option>
+                                    <option value="Palestinian Territory, Occupied">Palestinian Territory, Occupied</option>
+                                    <option value="Panama">Panama</option>
+                                    <option value="Papua New Guinea">Papua New Guinea</option>
+                                    <option value="Paraguay">Paraguay</option>
+                                    <option value="Peru">Peru</option>
+                                    <option value="Philippines">Philippines</option>
+                                    <option value="Pitcairn">Pitcairn</option>
+                                    <option value="Poland">Poland</option>
+                                    <option value="Portugal">Portugal</option>
+                                    <option value="Puerto Rico">Puerto Rico</option>
+                                    <option value="Qatar">Qatar</option>
+                                    <option value="Reunion">Reunion</option>
+                                    <option value="Romania">Romania</option>
+                                    <option value="Russian Federation">Russian Federation</option>
+                                    <option value="Rwanda">Rwanda</option>
+                                    <option value="Saint Helena">Saint Helena</option>
+                                    <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                                    <option value="Saint Lucia">Saint Lucia</option>
+                                    <option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
+                                    <option value="Saint Vincent and The Grenadines">Saint Vincent and The Grenadines</option>
+                                    <option value="Samoa">Samoa</option>
+                                    <option value="San Marino">San Marino</option>
+                                    <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+                                    <option value="Saudi Arabia">Saudi Arabia</option>
+                                    <option value="Senegal">Senegal</option>
+                                    <option value="Serbia and Montenegro">Serbia and Montenegro</option>
+                                    <option value="Seychelles">Seychelles</option>
+                                    <option value="Sierra Leone">Sierra Leone</option>
+                                    <option value="Singapore">Singapore</option>
+                                    <option value="Slovakia">Slovakia</option>
+                                    <option value="Slovenia">Slovenia</option>
+                                    <option value="Solomon Islands">Solomon Islands</option>
+                                    <option value="Somalia">Somalia</option>
+                                    <option value="South Africa">South Africa</option>
+                                    <option value="South Georgia and The South Sandwich Islands">South Georgia and The South Sandwich Islands</option>
+                                    <option value="Spain">Spain</option>
+                                    <option value="Sri Lanka">Sri Lanka</option>
+                                    <option value="Sudan">Sudan</option>
+                                    <option value="Suriname">Suriname</option>
+                                    <option value="Svalbard and Jan Mayen">Svalbard and Jan Mayen</option>
+                                    <option value="Swaziland">Swaziland</option>
+                                    <option value="Sweden">Sweden</option>
+                                    <option value="Switzerland">Switzerland</option>
+                                    <option value="Syrian Arab Republic">Syrian Arab Republic</option>
+                                    <option value="Taiwan, Province of China">Taiwan, Province of China</option>
+                                    <option value="Tajikistan">Tajikistan</option>
+                                    <option value="Tanzania, United Republic of">Tanzania, United Republic of</option>
+                                    <option value="Thailand">Thailand</option>
+                                    <option value="Timor-leste">Timor-leste</option>
+                                    <option value="Togo">Togo</option>
+                                    <option value="Tokelau">Tokelau</option>
+                                    <option value="Tonga">Tonga</option>
+                                    <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                                    <option value="Tunisia">Tunisia</option>
+                                    <option value="Turkey">Turkey</option>
+                                    <option value="Turkmenistan">Turkmenistan</option>
+                                    <option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+                                    <option value="Tuvalu">Tuvalu</option>
+                                    <option value="Uganda">Uganda</option>
+                                    <option value="Ukraine">Ukraine</option>
+                                    <option value="United Arab Emirates">United Arab Emirates</option>
+                                    <option value="United Kingdom">United Kingdom</option>
+                                    <option value="United States">United States</option>
+                                    <option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
+                                    <option value="Uruguay">Uruguay</option>
+                                    <option value="Uzbekistan">Uzbekistan</option>
+                                    <option value="Vanuatu">Vanuatu</option>
+                                    <option value="Venezuela">Venezuela</option>
+                                    <option value="Viet Nam">Viet Nam</option>
+                                    <option value="Virgin Islands, British">Virgin Islands, British</option>
+                                    <option value="Virgin Islands, U.S.">Virgin Islands, U.S.</option>
+                                    <option value="Wallis and Futuna">Wallis and Futuna</option>
+                                    <option value="Western Sahara">Western Sahara</option>
+                                    <option value="Yemen">Yemen</option>
+                                    <option value="Zambia">Zambia</option>
+                                    <option value="Zimbabwe">Zimbabwe</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <div ng-show="patient.demographics[0].ethnicity == 'Other'">
+                                    Other Nationality
+                                    <input type="text" class="form-control" id="Text1" name="ethnicityother" ng-model="patient.demographics[0].ethnicityother" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                Ethnicity
+                                <select class="form-control" id="demorace" name="demoethnirace" ng-model="patient.demographics[0].race">
+                                    <option value="">--Choose Ethnicity--</option>
+									<option value="White">White</option>
+                                    <option value="Latino">Latino</option>
+                                    <option value="Black">Black</option>
+                                    <option value="African American">African American</option>
+                                    <option value="Other">Other</option>
+                                    <option value="Asian Indian">Indian</option>
+                                    <option value="Chinese">Chinese</option>
+                                    <option value="Filipino">Filipino</option>
+                                    <option value="Native American">Native American</option>
+                                    <option value="Alaska Native">Alaska Native</option>
+                                    <option value="Laotian">Laotian</option>
+                                    <option value="Hispanic">Hispanic</option>
+                                    <option value="Thai">Thai</option>
+                                    <option value="Pakistani">Pakistani</option>
+                                    <option value="Cambodian">Cambodian</option>
+                                    <option value="Japanese">Japanese</option>
+                                    <option value="Korean">Korean</option>
+                                    <option value="Vietnamese">Vietnamese</option>
+                                    <option value="Hawaiian Native">Hawaiian Native</option>
+                                    <option value="Guamanian">Guamanian</option>
+                                    <option value="Chamorro">Chamorro</option>
+                                    <option value="Samoan">Samoan</option>
+                                    <option value="Pacific Islander">Pacific Islander</option>
+                                    <option value="Armenian">Armenian</option>
+                                    <option value="Iranian">Iranian</option>
+                                    <option value="Mixed Race">Mixed Race</option>
+                                    <option value="Arctic (Siberian, Eskimo)">Arctic (Siberian, Eskimo)</option>
+                                    <option value="Caucasian (European)">Caucasian (European)</option>
+                                    <option value="Caucasian (Indian)">Caucasian (Indian)</option>
+                                    <option value="Caucasian (Middle East)">Caucasian (Middle East)</option>
+                                    <option value="Caucasian (North African, Other)">Caucasian (North African, Other)</option>
+                                    <option value="Indigenous Australian">Indigenous Australian</option>
+                                    <option value="North East Asian (Mongol, Tibetan, Korean Japanese, etc)">North East Asian (Mongol, Tibetan, Korean Japanese, etc)</option>
+                                    <option value="Pacific (Polynesian, Micronesian, etc)">Pacific (Polynesian, Micronesian, etc)</option>
+                                    <option value="South East Asian (Chinese, Thai, Malay, Filipino, etc)">South East Asian (Chinese, Thai, Malay, Filipino, etc)</option>
+                                    <option value="West African, Bushmen, Ethiopian">West African, Bushmen, Ethiopian</option>                                   								                                   
+                                </select>
+                                <div ng-show="patient.demographics[0].race == 'Other'">
+                                    Other Ethnicity
+                                    <input type="text" class="form-control" id="Text2" name="raceother" ng-model="patient.demographics[0].raceother" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="pt-boxes" style="min-height: 50px;">
+                            <h4 class="pt-titles">Occupation</h4>
+                            <div class="control-group">
+                                Current Occupation
+                                <select class="form-control" id="occupcurrent" name="occupcurrent" ng-model="patient.occupation[0].currentoccupation">
+                                    <option value="">--Choose Occupation--</option>
+                                    <option value="Agriculture">Agriculture</option>
+                                    <option value="Computer/Tech">Computer/Tech</option>
+                                    <option value="Construction">Construction</option>
+                                    <option value="Finance">Finance</option>
+                                    <option value="Healthcare">Healthcare</option>
+                                    <option value="Retail">Retail</option>
+                                    <option value="Hospitality/Restaurant">Hospitality/Restaurant</option>
+                                    <option value="Manufacturing">Manufacturing</option>
+                                    <option value="Mechanic/Automotive">Mechanic/Automotive</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <div ng-show="patient.occupation[0].currentoccupation == 'Other'">
+                                    Other
+                                    <input type="text" class="form-control" id="currentoccupationother" name="currentoccupationother" ng-model="patient.occupation[0].currentoccupationother" />
+                                </div>
+                                <!--<p class="help-block" ng-show="submitted && step2form.occupcurrent.$error.required">
+                                    <input type="checkbox" id="occupcurrentunknown" name="occupcurrentunknown" ng-click="checkoccupunknown(step2form.occupcurrent)" />
+                                    Current Occupation Unknown
+                                </p>
+                                <p class="help-block" ng-show="step2form.occupcurrent.$valid && flagSocial && !patient.occupation[0].currentoccupation">
+                                    <input type="checkbox" id="occupvalid" name="occupvalid" ng-click="uncheckoccupunknown(step2form.occupcurrent)" />
+                                    Current Occupation Unknown
+                                </p>-->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-4">
+                         <div class="pt-boxes" style="min-height: 50px;">
+                             <h4 class="pt-titles">Occupation</h4>
+                             <div class="control-group">
+                                 Current Occupation
+                                 <select class="form-control" id="occupcurrent" name="occupcurrent" ng-model="patient.occupation[0].currentoccupation">
+                                     <option value="">--Choose Occupation--</option>
+                                     <option value="Agriculture">Agriculture</option>
+                                     <option value="Computer/Tech">Computer/Tech</option>
+                                     <option value="Construction">Construction</option>
+                                     <option value="Finance">Finance</option>
+                                     <option value="Healthcare">Healthcare</option>
+                                     <option value="Retail">Retail</option>
+                                     <option value="Hospitality/Restaurant">Hospitality/Restaurant</option>
+                                     <option value="Manufacturing">Manufacturing</option>
+                                     <option value="Mechanic/Automotive">Mechanic/Automotive</option>
+                                     <option value="Other">Other</option>
+                                 </select>
+                                 <div ng-show="patient.occupation[0].currentoccupation == 'Other'" ng-class="{'has-success': step2form.currentoccupationother.$valid && submitted,'has-error': step2form.currentoccupationother.$invalid && submitted }">
+                                     Other
+                                     <input type="text" class="form-control" id="currentoccupationother" name="currentoccupationother" ng-model="patient.occupation[0].currentoccupationother" />
+                                 </div>
+                                 <p class="error" ng-show="step2form.occupcurrent.$invalid && submitted">
+                                     Field is required.
+                                 </p>
+                                 <p class="help-block" ng-show="submitted && step2form.occupcurrent.$error.required">
+                                     <input type="checkbox" id="occupcurrentunknown" name="occupcurrentunknown" ng-click="checkoccupunknown(step2form.occupcurrent)" />
+                                     Current Occupation Unknown
+                                 </p>
+                                 <p class="help-block" ng-show="step2form.occupcurrent.$valid && flagSocial && !patient.occupation[0].currentoccupation">
+                                     <input type="checkbox" id="occupvalid" name="occupvalid" ng-click="uncheckoccupunknown(step2form.occupcurrent)" />
+                                     Current Occupation Unknown
+                                 </p>
+                             </div>
+                         </div>
+                     </div>-->
+                    <div class="col-sm-12 text-center">
+                        <button class="btn btn-warning btn-sm spacing-right-12" ng-click="step = 1" title="Back"><span class="glyphicon glyphicon-arrow-left"></span></button>
+                        <button class="btn btn-success btn-sm spacing-right-12" ng-click="createPatient(step2form)" id="btnCreatePatient">Done</button>
+                        <button class="btn btn-info btn-sm spacing-right-12" ng-click="clearForm('step2form')" title="Refresh"><span class="glyphicon glyphicon-repeat"></span></button>
+                        <button class="btn btn-danger btn-sm" ng-click="cancelForm()" title="Cancel"><span class="glyphicon glyphicon-remove"></span></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

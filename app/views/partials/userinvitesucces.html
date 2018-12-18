@@ -1,0 +1,24 @@
+<div class="bright">
+    <div class="container">
+        <div class="row">
+            <form class="form col-sm-12" name='myform'>
+                <div ng-init="checkInviteStatus()">
+                    <div class="login-sign text-center" style="margin-bottom: 12px; height:350px;" ng-show="isAllow">
+                        <a><span class="glyphicon glyphicon-user"></span></a>
+                        <h3>You Have Succesfully Accept Request!</h3>
+                        
+                    </div>
+                    <div style="clear: both;"></div>
+                    <div class="text-center" style="margin-bottom: 12px; height:350px;" ng-hide="isAllow">
+                        <div class="login-sign">
+                            <a><span class="glyphicon glyphicon-user"></span></a>
+                        </div>
+                        <h3 ng-hide="errorMessage">Sorry Link Expired!</h3>
+                        <h3 ng-show="errorMessage">You are already a registered user, click <a href="login">here</a> to Log In into your account.</h3>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

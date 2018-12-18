@@ -1,0 +1,187 @@
+﻿<div ng-controller="AddanotherbiologicalsiblingCtrl">
+    <span class="col-sm-2"><b>{{labelAddanother}}</b></span>
+    &nbsp;&nbsp;&nbsp;
+    <button type="button" ng-click="addTodos()" class="btn btn-default btn-circle btn-success">
+        <span class="glyphicon glyphicon-plus"></span>
+    </button>
+    <div ng-repeat="todo in todos.slice().reverse()" class="col-sm-12 addAnotherBottomBorder" style="padding: 5px;">
+        <input type="hidden" ng-model="todo.indexValue" ng-init="todo.indexValue = todos.length - ($index+1)" />
+        <button type="button" class="btn btn-info btn-xs margin-left-5" style="margin-top: 7px;" ng-click="clearbodypart($index+1,todos.length)">
+            Clear
+        </button>
+        <button type="button" class="btn btn-danger btn-xs margin-left-1" style="margin-top: 7px;" ng-click="deletebodypart($index+1,todos.length)">
+            Delete
+        </button>
+        <div class="col-sm-12 checkbox">
+            <label style="cursor: pointer">
+                <input id="Checkbox1" type="checkbox" ng-model="todo.baselcell" class="margin-left-1" ng-change="todo.baselcellageoffirstcancer='';todo.baselcellnoofcancers='';todo.baelcellcomplication='';todo.baselcellTextA=''" />
+                Basal Cell 
+            </label>
+            <span ng-if="todo.baselcell == true">
+                <br />
+            </span>
+            <label class="margin-left-2" ng-if="todo.baselcell == true">Age of First Cancer</label>
+            <select ng-if="todo.baselcell == true" id="Select1" ng-model="todo.baselcellageoffirstcancer" class="form-control margin-left-2" style="width: 20%">
+                <option value="" selected>--Select--</option>
+                <option>Teens</option>
+                <option>20s</option>
+                <option>30s</option>
+                <option>40s</option>
+                <option>50s</option>
+                <option>60s</option>
+                <option>70+</option>
+            </select>
+            <span ng-if="todo.baselcell == true">
+                <br />
+            </span>
+            <label ng-if="todo.baselcell == true" class="margin-left-2">Number of cancers</label>
+            <select ng-if="todo.baselcell == true" id="Select2" ng-model="todo.baselcellnoofcancers" class="form-control margin-left-2" style="width: 20%">
+                <option value="" selected>--Select--</option>
+                <option>1</option>
+                <option>2-5</option>
+                <option>6-10</option>
+                <option>10+</option>
+            </select>
+            <span ng-if="todo.baselcell == true">
+                <br />
+            </span>
+            <div ng-if="todo.baselcell == true">
+                <label class="margin-left-2">Complications</label>
+                &nbsp;&nbsp;
+                <label>
+                    <input type="radio" value="Yes" ng-model="todo.baelcellcomplication" />
+                    Yes</label>&nbsp;&nbsp;
+                <label>
+                    <input type="radio" value="No" ng-model="todo.baelcellcomplication" ng-click="todo.baselcellTextA=''" />
+                    No</label>
+                <br />
+            </div>
+            <div ng-show="todo.baelcellcomplication == 'Yes'">
+                <button type="button" class="btn btn-info btn-xs margin-left-2" ng-click="isedit1=true">
+                    Text
+                </button>
+                <div ng-hide="isedit1"><span dynamic="todo.baselcellTextA" class="textEditorTextColor col-sm-10 margin-left-2"></span></div>
+                <div class="col-sm-10 margin-left-2" ng-if="isedit1">
+                    <textarea ui-tinymce="tinymceOptions" ng-model="todo.baselcellTextA"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 checkbox">
+            <label style="cursor: pointer">
+                <input id="Checkbox2" type="checkbox" ng-model="todo.Squamouscell" class="margin-left-1" ng-change="todo.Squamouscellageoffirstcancer='';todo.Squamouscellnoofcancers='';todo.Squamouscellcomplication='';todo.SquamouscellTextA=''" />
+                Squamous cell</label>
+            <span ng-if="todo.Squamouscell == true">
+                <br />
+            </span>
+            <label class="margin-left-2" ng-if="todo.Squamouscell == true">Age of First Cancer</label>
+            <select ng-if="todo.Squamouscell == true" id="Select3" ng-model="todo.Squamouscellageoffirstcancer" class="form-control margin-left-2" style="width: 20%">
+                <option value="" selected>--Select--</option>
+                <option>Teens</option>
+                <option>20s</option>
+                <option>30s</option>
+                <option>40s</option>
+                <option>50s</option>
+                <option>60s</option>
+                <option>70+</option>
+            </select>
+
+            <span ng-if="todo.Squamouscell == true">
+                <br />
+            </span>
+            <label ng-if="todo.Squamouscell == true" class="margin-left-2">Number of cancers</label>
+            <select ng-if="todo.Squamouscell == true" id="Select4" ng-model="todo.Squamouscellnoofcancers" class="form-control margin-left-2" style="width: 20%">
+                <option value="" selected>--Select--</option>
+                <option>1</option>
+                <option>2-5</option>
+                <option>6-10</option>
+                <option>10+</option>
+            </select><span ng-if="todo.Squamouscell == true">
+                <br />
+            </span>
+            <div ng-if="todo.Squamouscell == true">
+                <label class="margin-left-2" ng-if="todo.Squamouscell == true">Complications</label>
+                &nbsp;&nbsp;
+                <label>
+                    <input type="radio" value="Yes" ng-model="todo.Squamouscellcomplication" />
+                    Yes</label>&nbsp;&nbsp;
+                <label>
+                    <input type="radio" value="No" ng-model="todo.Squamouscellcomplication" ng-click="todo.SquamouscellTextA=''" />
+                    No</label>
+                <br />
+            </div>
+            <div ng-show="todo.Squamouscellcomplication == 'Yes'">
+                <button type="button" class="btn btn-info btn-xs margin-left-2" ng-click="isedit2=true">
+                    Text
+                </button>
+                <div ng-hide="isedit2"><span dynamic="todo.SquamouscellTextA" class="textEditorTextColor col-sm-10 margin-left-2"></span></div>
+                <div class="col-sm-10 margin-left-2" ng-if="isedit2">
+                    <textarea ui-tinymce="tinymceOptions" ng-model="todo.SquamouscellTextA"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 checkbox">
+            <label style="cursor: pointer">
+                <input id="Checkbox3" type="checkbox" ng-model="todo.Melanoma" class="margin-left-1" ng-change="todo.Melanomaageoffirstcancer='';todo.Melanomanoofcancers='';todo.Melanomacomplication='';todo.MelanomaTextA=''" />
+                Melanoma</label>
+            <span ng-if="todo.Melanoma == true">
+                <br />
+            </span>
+            <label class="margin-left-2" ng-if="todo.Melanoma == true">Age of First Cancer</label>
+            <select ng-if="todo.Melanoma == true" id="Select5" ng-model="todo.Melanomaageoffirstcancer" class="form-control margin-left-2" style="width: 20%">
+                <option value="" selected>--Select--</option>
+                <option>Teens</option>
+                <option>20s</option>
+                <option>30s</option>
+                <option>40s</option>
+                <option>50s</option>
+                <option>60s</option>
+                <option>70+</option>
+            </select>
+
+            <span ng-if="todo.Melanoma == true">
+                <br />
+            </span>
+            <label ng-if="todo.Melanoma == true" class="margin-left-2">Number of cancers</label>
+            <select ng-if="todo.Melanoma == true" id="Select6" ng-model="todo.Melanomanoofcancers" class="form-control margin-left-2" style="width: 20%">
+                <option value="" selected>--Select--</option>
+                <option>1</option>
+                <option>2-5</option>
+                <option>6-10</option>
+                <option>10+</option>
+            </select><br />
+            <div ng-if="todo.Melanoma == true">
+                <label class="margin-left-2">Complications</label>
+                &nbsp;&nbsp;
+                <label>
+                    <input type="radio" value="Yes" ng-model="todo.Melanomacomplication" />
+                    Yes</label>&nbsp;&nbsp;
+                <label>
+                    <input type="radio" value="No" ng-model="todo.Melanomacomplication" ng-click="todo.MelanomaTextA=''" />
+                    No</label>
+                <br />
+            </div>
+            <div ng-show="todo.Melanomacomplication == 'Yes'">
+                <button type="button" class="btn btn-info btn-xs margin-left-2" ng-click="isedit3=true">
+                    Text
+                </button>
+                <div ng-hide="isedit3"><span dynamic="todo.MelanomaTextA" class="textEditorTextColor col-sm-10 margin-left-2"></span></div>
+                <div class="col-sm-10 margin-left-2" ng-if="isedit3">
+                    <textarea ui-tinymce="tinymceOptions" ng-model="todo.MelanomaTextA"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-info btn-xs" ng-click="siblingIsEdit=true">
+                Text
+            </button>
+            <div ng-hide="siblingIsEdit"><span dynamic="todo.siblingTextA" class="textEditorTextColor col-sm-12"></span></div>
+            <div class="col-sm-12" ng-if="siblingIsEdit">
+                <textarea ui-tinymce="tinymceOptions" ng-model="todo.siblingTextA"></textarea>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>
+

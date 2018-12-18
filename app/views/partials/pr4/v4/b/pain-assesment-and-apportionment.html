@@ -1,0 +1,180 @@
+<!-- Start Pain Assesment and Apportionment -->
+<div ng-if="report.data['painassessment'].disableradio!=1 && report.data['painassessment'].disableradio != 'No'">
+    <!--Pain Assessment-->
+    <div ng-if="report.data['painassessment'].rdoAssessment=='Yes' || report.data['painassessment'].rdoAssessment=='No' || report.data['painassessment'].textareaAssessment">
+        <br />
+        <div class="DFRReportSubHeadingFontSize"><strong>Pain Related Impairment</strong></div>
+        <div class="divMain">
+            <div ng-if="report.data['painassessment'].ddlAssessment != '0% WPI' && report.data['painassessment'].ddlAssessment !=''">
+                A {{report.data['painassessment'].ddlAssessment}} is assigned for pain in excess of that already incorporated in the WPI rating under Chapters 3-17 of the {{report.data['bginfo'].administrativerule}}. 
+            </div>
+            <div ng-if="report.data['painassessment'].ddlAssessment == '0% WPI'">
+                According to Chapters 3-17 of the {{report.data['bginfo'].administrativerule}}, no WPI (0%) is indicated.  
+            </div>
+            <div ng-bind-html="appendPeriod(report.data['painassessment'].textareaAssessment)"></div>
+        </div>
+    </div>
+
+    <!--Effects of Medication-->
+    <div ng-if="report.data['painassessment'].effectsofmedicationradio">
+        <br />
+        <div class="DFRReportSubHeadingFontSize"><strong>Effects of Medication</strong></div>
+        <div class="divMain">
+            <div ng-if="report.data['painassessment'].effectsofmedicationradio=='Yes'">
+                <div ng-repeat="rdoItem in report.data['selectinjuries'].concatedbodypart">
+                    <div ng-if="report.data['patientcomplaints' + rdoItem.concateId].checkifeffectsofmedication">
+                        <div ng-if="report.data['patientcomplaints' + rdoItem.concateId].checkifeffectsofmedication=='Yes'">
+                            <!--NSAIDs-->
+                            <div ng-if="report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationnsaidsChild">
+                                <div ng-if="report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationnsaidsChild.length>0">
+                                    {{report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationnsaidsChild[0]}}: This medication is medically necessary to treat the {{rdoItem.text|lowercase}} symptoms. The use of this medication results in ongoing side effects. <span ng-bind-html="appendPeriod(report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentmedicationsnsaidsChildtextinput)"></span>
+                                </div>
+                            </div>
+
+                            <!--Tylenol-->
+                            <div ng-if="report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationtylenolChild">
+                                <div ng-if="report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationtylenolChild.length>0">
+                                    {{report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationtylenolChild[0]}}: This medication is medically necessary to treat the {{rdoItem.text|lowercase}} symptoms. The use of this medication results in ongoing side effects. <span ng-bind-html="appendPeriod(report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationtylenolChildtextinput)"></span>
+                                </div>
+                            </div>
+
+                            <!--Opioids-->
+                            <div ng-if="report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationopioidsChild">
+                                <div ng-if="report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationopioidsChild.length>0">
+                                    {{report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationopioidsChild[0]}}: This medication is medically necessary to treat the {{rdoItem.text|lowercase}} symptoms. The use of this medication results in ongoing side effects. <span ng-bind-html="appendPeriod(report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationsopioidsChildtextinput)"></span>
+                                </div>
+                            </div>
+
+                            <!--Muscle Relaxants-->
+                            <div ng-if="report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationmusclerelaxantsChild">
+                                <div ng-if="report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationmusclerelaxantsChild.length>0">
+                                    {{report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationmusclerelaxantsChild[0]}}: This medication is medically necessary to treat the {{rdoItem.text|lowercase}} symptoms. The use of this medication results in ongoing side effects. <span ng-bind-html="appendPeriod(report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationsmusclerelaxantsChildtextinput)"></span>
+                                </div>
+                            </div>
+
+                            <!--Tricyclics-->
+                            <div ng-if="report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationtricyclicsChild">
+                                <div ng-if="report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationtricyclicsChild.length>0">
+                                    {{report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationtricyclicsChild[0]}}: This medication is medically necessary to treat the {{rdoItem.text|lowercase}} symptoms. The use of this medication results in ongoing side effects. <span ng-bind-html="appendPeriod(report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationstricyclicsChildtextinput)"></span>
+                                </div>
+                            </div>
+
+                            <!--Nerve Stabilizers-->
+                            <div ng-if="report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationnerveChild">
+                                <div ng-if="report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationnerveChild.length>0">
+                                    {{report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationnerveChild[0]}}: This medication is medically necessary to treat the {{rdoItem.text|lowercase}} symptoms. The use of this medication results in ongoing side effects. <span ng-bind-html="appendPeriod(report.data['patientcomplaints' + rdoItem.concateId].checkboxCurrentMedicationsnervestablizersChildtextinput)"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="report.data['painassessment'].effectsofmedicationselect">
+                As allowable in the glossary, "Effects of medication", Page 600, the impairment estimate is increased by {{report.data['painassessment'].effectsofmedicationselect}} WPI.
+            </div>
+        </div>
+    </div>
+
+    <!--Adjustments for Effects of Treatment-->
+    <div ng-if="treatmentCheckTotalRemission()">
+        <br />
+        <span class="DFRReportSubHeadingFontSize"><strong>Adjustment for Effects of Treatment</strong></span>
+        <div class="divMain">
+            Medication is necessary for total remission of pain and symptoms.
+        <div ng-if="report.data['painassessment'].totalremissionradio">
+            <div ng-if="report.data['painassessment'].totalremissionradio=='No'">
+                It is my medical opinion that no additional impairment (0% WPI) is indicated.
+            </div>
+            <div ng-if="report.data['painassessment'].totalremissionradio=='Yes'">
+                <div ng-if="report.data['painassessment'].totalremissionselect">
+                    <div ng-if="report.data['painassessment'].totalremissionselect.length>0">
+                        In my medical opinion, the impairment should be increased by {{report.data['painassessment'].totalremissionselect}} WPI based on the necessity of treatment for total remission of symptoms as allowable in Chapter 2 Practical Application of the Guides, Section 2.5g, Page 20. 
+                    </div>
+                </div>
+                <div ng-if="report.data['painassessment'].effectsofmedicationselect.length==0">
+                    In my medical opinion, the impairment should be increased by a small amount (1-3% WPI) based on the necessity of treatment as allowable in Chapter 2 Practical Application of the Guides, Section 2.5g, Page 20. 
+                </div>
+            </div>
+            <br />
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Start Pain and Apportionment-->
+<div>
+    <!-- ng-if="checkApportionmentExistAll()"-->
+    <!--Pain and Apportionment - General Data -->
+    <div ng-if="((report.data['apportionment'].rdopainassessment.length>0))">
+        <!--  && (report.data['apportionment'].disableradio!=1 && report.data['apportionment'].disableradio != 'No'))"> -->
+        <br />
+        <div class="DFRReportSubHeadingFontSize"><strong>Apportionment</strong></div>
+        <div class="divMain">
+            <div ng-if="report.data['apportionment'].rdopainassessment=='No' || report.data['apportionment'].rdopainassessment.indexOf('know the answer')!=-1">
+                If permanent disability (functional or administrative, e.g., a permanent disability rating calculated based on the findings of this report) is found to be present, apportionment is not indicated. There are no prior injuries, ongoing disease processes, or subsequent injuries that apply.
+            </div>
+            <div ng-if="report.data['apportionment'].rdopainassessment=='Yes'">
+                Apportionment, including prior industrial injuries, is indicated for other factors both before and subsequent to this industrial injury if permanent disability is found to be present (functional or administrative, e.g., a permanent disability rating calculated based on the findings of this report).
+            </div>
+        </div>
+    </div>
+
+    <!--Pain and Apportionment - Body Part Wise -->
+    <!--<div ng-if="report.data['apportionment'].rdopainassessment.length>0">
+            <div ng-if="report.data['apportionment'].rdopainassessment=='Yes'">-->
+    <div ng-repeat="rdoItem in report.data['selectinjuries'].concatedbodypart">
+        <!--<div ng-if="rdoItem.bodysystem !='skin'">-->
+        <div class="divMain">
+            <div ng-if="(report.data['apportionment' + rdoItem.concateId].chkPreExisting.length>0 || report.data['apportionment' + rdoItem.concateId].chkImaging.length>0 || report.data['apportionment' + rdoItem.concateId].chkObesity.length>0 || report.data['apportionment' + rdoItem.concateId].chkOther.length>0 || report.data['apportionment' + rdoItem.concateId].textareaComment)">
+                <!-- && (report.data['apportionment' + rdoItem.concateId].disableradio!=1 && report.data['apportionment' + rdoItem.concateId].disableradio != 'No')"> -->
+                <!--<div class="DFRReportSubHeadingFontSize">{{rdoItem.bodysystem =='Skin'?'Skin - ':''}}{{(rdoItem.text!='Other'?rdoItem.text+' '+(rdoItem.bdsides=='n/a'||rdoItem.bdsides=='none'?'':rdoItem.bdsides|capitalize):rdoItem.bdpartother+' '+(rdoItem.bdsides=='n/a'?'':rdoItem.bdsides|capitalize)) | capitalize}}</div>-->
+                <br />
+                <span class="DFRReportSubHeadingFontSize"><strong>{{displayBodyPartName(rdoItem)}}</strong></span>
+                <br />
+
+                <div ng-if="report.data['apportionment' + rdoItem.concateId].txtPreExisitng || report.data['apportionment' + rdoItem.concateId].txtImaging || report.data['apportionment' + rdoItem.concateId].txtObesity || report.data['apportionment' + rdoItem.concateId].txtOther2">
+                    I have assigned apportionment for the {{(rdoItem.text!='Other'?(rdoItem.bdsides=='n/a'||rdoItem.bdsides=='none'?'':rdoItem.bdsides)+' '+rdoItem.text:(rdoItem.bdsides=='n/a'?'':rdoItem.bdsides)+' '+rdoItem.bdpartother) | lowercase }}.
+                </div>
+
+                <div ng-if="report.data['apportionment' + rdoItem.concateId].txtPreExisitng">
+                    <div ng-if="report.data['apportionment' + rdoItem.concateId].txtPreExisitng!='' && report.data['apportionment' + rdoItem.concateId].txtPreExisitng!=0">
+                        I assign {{report.data['apportionment' + rdoItem.concateId].txtPreExisitng|number}}% for pre-existing conditions.                         
+                    </div>
+                </div>
+                <div ng-if="report.data['apportionment' + rdoItem.concateId].txtImaging">
+                    <div ng-if="report.data['apportionment' + rdoItem.concateId].txtImaging!='' && report.data['apportionment' + rdoItem.concateId].txtImaging!=0">
+                        I assign {{report.data['apportionment' + rdoItem.concateId].txtImaging|number}}% for imaging/degenerative changes.
+                    </div>
+                </div>
+
+                <!--Additional Condition for Obesity textbox in case of the following body parts-->
+                <div ng-if="rdoItem.id =='thoracic' || rdoItem.id =='lumbar' || rdoItem.id =='pelviship' || rdoItem.id =='knee' || rdoItem.id =='anklefoot' || rdoItem.id =='toe'">
+                    <div ng-if="report.data['apportionment' + rdoItem.concateId].txtObesity">
+                        <div ng-if="report.data['apportionment' + rdoItem.concateId].txtObesity!=''">
+                            I assign {{report.data['apportionment' + rdoItem.concateId].txtObesity|number}}% for obesity.
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="report.data['apportionment' + rdoItem.concateId].txtOther && report.data['apportionment' + rdoItem.concateId].txtOther2">
+                    <div ng-if="report.data['apportionment' + rdoItem.concateId].txtOther!='' && report.data['apportionment' + rdoItem.concateId].txtOther2!=''">
+                        I assign an additional {{report.data['apportionment' + rdoItem.concateId].txtOther2|number}}%. <span ng-bind="appendPeriod(report.data['apportionment' + rdoItem.concateId].txtOther)"></span>
+                    </div>
+                </div>
+
+                <div ng-if="report.data['apportionment' + rdoItem.concateId].txtTotal">
+                    <div ng-if="report.data['apportionment' + rdoItem.concateId].txtTotal!=''">
+                        Total apportionment contribution for the {{(rdoItem.text!='Other'?(rdoItem.bdsides=='n/a'||rdoItem.bdsides=='none'?'':rdoItem.bdsides)+' '+rdoItem.text:(rdoItem.bdsides=='n/a'?'':rdoItem.bdsides)+' '+rdoItem.bdpartother) | lowercase }} is {{report.data['apportionment' + rdoItem.concateId].txtTotal}}%.  
+                    </div>
+                </div>
+                <span ng-bind-html="appendPeriod(report.data['apportionment' + rdoItem.concateId].textareaComment)"></span>
+                <br />
+            </div>
+        </div>
+        <!--</div>-->
+    </div>
+    <!--</div>
+        </div>-->
+</div>
+<!-- End Pain and Apportionment-->
+<!-- End Pain Assesment and Apportionment -->

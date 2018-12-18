@@ -1,0 +1,213 @@
+﻿<div class="sample"> <!-- ng-controller="submitreportCtrl" -->
+    <div class="bright">
+        <section id="header-title" style="margin-bottom: -10px;">
+            <div class="container">
+                <div class="row">
+                    <h2>Submitted PR-4 Reports
+                    <img src="/images/menu-search.png" alt="Search" title="Search Patients" ng-click="searchBox=!searchBox" style="cursor: pointer; margin-left: 20px;" /></h2>
+                </div>
+            </div>
+        </section>
+        <section class="search bar2" ng-show="searchBox">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <form ng-submit="searchPatients(1)" class="searchPatient form-horizontal" id="searchPatient">
+                            <table width="50%">
+                                <tr>
+									<td style="width: 30%">Report id</td>
+									<td style="width: 70%">
+										<div class="control-group">
+											<input name="reportID" id="reportID" type="text" ng-model="search.reportID" style="width: 60%"/>
+										</div>
+									</td>
+								</tr>
+								<tr>
+                                    <td style="width: 30%">Practice name</td>
+                                    <td style="width: 70%">
+                                        <div class="control-group">
+                                            <input name="practicename" id="practicename" type="text" ng-model="search.practicename" />
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!--<tr>
+                                    <td>Practice id</td>
+                                    <td>
+                                        <div class="control-group">
+                                            <input name="practiceid" id="practiceid" type="text" ng-model="search.practiceid" />
+                                        </div>
+                                    </td>
+                                </tr>-->
+                                <tr>
+                                    <td style="width: 30%">Date Submitted from</td>
+                                    <td style="width: 70%">
+                                        <div class="control-group">
+                                            <input name="datesubmittedfrom" id="datesubmittedfrom" type="text" ng-model="search.datesubmittedfrom" date-options="dateOptions" custom-datepicker date-format="dd-MM-yy" />
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 30%">Date Submitted to</td>
+                                    <td style="width: 70%">
+                                        <div class="control-group">
+                                            <input name="datesubmittedto" id="datesubmittedto" type="text" ng-model="search.datesubmittedto" date-options="dateOptions" custom-datepicker date-format="dd-MM-yy" />
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 30%">Patient first name</td>
+                                    <td style="width: 70%">
+                                        <div class="control-group">
+                                            <input name="patientfname" id="patientfname" type="text" ng-model="search.patientfname" />
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 30%">Patient last name</td>
+                                    <td style="width: 70%">
+                                        <div class="control-group">
+                                            <input name="patientlname" id="patientlname" type="text" ng-model="search.patientlname" />
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>
+                                        <div style="margin: 7px 0;">
+                                            <button id="Button1" class="btn btn-success btn-xs">Search</button>
+                                            <img src="/images/reset.png" id="resetSearch" alt="Reset" title="Reset" ng-click="resetSearch()" style="cursor: pointer; width: 21px;" />
+                                            <!--<button type="button" id="advancedSearch" class="btn btn-success btn-xs">Advanced</button>-->
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section style="margin-top:10px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4" ng-init="newcasesList(1)">
+                        <div>
+                            <div>
+                                <h4 class=""><strong>New Cases</strong></h4>
+                            </div>
+                            <hr />
+                            <div style="height: 480px; overflow: auto; -webkit-overflow-scrolling: touch;">
+                                <div ng-show="showMessage">There are no submitted reports for this search.</div>
+                                <div ng-repeat="item in submittedpr4reportData" ng-if="item.status == 'level1'" ng-click="reportConfirmation(item._id, item.patientid, item.injuryid, item.status, 'existing', item.formtype, item.version, item.formid)" style="cursor: pointer">
+                                    <div class="panel panel-default raterhead" style="overflow: hidden;">
+                                        <div class="raterheadercomplete text-center btn-danger">
+                                            <h4 class="titles">Report Information</h4>
+                                        </div>
+                                        <div class="col-sm-2" style="padding: 18px 0px 0px 0px;">
+                                            <img src="/images/icon-patient.png" />
+                                        </div>
+                                        <div class="col-sm-10" style="padding: 10px 0px 0px 0px;">
+                                            <ul style="list-style: none; padding-left: 10px;">
+                                                <li><strong>Provider:</strong> {{item.submittedBy}}</li>
+                                                <li><strong>Practice Account:</strong> {{item.practicename}}</li>
+                                                <li><strong>Patient:</strong> {{item.data['bginfo']['firstname']}} {{item.data['bginfo']['lastname']}}</li>
+                                                <li><strong>Visit Date:</strong> {{item.data['patientcomplaints']['currentexamdate'] | date:'MM/dd/yyyy'}}</li>
+                                                <li><strong>Date Submitted:</strong> {{item.submittedDate | date:'MM/dd/yyyy'}}</li>
+                                                <li><strong>Level1:</strong> Not yet rated</li>
+                                                <li><strong>Level2:</strong> Not yet rated</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearer"></div>
+
+                            </div>
+                        </div>
+                        <hr />
+                        <div style="margin-left: 25px;">
+                            <pagination total-items="totalItemsfornewcases" page="currentPagefornewcases" items-per-page="itemsperpagefornewcases" max-size="maxsize" on-select-page="newcasesList(page)" class="pagination-sm" boundary-links="true"></pagination>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" ng-init="level1casesList(1)">
+                        <div>
+                            <div>
+                                <h4 class=""><strong>Rating Level 1 Complete</strong></h4>
+                            </div>
+                            <hr />
+                            <div style="height: 480px; overflow: auto; -webkit-overflow-scrolling: touch;">
+                                <div ng-show="showMessage">There are no submitted reports for this search.</div>
+                                <div ng-repeat="item in submittedpr4level1reportData" ng-if="item.status == 'level2'" ng-click="reportConfirmation(item._id, item.patientid, item.injuryid, item.status, 'existing', item.formtype, item.version,  item.formid)" style="cursor: pointer">
+                                    <div class="panel panel-default raterhead" style="overflow: hidden;">
+                                        <div class="raterheadercomplete text-center btn-warning">
+                                            <h4 class="titles">Report Information</h4>
+                                        </div>
+                                        <div class="col-sm-2" style="padding: 18px 0px 0px 0px;">
+                                            <img src="/images/icon-patient.png" />
+                                        </div>
+                                        <div class="col-sm-10" style="padding: 10px 0px 0px 0px;">
+                                            <ul style="list-style: none; padding-left: 10px;">
+                                                <li><strong>Provider:</strong> {{item.submittedBy}}</li>
+                                                <li><strong>Practice Account:</strong> {{item.practicename}}</li>
+                                                <li><strong>Patient:</strong> {{item.data['bginfo']['firstname']}} {{item.data['bginfo']['lastname']}}</li>
+                                                <li><strong>Visit Date:</strong> {{item.data['patientcomplaints']['currentexamdate'] | date:'MM/dd/yyyy'}}</li>
+                                                <li><strong>Date Submitted:</strong> {{item.submittedDate | date:'MM/dd/yyyy'}}</li>
+                                                <li><strong>Level1:</strong> {{item.submittedAtLevel1}} - {{item.submittedDateAtLevel1 | date:'MM/dd/yyyy @ h:mma'}}</li>
+                                                <li><strong>Level2:</strong> Not yet rated</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="clearer"></div>
+
+                                </div>
+                                <div class="clearer"></div>
+
+                            </div>
+                        </div>
+                        <hr />
+                        <div ng-hide="submittedpr4level1reportData.length > 5" style="margin-left: 25px;">
+                            <pagination total-items="totalItemsforlevel1cases" page="currentPageforlevel1cases" items-per-page="itemsperpageforlevel1cases" max-size="maxsize" on-select-page="level1casesList(page)" class="pagination-sm" boundary-links="true"></pagination>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" ng-init="completedList(1)">
+                        <div>
+                            <div>
+                                <h4 class=""><strong>Rating Complete</strong></h4>
+                            </div>
+                            <hr />
+                            <div style="height: 480px; overflow: auto; -webkit-overflow-scrolling: touch;">
+                                <div ng-show="showMessage">There are no submitted reports for this search.</div>
+                                <div ng-repeat="item in completedpr4reports" ng-if="item.status == 'closed'" ng-click="reportConfirmation(item._id, item.patientid, item.injuryid, item.status, 'existing', item.formtype, item.version, item.formid)" style="cursor: pointer">
+                                    <div class="panel panel-default raterhead" style="overflow: hidden;">
+                                        <div class="raterheadercomplete text-center btn-info">
+                                            <h4 class="titles">Report Information</h4>
+                                        </div>
+                                        <div class="col-sm-2" style="padding: 18px 0px 0px 0px;">
+                                            <img src="/images/icon-patient.png" />
+                                        </div>
+                                        <div class="col-sm-10" style="padding: 10px 0px 0px 0px;">
+                                            <ul style="list-style: none; padding-left: 10px;">
+                                                <li><strong>Provider:</strong> {{item.submittedBy}}</li>
+                                                <li><strong>Practice Account:</strong> {{item.practicename}}</li>
+                                                <li><strong>Patient:</strong> {{item.data['bginfo']['firstname']}} {{item.data['bginfo']['lastname']}}</li>
+                                                <li><strong>Visit Date:</strong> {{item.data['patientcomplaints']['currentexamdate'] | date:'MM/dd/yyyy'}}</li>
+                                                <li><strong>Date Submitted:</strong> {{item.submittedDate | date:'MM/dd/yyyy'}}</li>
+                                                <li><strong>Level1:</strong> {{item.submittedAtLevel1}} - {{item.submittedDateAtLevel1 | date:'MM/dd/yyyy @ h:mma'}}</li>
+                                                <li><strong>Level2:</strong> {{item.submittedAtLevel2}} - {{item.submittedDateAtLevel2 | date:'MM/dd/yyyy @ h:mma'}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="clearer"></div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div ng-hide="completedpr4reports.length > 5" style="margin-left: 25px;">
+                            <pagination total-items="totalItems" page="currentPage" items-per-page="itemsperpage" max-size="maxsize" on-select-page="completedList(page)" class="pagination-sm" boundary-links="true"></pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

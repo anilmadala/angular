@@ -1,0 +1,161 @@
+<div class="contactus">
+  <div class="bright">
+  <section id="header-title">
+      <div class="section">
+	      <div class="container">
+	        <div class="row">
+	          <h2 style="text-align: left; display: inline-block; font-family: Arial; font-weight: normal; text-transform: capitalize;">Fax Work Status Note</h2>
+	        </div>
+	      </div>
+      </div>
+    </section>
+	<div class="section" ng-controller="workstatusController">
+	    <!--Add code here-->
+		<div class="container">
+			<div class="row">
+				<div ng-if="dispayProgress" class="ng-scope">
+                    <div class="overlayBackground"></div>
+                    <div class="overlayContent">
+                        <img src="/images/spinner.gif"><span>&nbsp;&nbsp;Loading</span>
+                    </div>
+                </div>
+				<div class="col-sm-6 col-md-6 col-xs-12" >
+					<form class="simple-form" name="workStatusFaxForm" ng-submit="submitForm(workStatusFaxForm)" novalidate>
+						<h3>Recipient</h3>
+						<br/>
+						<div class="row">
+							<div class="col-sm-6 col-md-6 col-xs-12" >
+								<div class="form-group col-sm-offset-1" >
+							      <label class="form-label" >Company</label>
+							      <input type="text" class="form-control" name="company" ng-model="recipient.company" />
+							    </div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6 col-md-6 col-xs-12" >
+								<div class="form-group col-sm-offset-1" >
+							      <label class="form-label" >First Name</label>
+							      <input type="text" class="form-control" name="fname" ng-model="recipient.fname" />
+							    </div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-xs-12" >
+							    <div class="form-group  col-sm-offset-1" >
+							      <label class="form-label" >Last Name</label>
+							      <input type="text" class="form-control" name="lname" ng-model="recipient.lname" />
+							    </div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6 col-md-6 col-xs-12" >
+								<div class="form-group col-sm-offset-1"  ng-class="{true: 'has-error'}[submitted && workStatusFaxForm.recipientfaxCountryCode.$invalid]">
+							      <label class="form-label" >Country Code <span class="error">*</span></label>
+							      <select class="form-control ng-pristine ng-valid" name="recipientfaxCountryCode" id="recipientfaxCountryCode" ng-model="data.countryList">
+								      <option ng-repeat="option in countryList" value="{{option.dialCode}}" ng-selected="option.dialCode==1" >{{option.name}} + {{option.dialCode}}</option>
+								    </select>
+							      <span class="error" ng-show="submitted && workStatusFaxForm.recipientfaxCountryCode.$error.required">Required</span>
+							    </div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-xs-12" >
+								<div class="form-group col-sm-offset-1"  ng-class="{true: 'has-error'}[submitted && workStatusFaxForm.recipientfaxnumber.$invalid]">
+							      
+							      <label class="form-label" >Recipient Fax Number <span class="error">*</span> <span ng-click="open(1)" style="color: #14A4DC; cursor: pointer">(i)</span></label>
+							      <input type="tel" name="recipientfaxnumber" ng-model="recipient.recipientfaxnumber"  validator-required="false" class="form-control ng-valid ng-dirty ng-valid-mask" placeholder="" maxlength="" ui-mask="(999) 999-9999" numbers-only="numbers-only" required>
+							      <span class="error" ng-show="submitted && workStatusFaxForm.recipientfaxnumber.$error.required">Required</span>
+           						 <span class="error" ng-show="submitted && workStatusFaxForm.recipientfaxnumber.$error.tel">Invalid Fax Number</span>
+							    </div>
+							</div>
+						</div>
+					  	<div class="row">
+							<div class="col-sm-6 col-md-6 col-xs-12" >
+								<div class="form-group col-sm-offset-1" >
+							      <label class="form-label" >Message to Recipient</label>
+							      <textarea ng-model="recipientRemark" name="recipientRemark" rows="10" cols="70" ></textarea>
+							      
+							    </div>
+							</div>
+						</div>
+						<br/>
+						<br/>
+						<h3>Sender</h3>
+						<br/>
+						<div class="row">
+							<div class="col-sm-6 col-md-6 col-xs-12" >
+								<div class="form-group col-sm-offset-1"  ng-class="{true: 'has-error'}[submitted && workStatusFaxForm.sendername.$invalid]">
+							      <label class="form-label" >Sender Name <span class="error">*</span></label>
+							      <input type="text" class="form-control" name="sendername" ng-model="sender.fullname" required />
+							      <span class="error" ng-show="submitted && workStatusFaxForm.sendername.$error.required">Required</span>
+           				
+							    </div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-xs-12" >
+								<div class="form-group col-sm-offset-1" >
+							      <label class="form-label" >Sender Office Address</label>
+							      <select class="form-control"  id="senderofficeaddress"  name="senderofficeaddress" ng-model="senderofficeaddress" ng-change="locationChange(senderofficeaddress)">
+								      <option value="">---Please select---</option> 
+								       <option ng-repeat="addr in sender.officeAddr" value="{{addr.location}}" ng-selected="currentSelCliniclocation['_id']==addr['_id']"><span ng-if="addr.county!=''" >{{addr.street}},</span><span ng-if="addr.county!=''" >{{addr.city}},</span><span ng-if="addr.county!=''" >{{addr.zipcode}},</span><span ng-if="addr.county!=''" >{{addr.state}},</span><span ng-if="addr.county!=''" >{{addr.country}},</span></option>
+    								      
+								   </select> 
+							      
+							    </div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6 col-md-6 col-xs-12" >
+								
+							</div>
+							<div class="col-sm-6 col-md-6 col-xs-12" >
+								<div class="form-group col-sm-offset-1" >
+							      <label class="form-label" >Location Name</label>
+							      <input type="text" class="form-control" name="senderlocationname" value=""   ng-model="sender.currentSelCliniclocation"/>
+						
+							    
+							    </div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6 col-md-6 col-xs-12" >
+								<div class="form-group col-sm-offset-1" >
+							      <label class="form-label" >Sender Phone Number</label>
+							      <input type="text" class="form-control" name="senderphonenumber" ng-model="sender.loggenInUser.userphonenumber"  />
+							    </div>
+							</div>
+							<div class="col-sm-3 col-md-3 col-xs-12" >
+								<div class="form-group col-sm-offset-1" >
+							      <label class="form-label" >Extension</label>
+							      <input type="text" class="form-control" name="senderphoneextension" ng-model="sender.loggenInUser.userextension"   />
+							    </div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6 col-md-6 col-xs-12" >
+								<div class="form-group col-sm-offset-1" >
+							      <label class="form-label" >Sender Email</label>
+							      <input type="text" class="form-control" name="senderemail" ng-model="sender.loggenInUser.email"  />
+							    </div>
+							</div>
+							<div class="col-sm-6 col-md-6 col-xs-12" >
+								<div class="form-group col-sm-offset-1" >
+							      <label class="form-label" >Sender Fax Number</label>
+							      <input type="tel" name="senderfaxnumber" ng-model="sender.loggenInUser.faxnumber"  validator-required="false" class="form-control ng-valid ng-dirty ng-valid-mask" placeholder="" maxlength="" ui-mask="(999) 999-9999" numbers-only="numbers-only">
+							      
+							    </div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6 col-md-6 col-xs-12" >
+								<button type="submit" class="btn btn-primary btn-large" ng-click="submitted=true">Send Fax</button>
+								<button type="button" class="btn  btn-danger btn-large" ng-click="cancelFax()">Cancel</button>
+							</div>
+							<div class="col-sm-6 col-md-6 col-xs-12" >
+								
+
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
+	

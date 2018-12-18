@@ -1,0 +1,23 @@
+	<!--Signature section -->
+	<div style="color: #333333;" ng-init="getDoctordata(report.data['patientcomplaints'].treatphynamedropdown)">
+        <div>e-signed by 
+        	<div ng-if="report.data.signDoctor.level4!== undefined">
+        		{{report.data.signDoctor.level4.firstname | capitalize}} {{report.data.signDoctor.level4.lastname | capitalize}}<span ng-if="report.data.signDoctor.level4.profession">, <span ng-bind-html="getProfession(report.data.signDoctor.level4.profession,report.data.signDoctor.level4.otherprofessiontext)"></span></span>
+        	</div>
+        	<div ng-if="report.data.signDoctor.level3!== undefined">
+        		{{report.data.signDoctor.level3.firstname | capitalize}} {{report.data.signDoctor.level3.lastname | capitalize}}<span ng-if="report.data.signDoctor.level3.profession">, <span ng-bind-html="getProfession(report.data.signDoctor.level3.profession,report.data.signDoctor.level3.otherprofessiontext)"></span></span>
+        	</div>
+			<div ng-if="submittedDate">
+				<span ng-bind="(submittedDate | date:'h:mma').replace('PM',' p.m.').replace('AM',' a.m.')"></span>, <span ng-bind="(submittedDate | date:'MMMM d, y')"></span>
+			</div>
+			<div ng-if="report.data.signDoctor.level4!== undefined">
+					<div ng-if="getSpeciality(report.data.signDoctor.level4.speciality)">Specialty: <span ng-bind-html="getSpeciality(report.data.signDoctor.level4.speciality)"></span></div>
+			</div>
+			<div ng-if="report.data.signDoctor.level3!== undefined">
+				<div ng-if="getSpeciality(report.data.signDoctor.level3.speciality)">Specialty: <span ng-bind-html="getSpeciality(report.data.signDoctor.level3.speciality)"></span></div>
+			</div>
+			<div ng-if="report.data.patientcomplaints.treatphynamedropdown"><span ng-if="report.data.signDoctor.level4.id !=report.data.patientcomplaints.treatphynamedropdown">signing for {{doctorInfo.firstname}} {{doctorInfo.lastname}} <span ng-bind-html="getProfession(doctorInfo.profession, doctorInfo.otherprofessiontext)"></span></span></div>
+		</div>
+    </div>
+    <div ng-if="getTotalPage()"></div>
+	<!--Signature section -->

@@ -1,0 +1,56 @@
+	<input type="button" value="Add another" ng-click="addTodos()" />
+	<div ng-repeat="todo in todos.slice().reverse()" class="col-sm-12" style="padding:5px;">
+		<hr>
+		<div class="col-sm-12">
+			<div class="col-sm-3">
+				<label>Year of prior injury: </label>
+			</div>	
+			<div class="col-sm-3">
+      			<input type="tel" ui-date my-date ng-model="todo.dateOfPriorInjury" class="form-control" placeholder="MM/DD/YYYY" >
+      			<input type="tel" ng-model="todo.number" class="form-control" >
+      		</div>
+      		<div class="col-sm-1">
+	    		<button type="button" class="btn btn-info btn-xs" ng-click="clearbodypart($index+1,todos.length)">Clear</button>
+	    	</div>
+	    	<div class="col-sm-1">
+	    		<button type="button" class="btn btn-danger btn-xs" ng-click="deletebodypart($index+1,todos.length)">Delete</button>
+	    	</div>	
+      	</div>	
+      	<div class="col-sm-12">
+			<div class="col-sm-12">
+				<label><br/>Do you have residual problems?</label>
+			</div>	
+			<div class="col-sm-12">
+      			<input type="radio" name="residualProblemsRadio{{$index}}" ng-model="todo.residualProblemsRadio" value="No" /><lable>&nbsp;No</label> 
+      			<input type="radio" name="residualProblemsRadio{{$index}}"ng-model="todo.residualProblemsRadio" value="Yes"/><lable>&nbsp;Yes</label>
+      		</div>
+      		<div class="col-sm-12" ng-if="todo.residualProblemsRadio == 'Yes'">
+      			<div class="col-sm-5">	
+      				<label><br/>Select baseline pain prior to injury <br/>0 (no pain) to 10 (most severe pain)</label>
+      			</div>
+      			<div class="col-sm-2">	
+	      			<select ng-model="todo.residualProblemsBaseline" class="form-control" ng-init="todo.residualProblemsBaseline = '0'">
+	      				<option value="{{n}}" ng-repeat="n in [0,1,2,3,4,5,6,7,8,9,10]" >{{n}}</option>
+	      			</select>
+	      		</div>	
+      		</div>
+      	</div>	
+      	<div class="col-sm-12">
+			<div class="col-sm-12">
+				<label>Prior Surgery History</label>
+			</div>	
+			<div class="col-sm-12">
+      			<input type="radio" name="priorSurgeryHistoryRadio
+      			{{$index}}" ng-model="todo.priorSurgeryHistoryRadio" value="No" /><lable>&nbsp;No</label> 
+      			<input type="radio" name="priorSurgeryHistoryRadio{{$index}}"ng-model="todo.priorSurgeryHistoryRadio" value="Yes"/><lable>&nbsp;Yes</label>
+      		</div>
+      		<div class="col-sm-12" ng-if="todo.priorSurgeryHistoryRadio == 'Yes'" >
+      			<textarea ui-tinymce ng-model="todo.priorSurgeryHistoryText" ></textarea>
+      		</div>
+      	</div>
+            <div class="col-sm-12">
+                  <textarea ui-tinymce ng-model="todo.priorText" ></textarea>
+            </div>	
+      	<hr>
+
+    </div>

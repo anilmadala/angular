@@ -1,0 +1,100 @@
+<div class="modal-header">
+    <h3>Add New Section</h3>
+</div>
+<form name="myform" class="form-horizontal">
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Type</label>
+            <div class="col-sm-8">
+                <select class="form-control" ng-model="section.type">
+                    <option value="section">Section</option>
+                    <option value="subsection">Sub Section</option>        
+                    <option value="blank">Blank</option>
+                    <option value="label">Label</option>
+                    <option value="dynamiclable">Dynamic Label</option>
+                    <option value="template">Template</option>
+                    <option value="bodypart">Body Part</option>
+                </select>
+            </div>
+        </div>
+       <div class="form-group" ng-show="section.type=='subsection'">
+            <label for="inputEmail3" class="col-sm-2 control-label">Main Section</label>
+            <div class="col-sm-8">
+                <input type='textbox' name="subsection" ng-model="section.mainsectionname" class="form-control" />
+            </div>
+
+        </div>
+        <div class="form-group" ng-show="section.type=='bodypart'">
+            <label for="inputEmail3" class="col-sm-2 control-label">Template</label>
+            <div class="col-sm-8">
+                <select class="form-control" ng-model="section.template">
+                    <option value="" selected>--Select--</option>                  
+                    <option ng-selected="{{form._id == section.template}}" ng-repeat="form in formlist|filter:{type:'template',formtype:formtype}" value="{{form._id}}">{{form.formname}}</option>                    
+                </select>
+            </div>
+
+        </div>
+        
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Id</label>
+            <div class="col-sm-8">
+                <input type='textbox' ng-disabled="section.type=='blank'" name="sectiondataid" ng-trim='false' ng-model="section.sectiondataid" ng-blur="checkname(section.sectiondataid)" class="form-control"
+                    ng-required="section.type!='blank'" />
+                <span ng-show="error" style="color: #ff0000;">Section already exist</span>
+            </div>
+
+        </div>
+      
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-8">
+                <input type='textbox' ng-model="section.sectionname" ng-disabled="section.type=='blank'" class="form-control"
+                    ng-required="section.type!='blank'" />
+            </div>
+
+        </div>
+       
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Visiblity</label>
+            <div class="col-sm-8">
+                <input type='textbox' ng-model="section.visiblity" ng-disabled="section.type=='blank'" class="form-control"
+                    ng-required="section.type!='blank'" />
+            </div>
+
+        </div>
+        <div class="form-group" ng-show="section.type=='bodypart'">
+            <label for="" class="col-sm-2 control-label">Hide Body Part</label>
+            <div class="col-sm-8">
+                 <input type='textbox' ng-model="section.hidebodypart" ng-disabled="section.type=='blank'" class="form-control"
+                    ng-required="section.type!='blank'" />
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Class</label>
+            <div class="col-sm-8">
+                <input type='textbox' ng-model="section.class" ng-disabled="section.type=='blank'" class="form-control" />
+            </div>
+        </div>
+        
+        <div class="form-group" ng-show="section.type=='bodypart'">
+            <label for="inputEmail3" class="col-sm-2 control-label">Modal</label>
+            <div class="col-sm-8">
+                <input type='textbox' ng-model="section.modal" class="form-control" />
+            </div>
+        </div>
+
+    </div>
+    <br />
+    <div class="modal-footer">
+        <input ng-show="isUpdate && !error" type="submit" ng-click="addSection(section,'add')" class="btn btn-primary" ng-disabled="!myform.$valid"
+            value="Add Section" />
+
+        <input ng-hide="isUpdate" type="submit" ng-click="editSection(section,'edit')" class="btn btn-primary" ng-disabled="!myform.$valid"
+            value="Save" />
+
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

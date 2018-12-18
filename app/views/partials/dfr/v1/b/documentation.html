@@ -1,0 +1,24 @@
+<!--Start Documentation-->
+<div class="DFRReportHeadingFontSize"><strong>Documentation</strong></div>
+<div ng-if="report.data['documentation'].docmedicalrecordchkbx.length>0 || report.data['documentation'].medicalrecordsOtherText">
+    <span ng-if="report.data['documentation'].docmedicalrecordchkbx==''">I reviewed patient's medical records.</span>
+    <span ng-if="report.data['documentation'].docmedicalrecordchkbx.length>=1">{{report.data['documentation'].docmedicalrecordchkbx | map | capitalize}} were reviewed. </span>
+    <span ng-if="report.data['documentation'].medicalrecordsOtherText" ng-bind-html="appendPeriod(report.data['documentation'].medicalrecordsOtherText)"></span>
+    <span ng-if="report.data['documentation'].docmedicalrecordchkbx.length>0">This information was necessary for the formulation of medical opinions. </span>
+    <br>
+</div>
+<div>
+    <br>
+    I declare under penalty of perjury that I have not violated the provisions of California Labor Code Section 139.3 with regard to the evaluation of this patient or the preparation of this report.<br>
+</div>
+<div ng-if="report.data['documentation'].doctdreview || report.data['documentation'].doctdface || report.data['documentation'].doctdprepare" class="DFRReportHeadingFontSize">
+    <br>
+    <strong>Time Disclaimer</strong><br>
+</div>
+<div>
+    I verify under penalty of perjury that the total time I spend on the following activities is true and correct:
+</div>
+<div ng-if="report.data['documentation'].doctdreview">It took me <span ng-if="report.data['documentation'].doctdreview>1">{{getAbsValue(report.data['documentation'].doctdreview)}}&nbsp;minutes&nbsp;</span><span ng-if="report.data['documentation'].doctdreview==1">{{getAbsValue(report.data['documentation'].doctdreview)}}&nbsp;minute&nbsp;</span>to review the medical records.</div>
+<div ng-if="report.data['documentation'].doctdface">I spent <span ng-if="report.data['documentation'].doctdface>1">{{getAbsValue(report.data['documentation'].doctdface)}}&nbsp;minutes&nbsp;</span><span ng-if="report.data['documentation'].doctdface==1">{{getAbsValue(report.data['documentation'].doctdface)}}&nbsp;minute&nbsp;</span>face-to-face time with the patient.</div>
+<div ng-if="report.data['documentation'].doctdprepare">Complete preparation of this entire report took me <span ng-if="report.data['documentation'].doctdprepare>1">{{getAbsValue(report.data['documentation'].doctdprepare)}}&nbsp;minutes.&nbsp;</span><span ng-if="report.data['documentation'].doctdprepare==1">{{getAbsValue(report.data['documentation'].doctdprepare)}}&nbsp;minute.</span></div>
+<!--End Documentation-->

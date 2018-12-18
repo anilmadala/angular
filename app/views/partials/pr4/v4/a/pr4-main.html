@@ -1,0 +1,94 @@
+﻿<div class="reportStandard" id="rptHtmlData" style="line-height: 20px;">
+
+	<div ng-init="loader_handler(true)">
+    </div>
+    <div ng-if="reportisLoad">
+         <div class="overlayBackground"></div>
+         <div class="overlayContent" style="top: 60%">
+             <img src="/images/spinner.gif"><span>&nbsp;&nbsp;Loading</span>
+         </div>
+    </div>
+    <div ng-show="!reportisLoad">
+	
+    <!--Include Header and Cover html-->
+    <div ng-include="'partials/pr4/v4/a/header-cover.html'" />
+    <!--Include Header and Cover html-->
+
+    <br />
+    <table>
+        <tbody></tbody>
+    </table>
+
+    <!--Include History of injury html-->
+    <div ng-include="'partials/pr4/v4/a/history-of-injury.html'" />
+    <!--Include History of injury html-->
+
+    <!--Include Subjective Complaints html-->
+    <div ng-include="'partials/pr4/v4/a/subjective-complaints.html'" />
+    <!--Include Subjective Complaints html-->
+
+    <!--Include ADL html-->
+    <div ng-include="'partials/pr4/v4/a/adl.html'" />
+    <!--Include ADL html-->
+
+    <!--Include Medical History html-->
+    <div ng-include="'partials/pr4/v4/a/medical-history.html'" />
+    <!--Include Medical History html-->
+
+    <!--Include Social History html-->
+    <div ng-include="'partials/pr4/v4/a/social-history.html'" />
+    <!--Include Social History html-->
+
+    <!--Include Objective Findings html-->
+    <div ng-include="'partials/pr4/v4/a/objective-findings.html'" />
+    <!--Include Objective Findings html-->
+
+    <!--Include DTR html-->
+    <div ng-include="'partials/pr4/v4/a/dtr.html'" />
+    <!--Include DTR html-->
+
+    <!--Include Diagnoses html-->
+    <div ng-include="'partials/pr4/v4/a/diagnoses.html'" />
+    <!--Include Diagnoses html-->
+
+    <!--Include Impairment Rating html-->
+    <div ng-include="'partials/pr4/v4/a/impairment-rating.html'" />
+    <!--Include Impairment Rating html-->
+
+    <!--Include Treatment html-->
+    <div ng-include="'partials/pr4/v4/a/treatment.html'" />
+    <!--Include Treatment html-->
+
+    <!--Include Pain Assesment and Apportionemnt html-->
+    <div ng-include="'partials/pr4/v4/a/pain-assesment-and-apportionment.html'" />
+    <!--Include Pain Assesment and Apportionemnt html-->
+
+    <!--Include Work restrictions html-->
+    <div ng-include="'partials/pr4/v4/a/work-status.html'" />
+    <!--Include Work restrictions html-->    
+
+    <!--Include Documentation html-->
+    <div ng-include="'partials/pr4/v4/a/documentation.html'" />
+    <!--Include Documentation html-->
+
+    <!--Include Signature html-->
+    <div ng-include="'partials/pr4/v4/a/signature.html'" />
+    <!--Include Signature html-->
+	
+	<!--Include Addendum html-->
+    <div ng-include="'partials/dfr/v4/a/addendum.html'" />  
+    <!--Include Addendum html-->
+	
+	<!--Include RFA html-->
+	<div ng-include="'partials/pr4/v4/a/rfa.html'" />
+	<!--Include RFA html-->
+
+	<!--Include Work status note html-->
+	<div ng-include="'partials/pr4/v4/common/workstatus-note.html'" />
+	<!--Include Work status note html-->
+	
+	</div>	
+	
+</div>
+
+

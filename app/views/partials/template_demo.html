@@ -1,0 +1,124 @@
+<div class="row" style="padding: 1%;" ng-form="bdpartform" ng-submit="addEntity()">
+    <button type="button" class="btn btn-default btn-sm" ng-click="addAnother()"><b>Injured Body System(s) :</b> </button>
+    &nbsp;&nbsp;&nbsp;
+    <img src="/images/add.png" style="height: 30px; cursor: pointer" ng-click="addAnother()" ng-show="AddanotherImage" />
+    <!-- <label>Accepted Body Parts :</label>-->
+    &nbsp;&nbsp;&nbsp;
+            <img src="/images/archive.png" style="cursor: pointer" ng-click="archiveAcceptedbodypartModal('acceptedbodyparts')" ng-show="injurydata.acceptedbodyparts.length > 0 && acceptedbodypartsUpdate" />
+    <br />
+    <div ng-hide="isLoad">
+        <div class="overlayBackground"></div>
+        <div class="overlayContent" style="top: 60%">
+            <img src="/images/spinner.gif"><span>&nbsp;&nbsp;Loading</span>
+        </div>
+    </div>
+     <!-- Shridhar Header fixed for the injury body parts -->
+	<div class="form-group col-sm-12 smoothscroll" style="width: 100%; margin-top:10px; margin-bottom:10px;bodder-bottom:2px solid #e8e8e8;">
+		<table style="width: 100%">
+			<thead>
+				<tr>
+					<th style="width: 20%">Body System</th>
+					<th style="width: 20%">Body Part</th>
+					<th style="width: 15%">Side</th>
+					<th style="width: 35%">Mechanism of injury</th>
+					<th style="width: 5%"></th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+    <!--  Ends here header fixed for the injury body parts -->
+    <!-- Scroll code updated id and style info date: 3-JAN-2016 by Manoj Gupta<manoj97738@gmail.com>  -->
+    <div class="form-group col-sm-12 smoothscroll" style="max-height:400px;overflow-y: scroll;" id="scroll">
+        <form name="frmSelectInjuries">
+			<table class="table table-striped" style="width: 100%"> 			
+				<tbody style="width: 100%;">
+					<tr ng-repeat="s in InjuriesDate[0].injurydata.acceptedbodyparts[0].injuredbodypart">
+						<td style="width: 20%">
+							<div>
+								<select ui-select2 ng-model="s.bodysystem" ng-change="changebodysystem(s.bodypart,s,$index)" name="bodysystem" style="width: 100%;" ng-required="true" ng-class="{'bodypartError' : !s.bodysystem.length}" required>
+									<option value="">- Body system -</option>
+									<option ng-repeat="item in bodysystem" value="{{item}}">{{item}}</option>
+								</select>
+							</div>
+							<br />
+							<!--<a popover="No special characters, other than space is allowed in name"
+									popover-trigger="mouseenter" class="btn" style="padding: 0px; font-size: 11px; color: red;">Naming
+									Rules
+								</a>-->
+							<input ng-pattern="/^[a-zA-Z ]+$/" type="text" name="txtOtherSystem" class="form-control input-min" ng-if="s.bodysystem=='Other'" ng-model="s.otherBodysystem" ng-blur="loadbdpartsides(s,s.otherBodyparts)" style="width: 100%;height: 27px;" ng-class="{'bodypartError' : !s.otherBodysystem.length}" required > 
+
+							<!--<div ng-if="s.bodysystem=='Other'">
+								<span class="errorMessage" ng-show="frmSelectInjuries.txtOtherSystem.$dirty && frmSelectInjuries.txtOtherSystem.$error.pattern">Note: You cannot give the “Other” body system a name containing special characters.</span>
+							 </div>-->
+						</td>
+
+						<td style="width: 20%">
+							<select ui-select2 ng-model="s.bodypart" ng-if="s.bodysystem" ng-disabled="s.bodysystem=='Other'" ng-change="changebodypart(s.bodypart,s)" style="width: 100%" ng-class="{'bodypartError' : !s.bodypart.length && s.bodysystem!='Other'}" required>
+								<option value="">-- Body part --</option>
+								<option ng-repeat="item in bodyparts|filter:s.bodysystem" ng-disabled="!item.selectable" ng-if="s.bodysystem!=item.text && item.text!=''" value="{{item}}">{{item.text}}</option>
+							</select>
+							 <br /><br />             
+							<input ng-pattern="/^[a-zA-Z ]+$/" type="text" name="txtOtherPart" class="form-control" ng-if="s.otherBodysystem" ng-blur="loadbdpartsides(s,s.otherBodyparts)" ng-model="s.otherBodyparts" style="width: 100%;height: 27px;" ng-class="{'bodypartError' : !s.otherBodyparts.length}" required />
+							
+							<!--<div ng-if="s.bodysystem=='Other'">
+								<span class="errorMessage" ng-show="frmSelectInjuries.txtOtherPart.$dirty && frmSelectInjuries.txtOtherPart.$error.pattern">Note: You cannot give the “Other” body part a name containing special characters.</span>
+							 </div>-->
+
+						</td>
+
+						<td style="width: 15%">
+							<select ui-select2 ng-model="s.bodypartsides" ng-hide="s.Hidebdpartsides" ng-if="s.bodypart || s.otherBodyparts" ng-change="changebodypart(s.bodypart,s)" style="width: 96px" ng-class="{'bodypartError' : !s.bodypartsides.length}" required>
+								<option value="">- Side -</option>
+								<option ng-repeat="item in sides[s.bodypart]" value="{{item}}">{{item}}</option>
+							</select>
+							 <br /><br />
+						</td>
+
+						<td style="width: 35%">
+							<select ui-select2 id="body_part_mechanism" ng-if="s.bodypartsides" ng-model="s.bodypart_mechanism" ng-change="changebodypartmechanism(s.bodypart_mechanism,s);s.otherbodypart_mechanismshowmodel=''" style="width: 100%;" ng-class="{'bodypartError' : !s.bodypart_mechanism.length && s.bodypart_mechanism!='Other'}" required>
+								<option value="">- Choose -</option>
+								<option value="Cumulative Sun Exposure" ng-if="s.bodysystem=='Skin'">Cumulative Sun Exposure</option>
+								<option value="Repetitive use">Repetitive use</option>
+								<option value="Lifting">Lifting</option>
+								<option value="Pushing">Pushing</option>
+								<option value="Pulling">Pulling</option>
+								<option value="Overhead Work">Overhead Work</option>
+								<option value="Fall from Height">Fall from Height</option>
+								<option value="Slip and Fall">Slip and Fall</option>
+								<option value="Motor Vehicle Accident">Motor Vehicle Accident</option>
+								<option value="Altercation">Altercation</option>
+								<option value="Laceration by Object">Laceration by Object</option>
+								<option value="Direct Strike Injury With Other Object">Direct Strike Injury With Other Object</option>
+								<option value="Exposure Toxic/Infectious">Exposure Toxic/Infectious</option>
+								<option value="Other">Other</option>
+							</select>
+							 <br /><br />
+							<input type="text" class="form-control" ng-if="s.bodypart_mechanism=='Other'" ng-model="s.otherbodypart_mechanismshowmodel" ng-change="checkOther(s.otherbodypart_mechanismshowmodel)" style="width: 100%;height: 27px;" ng-class="{'bodypartError' : !s.otherbodypart_mechanismshowmodel.length}"  /><!--no-special-char -->
+						</td>
+
+						<td style="width: 5%">
+							<button type="submit" class="btn btn-danger btn-sm" ng-click="deletebodypart($index)">
+								<span class="glyphicon glyphicon-remove"></span>									
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="5" style="background-color:#fff">
+							<div>
+								<span class="errorMessage" ng-show="frmSelectInjuries.txtOtherSystem.$dirty && frmSelectInjuries.txtOtherSystem.$error.pattern">Note: You cannot give the “Other” body system a name containing special characters.</span>
+							 </div>
+							 <div>
+								<span class="errorMessage" ng-show="frmSelectInjuries.txtOtherPart.$dirty && frmSelectInjuries.txtOtherPart.$error.pattern">Note: You cannot give the “Other” body part a name containing special characters.</span>
+							 </div>
+						</td>
+					</tr>	
+				</tbody>
+			</table>
+		</form>	
+    </div>
+</div>
+
+<div class="modal-footer">
+    <input type="submit" class="btn btn-primary" value="Save" ng-click="addEntity('injury.$.injurydata.acceptedbodyparts',injurydata.acceptedbodyparts[0])" />
+    <input type="button" class="btn btn-warning" value="Cancel" ng-click="close()" />
+</div>

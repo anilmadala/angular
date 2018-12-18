@@ -1,0 +1,237 @@
+<div class="bright">
+    <div class="container">
+        <div class="row">
+            <form class="form col-sm-8 col-sm-offset-1" name='myform' ng-init="step = 1" ng-hide="regMaindiv">
+                <div class="login-sign text-center" style="margin-bottom: 12px;">
+                    <h3>Welcome to RateFast!</h3>
+                    <a><span class="glyphicon glyphicon-user"></span></a>
+                </div>
+                <div ng-init="">
+                    <h3>Step 1</h3>
+                    <div ng-form='step1form' novalidate>
+                        <div class="form-group col-sm-2" ng-class="{ 'has-success': step1form.firstname.$valid && submitted,
+                                                    'has-error': step1form.firstname.$invalid && submitted }">
+                            First Name
+                            <input type="text" name="firstname" class="form-control" ng-model="practice.name"
+                                   placeholder="Name" required/>
+
+                            <p class="help-block" ng-show="step1form.firstname.$error.required && submitted">
+                                Name is required
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-2" ng-class="{ 'has-success': step1form.lastname.$valid && submitted,
+                                                    'has-error': step1form.lastname.$invalid && submitted }">
+                            Last Name
+                            <input type="text" name="lastname" class="form-control" ng-model="practice.name"
+                                   placeholder="Name" required/>
+
+                            <p class="help-block" ng-show="step1form.lastname.$error.required && submitted">
+                                Name is required
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-4 "
+                             ng-class="{ 'has-success': step1form.practicename.$valid && submitted, 'has-error': step1form.practicename.$invalid && submitted}">
+                            Practice Name
+                            <input type="text" name="practicename" class="form-control" ng-model="practice.practicename"
+                                   placeholder="Practice Name" ng-blur="UniquePracticeName(practice.practicename)"
+                                   required/>
+
+                            <p class="help-block" ng-show="step1form.practicename.$error.required && submitted">
+                                Practice name is required
+                            </p>
+
+                            <p class="help-block" ng-show="uniquePracticename">
+                                Practice name is already in use
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step1form.email.$valid && submitted,
+                                                    'has-error': step1form.email.$invalid && submitted }">
+                            Email
+                            <input type="email" name="email" class="form-control" ng-model="practice.email"
+                                   placeholder="Email" ng-blur="UniqueEmail(practice.email)" required/>
+
+                            <p class="help-block" ng-show="step1form.email.$error.required && submitted">
+                                Email is required
+                            </p>
+
+                            <p class="help-block" ng-show="step1form.email.$error.email && submitted">
+                                Doesn't look like a valid email.
+                            </p>
+
+                            <p class="help-block" ng-show="UniqueemailId">
+                                Email id is in use.
+                            </p>
+                        </div>
+                        <div style="clear:both;"></div>
+
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step1form.username.$valid && submitted,
+                                                    'has-error': step1form.username.$invalid && submitted }">
+                            Username
+                            <input type="text" name="username" class="form-control" ng-model="practice.username"
+                                   placeholder="User Name" ng-blur="UniqueUsername(practice.username)" required/>
+
+                            <p class="help-block" ng-show="step1form.username.$error.required && submitted">
+                                User name is required
+                            </p>
+
+                            <p class="help-block" ng-show="Uniqueuser">
+                                User name is already in use.
+                            </p>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            Password <a
+                                popover="Minimum 8 character with a capital letter,a special character and a number."
+                                popover-trigger="mouseenter" class="btn"
+                                style="padding:0px; font-size:11px; color:red;">Password Rules</a>
+                            <input type="password" class="form-control" ng-minlength=8
+                                   ng-pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/" name="password" required
+                                   ng-model="practice.password" placeholder="password">
+                            <span ng-show='step1form.password.$error.pattern'>Do not match with password rule.</span>
+                            <span ng-show='step1form.password.$error.minlength'>Enter Strong Password.</span>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            Confirm Password
+                            <input type="password" class="form-control" name="confirm_password" required
+                                   ng-model="practice.confirmpassword" ui-validate=" '$value==practice.password' "
+                                   ui-validate-watch=" 'practice.password' " placeholder="confirm password">
+                            <span ng-show='step1form.confirm_password.$error.validator'>Passwords do not match!</span>
+                        </div>
+
+
+                        <div class="form-group col-sm-12" ng-class="{ 'has-success': step1form.salesperson.$valid && submitted,
+                                                    'has-error': step1form.salesperson.$invalid && submitted }">
+                            <label>Did a field sales person introduced you to RateFast?</label><br/>
+
+                            <div class="col-sm-4">
+                                <input type="radio" name="salesperson" id="salesperson_yes" value="1"
+                                       ng-model="salesperson" required/>
+                                <label for="salesperson_yes">Yes</label>
+                                &nbsp;&nbsp;
+                                <input type="radio" name="salesperson" id="salesperson_no" value="0"
+                                       ng-model="salesperson" ng-click="salesperson_selected = ''" required/>
+                                <label for="salesperson_no">No</label>
+
+                                <p class="help-block" ng-show="step1form.salesperson.$error.required && submitted">
+                                    Salesperson is required
+                                </p>
+                            </div>
+                            <div ng-hide="salesperson != '1'" class="col-sm-4">
+                                <section data-ng-init="salespersonList()">
+                                    <select ng-model="practice.salesperson" name="salesperson_selected"
+                                            class="form-control" ng-required="salesperson == '1'">
+                                        <option value="" selected="selected">--Choose Salesperson--</option>
+                                        <option ng-repeat="salesperson in salespersons" value="{{salesperson._id}}">
+                                            {{salesperson.salesperson}}
+                                        </option>
+                                        <option value="Other">Other</option>
+                                    </select>
+
+                                    <p class="help-block has-error"
+                                       ng-show="step1form.salesperson_selected.$error.required && submitted">
+                                        Select atleast one from the dropdown.
+                                    </p>
+                                </section>
+
+                            </div>
+                            <div class="col-sm-4" ng-if="salesperson_selected == 'Other'" ng-hide="salesperson != '1'">
+                                <input type="text" name="other_salesperson" class="form-control"
+                                       ng-model="practice.other_salesperson" placeholder="Salesperson Name"
+                                       ng-required="salesperson_selected == 'Other'"/>
+
+                                <p class="help-block"
+                                   ng-show="step1form.other_salesperson.$error.required && submitted">
+                                    Specify the name of other salesperson.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label>Practice Address :</label>
+                            <a class="btn btn-md btn-primary" ng-click="addToAddress()">Add</a>
+                        </div>
+
+                        <br/>
+
+                        <div ng-repeat="p in practice.practiceaddress">
+
+                            <div class="form-group col-sm-4"
+                                 ng-class="{ 'has-success': step1form.StreetAddress.$valid && submitted, 'has-error': step1form.StreetAddress.$invalid && submitted }">
+                                Street Address
+                                <input type="text" name="StreetAddress" class="form-control" ng-model="p.StreetAddress"
+                                       placeholder="Street Address" maxLength="100" required/>
+
+                                <p class="help-block" ng-show="step1form.StreetAddress.$error.required && submitted">
+                                    Street Address is required.
+                                </p>
+                            </div>
+                            <div class="form-group col-sm-3"
+                                 ng-class="{ 'has-success': step1form.county.$valid && submitted, 'has-error': step1form.county.$invalid && submitted }">
+                                Country
+                                <input type="text" name="county" class="form-control" ng-model="p.county"
+                                       placeholder="County" maxLength="100" required/>
+
+                                <p class="help-block" ng-show="step1form.county.$error.required && submitted">
+                                    County is required.
+                                </p>
+                            </div>
+                            <div class="form-group col-sm-2"
+                                 ng-class="{ 'has-success': step1form.city.$valid && submitted, 'has-error': step1form.city.$invalid && submitted }">
+                                City
+                                <input type="text" name="city" class="form-control" ng-model="p.city" placeholder="City"
+                                       maxLength="100" required/>
+
+                                <p class="help-block" ng-show="step1form.city.$error.required && submitted">
+                                    City is required
+                                </p>
+                            </div>
+                            <div class="form-group col-sm-3"
+                                 ng-class="{ 'has-success': addressForm.state.$valid && submitted, 'has-error': step1form.state.$invalid && submitted }">
+                                State
+                                <section>
+                                    <select ng-model="p.state" name="state" class="form-control" required>
+                                        <option value="" selected="selected">-- Choose --</option>
+                                        <option ng-repeat="state in states" value="{{state.state}}">{{state.state}}
+                                        </option>
+                                    </select>
+                                </section>
+                                <p class="help-block" ng-show="addressForm.state.$error.required && submitted">
+                                    States is required.
+                                </p>
+                            </div>
+                            <div class="form-group col-sm-4"
+                                 ng-class="{ 'has-success': addressForm.zipcode.$valid && submitted, 'has-error': step1form.zipcode.$invalid && submitted }">
+                                Zip/Postal Code
+                                <input name="zipcode" class="form-control" ng-model="p.zipcode" placeholder="Zip/Postal Code"
+                                       minlength="5" maxlength="5" numbers-only="numbers-only" required/>
+
+                                <p class="help-block" ng-show="step1form.zipcode.$error.required && submitted">
+                                    Zip/Postal Code is required.
+                                </p>
+                            </div>
+                            <td>
+                                <select ng-model="p.country" name="country" class="form-control capitalize"
+                                        ng-change="changecountry(p.country)" required>
+                                    <option ng-repeat="c in countries" value="{{c.code}}" ng-model="p.country"
+                                            ng-selected="c.code=='US'">{{c.name}}
+                                    </option>
+                                </select>
+                            </td>
+                            <div class="form-group col-sm-4">
+                                <br>
+                                <a class="btn btn-md btn-primary" ng-hide="$index == 0" ng-click="removeAddress(p)">Remove</a>
+                            </div>
+                            <div class="col-sm-4">
+                                <br>
+
+                            </div>
+                            <div style="clear:both"></div>
+                        </div>
+
+                        <a ng-disabled="disable" ng-click="validateform1(step1form)"
+                           class="btn btn-md btn-primary">Next</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

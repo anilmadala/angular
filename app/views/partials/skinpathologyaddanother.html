@@ -1,0 +1,622 @@
+﻿<div ng-controller="SkinPathologyAddAnotherCtrl">
+    <div class="col-sm-12">
+        <label class="{{labelclass}}">{{label}}</label>
+        <button type="button" ng-click="addControl()" class="btn btn-default btn-circle btn-success">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+    <div ng-repeat="todo in todos.slice().reverse()" class="col-sm-12 checkbox" style="padding: 5px;">
+        <hr />
+        <input type="hidden" ng-model="todo.indexValue" ng-init="todo.indexValue = todos.length - ($index+1)" />
+        <div class="col-sm-12">
+            <div class="col-sm-3" style="margin-top: 7px; padding-left: 0;">
+                <label>Date of pathology report:</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="tel" ui-date="dateOptions" my-date ng-model="todo.dateOfPathology" class="form-control" placeholder="MM/DD/YYYY">
+            </div>
+            <div class="col-sm-1" style="margin-top: 7px;">
+                <button type="button" class="btn btn-info btn-xs" ng-click="clearbodypart($index+1,todos.length)">Clear</button>
+            </div>
+            <div class="col-sm-5" style="margin-top: 7px;">
+                <button type="button" class="btn btn-danger btn-xs" ng-click="deletebodypart($index+1,todos.length)">Delete</button>
+            </div>
+            <!------- Actinic keratosis ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.actinic" />
+                    &nbsp;Actinic keratosis</label>
+            </div>
+            <!------- Atopic dermatitis ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.atopic" />
+                    &nbsp;Atopic dermatitis</label>
+            </div>
+            <!------- Bullous disease ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.bullous" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].pemphigusvulgaris = false', '$scope.todos[{{todo.indexValue}}].pemphigoid = false', '$scope.todos[{{todo.indexValue}}].erythemamultiformebullosum = false', '$scope.todos[{{todo.indexValue}}].bullousimpetigo = false', '$scope.todos[{{todo.indexValue}}].bulloustexteditordata = \'\''])" />
+                    &nbsp;Bullous disease</label>
+            </div>
+            <div class="col-sm-12 margin-left-1" ng-if="todo.bullous">
+                <label>
+                    <input type="checkbox" ng-true-value="Pemphigus vulgaris" ng-model="todo.pemphigusvulgaris" />
+                    &nbsp;Pemphigus vulgaris</label><br />
+                <label>
+                    <input type="checkbox" ng-true-value="Pemphigoid" ng-model="todo.pemphigoid" />
+                    &nbsp;Pemphigoid</label><br />
+                <label>
+                    <input type="checkbox" ng-true-value="Erythema multiforme bullosum (Stevens-Johnson syndrome)" ng-model="todo.erythemamultiformebullosum" />
+                    &nbsp;Erythema multiforme bullosum (Stevens-Johnson syndrome)</label><br />
+                <label>
+                    <input type="checkbox" ng-true-value="Bullous impetigo" ng-model="todo.bullousimpetigo" />
+                    &nbsp;Bullous impetigo</label>
+                <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                    <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                </div>
+                <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.bulloustexteditordata"></span>
+                </div>
+                <div ng-if="isEdit" class="col-sm-12">
+                    <textarea ui-tinymce="tinymceOptions" ng-model="todo.bulloustexteditordata"></textarea>
+                </div>
+            </div>
+            <!------- Dermatofibroma ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.dermatofibroma" />
+                    &nbsp;Dermatofibroma</label>
+            </div>
+            <!------- Drug eruption ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.drug" />
+                    &nbsp;Drug eruption</label>
+            </div>
+            <!------- Dyshidrotic eczema ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.dyshidrotic" />
+                    &nbsp;Dyshidrotic eczema</label>
+            </div>
+            <!------- Epidermal inclusion cyst ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.epidermal" />
+                    &nbsp;Epidermal inclusion cyst</label>
+            </div>
+            <!------- Erythema multiforme ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.erythemamultiforme" />
+                    &nbsp;Erythema multiforme</label>
+            </div>
+            <!------- Erythema nodosum ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.erythemanodosum" />
+                    &nbsp;Erythema nodosum</label>
+            </div>
+            <!------- Folliculitis ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.folliculitis" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].bacterialfolliculitis = false', '$scope.todos[{{todo.indexValue}}].fungalfolliculitis = false', '$scope.todos[{{todo.indexValue}}].folliculitistexteditordata = \'\''])" />
+                    &nbsp;Folliculitis</label>
+            </div>
+            <div class="col-sm-12 margin-left-1" ng-if="todo.folliculitis">
+                <label>
+                    <input type="checkbox" ng-model="todo.bacterialfolliculitis" />
+                    &nbsp;Bacterial folliculitis</label><br />
+                <label>
+                    <input type="checkbox" ng-model="todo.fungalfolliculitis" />
+                    &nbsp;Fungal folliculitis</label>
+                <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                    <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                </div>
+                <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.folliculitistexteditordata"></span>
+                </div>
+                <div ng-if="isEdit" class="col-sm-12">
+                    <textarea ui-tinymce="tinymceOptions" ng-model="todo.folliculitistexteditordata"></textarea>
+                </div>
+            </div>
+            <!------- Granuloma annulare ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.granuloma" />
+                    &nbsp;Granuloma annulare</label>
+            </div>
+            <!------- Simple lentigo (non-cancerous) ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.simplelentigo" />
+                    &nbsp;Simple lentigo (non-cancerous)</label>
+            </div>
+            <!------- Lichen planus ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.lichenplanus" />
+                    &nbsp;Lichen planus</label>
+            </div>
+            <!------- Lichen simplex chronicus ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.lichensimplex" />
+                    &nbsp;Lichen simplex chronicus</label>
+            </div>
+            <!------- Lipoma ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.lipoma" />
+                    &nbsp;Lipoma</label>
+            </div>
+            <!------- Malignancy ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.malignancy" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].basalcellcancer = false', '$scope.todos[{{todo.indexValue}}].melanoma = false', '$scope.todos[{{todo.indexValue}}].squamouscarcinoma = false', '$scope.todos[{{todo.indexValue}}].squamousneurotropic = false', '$scope.todos[{{todo.indexValue}}].squamoussitu = false', '$scope.todos[{{todo.indexValue}}].malignancytexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].basalcellcancertexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].acrallentiginous = false', '$scope.todos[{{todo.indexValue}}].amelanoticmelanoma = false', '$scope.todos[{{todo.indexValue}}].lentigomalignasitu = false', '$scope.todos[{{todo.indexValue}}].mucosal = false', '$scope.todos[{{todo.indexValue}}].neurotropicdesmoplastic = false', '$scope.todos[{{todo.indexValue}}].nodular = false', '$scope.todos[{{todo.indexValue}}].superficial = false', '$scope.todos[{{todo.indexValue}}].acrallentiginousradioopts = false', '$scope.todos[{{todo.indexValue}}].acrallentiginousopts = \'\'', '$scope.todos[{{todo.indexValue}}].acrallentiginoustexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].amelanoticmelanomaradioopts = false', '$scope.todos[{{todo.indexValue}}].amelanoticmelanomaopts = \'\'', '$scope.todos[{{todo.indexValue}}].amelanoticmelanomatexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].lentigomalignasituradioopts = false', '$scope.todos[{{todo.indexValue}}].lentigomalignasituopts = \'\'', '$scope.todos[{{todo.indexValue}}].lentigomalignasitutexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].mucosalradioopts = false', '$scope.todos[{{todo.indexValue}}].mucosalopts = \'\'', '$scope.todos[{{todo.indexValue}}].mucosaltexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].neurotropicdesmoplasticradioopts = false', '$scope.todos[{{todo.indexValue}}]neurotropicdesmoplasticopts = \'\'', '$scope.todos[{{todo.indexValue}}].neurotropicdesmoplastictexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].nodularradioopts = false', '$scope.todos[{{todo.indexValue}}].nodularopts = \'\'', '$scope.todos[{{todo.indexValue}}].nodulartexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].superficialradioopts = false', '$scope.todos[{{todo.indexValue}}].superficialopts = \'\'', '$scope.todos[{{todo.indexValue}}].superficialtexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].squamouscarcinomaradioopts = false', '$scope.todos[{{todo.indexValue}}].squamouscarcinomaopts = \'\'', '$scope.todos[{{todo.indexValue}}].squamouscarcinomatexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].squamousneurotropicradioopts = false', '$scope.todos[{{todo.indexValue}}].squamousneurotropicopts = \'\'', '$scope.todos[{{todo.indexValue}}].squamousneurotropictexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].squamoussitutexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].malignancytexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].squamouscarcinomaradioopts = false', '$scope.todos[{{todo.indexValue}}].squamouscarcinomaopts = \'\'', '$scope.todos[{{todo.indexValue}}].squamouscarcinomatexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].squamousneurotropicradioopts = false', '$scope.todos[{{todo.indexValue}}].squamousneurotropicopts = \'\'', '$scope.todos[{{todo.indexValue}}].squamousneurotropictexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].squamoussitutexteditordata = \'\''])" />
+                    &nbsp;Malignancy</label>
+            </div>
+            <div class="col-sm-12 margin-left-1" ng-if="todo.malignancy">
+                <div class="col-sm-12">
+                    <label>
+                        <input type="checkbox" ng-model="todo.basalcellcancer" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].basalcellcancertexteditordata = \'\''])" />
+                        &nbsp;Basal cell cancer</label>
+                </div>
+                <div class="col-sm-12" ng-if="todo.basalcellcancer">
+                    <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                        <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                    </div>
+                    <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                        <span ng-bind-html="todo.basalcellcancertexteditordata"></span>
+                    </div>
+                    <div ng-if="isEdit" class="col-sm-12">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="todo.basalcellcancertexteditordata"></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label>
+                        <input type="checkbox" ng-model="todo.melanoma" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].acrallentiginous = false', '$scope.todos[{{todo.indexValue}}].amelanoticmelanoma = false', '$scope.todos[{{todo.indexValue}}].lentigomalignasitu = false', '$scope.todos[{{todo.indexValue}}].mucosal = false', '$scope.todos[{{todo.indexValue}}].neurotropicdesmoplastic = false', '$scope.todos[{{todo.indexValue}}].nodular = false', '$scope.todos[{{todo.indexValue}}].superficial = false', '$scope.todos[{{todo.indexValue}}].acrallentiginousradioopts = false', '$scope.todos[{{todo.indexValue}}].acrallentiginousopts = \'\'', '$scope.todos[{{todo.indexValue}}].acrallentiginoustexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].amelanoticmelanomaradioopts = false', '$scope.todos[{{todo.indexValue}}].amelanoticmelanomaopts = \'\'', '$scope.todos[{{todo.indexValue}}].amelanoticmelanomatexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].lentigomalignasituradioopts = false', '$scope.todos[{{todo.indexValue}}].lentigomalignasituopts = \'\'', '$scope.todos[{{todo.indexValue}}].lentigomalignasitutexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].mucosalradioopts = false', '$scope.todos[{{todo.indexValue}}].mucosalopts = \'\'', '$scope.todos[{{todo.indexValue}}].mucosaltexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].neurotropicdesmoplasticradioopts = false', '$scope.todos[{{todo.indexValue}}]neurotropicdesmoplasticopts = \'\'', '$scope.todos[{{todo.indexValue}}].neurotropicdesmoplastictexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].nodularradioopts = false', '$scope.todos[{{todo.indexValue}}].nodularopts = \'\'', '$scope.todos[{{todo.indexValue}}].nodulartexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].superficialradioopts = false', '$scope.todos[{{todo.indexValue}}].superficialopts = \'\'', '$scope.todos[{{todo.indexValue}}].superficialtexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].squamouscarcinomaradioopts = false', '$scope.todos[{{todo.indexValue}}].squamouscarcinomaopts = \'\'', '$scope.todos[{{todo.indexValue}}].squamouscarcinomatexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].squamousneurotropicradioopts = false', '$scope.todos[{{todo.indexValue}}].squamousneurotropicopts = \'\'', '$scope.todos[{{todo.indexValue}}].squamousneurotropictexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].squamoussitutexteditordata = \'\'', '$scope.todos[{{todo.indexValue}}].malignancytexteditordata = \'\''])" />
+                        &nbsp;Melanoma</label>
+                </div>
+                <div class="col-sm-12 margin-left-1" ng-if="todo.melanoma">
+                    <div class="col-sm-12">
+                        <label>
+                            <input type="checkbox" ng-model="todo.acrallentiginous" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].acrallentiginousradioopts = false', '$scope.todos[{{todo.indexValue}}].acrallentiginousopts = \'\'', '$scope.todos[{{todo.indexValue}}].acrallentiginoustexteditordata = \'\''])" />
+                            &nbsp;Acral lentiginous melanoma</label>
+                    </div>
+                    <div class="col-sm-12 margin-left-1" ng-if="todo.acrallentiginous">
+                        <label class="col-sm-2 margin-top-5" style="padding-left: 0;">Depth (mm)</label>
+                        <select ng-model="todo.acrallentiginousopts" class="form-control" style="width: 150px;">
+                            <option value="">Choose</option>
+                            <option>Less than 1.0</option>
+                            <option>1.0-1.9</option>
+                            <option>2.0-2.9</option>
+                            <option>3.0-3.9</option>
+                            <option>4.0</option>
+                            <option>Greater than 4</option>
+                        </select>
+                        <label>
+                            <input type="radio" value="Metastatic" ng-model="todo.acrallentiginousradioopts" />&nbsp;Metastatic</label>
+                        <label>
+                            <input type="radio" value="NonMetastatic" ng-model="todo.acrallentiginousradioopts" />&nbsp;Non-metastatic</label>
+                        <br />
+                        <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                            <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                        </div>
+                        <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                            <span ng-bind-html="todo.acrallentiginoustexteditordata"></span>
+                        </div>
+                        <div ng-if="isEdit" class="col-sm-12">
+                            <textarea ui-tinymce="tinymceOptions" ng-model="todo.acrallentiginoustexteditordata"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label>
+                            <input type="checkbox" ng-model="todo.amelanoticmelanoma" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].amelanoticmelanomaradioopts = false', '$scope.todos[{{todo.indexValue}}].amelanoticmelanomaopts = \'\'', '$scope.todos[{{todo.indexValue}}].amelanoticmelanomatexteditordata = \'\''])" />
+                            &nbsp;Amelanotic melanoma</label>
+                    </div>
+                    <div class="col-sm-12 margin-left-1" ng-if="todo.amelanoticmelanoma">
+                        <label class="col-sm-2 margin-top-5" style="padding-left: 0;">Depth (mm)</label>
+                        <select ng-model="todo.amelanoticmelanomaopts" class="form-control" style="width: 150px;">
+                            <option value="">Choose</option>
+                            <option>Less than 1.0</option>
+                            <option>1.0-1.9</option>
+                            <option>2.0-2.9</option>
+                            <option>3.0-3.9</option>
+                            <option>4.0</option>
+                            <option>Greater than 4</option>
+                        </select>
+                        <label>
+                            <input type="radio" value="Metastatic" ng-model="todo.amelanoticmelanomaradioopts" />&nbsp;Metastatic</label>
+                        <label>
+                            <input type="radio" value="NonMetastatic" ng-model="todo.amelanoticmelanomaradioopts" />&nbsp;Non-metastatic</label>
+                        <br />
+                        <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                            <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                        </div>
+                        <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                            <span ng-bind-html="todo.amelanoticmelanomatexteditordata"></span>
+                        </div>
+                        <div ng-if="isEdit" class="col-sm-12">
+                            <textarea ui-tinymce="tinymceOptions" ng-model="todo.amelanoticmelanomatexteditordata"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label>
+                            <input type="checkbox" ng-model="todo.lentigomalignasitu" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].lentigomalignasituradioopts = false', '$scope.todos[{{todo.indexValue}}].lentigomalignasituopts = \'\'', '$scope.todos[{{todo.indexValue}}].lentigomalignasitutexteditordata = \'\''])" />
+                            &nbsp;Lentigo maligna/melanoma in situ</label>
+                    </div>
+                    <div class="col-sm-12 margin-left-1" ng-if="todo.lentigomalignasitu">
+                        <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                            <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                        </div>
+                        <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                            <span ng-bind-html="todo.lentigomalignasitutexteditordata"></span>
+                        </div>
+                        <div ng-if="isEdit" class="col-sm-12">
+                            <textarea ui-tinymce="tinymceOptions" ng-model="todo.lentigomalignasitutexteditordata"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label>
+                            <input type="checkbox" ng-model="todo.mucosal" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].mucosalradioopts = false', '$scope.todos[{{todo.indexValue}}].mucosalopts = \'\'', '$scope.todos[{{todo.indexValue}}].mucosaltexteditordata = \'\''])" />
+                            &nbsp;Mucosal melanoma</label>
+                    </div>
+                    <div class="col-sm-12 margin-left-1" ng-if="todo.mucosal">
+                        <label class="col-sm-2 margin-top-5" style="padding-left: 0;">Depth (mm)</label>
+                        <select ng-model="todo.mucosalopts" class="form-control" style="width: 150px;">
+                            <option value="">Choose</option>
+                            <option>Less than 1.0</option>
+                            <option>1.0-1.9</option>
+                            <option>2.0-2.9</option>
+                            <option>3.0-3.9</option>
+                            <option>4.0</option>
+                            <option>Greater than 4</option>
+                        </select>
+                        <label>
+                            <input type="radio" value="Metastatic" ng-model="todo.mucosalradioopts" />&nbsp;Metastatic</label>
+                        <label>
+                            <input type="radio" value="NonMetastatic" ng-model="todo.mucosalradioopts" />&nbsp;Non-metastatic</label>
+                        <br />
+                        <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                            <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                        </div>
+                        <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                            <span ng-bind-html="todo.mucosaltexteditordata"></span>
+                        </div>
+                        <div ng-if="isEdit" class="col-sm-12">
+                            <textarea ui-tinymce="tinymceOptions" ng-model="todo.mucosaltexteditordata"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label>
+                            <input type="checkbox" ng-model="todo.neurotropicdesmoplastic" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].neurotropicdesmoplasticradioopts = false', '$scope.todos[{{todo.indexValue}}].neurotropicdesmoplasticopts = \'\'', '$scope.todos[{{todo.indexValue}}].neurotropicdesmoplastictexteditordata = \'\''])" />
+                            &nbsp;Neurotropic and desmoplastic melanoma</label>
+                    </div>
+                    <div class="col-sm-12 margin-left-1" ng-if="todo.neurotropicdesmoplastic">
+                        <label class="col-sm-2 margin-top-5" style="padding-left: 0;">Depth (mm)</label>
+                        <select ng-model="todo.neurotropicdesmoplasticopts" class="form-control" style="width: 150px;">
+                            <option value="">Choose</option>
+                            <option>Less than 1.0</option>
+                            <option>1.0-1.9</option>
+                            <option>2.0-2.9</option>
+                            <option>3.0-3.9</option>
+                            <option>4.0</option>
+                            <option>Greater than 4</option>
+                        </select>
+                        <label>
+                            <input type="radio" value="Metastatic" ng-model="todo.neurotropicdesmoplasticradioopts" />&nbsp;Metastatic</label>
+                        <label>
+                            <input type="radio" value="NonMetastatic" ng-model="todo.neurotropicdesmoplasticradioopts" />&nbsp;Non-metastatic</label>
+                        <br />
+                        <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                            <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                        </div>
+                        <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                            <span ng-bind-html="todo.neurotropicdesmoplastictexteditordata"></span>
+                        </div>
+                        <div ng-if="isEdit" class="col-sm-12">
+                            <textarea ui-tinymce="tinymceOptions" ng-model="todo.neurotropicdesmoplastictexteditordata"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label>
+                            <input type="checkbox" ng-model="todo.nodular" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].nodularradioopts = false', '$scope.todos[{{todo.indexValue}}].nodularopts = \'\'', '$scope.todos[{{todo.indexValue}}].nodulartexteditordata = \'\''])" />
+                            &nbsp;Nodular melanoma</label>
+                    </div>
+                    <div class="col-sm-12 margin-left-1" ng-if="todo.nodular">
+                        <label class="col-sm-2 margin-top-5" style="padding-left: 0;">Depth (mm)</label>
+                        <select ng-model="todo.nodularopts" class="form-control" style="width: 150px;">
+                            <option value="">Choose</option>
+                            <option>Less than 1.0</option>
+                            <option>1.0-1.9</option>
+                            <option>2.0-2.9</option>
+                            <option>3.0-3.9</option>
+                            <option>4.0</option>
+                            <option>Greater than 4</option>
+                        </select>
+                        <label>
+                            <input type="radio" value="Metastatic" ng-model="todo.nodularradioopts" />&nbsp;Metastatic</label>
+                        <label>
+                            <input type="radio" value="NonMetastatic" ng-model="todo.nodularradioopts" />&nbsp;Non-metastatic</label>
+                        <br />
+                        <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                            <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                        </div>
+                        <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                            <span ng-bind-html="todo.nodulartexteditordata"></span>
+                        </div>
+                        <div ng-if="isEdit" class="col-sm-12">
+                            <textarea ui-tinymce="tinymceOptions" ng-model="todo.nodulartexteditordata"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label>
+                            <input type="checkbox" ng-model="todo.superficial" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].superficialradioopts = false', '$scope.todos[{{todo.indexValue}}].superficialopts = \'\'', '$scope.todos[{{todo.indexValue}}].superficialtexteditordata = \'\''])" />
+                            &nbsp;Superficial spreading melanoma</label>
+                    </div>
+                    <div class="col-sm-12 margin-left-1" ng-if="todo.superficial">
+                        <label class="col-sm-2 margin-top-5" style="padding-left: 0;">Depth (mm)</label>
+                        <select ng-model="todo.superficialopts" class="form-control" style="width: 150px;">
+                            <option value="">Choose</option>
+                            <option>Less than 1.0</option>
+                            <option>1.0-1.9</option>
+                            <option>2.0-2.9</option>
+                            <option>3.0-3.9</option>
+                            <option>4.0</option>
+                            <option>Greater than 4</option>
+                        </select>
+                        <label>
+                            <input type="radio" value="Metastatic" ng-model="todo.superficialradioopts" />&nbsp;Metastatic</label>
+                        <label>
+                            <input type="radio" value="NonMetastatic" ng-model="todo.superficialradioopts" />&nbsp;Non-metastatic</label>
+                        <br />
+                        <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                            <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                        </div>
+                        <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                            <span ng-bind-html="todo.superficialtexteditordata"></span>
+                        </div>
+                        <div ng-if="isEdit" class="col-sm-12">
+                            <textarea ui-tinymce="tinymceOptions" ng-model="todo.superficialtexteditordata"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label>
+                        <input type="checkbox" ng-model="todo.squamouscarcinoma" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].squamouscarcinomaradioopts = false', '$scope.todos[{{todo.indexValue}}].squamouscarcinomaopts = \'\'', '$scope.todos[{{todo.indexValue}}].squamouscarcinomatexteditordata = \'\''])" />
+                        &nbsp;Squamous cell carcinoma</label>
+                </div>
+                <div class="col-sm-12 margin-left-1" ng-if="todo.squamouscarcinoma">
+                    <label class="col-sm-2 margin-top-5" style="padding-left: 0;">Depth (mm)</label>
+                    <select ng-model="todo.squamouscarcinomaopts" class="form-control" style="width: 150px;">
+                        <option value="">Choose</option>
+                        <option>Less than 1.0</option>
+                        <option>1.0-1.9</option>
+                        <option>2.0-2.9</option>
+                        <option>3.0-3.9</option>
+                        <option>4.0</option>
+                        <option>Greater than 4</option>
+                    </select>
+                    <label>
+                        <input type="radio" value="Metastatic" ng-model="todo.squamouscarcinomaradioopts" />&nbsp;Metastatic</label>
+                    <label>
+                        <input type="radio" value="NonMetastatic" ng-model="todo.squamouscarcinomaradioopts" />&nbsp;Non-metastatic</label>
+                    <br />
+                    <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                        <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                    </div>
+                    <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                        <span ng-bind-html="todo.squamouscarcinomatexteditordata"></span>
+                    </div>
+                    <div ng-if="isEdit" class="col-sm-12">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="todo.squamouscarcinomatexteditordata"></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label>
+                        <input type="checkbox" ng-model="todo.squamousneurotropic" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].squamousneurotropicradioopts = false', '$scope.todos[{{todo.indexValue}}].squamousneurotropicopts = \'\'', '$scope.todos[{{todo.indexValue}}].squamousneurotropictexteditordata = \'\''])" />
+                        &nbsp;Squamous cell carcinoma neurotropic</label>
+                </div>
+                <div class="col-sm-12 margin-left-1" ng-if="todo.squamousneurotropic">
+                    <label class="col-sm-2 margin-top-5" style="padding-left: 0;">Depth (mm)</label>
+                    <select ng-model="todo.squamousneurotropicopts" class="form-control" style="width: 150px;">
+                        <option value="">Choose</option>
+                        <option>Less than 1.0</option>
+                        <option>1.0-1.9</option>
+                        <option>2.0-2.9</option>
+                        <option>3.0-3.9</option>
+                        <option>4.0</option>
+                        <option>Greater than 4</option>
+                    </select>
+                    <label>
+                        <input type="radio" value="Metastatic" ng-model="todo.squamousneurotropicradioopts" />&nbsp;Metastatic</label>
+                    <label>
+                        <input type="radio" value="NonMetastatic" ng-model="todo.squamousneurotropicradioopts" />&nbsp;Non-metastatic</label>
+                    <br />
+                    <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                        <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                    </div>
+                    <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                        <span ng-bind-html="todo.squamousneurotropictexteditordata"></span>
+                    </div>
+                    <div ng-if="isEdit" class="col-sm-12">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="todo.squamousneurotropictexteditordata"></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label>
+                        <input type="checkbox" ng-model="todo.squamoussitu" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].squamoussitutexteditordata = \'\''])" />
+                        &nbsp;Squamous cell carcinoma in situ</label>
+                </div>
+                <div class="col-sm-12 margin-left-1" ng-if="todo.squamoussitu">
+                    <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                        <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                    </div>
+                    <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                        <span ng-bind-html="todo.squamoussitutexteditordata"></span>
+                    </div>
+                    <div ng-if="isEdit" class="col-sm-12">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="todo.squamoussitutexteditordata"></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                        <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                    </div>
+                    <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                        <span ng-bind-html="todo.malignancytexteditordata"></span>
+                    </div>
+                    <div ng-if="isEdit" class="col-sm-12">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="todo.malignancytexteditordata"></textarea>
+                    </div>
+                </div>
+            </div>
+            <!------- Mycosis fungoides ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.mycosisfungoides" />
+                    &nbsp;Mycosis fungoides</label>
+            </div>
+
+            <!------- Necrobiosis lipoidica diabeticorum ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.necrobiosis" />
+                    &nbsp;Necrobiosis lipoidica diabeticorum</label>
+            </div>
+            <!------- Nevi ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.nevi" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].junctional = false', '$scope.todos[{{todo.indexValue}}].compound = false', '$scope.todos[{{todo.indexValue}}].intradermal = false', '$scope.todos[{{todo.indexValue}}].dysplastic = false'])" />
+                    &nbsp;Nevi</label>
+
+            </div>
+            <div class="col-sm-12 margin-left-1" ng-if="todo.nevi">
+                <label>
+                    <input type="checkbox" ng-true-value="Junctional" ng-model="todo.junctional" />
+                    &nbsp;Junctional</label><br />
+                <label>
+                    <input type="checkbox" ng-true-value="Compound" ng-model="todo.compound" />
+                    &nbsp;Compound</label><br />
+                <label>
+                    <input type="checkbox" ng-true-value="Intradermal" ng-model="todo.intradermal" />
+                    &nbsp;Intradermal</label><br />
+                <label>
+                    <input type="checkbox" ng-true-value="Dysplastic" ng-model="todo.dysplastic" />
+                    &nbsp;Dysplastic</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.nevi">
+                <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                    <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                </div>
+                <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.nevitexteditordata"></span>
+                </div>
+                <div ng-if="isEdit" class="col-sm-12">
+                    <textarea ui-tinymce="tinymceOptions" ng-model="todo.nevitexteditordata"></textarea>
+                </div>
+            </div>
+            <!------- Psoriasis ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.psoriasis" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].psoriasistexteditordata = \'\''])" />
+                    &nbsp;Psoriasis</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.psoriasis">
+                <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                    <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                </div>
+                <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.psoriasistexteditordata"></span>
+                </div>
+                <div ng-if="isEdit" class="col-sm-12">
+                    <textarea ui-tinymce="tinymceOptions" ng-model="todo.psoriasistexteditordata"></textarea>
+                </div>
+            </div>
+            <!------- Pyogenic granuloma ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.pyogenic" />
+                    &nbsp;Pyogenic granuloma</label>
+            </div>
+            <!------- Scabies ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.scabies" />
+                    &nbsp;Scabies</label>
+            </div>
+            <!------- Seborrheic dermatitis ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.seborrheicdermatitis" />
+                    &nbsp;Seborrheic dermatitis</label>
+            </div>
+            <!------- Seborrheic keratosis ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.seborrheic" />
+                    &nbsp;Seborrheic keratosis</label>
+            </div>
+            <!------- Stasis dermatitis ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.stasis" />
+                    &nbsp;Stasis dermatitis</label>
+            </div>
+            <!------- Tinea ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.tinea" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].tineatexteditordata = \'\''])" />
+                    &nbsp;Tinea</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.tinea">
+                <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                    <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                </div>
+                <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.tineatexteditordata"></span>
+                </div>
+                <div ng-if="isEdit" class="col-sm-12">
+                    test
+                    <textarea ui-tinymce="tinymceOptions" ng-model="todo.tineatexteditordata"></textarea>
+                </div>
+            </div>
+            <!------- Vasculitis ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.vasculitis" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].vasculitistexteditordata = \'\''])" />
+                    &nbsp;Vasculitis</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.vasculitis">
+                <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                    <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                </div>
+                <div ng-hide="isEdit" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.vasculitistexteditordata"></span>
+                </div>
+                <div ng-if="isEdit" class="col-sm-12">
+                    <textarea ui-tinymce="tinymceOptions" ng-model="todo.vasculitistexteditordata"></textarea>
+                </div>
+            </div>
+            <!------- Verruca vulgaris (wart) ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.verruca" />
+                    &nbsp;Verruca vulgaris (wart)</label>
+            </div>
+            <!------- Text ------->
+            <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                <button type="button" class="btn btn-info btn-xs" ng-click="showmainText=true">Text</button>
+            </div>
+            <div ng-hide="showmainText" class="col-sm-12 textEditorTextColor">
+                <span ng-bind-html="todo.maintexteditordata"></span>
+            </div>
+            <div ng-if="showmainText" class="col-sm-12">
+                <textarea ui-tinymce="tinymceOptions" ng-model="todo.maintexteditordata"></textarea>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>

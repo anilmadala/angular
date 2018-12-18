@@ -1,0 +1,77 @@
+<label>Prior Injury - </label> <label ng-bind="bodypartname.bodysystem == 'Other' ? bodypartname.bdsystemother : bodypartname.bodysystem | capitalize"></label> - <label ng-bind="bodypartname.text == 'Other' ? bodypartname.bdpartother : bodypartname.text | capitalize"></label><label ng-if="bodypartname.bdsides && (bodypartname.bdsides != 'none' && bodypartname.bdsides != 'n/a')"> - {{bodypartname.bdsides | capitalize}}</label>
+<button type="button" ng-click="addTodos()" class="btn btn-default btn-circle btn-success">
+  <span class="glyphicon glyphicon-plus"></span>
+</button>
+<div ng-repeat="todo in todos.slice().reverse()" class="col-sm-12 addAnotherBottomBorder" style="padding: 5px;">
+    <input type="hidden" ng-model="todo.indexValue" ng-init="todo.indexValue = todos.length - ($index+1)" />
+    <div class="col-sm-12">
+        <div class="col-sm-3 checkbox">
+            <label>Date of prior injury: </label>
+        </div>
+        <div class="col-sm-3">
+            <input type="tel" ui-date="dateOptions" my-date ng-model="todo.dateOfPriorInjury" class="form-control" placeholder="MM/DD/YYYY">
+        </div>
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-info btn-xs" ng-click="clearbodypart($index+1,todos.length)"> Clear</button>
+        </div>
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-danger btn-xs" ng-click="deletebodypart($index+1,todos.length)"> Delete</button>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="col-sm-12 checkbox">
+            <br />
+            <label>Do you have residual problems?</label>
+        </div>
+        <div class="col-sm-12 checkbox">
+            <label><input type="radio" ng-model="todo.residualProblemsRadio" value="No" ng-click="todo.residualProblemsBaseline='0'"/>&nbsp;No</label>
+            <label><input type="radio" ng-model="todo.residualProblemsRadio" value="Yes" />&nbsp;Yes</label>
+        </div>
+        <div class="col-sm-12" ng-if="todo.residualProblemsRadio == 'Yes'">
+            <div class="col-sm-12 checkbox">
+                <label>
+                    Select baseline pain prior to the current injury on a scale from 0 (no pain) to 10 (most severe pain)
+                    </label>
+            </div>
+            <br />
+            <div class="col-sm-2">
+                <select ng-model="todo.residualProblemsBaseline" class="form-control" >
+                    <option ng-repeat="n in [0,1,2,3,4,5,6,7,8,9,10]">{{n}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 checkbox">
+        <div class="col-sm-12">
+            <label>Prior Surgery History</label>
+        </div>
+        <div class="col-sm-12 checkbox">
+            <label><input type="radio" ng-model="todo.priorSurgeryHistoryRadio" value="No" ng-click="todo.priorSurgeryHistoryText = ''"/>&nbsp;No</label>
+            <label><input type="radio" ng-model="todo.priorSurgeryHistoryRadio" value="Yes" />&nbsp;Yes</label>
+        </div>
+        <div class="col-sm-12" ng-if="todo.priorSurgeryHistoryRadio == 'Yes'">
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-info btn-xs" ng-click="showeditor=true">
+                    Text
+                </button>
+            </div>
+            <div ng-hide="showeditor"><span dynamic="todo.priorSurgeryHistoryText" class="textEditorTextColor col-sm-10"></span></div>
+            <div class="col-sm-10" ng-if="showeditor">
+                <textarea ui-tinymce="tinymceOptions" ng-model="todo.priorSurgeryHistoryText"></textarea>
+            </div>
+        </div>
+        <div class="col-sm-12  checkbox">
+            <br />
+            <label>Free Data Entry:</label>
+            <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">
+                Text
+            </button>
+            <div ng-hide="isEdit"><span dynamic="todo.TextA" class="textEditorTextColor col-sm-10"></span></div>
+            <div class="col-sm-10" ng-if="isEdit">
+                <textarea ui-tinymce="tinymceOptions" ng-model="todo.TextA"></textarea>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>
+

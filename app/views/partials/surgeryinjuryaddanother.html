@@ -1,0 +1,42 @@
+<div ng-controller="SurgeryInjuryAddAnotherCtrl">
+    <label>Surgery for this injury - </label>
+    <label ng-bind="bodypartname.bodysystem == 'Other' ? bodypartname.bdsystemother : bodypartname.bodysystem | capitalize"></label>
+    -
+    <label ng-bind="bodypartname.text == 'Other' ? bodypartname.bdpartother : bodypartname.text | capitalize"></label>
+    <label ng-if="bodypartname.bdsides && (bodypartname.bdsides != 'none' && bodypartname.bdsides != 'n/a')">- {{bodypartname.bdsides | capitalize}}</label>
+    <button type="button" ng-click="addTodos()" class="btn btn-default btn-circle btn-success">
+        <span class="glyphicon glyphicon-plus"></span>
+    </button>
+    <div ng-repeat="todo in todos.slice().reverse()" class="col-sm-12 addAnotherBottomBorder" style="padding: 5px;">
+        <input type="hidden" ng-model="todo.indexValue" ng-init="todo.indexValue = todos.length - ($index+1)" />
+        <div class="col-sm-12">
+            <div class="col-sm-3 checkbox">
+                <label>Date of Surgery: </label>
+            </div>
+            <div class="col-sm-3">
+                <input type="tel" ui-date="dateOptions" my-date ng-model="todo.dateOfSurgery" class="form-control" placeholder="MM/DD/YYYY">
+            </div>
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-info btn-xs" ng-click="clearbodypart($index+1,todos.length)">Clear</button>
+            </div>
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-danger btn-xs" ng-click="deletebodypart($index+1,todos.length)">Delete</button>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="col-sm-10 checkbox">
+                <label>
+                    <br />
+                    Surgeon Name and Procedure: </label>
+                    <button type="button" class="btn btn-info btn-xs" ng-click="surgeonNameShow=true">Text</button>
+            </div>
+        </div>
+        <div class="col-sm-12" >
+            <div ng-hide="surgeonNameShow"><span dynamic="todo.surgeonName" class="textEditorTextColor col-sm-12"></span></div>
+                        
+            <div class="col-sm-10" ng-if="surgeonNameShow">
+                <textarea ui-tinymce="tinymceOptions" ng-model="todo.surgeonName"></textarea>
+            </div>
+        </div>
+    </div>
+</div>

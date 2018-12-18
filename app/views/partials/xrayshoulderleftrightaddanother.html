@@ -1,0 +1,198 @@
+<div ng-controller="XrayShoulderLeftRightAddAnotherCtrl">
+    <div class="col-sm-12">
+        <label class="{{labelclass}}">{{label}}</label>
+        <button type="button" ng-click="addControl()" class="btn btn-default btn-circle btn-success">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+    <div ng-repeat="todo in todos.slice().reverse()" class="col-sm-12 checkbox addAnotherBottomBorder" style="padding: 5px;">
+        <input type="hidden" ng-model="todo.indexValue" ng-init="todo.indexValue = todos.length - ($index+1)" />
+        <div class="col-sm-12">
+            <div class="col-sm-1" style="margin-top: 7px; padding-left: 0;">
+                <label>Date:</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="tel" ui-date="dateOptions" my-date ng-model="todo.dateOfSurgery" class="form-control" placeholder="MM/DD/YYYY">
+            </div>
+            <div class="col-sm-1" style="margin-top: 7px;">
+                <button type="button" class="btn btn-info btn-xs" ng-click="clearbodypart($index+1,todos.length)">Clear</button>
+            </div>
+            <div class="col-sm-6" style="margin-top: 7px;">
+                <button type="button" class="btn btn-danger btn-xs" ng-click="deletebodypart($index+1,todos.length)">Delete</button>
+            </div>
+            <!------- Normal ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.normal" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].fracture = false','$scope.todos[{{todo.indexValue}}].acromion = false','$scope.todos[{{todo.indexValue}}].arthritis = false','$scope.todos[{{todo.indexValue}}].calcific = false','$scope.todos[{{todo.indexValue}}].document = false','$scope.todos[{{todo.indexValue}}].amputation = false'],todo.normal,'$scope.todos[{{todo.indexValue}}].normal',true)" />
+                    &nbsp;Normal</label>
+            </div>
+            <!------- Fracture ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.fracture" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Fracture</label>
+            </div>
+            <!------- Acromion type ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.acromion" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false','$scope.todos[{{todo.indexValue}}].acromionopts = false', '$scope.todos[{{todo.indexValue}}].acromionoptschk = false','$scope.todos[{{todo.indexValue}}].acromionoptsedittext = \'\''])" />
+                    &nbsp;Acromion type</label>
+            </div>
+            <div class="col-sm-12 margin-left-1" ng-if="todo.acromion">
+                <label>
+                    <input type="radio" value="Type I" ng-model="todo.acromionopts" />&nbsp;Type I</label><br />
+                <label>
+                    <input type="radio" value="Type II" ng-model="todo.acromionopts" />&nbsp;Type II</label><br />
+                <label>
+                    <input type="radio" value="Type III" ng-model="todo.acromionopts" />&nbsp;Type III</label><br />
+                <label>
+                    <input type="checkbox" value="Postoperative" ng-model="todo.acromionoptschk" style="margin-left: 0;" />&nbsp;Postoperative changes</label><br />
+                <div class="col-sm-12  checkbox">
+                    <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                    <div class="clearer"></div>
+                    <div ng-hide="isEdit"><span dynamic="todo.acromionoptsedittext" class="textEditorTextColor col-sm-10"></span></div>
+                    <div class="col-sm-10" ng-if="isEdit">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="todo.acromionoptsedittext"></textarea>
+                    </div>
+                </div>
+            </div>
+            <!------- Arthritis/degenerative joint changes ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.arthritis" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false','$scope.todos[{{todo.indexValue}}].arthritisterno = false','$scope.todos[{{todo.indexValue}}].arthritisacromi = false','$scope.todos[{{todo.indexValue}}].arthritisglen = false','$scope.todos[{{todo.indexValue}}].arthritisternopts = false','$scope.todos[{{todo.indexValue}}].arthritisacromiopts = false','$scope.todos[{{todo.indexValue}}].arthritisglenopts = false'],todo.arthritis,'$scope.todos[{{todo.indexValue}}].arthritis')" />
+                    &nbsp;Arthritis/degenerative joint changes</label>
+            </div>
+            <div class="col-sm12" ng-if="todo.arthritis">
+                <div class="col-sm-12 margin-left-1">
+                    <label>
+                        <input type="checkbox" ng-model="todo.arthritisterno" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthritisternopts = false','$scope.todos[{{todo.indexValue}}].arthritisterncheck = false'])" />&nbsp;Sternoclavicular joint</label>
+                </div>
+                <div class="col-sm-12 margin-left-2" ng-if="todo.arthritisterno">
+                    <label>
+                        <input type="radio" ng-model="todo.arthritisternopts" value="Mild" />&nbsp;Mild</label><br />
+                    <label>
+                        <input type="radio" ng-model="todo.arthritisternopts" value="Moderate" />&nbsp;Moderate</label><br />
+                    <label>
+                        <input type="radio" ng-model="todo.arthritisternopts" value="Severe" />&nbsp;Severe</label><br />
+                    <label>
+                        <input type="checkbox" ng-model="todo.arthritisterncheck" ng-true-value="Postoperative" style="margin-left: 0px;" />&nbsp;Postoperative changes</label>
+                    <div class="col-sm-12">
+                        <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                    </div>
+                    <div class="col-sm-12  checkbox">
+                        <div ng-hide="isEdit"><span dynamic="todo.arthritisterntext" class="textEditorTextColor col-sm-10"></span></div>
+                        <div class="col-sm-10" ng-if="isEdit">
+                            <textarea ui-tinymce="tinymceOptions" ng-model="todo.arthritisterntext"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm12" ng-if="todo.arthritis">
+                <div class="col-sm-12 margin-left-1">
+                    <label>
+                        <input type="checkbox" ng-model="todo.arthritisacromi" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthritisacromiopts = false','$scope.todos[{{todo.indexValue}}].arthritisacromicheck = false'])" />&nbsp;Acromioclavicular joint</label><br />
+                </div>
+                <div class="col-sm-12 margin-left-2" ng-if="todo.arthritisacromi">
+                    <label>
+                        <input type="radio" ng-model="todo.arthritisacromiopts" value="Mild" />&nbsp;Mild</label><br />
+                    <label>
+                        <input type="radio" ng-model="todo.arthritisacromiopts" value="Moderate" />&nbsp;Moderate</label><br />
+                    <label>
+                        <input type="radio" ng-model="todo.arthritisacromiopts" value="Severe" />&nbsp;Severe</label><br />
+                    <label>
+                        <input type="checkbox" ng-model="todo.arthritisacromicheck" ng-true-value="Postoperative" style="margin-left: 0px;" />&nbsp;Postoperative changes</label>
+                    <div class="col-sm-12">
+                        <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                    </div>
+                    <div class="col-sm-12  checkbox">
+                        <div ng-hide="isEdit"><span dynamic="todo.arthritisacromitext" class="textEditorTextColor col-sm-10"></span></div>
+                        <div class="col-sm-10" ng-if="isEdit">
+                            <textarea ui-tinymce="tinymceOptions" ng-model="todo.arthritisacromitext"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm12" ng-if="todo.arthritis">
+                <div class="col-sm-12 margin-left-1">
+                    <label>
+                        <input type="checkbox" ng-model="todo.arthritisglen" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthritisglenopts = false','$scope.todos[{{todo.indexValue}}].arthritisglencheck = false'])" />&nbsp;Glenohumeral joint</label>
+                </div>
+                <div class="col-sm-12 margin-left-2" ng-if="todo.arthritisglen">
+                    <label>
+                        <input type="radio" ng-model="todo.arthritisglenopts" value="Mild" />&nbsp;Mild</label><br />
+                    <label>
+                        <input type="radio" ng-model="todo.arthritisglenopts" value="Moderate" />&nbsp;Moderate</label><br />
+                    <label>
+                        <input type="radio" ng-model="todo.arthritisglenopts" value="Severe" />&nbsp;Severe</label><br />
+                    <label>
+                        <input type="checkbox" ng-model="todo.arthritisglencheck" ng-true-value="Postoperative" style="margin-left: 0px;" />&nbsp;Postoperative changes</label>
+                    <div class="col-sm-12">
+                        <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                    </div>
+                    <div class="col-sm-12  checkbox">
+                        <div ng-hide="isEdit"><span dynamic="todo.arthritisglentext" class="textEditorTextColor col-sm-10"></span></div>
+                        <div class="col-sm-10" ng-if="isEdit">
+                            <textarea ui-tinymce="tinymceOptions" ng-model="todo.arthritisglentext"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!------- Calcific tendonitis ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.calcific" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Calcific tendonitis</label>
+            </div>
+            <!------- Documentation of instability (recurrent subluxation or dislocation) ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.document" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false','$scope.todos[{{todo.indexValue}}].documentopts1 = false', '$scope.todos[{{todo.indexValue}}].documentopts2 = false'])" />
+                    &nbsp;Documentation of instability (recurrent subluxation or dislocation)</label>
+            </div>
+            <div class="col-sm-12 margin-left-1" ng-if="todo.document">
+                <label>
+                    <input type="checkbox" ng-model="todo.documentopts1" />&nbsp;Bony Bankart</label><br />
+                <label>
+                    <input type="checkbox" ng-model="todo.documentopts2" />&nbsp;Hill Sachs Lesion</label>
+            </div>
+            <!------- Amputation ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.amputation" ng-change="todo.AmputationtextA=''" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false','$scope.todos[{{todo.indexValue}}].amputationopts = false'])" />
+                    &nbsp;Amputation</label>
+            </div>
+            <div class="col-sm-12 margin-left-1" ng-if="todo.amputation">
+                <label>
+                    <input type="radio" value="deltoid" ng-model="todo.amputationopts" />&nbsp;At/or above the deltoid tubercle</label><br />
+                <label>
+                    <input type="radio" value="bicep" ng-model="todo.amputationopts" />&nbsp;At/or above the bicep tubercle</label><br />
+                <label>
+                    <input type="radio" value="bicepital" ng-model="todo.amputationopts" />&nbsp;Below the bicepital tubercle (above transmetacarpophalangeal level)</label><br />
+                <label>
+                    <input type="radio" value="transmetacarpophalangeal" ng-model="todo.amputationopts" />&nbsp;At transmetacarpophalangeal level (includes all digits)</label><br />
+                <div class="col-sm-12">
+                    <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                </div>
+                <div class="col-sm-12  checkbox">
+                    <div ng-hide="isEdit"><span dynamic="todo.AmputationtextA" class="textEditorTextColor col-sm-10"></span></div>
+                    <div class="col-sm-10" ng-if="isEdit">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="todo.AmputationtextA"></textarea>
+                    </div>
+                </div>
+            </div>
+            <!------- Other ------->
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-info btn-xs" ng-click="othertexteditorCondition=true">
+                    Text
+                </button>
+            </div>
+            <div class="col-sm-12">
+                <div ng-hide="othertexteditorCondition"><span dynamic="todo.othertexteditor" class="textEditorTextColor col-sm-10"></span></div>
+                <div class="col-sm-10" ng-if="othertexteditorCondition">
+                    <textarea ui-tinymce ng-model="todo.othertexteditor"></textarea>
+                </div>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>

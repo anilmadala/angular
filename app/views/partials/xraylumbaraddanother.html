@@ -1,0 +1,1505 @@
+<div ng-controller="XrayLumbarAddAnotherCtrl">
+    <div class="col-sm-12">
+        <label class="{{labelclass}}">{{label}}</label>
+        <button type="button" ng-click="addControl()" class="btn btn-default btn-circle btn-success">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+    <div ng-repeat="todo in todos.slice().reverse()" class="col-sm-12 checkbox addAnotherBottomBorder" style="padding: 5px;">
+        <input type="hidden" ng-model="todo.indexValue" ng-init="todo.indexValue = todos.length - ($index+1)" />
+        <div class="col-sm-12">
+            <div class="col-sm-1" style="margin-top: 7px; padding-left: 0;">
+                <label>Date:</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="tel" ui-date="dateOptions" my-date ng-model="todo.dateOfSurgery" class="form-control" placeholder="MM/DD/YYYY">
+            </div>
+            <div class="col-sm-1" style="margin-top: 7px;">
+                <button type="button" class="btn btn-info btn-xs" ng-click="clearbodypart($index+1,todos.length)"> Clear</button>
+            </div>
+            <div class="col-sm-6" style="margin-top: 7px;">
+                <button type="button" class="btn btn-danger btn-xs" ng-click="deletebodypart($index+1,todos.length)"> Delete</button>
+            </div>
+            <!------- Normal ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.cervnormal" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].fracture = false','$scope.todos[{{todo.indexValue}}].arthritis = false','$scope.todos[{{todo.indexValue}}].alteration = false'],todo.cervnormal,'$scope.todos[{{todo.indexValue}}].cervnormal',true)" />
+                &nbsp;Normal</label>
+            </div>
+            <!------- Fracture ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.fracture" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].cervnormal = false','$scope.todos[{{todo.indexValue}}].l1 = false', '$scope.todos[{{todo.indexValue}}].l2 = false', '$scope.todos[{{todo.indexValue}}].l3 = false', '$scope.todos[{{todo.indexValue}}].l4 = false', '$scope.todos[{{todo.indexValue}}].l5 = false', '$scope.todos[{{todo.indexValue}}].l1vert = false', '$scope.todos[{{todo.indexValue}}].l1vertopts = \'\'', '$scope.todos[{{todo.indexValue}}].l1post = false', '$scope.todos[{{todo.indexValue}}].l1postdisloc = false', '$scope.todos[{{todo.indexValue}}].l1postspinal = false', '$scope.todos[{{todo.indexValue}}].l1trans = false', '$scope.todos[{{todo.indexValue}}].l1transdisplace = false', '$scope.todos[{{todo.indexValue}}].l2vert = false', '$scope.todos[{{todo.indexValue}}].l2vertopts = \'\'', '$scope.todos[{{todo.indexValue}}].l2post = false', '$scope.todos[{{todo.indexValue}}].l2postdisloc = false', '$scope.todos[{{todo.indexValue}}].l2postspinal = false', '$scope.todos[{{todo.indexValue}}].l2trans = false', '$scope.todos[{{todo.indexValue}}].l2transdisplace = false', '$scope.todos[{{todo.indexValue}}].l3vert = false', '$scope.todos[{{todo.indexValue}}].l3vertopts = \'\'', '$scope.todos[{{todo.indexValue}}].l3post = false', '$scope.todos[{{todo.indexValue}}].l3postdisloc = false', '$scope.todos[{{todo.indexValue}}].l3postspinal = false', '$scope.todos[{{todo.indexValue}}].l3trans = false', '$scope.todos[{{todo.indexValue}}].l3transdisplace = false', '$scope.todos[{{todo.indexValue}}].l4vert = false', '$scope.todos[{{todo.indexValue}}].l4vertopts = \'\'', '$scope.todos[{{todo.indexValue}}].l4post = false', '$scope.todos[{{todo.indexValue}}].l4postdisloc = false', '$scope.todos[{{todo.indexValue}}].l4postspinal = false', '$scope.todos[{{todo.indexValue}}].l4trans = false', '$scope.todos[{{todo.indexValue}}].l4transdisplace = false', '$scope.todos[{{todo.indexValue}}].l5vert = false', '$scope.todos[{{todo.indexValue}}].l5vertopts = \'\'', '$scope.todos[{{todo.indexValue}}].l5post = false', '$scope.todos[{{todo.indexValue}}].l5postdisloc = false', '$scope.todos[{{todo.indexValue}}].l5postspinal = false', '$scope.todos[{{todo.indexValue}}].l5trans = false', '$scope.todos[{{todo.indexValue}}].l5transdisplace = false'],todo.fracture,'$scope.todos[{{todo.indexValue}}].fracture')" />
+                    &nbsp;Fracture</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.fracture">
+                <!------- Fracture L1 ------->
+                <div class="col-sm-12">
+                    <div class="col-sm-offset-1 col-sm-11" ng-if="todo.fracture">
+                        <label>
+                            <input type="checkbox" ng-model="todo.l1" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l1vert = false', '$scope.todos[{{todo.indexValue}}].l1vertopts = \'\'', '$scope.todos[{{todo.indexValue}}].l1post = false', '$scope.todos[{{todo.indexValue}}].l1postdisloc = false', '$scope.todos[{{todo.indexValue}}].l1postspinal = false', '$scope.todos[{{todo.indexValue}}].l1trans = false', '$scope.todos[{{todo.indexValue}}].l1transdisplace = false'])" />
+                            &nbsp;L1</label>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.l1">
+                        <div class="col-sm-12" ng-if="todo.l1">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.l1vert" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l1vertopts = \'\''])" />
+                                    &nbsp;Vertebral body compression fracture</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l1vert">
+                            <div class="margin-left-3">
+                                <select ng-model="todo.l1vertopts" class="form-control" style="width: 100px;">
+                                    <option value="">Choose</option>
+                                    <option>Less than 25%</option>
+                                    <option>25-50%</option>
+                                    <option>Greater than 50%</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l1">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.l1post" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l1postdisloc = false', '$scope.todos[{{todo.indexValue}}].l1postspinal = false'])" />
+                                    &nbsp;Posterior element fracture</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l1post">
+                            <div class="margin-left-3">
+                                <label>Is dislocation present?</label><br />
+                                <label>
+                                    <input type="radio" value="Yes" ng-model="todo.l1postdisloc" />&nbsp;Yes</label>
+                                <label>
+                                    <input type="radio" value="No" ng-model="todo.l1postdisloc" />&nbsp;No</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l1post">
+                            <div class="margin-left-3">
+                                <label>Is the spinal canal disrupted?</label><br />
+                                <label>
+                                    <input type="radio" value="Yes" ng-model="todo.l1postspinal" />&nbsp;Yes</label>
+                                <label>
+                                    <input type="radio" value="No" ng-model="todo.l1postspinal" />&nbsp;No</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l1">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.l1trans" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l1transdisplace = false'])" />
+                                    &nbsp;Transverse or spinous process</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l1trans">
+                            <div class="margin-left-3">
+                                <label>Is displacement present? </label>
+                                <br />
+                                <label>
+                                    <input type="radio" value="Yes" ng-model="todo.l1transdisplace" />&nbsp;Yes</label>
+                                <label>
+                                    <input type="radio" value="No" ng-model="todo.l1transdisplace" />&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------- Fracture L2 ------->
+                <div class="col-sm-12">
+                    <div class="col-sm-offset-1 col-sm-11" ng-if="todo.fracture">
+                        <label>
+                            <input type="checkbox" ng-model="todo.l2" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l2vert = false', '$scope.todos[{{todo.indexValue}}].l2vertopts = \'\'', '$scope.todos[{{todo.indexValue}}].l2post = false', '$scope.todos[{{todo.indexValue}}].l2postdisloc = false', '$scope.todos[{{todo.indexValue}}].l2postspinal = false', '$scope.todos[{{todo.indexValue}}].l2trans = false', '$scope.todos[{{todo.indexValue}}].l2transdisplace = false'])" />
+                            &nbsp;L2</label>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.l2">
+                        <div class="col-sm-12" ng-if="todo.l2">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.l2vert" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l2vertopts = \'\''])" />
+                                    &nbsp;Vertebral body compression fracture</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l2vert">
+                            <div class="margin-left-3">
+                                <select ng-model="todo.l2vertopts" class="form-control" style="width: 100px;">
+                                    <option value="">Choose</option>
+                                    <option>Less than 25%</option>
+                                    <option>25-50%</option>
+                                    <option>Greater than 50%</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l2">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.l2post" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l2postdisloc = false', '$scope.todos[{{todo.indexValue}}].l2postspinal = false'])" />
+                                    &nbsp;Posterior element fracture</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l2post">
+                            <div class="margin-left-3">
+                                <label>Is dislocation present?</label><br />
+                                <label>
+                                    <input type="radio" value="Yes" ng-model="todo.l2postdisloc" />&nbsp;Yes</label>
+                                <label>
+                                    <input type="radio" value="No" ng-model="todo.l2postdisloc" />&nbsp;No</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l2post">
+                            <div class="margin-left-3">
+                                <label>Is the spinal canal disrupted?</label><br />
+                                <label>
+                                    <input type="radio" value="Yes" ng-model="todo.l2postspinal" />&nbsp;Yes</label>
+                                <label>
+                                    <input type="radio" value="No" ng-model="todo.l2postspinal" />&nbsp;No</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l2">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.l2trans" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l2transdisplace = false'])" />
+                                    &nbsp;Transverse or spinous process</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l2trans">
+                            <div class="margin-left-3">
+                                <label>Is displacement present? </label>
+                                <br />
+                                <label>
+                                    <input type="radio" value="Yes" ng-model="todo.l2transdisplace" />&nbsp;Yes</label>
+                                <label>
+                                    <input type="radio" value="No" ng-model="todo.l2transdisplace" />&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------- Fracture L3 ------->
+                <div class="col-sm-12">
+                    <div class="col-sm-offset-1 col-sm-11" ng-if="todo.fracture">
+                        <label>
+                            <input type="checkbox" ng-model="todo.l3" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l3vert = false', '$scope.todos[{{todo.indexValue}}].l3vertopts = \'\'', '$scope.todos[{{todo.indexValue}}].l3post = false', '$scope.todos[{{todo.indexValue}}].l3postdisloc = false', '$scope.todos[{{todo.indexValue}}].l3postspinal = false', '$scope.todos[{{todo.indexValue}}].l3trans = false', '$scope.todos[{{todo.indexValue}}].l3transdisplace = false'])" />
+                            &nbsp;L3</label>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.l3">
+                        <div class="col-sm-12" ng-if="todo.l3">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.l3vert" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l3vertopts = \'\''])" />
+                                    &nbsp;Vertebral body compression fracture</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l3vert">
+                            <div class="margin-left-3">
+                                <select ng-model="todo.l3vertopts" class="form-control" style="width: 100px;">
+                                    <option value="">Choose</option>
+                                    <option>Less than 25%</option>
+                                    <option>25-50%</option>
+                                    <option>Greater than 50%</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l3">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.l3post" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l3postdisloc = false', '$scope.todos[{{todo.indexValue}}].l3postspinal = false'])" />
+                                    &nbsp;Posterior element fracture</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l3post">
+                            <div class="margin-left-3">
+                                <label>Is dislocation present?</label><br />
+                                <label>
+                                    <input type="radio" value="Yes" ng-model="todo.l3postdisloc" />&nbsp;Yes</label>
+                                <label>
+                                    <input type="radio" value="No" ng-model="todo.l3postdisloc" />&nbsp;No</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l3post">
+                            <div class="margin-left-3">
+                                <label>Is the spinal canal disrupted?</label><br />
+                                <label>
+                                    <input type="radio" value="Yes" ng-model="todo.l3postspinal" />&nbsp;Yes</label>
+                                <label>
+                                    <input type="radio" value="No" ng-model="todo.l3postspinal" />&nbsp;No</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l3">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.l3trans" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l3transdisplace = false'])" />
+                                    &nbsp;Transverse or spinous process</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l3trans">
+                            <div class="margin-left-3">
+                                <label>Is displacement present? </label>
+                                <br />
+                                <label>
+                                    <input type="radio" value="Yes" ng-model="todo.l3transdisplace" />&nbsp;Yes</label>
+                                <label>
+                                    <input type="radio" value="No" ng-model="todo.l3transdisplace" />&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------- Fracture L4 ------->
+                <div class="col-sm-12">
+                    <div class="col-sm-offset-1 col-sm-11" ng-if="todo.fracture">
+                        <label>
+                            <input type="checkbox" ng-model="todo.l4" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l4vert = false', '$scope.todos[{{todo.indexValue}}].l4vertopts = \'\'', '$scope.todos[{{todo.indexValue}}].l4post = false', '$scope.todos[{{todo.indexValue}}].l4postdisloc = false', '$scope.todos[{{todo.indexValue}}].l4postspinal = false', '$scope.todos[{{todo.indexValue}}].l4trans = false', '$scope.todos[{{todo.indexValue}}].l4transdisplace = false'])" />
+                            &nbsp;L4</label>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.l4">
+                        <div class="col-sm-12" ng-if="todo.l4">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.l4vert" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l4vertopts = \'\''])" />
+                                    &nbsp;Vertebral body compression fracture</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l4vert">
+                            <div class="margin-left-3">
+                                <select ng-model="todo.l4vertopts" class="form-control" style="width: 100px;">
+                                    <option value="">Choose</option>
+                                    <option>Less than 25%</option>
+                                    <option>25-50%</option>
+                                    <option>Greater than 50%</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l4">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.l4post" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l4postdisloc = false', '$scope.todos[{{todo.indexValue}}].l4postspinal = false'])" />
+                                    &nbsp;Posterior element fracture</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l4post">
+                            <div class="margin-left-3">
+                                <label>Is dislocation present?</label><br />
+                                <label>
+                                    <input type="radio" value="Yes" ng-model="todo.l4postdisloc" />&nbsp;Yes</label>
+                                <label>
+                                    <input type="radio" value="No" ng-model="todo.l4postdisloc" />&nbsp;No</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l4post">
+                            <div class="margin-left-3">
+                                <label>Is the spinal canal disrupted?</label><br />
+                                <label>
+                                    <input type="radio" value="Yes" ng-model="todo.l4postspinal" />&nbsp;Yes</label>
+                                <label>
+                                    <input type="radio" value="No" ng-model="todo.l4postspinal" />&nbsp;No</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l4">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.l4trans" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l4transdisplace = false'])" />
+                                    &nbsp;Transverse or spinous process</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l4trans">
+                            <div class="margin-left-3">
+                                <label>Is displacement present? </label>
+                                <br />
+                                <label>
+                                    <input type="radio" value="Yes" ng-model="todo.l4transdisplace" />&nbsp;Yes</label>
+                                <label>
+                                    <input type="radio" value="No" ng-model="todo.l4transdisplace" />&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------- Fracture L5 ------->
+                <div class="col-sm-12">
+                    <div class="col-sm-offset-1 col-sm-11" ng-if="todo.fracture">
+                        <label>
+                            <input type="checkbox" ng-model="todo.l5" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l5vert = false', '$scope.todos[{{todo.indexValue}}].l5vertopts = \'\'', '$scope.todos[{{todo.indexValue}}].l5post = false', '$scope.todos[{{todo.indexValue}}].l5postdisloc = false', '$scope.todos[{{todo.indexValue}}].l5postspinal = false', '$scope.todos[{{todo.indexValue}}].l5trans = false', '$scope.todos[{{todo.indexValue}}].l5transdisplace = false'])" />
+                            &nbsp;L5</label>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.l5">
+                        <div class="col-sm-12" ng-if="todo.l5">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.l5vert" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l5vertopts = \'\''])" />
+                                    &nbsp;Vertebral body compression fracture</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l5vert">
+                            <div class="margin-left-3">
+                                <select ng-model="todo.l5vertopts" class="form-control" style="width: 100px;">
+                                    <option value="">Choose</option>
+                                    <option>Less than 25%</option>
+                                    <option>25-50%</option>
+                                    <option>Greater than 50%</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l5">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.l5post" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l5postdisloc = false', '$scope.todos[{{todo.indexValue}}].l5postspinal = false'])" />
+                                    &nbsp;Posterior element fracture</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l5post">
+                            <div class="margin-left-3">
+                                <label>Is dislocation present?</label><br />
+                                <label>
+                                    <input type="radio" value="Yes" ng-model="todo.l5postdisloc" />&nbsp;Yes</label>
+                                <label>
+                                    <input type="radio" value="No" ng-model="todo.l5postdisloc" />&nbsp;No</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l5post">
+                            <div class="margin-left-3">
+                                <label>Is the spinal canal disrupted?</label><br />
+                                <label>
+                                    <input type="radio" value="Yes" ng-model="todo.l5postspinal" />&nbsp;Yes</label>
+                                <label>
+                                    <input type="radio" value="No" ng-model="todo.l5postspinal" />&nbsp;No</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l5">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.l5trans" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].l5transdisplace = false'])" />
+                                    &nbsp;Transverse or spinous process</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.l5trans">
+                            <div class="margin-left-3">
+                                <label>Is displacement present? </label>
+                                <br />
+                                <label>
+                                    <input type="radio" value="Yes" ng-model="todo.l5transdisplace" />&nbsp;Yes</label>
+                                <label>
+                                    <input type="radio" value="No" ng-model="todo.l5transdisplace" />&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!------- Arthritis/degenerative joint changes ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.arthritis" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].cervnormal = false','$scope.todos[{{todo.indexValue}}].artht12l1 = false', '$scope.todos[{{todo.indexValue}}].arthl12 = false', '$scope.todos[{{todo.indexValue}}].arthl23 = false', '$scope.todos[{{todo.indexValue}}].arthl34 = false', '$scope.todos[{{todo.indexValue}}].arthl45 = false', '$scope.todos[{{todo.indexValue}}].arthl56 = false', '$scope.todos[{{todo.indexValue}}].artht12l1right = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightfora = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightforaopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightfacet = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightcanal = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightfacet = false', '$scope.todos[{{todo.indexValue}}].artht12l1left = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftfora = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftforaopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftfacet = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftcanal = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl12right = false', '$scope.todos[{{todo.indexValue}}].arthl12rightfora = false', '$scope.todos[{{todo.indexValue}}].arthl12rightforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl12rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl12rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl12rightcanal = false', '$scope.todos[{{todo.indexValue}}].arthl12rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl12rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl12left = false', '$scope.todos[{{todo.indexValue}}].arthl12leftfora = false', '$scope.todos[{{todo.indexValue}}].arthl12leftforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl12leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl12leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl12leftcanal = false', '$scope.todos[{{todo.indexValue}}].arthl12leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl12leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl23right = false', '$scope.todos[{{todo.indexValue}}].arthl23rightfora = false', '$scope.todos[{{todo.indexValue}}].arthl23rightforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl23rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl23rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl23rightcanal = false', '$scope.todos[{{todo.indexValue}}].arthl23rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl23rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl23left = false', '$scope.todos[{{todo.indexValue}}].arthl23leftfora = false', '$scope.todos[{{todo.indexValue}}].arthl23leftforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl23leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl23leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl23leftcanal = false', '$scope.todos[{{todo.indexValue}}].arthl23leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl23leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl34right = false', '$scope.todos[{{todo.indexValue}}].arthl34rightfora = false', '$scope.todos[{{todo.indexValue}}].arthl34rightforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl34rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl34rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl34rightcanal = false', '$scope.todos[{{todo.indexValue}}].arthl34rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl34rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl34left = false', '$scope.todos[{{todo.indexValue}}].arthl34leftfora = false', '$scope.todos[{{todo.indexValue}}].arthl34leftforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl34leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl34leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl34leftcanal = false', '$scope.todos[{{todo.indexValue}}].arthl34leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl34leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl45right = false', '$scope.todos[{{todo.indexValue}}].arthl45rightfora = false', '$scope.todos[{{todo.indexValue}}].arthl45rightforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl45rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl45rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl45rightcanal = false', '$scope.todos[{{todo.indexValue}}].arthl45rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl45rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl45left = false', '$scope.todos[{{todo.indexValue}}].arthl45leftfora = false', '$scope.todos[{{todo.indexValue}}].arthl45leftforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl45leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl45leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl45leftcanal = false', '$scope.todos[{{todo.indexValue}}].arthl45leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl45leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl56right = false', '$scope.todos[{{todo.indexValue}}].arthl56rightfora = false', '$scope.todos[{{todo.indexValue}}].arthl56rightforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl56rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl56rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl56rightcanal = false', '$scope.todos[{{todo.indexValue}}].arthl56rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl56rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl56left = false', '$scope.todos[{{todo.indexValue}}].arthl56leftfora = false', '$scope.todos[{{todo.indexValue}}].arthl56leftforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl56leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl56leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl56leftcanal = false', '$scope.todos[{{todo.indexValue}}].arthl56leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl56leftfacet = false'],todo.arthritis,'$scope.todos[{{todo.indexValue}}].arthritis')" />
+                    &nbsp;Arthritis/degenerative joint changes</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.arthritis">
+                <!------- Arthritis/degenerative T12-L1 ------->
+                <div class="col-sm-12">
+                    <div class="col-sm-offset-1 col-sm-11" ng-if="todo.arthritis">
+                        <label>
+                            <input type="checkbox" ng-model="todo.artht12l1" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].artht12l1right = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightfora = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightforaopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightfacet = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightcanal = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightfacet = false', '$scope.todos[{{todo.indexValue}}].artht12l1left = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftfora = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftforaopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftfacet = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftcanal = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftfacet = false'])" />
+                            &nbsp;T12-L1</label>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.artht12l1">
+                        <div class="col-sm-12">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.artht12l1right" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].artht12l1rightfora = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightforaopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightfacet = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightcanal = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1rightfacet = false'])" />
+                                    &nbsp;Right</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.artht12l1right">
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.artht12l1rightfora" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].artht12l1rightforaopts = false'])" />
+                                        &nbsp;Foraminal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.artht12l1rightfora">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.artht12l1rightforaopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.artht12l1rightforaopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.artht12l1rightforaopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.artht12l1rightfacet" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].artht12l1rightfacetopts = false'])" />
+                                        &nbsp;Facet Arthritis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.artht12l1rightfacet">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.artht12l1rightfacetopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.artht12l1rightfacetopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.artht12l1rightfacetopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.artht12l1rightcanal" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].artht12l1rightcanalopts = false'])" />
+                                        &nbsp;Canal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.artht12l1rightcanal">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.artht12l1rightcanalopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.artht12l1rightcanalopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.artht12l1rightcanalopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.artht12l1left" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].artht12l1leftfora = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftforaopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftfacet = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftcanal = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].artht12l1leftfacet = false'])" />
+                                    &nbsp;Left</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.artht12l1left">
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.artht12l1leftfora" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].artht12l1leftforaopts = false'])" />
+                                        &nbsp;Foraminal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.artht12l1leftfora">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.artht12l1leftforaopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.artht12l1leftforaopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.artht12l1leftforaopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.artht12l1leftfacet" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].artht12l1leftfacetopts = false'])" />
+                                        &nbsp;Facet Arthritis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.artht12l1leftfacet">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.artht12l1leftfacetopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.artht12l1leftfacetopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.artht12l1leftfacetopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.artht12l1leftcanal" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].artht12l1leftcanalopts = false'])" />
+                                        &nbsp;Canal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.artht12l1leftcanal">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.artht12l1leftcanalopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.artht12l1leftcanalopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.artht12l1leftcanalopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------- Arthritis/degenerative L1-2 ------->
+                <div class="col-sm-12">
+                    <div class="col-sm-offset-1 col-sm-11" ng-if="todo.arthritis">
+                        <label>
+                            <input type="checkbox" ng-model="todo.arthl12" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl12right = false', '$scope.todos[{{todo.indexValue}}].arthl12rightfora = false', '$scope.todos[{{todo.indexValue}}].arthl12rightforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl12rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl12rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl12rightcanal = false', '$scope.todos[{{todo.indexValue}}].arthl12rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl12rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl12left = false', '$scope.todos[{{todo.indexValue}}].arthl12leftfora = false', '$scope.todos[{{todo.indexValue}}].arthl12leftforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl12leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl12leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl12leftcanal = false', '$scope.todos[{{todo.indexValue}}].arthl12leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl12leftfacet = false'])" />
+                            &nbsp;L1-2</label>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.arthl12">
+                        <div class="col-sm-12">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.arthl12right" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl12rightfora = false', '$scope.todos[{{todo.indexValue}}].arthl12rightforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl12rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl12rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl12rightcanal = false', '$scope.todos[{{todo.indexValue}}].arthl12rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl12rightfacet = false'])" />
+                                    &nbsp;Right</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.arthl12right">
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl12rightfora" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl12rightforaopts = false'])" />
+                                        &nbsp;Foraminal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl12rightfora">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl12rightforaopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl12rightforaopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl12rightforaopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl12rightfacet" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl12rightfacetopts = false'])" />
+                                        &nbsp;Facet Arthritis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl12rightfacet">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl12rightfacetopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl12rightfacetopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl12rightfacetopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl12rightcanal" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl12rightcanalopts = false'])" />
+                                        &nbsp;Canal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl12rightcanal">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl12rightcanalopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl12rightcanalopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl12rightcanalopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.arthl12left" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl12leftfora = false', '$scope.todos[{{todo.indexValue}}].arthl12leftforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl12leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl12leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl12leftcanal = false', '$scope.todos[{{todo.indexValue}}].arthl12leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl12leftfacet = false'])" />
+                                    &nbsp;Left</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.arthl12left">
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl12leftfora" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl12leftforaopts = false'])" />
+                                        &nbsp;Foraminal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl12leftfora">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl12leftforaopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl12leftforaopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl12leftforaopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl12leftfacet" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl12leftfacetopts = false'])" />
+                                        &nbsp;Facet Arthritis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl12leftfacet">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl12leftfacetopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl12leftfacetopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl12leftfacetopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl12leftcanal" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl12leftcanalopts = false'])" />
+                                        &nbsp;Canal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl12leftcanal">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl12leftcanalopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl12leftcanalopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl12leftcanalopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------- Arthritis/degenerative L2-3 ------->
+                <div class="col-sm-12">
+                    <div class="col-sm-offset-1 col-sm-11" ng-if="todo.arthritis">
+                        <label>
+                            <input type="checkbox" ng-model="todo.arthl23" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl23right = false', '$scope.todos[{{todo.indexValue}}].arthl23rightfora = false', '$scope.todos[{{todo.indexValue}}].arthl23rightforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl23rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl23rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl23rightcanal = false', '$scope.todos[{{todo.indexValue}}].arthl23rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl23rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl23left = false', '$scope.todos[{{todo.indexValue}}].arthl23leftfora = false', '$scope.todos[{{todo.indexValue}}].arthl23leftforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl23leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl23leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl23leftcanal = false', '$scope.todos[{{todo.indexValue}}].arthl23leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl23leftfacet = false'])" />
+                            &nbsp;L2-3</label>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.arthl23">
+                        <div class="col-sm-12">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.arthl23right" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl23rightfora = false', '$scope.todos[{{todo.indexValue}}].arthl23rightforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl23rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl23rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl23rightcanal = false', '$scope.todos[{{todo.indexValue}}].arthl23rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl23rightfacet = false'])" />
+                                    &nbsp;Right</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.arthl23right">
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl23rightfora" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl23rightforaopts = false'])" />
+                                        &nbsp;Foraminal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl23rightfora">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl23rightforaopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl23rightforaopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl23rightforaopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl23rightfacet" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl23rightfacetopts = false'])" />
+                                        &nbsp;Facet Arthritis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl23rightfacet">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl23rightfacetopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl23rightfacetopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl23rightfacetopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl23rightcanal" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl23rightcanalopts = false'])" />
+                                        &nbsp;Canal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl23rightcanal">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl23rightcanalopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl23rightcanalopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl23rightcanalopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.arthl23left" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl23leftfora = false', '$scope.todos[{{todo.indexValue}}].arthl23leftforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl23leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl23leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl23leftcanal = false', '$scope.todos[{{todo.indexValue}}].arthl23leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl23leftfacet = false'])" />
+                                    &nbsp;Left</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.arthl23left">
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl23leftfora" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl23leftforaopts = false'])" />
+                                        &nbsp;Foraminal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl23leftfora">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl23leftforaopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl23leftforaopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl23leftforaopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl23leftfacet" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl23leftfacetopts = false'])" />
+                                        &nbsp;Facet Arthritis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl23leftfacet">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl23leftfacetopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl23leftfacetopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl23leftfacetopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl23leftcanal" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl23leftcanalopts = false'])" />
+                                        &nbsp;Canal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl23leftcanal">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl23leftcanalopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl23leftcanalopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl23leftcanalopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------- Arthritis/degenerative L3-4 ------->
+                <div class="col-sm-12">
+                    <div class="col-sm-offset-1 col-sm-11" ng-if="todo.arthritis">
+                        <label>
+                            <input type="checkbox" ng-model="todo.arthl34" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl34right = false', '$scope.todos[{{todo.indexValue}}].arthl34rightfora = false', '$scope.todos[{{todo.indexValue}}].arthl34rightforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl34rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl34rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl34rightcanal = false', '$scope.todos[{{todo.indexValue}}].arthl34rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl34rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl34left = false', '$scope.todos[{{todo.indexValue}}].arthl34leftfora = false', '$scope.todos[{{todo.indexValue}}].arthl34leftforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl34leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl34leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl34leftcanal = false', '$scope.todos[{{todo.indexValue}}].arthl34leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl34leftfacet = false'])" />
+                            &nbsp;L3-4</label>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.arthl34">
+                        <div class="col-sm-12">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.arthl34right" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl34rightfora = false', '$scope.todos[{{todo.indexValue}}].arthl34rightforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl34rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl34rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl34rightcanal = false', '$scope.todos[{{todo.indexValue}}].arthl34rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl34rightfacet = false'])" />
+                                    &nbsp;Right</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.arthl34right">
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl34rightfora" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl34rightforaopts = false'])" />
+                                        &nbsp;Foraminal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl34rightfora">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl34rightforaopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl34rightforaopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl34rightforaopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl34rightfacet" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl34rightfacetopts = false'])" />
+                                        &nbsp;Facet Arthritis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl34rightfacet">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl34rightfacetopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl34rightfacetopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl34rightfacetopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl34rightcanal" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl34rightcanalopts = false'])" />
+                                        &nbsp;Canal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl34rightcanal">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl34rightcanalopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl34rightcanalopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl34rightcanalopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.arthl34left" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl34leftfora = false', '$scope.todos[{{todo.indexValue}}].arthl34leftforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl34leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl34leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl34leftcanal = false', '$scope.todos[{{todo.indexValue}}].arthl34leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl34leftfacet = false'])" />
+                                    &nbsp;Left</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.arthl34left">
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl34leftfora" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl34leftforaopts = false'])" />
+                                        &nbsp;Foraminal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl34leftfora">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl34leftforaopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl34leftforaopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl34leftforaopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl34leftfacet" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl34leftfacetopts = false'])" />
+                                        &nbsp;Facet Arthritis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl34leftfacet">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl34leftfacetopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl34leftfacetopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl34leftfacetopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl34leftcanal" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl34leftcanalopts = false'])" />
+                                        &nbsp;Canal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl34leftcanal">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl34leftcanalopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl34leftcanalopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl34leftcanalopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------- Arthritis/degenerative L4-5 ------->
+                <div class="col-sm-12">
+                    <div class="col-sm-offset-1 col-sm-11" ng-if="todo.arthritis">
+                        <label>
+                            <input type="checkbox" ng-model="todo.arthl45" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl45right = false', '$scope.todos[{{todo.indexValue}}].arthl45rightfora = false', '$scope.todos[{{todo.indexValue}}].arthl45rightforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl45rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl45rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl45rightcanal = false', '$scope.todos[{{todo.indexValue}}].arthl45rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl45rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl45left = false', '$scope.todos[{{todo.indexValue}}].arthl45leftfora = false', '$scope.todos[{{todo.indexValue}}].arthl45leftforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl45leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl45leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl45leftcanal = false', '$scope.todos[{{todo.indexValue}}].arthl45leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl45leftfacet = false'])" />
+                            &nbsp;L4-5</label>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.arthl45">
+                        <div class="col-sm-12">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.arthl45right" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl45rightfora = false', '$scope.todos[{{todo.indexValue}}].arthl45rightforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl45rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl45rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl45rightcanal = false', '$scope.todos[{{todo.indexValue}}].arthl45rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl45rightfacet = false'])" />
+                                    &nbsp;Right</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.arthl45right">
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl45rightfora" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl45rightforaopts = false'])" />
+                                        &nbsp;Foraminal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl45rightfora">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl45rightforaopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl45rightforaopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl45rightforaopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl45rightfacet" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl45rightfacetopts = false'])" />
+                                        &nbsp;Facet Arthritis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl45rightfacet">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl45rightfacetopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl45rightfacetopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl45rightfacetopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl45rightcanal" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl45rightcanalopts = false'])" />
+                                        &nbsp;Canal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl45rightcanal">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl45rightcanalopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl45rightcanalopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl45rightcanalopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.arthl45left" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl45leftfora = false', '$scope.todos[{{todo.indexValue}}].arthl45leftforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl45leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl45leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl45leftcanal = false', '$scope.todos[{{todo.indexValue}}].arthl45leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl45leftfacet = false'])" />
+                                    &nbsp;Left</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.arthl45left">
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl45leftfora" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl45leftforaopts = false'])" />
+                                        &nbsp;Foraminal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl45leftfora">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl45leftforaopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl45leftforaopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl45leftforaopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl45leftfacet" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl45leftfacetopts = false'])" />
+                                        &nbsp;Facet Arthritis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl45leftfacet">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl45leftfacetopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl45leftfacetopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl45leftfacetopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl45leftcanal" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl45leftcanalopts = false'])" />
+                                        &nbsp;Canal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl45leftcanal">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl45leftcanalopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl45leftcanalopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl45leftcanalopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------- Arthritis/degenerative L5-6 ------->
+                <div class="col-sm-12">
+                    <div class="col-sm-offset-1 col-sm-11" ng-if="todo.arthritis">
+                        <label>
+                            <input type="checkbox" ng-model="todo.arthl56" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl56right = false', '$scope.todos[{{todo.indexValue}}].arthl56rightfora = false', '$scope.todos[{{todo.indexValue}}].arthl56rightforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl56rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl56rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl56rightcanal = false', '$scope.todos[{{todo.indexValue}}].arthl56rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl56rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl56left = false', '$scope.todos[{{todo.indexValue}}].arthl56leftfora = false', '$scope.todos[{{todo.indexValue}}].arthl56leftforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl56leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl56leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl56leftcanal = false', '$scope.todos[{{todo.indexValue}}].arthl56leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl56leftfacet = false'])" />
+                            &nbsp;L5-S1</label>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.arthl56">
+                        <div class="col-sm-12">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.arthl56right" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl56rightfora = false', '$scope.todos[{{todo.indexValue}}].arthl56rightforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl56rightfacet = false', '$scope.todos[{{todo.indexValue}}].arthl56rightfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl56rightcanal = false', '$scope.todos[{{todo.indexValue}}].arthl56rightcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl56rightfacet = false'])" />
+                                    &nbsp;Right</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.arthl56right">
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl56rightfora" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl56rightforaopts = false'])" />
+                                        &nbsp;Foraminal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl56rightfora">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl56rightforaopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl56rightforaopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl56rightforaopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl56rightfacet" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl56rightfacetopts = false'])" />
+                                        &nbsp;Facet Arthritis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl56rightfacet">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl56rightfacetopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl56rightfacetopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl56rightfacetopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl56rightcanal" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl56rightcanalopts = false'])" />
+                                        &nbsp;Canal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl56rightcanal">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl56rightcanalopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl56rightcanalopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl56rightcanalopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="margin-left-2">
+                                <label>
+                                    <input type="checkbox" ng-model="todo.arthl56left" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl56leftfora = false', '$scope.todos[{{todo.indexValue}}].arthl56leftforaopts = false', '$scope.todos[{{todo.indexValue}}].arthl56leftfacet = false', '$scope.todos[{{todo.indexValue}}].arthl56leftfacetopts = false', '$scope.todos[{{todo.indexValue}}].arthl56leftcanal = false', '$scope.todos[{{todo.indexValue}}].arthl56leftcanalopts = false', '$scope.todos[{{todo.indexValue}}].arthl56leftfacet = false'])" />
+                                    &nbsp;Left</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-if="todo.arthl56left">
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl56leftfora" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl56leftforaopts = false'])" />
+                                        &nbsp;Foraminal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl56leftfora">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl56leftforaopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl56leftforaopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl56leftforaopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl56leftfacet" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl56leftfacetopts = false'])" />
+                                        &nbsp;Facet Arthritis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl56leftfacet">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl56leftfacetopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl56leftfacetopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl56leftfacetopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="margin-left-3">
+                                    <label>
+                                        <input type="checkbox" ng-model="todo.arthl56leftcanal" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthl56leftcanalopts = false'])" />
+                                        &nbsp;Canal stenosis</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-if="todo.arthl56leftcanal">
+                                <div class="margin-left-4">
+                                    <label>
+                                        <input type="radio" value="Mild" ng-model="todo.arthl56leftcanalopts" />&nbsp;Mild</label>
+                                    <label>
+                                        <input type="radio" value="Moderate" ng-model="todo.arthl56leftcanalopts" />&nbsp;Moderate</label>
+                                    <label>
+                                        <input type="radio" value="Severe" ng-model="todo.arthl56leftcanalopts" />&nbsp;Severe</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!------- Alteration of segment integrity ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.alteration" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].cervnormal = false','$scope.todos[{{todo.indexValue}}].alt1spond = false','$scope.todos[{{todo.indexValue}}].alt2flex = false', '$scope.todos[{{todo.indexValue}}].alt1l12 = false', '$scope.todos[{{todo.indexValue}}].alt1l23 = false', '$scope.todos[{{todo.indexValue}}].alt1l34 = false', '$scope.todos[{{todo.indexValue}}].alt1l45 = false', '$scope.todos[{{todo.indexValue}}].alt1l5s1 = false', '$scope.todos[{{todo.indexValue}}].alt2l12 = false', '$scope.todos[{{todo.indexValue}}].alt2l23 = false', '$scope.todos[{{todo.indexValue}}].alt2l34 = false', '$scope.todos[{{todo.indexValue}}].alt2l45 = false', '$scope.todos[{{todo.indexValue}}].alt2l5s1 = false','$scope.todos[{{todo.indexValue}}].alt2l12translate = false', '$scope.todos[{{todo.indexValue}}].alt2l12angular = false', '$scope.todos[{{todo.indexValue}}].alt2l12lossmotion = false', '$scope.todos[{{todo.indexValue}}].alt2l23translate = false', '$scope.todos[{{todo.indexValue}}].alt2l23angular = false', '$scope.todos[{{todo.indexValue}}].alt2l23lossmotion = false', '$scope.todos[{{todo.indexValue}}].alt2l34translate = false', '$scope.todos[{{todo.indexValue}}].alt2l34angular = false', '$scope.todos[{{todo.indexValue}}].alt2l34lossmotion = false', '$scope.todos[{{todo.indexValue}}].alt2l45translate = false', '$scope.todos[{{todo.indexValue}}].alt2l45angular = false', '$scope.todos[{{todo.indexValue}}].alt2l45lossmotion = false', '$scope.todos[{{todo.indexValue}}].alt2l5s1translate = false', '$scope.todos[{{todo.indexValue}}].alt2l5s1angular = false', '$scope.todos[{{todo.indexValue}}].alt2l5s1lossmotion = false'],todo.alteration,'$scope.todos[{{todo.indexValue}}].alteration')" />
+                    &nbsp;Alteration of segment integrity</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.alteration">
+                <!------- Alteration 1 ------->
+                <div class="col-sm-offset-1 col-sm-11">
+                    <label>Is spondylolisthesis present? </label>
+                    <br />
+                    <label>
+                        <input type="radio" value="Yes" ng-model="todo.alt1spond" />&nbsp;Yes</label>
+                    <label>
+                        <input type="radio" value="No" ng-model="todo.alt1spond" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].alt1l12 = false', '$scope.todos[{{todo.indexValue}}].alt1l23 = false', '$scope.todos[{{todo.indexValue}}].alt1l34 = false', '$scope.todos[{{todo.indexValue}}].alt1l45 = false', '$scope.todos[{{todo.indexValue}}].alt1l5s1 = false'])" />&nbsp;No</label>
+                </div>
+                <div class="col-sm-12" ng-if="todo.alt1spond">
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.alt1l12" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].alt1l12grade = false'])" />
+                                &nbsp;L1-2</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.alt1l12">
+                        <div class="margin-left-3">
+                            <label>&nbsp;Select grade:</label><br />
+                            <label>
+                                <input type="radio" value="GradeI" ng-model="todo.alt1l12grade" />&nbsp;Grade I (1%-25% slippage)</label><br />
+                            <label>
+                                <input type="radio" value="GradeII" ng-model="todo.alt1l12grade" />&nbsp;Grade II (26%-50% slippage)</label><br />
+                            <label>
+                                <input type="radio" value="GradeIII" ng-model="todo.alt1l12grade" />&nbsp;Grade III (51%-75% slippage)</label><br />
+                            <label>
+                                <input type="radio" value="GradeIV" ng-model="todo.alt1l12grade" />&nbsp;Grade IV (76%-100% slippage)</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.alt1l23" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].alt1l23grade = false'])" />
+                                &nbsp;L2-3</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.alt1l23">
+                        <div class="margin-left-3">
+                            <label>&nbsp;Select grade:</label><br />
+                            <label>
+                                <input type="radio" value="GradeI" ng-model="todo.alt1l23grade" />&nbsp;Grade I (1%-25% slippage)</label><br />
+                            <label>
+                                <input type="radio" value="GradeII" ng-model="todo.alt1l23grade" />&nbsp;Grade II (26%-50% slippage)</label><br />
+                            <label>
+                                <input type="radio" value="GradeIII" ng-model="todo.alt1l23grade" />&nbsp;Grade III (51%-75% slippage)</label><br />
+                            <label>
+                                <input type="radio" value="GradeIV" ng-model="todo.alt1l23grade" />&nbsp;Grade IV (76%-100% slippage)</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.alt1l34" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].alt1l34grade = false'])" />
+                                &nbsp;L3-4</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.alt1l34">
+                        <div class="margin-left-3">
+                            <label>&nbsp;Select grade:</label><br />
+                            <label>
+                                <input type="radio" value="GradeI" ng-model="todo.alt1l34grade" />&nbsp;Grade I (1%-25% slippage)</label><br />
+                            <label>
+                                <input type="radio" value="GradeII" ng-model="todo.alt1l34grade" />&nbsp;Grade II (26%-50% slippage)</label><br />
+                            <label>
+                                <input type="radio" value="GradeIII" ng-model="todo.alt1l34grade" />&nbsp;Grade III (51%-75% slippage)</label><br />
+                            <label>
+                                <input type="radio" value="GradeIV" ng-model="todo.alt1l34grade" />&nbsp;Grade IV (76%-100% slippage)</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.alt1l45" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].alt1l45grade = false'])" />
+                                &nbsp;L4-5</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.alt1l45">
+                        <div class="margin-left-3">
+                            <label>&nbsp;Select grade:</label><br />
+                            <label>
+                                <input type="radio" value="GradeI" ng-model="todo.alt1l45grade" />&nbsp;Grade I (1%-25% slippage)</label><br />
+                            <label>
+                                <input type="radio" value="GradeII" ng-model="todo.alt1l45grade" />&nbsp;Grade II (26%-50% slippage)</label><br />
+                            <label>
+                                <input type="radio" value="GradeIII" ng-model="todo.alt1l45grade" />&nbsp;Grade III (51%-75% slippage)</label><br />
+                            <label>
+                                <input type="radio" value="GradeIV" ng-model="todo.alt1l45grade" />&nbsp;Grade IV (76%-100% slippage)</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.alt1l5s1" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].alt1l5s1grade = false'])" />
+                                &nbsp;L5-S1</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.alt1l5s1">
+                        <div class="margin-left-3">
+                            <label>&nbsp;Select grade:</label><br />
+                            <label>
+                                <input type="radio" value="GradeI" ng-model="todo.alt1l5s1grade" />&nbsp;Grade I (1%-25% slippage)</label><br />
+                            <label>
+                                <input type="radio" value="GradeII" ng-model="todo.alt1l5s1grade" />&nbsp;Grade II (26%-50% slippage)</label><br />
+                            <label>
+                                <input type="radio" value="GradeIII" ng-model="todo.alt1l5s1grade" />&nbsp;Grade III (51%-75% slippage)</label><br />
+                            <label>
+                                <input type="radio" value="GradeIV" ng-model="todo.alt1l5s1grade" />&nbsp;Grade IV (76%-100% slippage)</label>
+                        </div>
+                    </div>
+                </div>
+                <!------- Alteration 2 ------->
+                <div class="col-sm-offset-1 col-sm-11">
+                    <label>Were flexion and extension radiographs obtained? </label>
+                    <br />
+                    <label>
+                        <input type="radio" value="Yes" ng-model="todo.alt2flex" />&nbsp;Yes</label>
+                    <label>
+                        <input type="radio" value="No" ng-model="todo.alt2flex" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].alt2l12 = false', '$scope.todos[{{todo.indexValue}}].alt2l23 = false', '$scope.todos[{{todo.indexValue}}].alt2l34 = false', '$scope.todos[{{todo.indexValue}}].alt2l45 = false', '$scope.todos[{{todo.indexValue}}].alt2l5s1 = false', '$scope.todos[{{todo.indexValue}}].alt2l12translate = false', '$scope.todos[{{todo.indexValue}}].alt2l12angular = false', '$scope.todos[{{todo.indexValue}}].alt2l12lossmotion = false', '$scope.todos[{{todo.indexValue}}].alt2l23translate = false', '$scope.todos[{{todo.indexValue}}].alt2l23angular = false', '$scope.todos[{{todo.indexValue}}].alt2l23lossmotion = false', '$scope.todos[{{todo.indexValue}}].alt2l34translate = false', '$scope.todos[{{todo.indexValue}}].alt2l34angular = false', '$scope.todos[{{todo.indexValue}}].alt2l34lossmotion = false', '$scope.todos[{{todo.indexValue}}].alt2l45translate = false', '$scope.todos[{{todo.indexValue}}].alt2l45angular = false', '$scope.todos[{{todo.indexValue}}].alt2l45lossmotion = false', '$scope.todos[{{todo.indexValue}}].alt2l5s1translate = false', '$scope.todos[{{todo.indexValue}}].alt2l5s1angular = false', '$scope.todos[{{todo.indexValue}}].alt2l5s1lossmotion = false'])" />&nbsp;No</label>
+
+                </div>
+                <div class="col-sm-12" ng-if="todo.alt2flex">
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.alt2l12" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].alt2l12translate = false', '$scope.todos[{{todo.indexValue}}].alt2l12angular = false', '$scope.todos[{{todo.indexValue}}].alt2l12lossmotion = false'])" />
+                                &nbsp;L1-2</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.alt2l12">
+                        <div class="margin-left-3">
+                            <label>
+                                &nbsp;Is translation of one vertebral body on the other AT LEAST 4.5 mm or greater?                                 
+                                (millimeters of translation)</label><br />
+                            <label>
+                                <input type="radio" value="Yes" ng-model="todo.alt2l12translate" />&nbsp;Yes</label>
+                            <label>
+                                <input type="radio" value="No" ng-model="todo.alt2l12translate" />&nbsp;No</label>
+                        </div>
+                        <div class="margin-left-3">
+                            <label>
+                                &nbsp;Is angular motion GREATER THAN 15&deg; at each ADJACENT LEVEL                                 
+                                (angular motion in degrees)?</label><br />
+                            <label>
+                                <input type="radio" value="Yes" ng-model="todo.alt2l12angular" />&nbsp;Yes</label>
+                            <label>
+                                <input type="radio" value="No" ng-model="todo.alt2l12angular" />&nbsp;No</label>
+                        </div>
+                        <div class="margin-left-3">
+                            <label>
+                                &nbsp;Is there COMPLETE LOSS OF MOTION (or near complete loss) of a motion segment due to a developmental fusion and/or arthrodesis?
+                            </label>
+                            <br />
+                            <label>
+                                <input type="radio" value="Yes" ng-model="todo.alt2l12lossmotion" />&nbsp;Yes</label>
+                            <label>
+                                <input type="radio" value="No" ng-model="todo.alt2l12lossmotion" />&nbsp;No</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.alt2l23" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].alt2l23translate = false', '$scope.todos[{{todo.indexValue}}].alt2l23angular = false', '$scope.todos[{{todo.indexValue}}].alt2l23lossmotion = false'])" />
+                                &nbsp;L2-3</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.alt2l23">
+                        <div class="margin-left-3">
+                            <label>
+                                &nbsp;Is translation of one vertebral body on the other AT LEAST 4.5 mm or greater?                                 
+                                (millimeters of translation)</label><br />
+                            <label>
+                                <input type="radio" value="Yes" ng-model="todo.alt2l23translate" />&nbsp;Yes</label>
+                            <label>
+                                <input type="radio" value="No" ng-model="todo.alt2l23translate" />&nbsp;No</label>
+                        </div>
+                        <div class="margin-left-3">
+                            <label>
+                                &nbsp;Is angular motion GREATER THAN 15&deg; at each ADJACENT LEVEL                                 
+                                (angular motion in degrees)?</label><br />
+                            <label>
+                                <input type="radio" value="Yes" ng-model="todo.alt2l23angular" />&nbsp;Yes</label>
+                            <label>
+                                <input type="radio" value="No" ng-model="todo.alt2l23angular" />&nbsp;No</label>
+                        </div>
+                        <div class="margin-left-3">
+                            <label>
+                                &nbsp;Is there COMPLETE LOSS OF MOTION (or near complete loss) of a motion segment due to a developmental fusion and/or arthrodesis?
+                            </label>
+                            <br />
+                            <label>
+                                <input type="radio" value="Yes" ng-model="todo.alt2l23lossmotion" />&nbsp;Yes</label>
+                            <label>
+                                <input type="radio" value="No" ng-model="todo.alt2l23lossmotion" />&nbsp;No</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.alt2l34" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].alt2l34translate = false', '$scope.todos[{{todo.indexValue}}].alt2l34angular = false', '$scope.todos[{{todo.indexValue}}].alt2l34lossmotion = false'])" />
+                                &nbsp;L3-4</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.alt2l34">
+                        <div class="margin-left-3">
+                            <label>
+                                &nbsp;Is translation of one vertebral body on the other AT LEAST 4.5 mm or greater?                                 
+                                (millimeters of translation)</label><br />
+                            <label>
+                                <input type="radio" value="Yes" ng-model="todo.alt2l34translate" />&nbsp;Yes</label>
+                            <label>
+                                <input type="radio" value="No" ng-model="todo.alt2l34translate" />&nbsp;No</label>
+                        </div>
+                        <div class="margin-left-3">
+                            <label>
+                                &nbsp;Is angular motion GREATER THAN 15&deg; at each ADJACENT LEVEL                                 
+                                (angular motion in degrees)?</label><br />
+                            <label>
+                                <input type="radio" value="Yes" ng-model="todo.alt2l34angular" />&nbsp;Yes</label>
+                            <label>
+                                <input type="radio" value="No" ng-model="todo.alt2l34angular" />&nbsp;No</label>
+                        </div>
+                        <div class="margin-left-3">
+                            <label>
+                                &nbsp;Is there COMPLETE LOSS OF MOTION (or near complete loss) of a motion segment due to a developmental fusion and/or arthrodesis?
+                            </label>
+                            <br />
+                            <label>
+                                <input type="radio" value="Yes" ng-model="todo.alt2l34lossmotion" />&nbsp;Yes</label>
+                            <label>
+                                <input type="radio" value="No" ng-model="todo.alt2l34lossmotion" />&nbsp;No</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.alt2l45" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].alt2l45translate = false', '$scope.todos[{{todo.indexValue}}].alt2l45angular = false', '$scope.todos[{{todo.indexValue}}].alt2l45lossmotion = false'])" />
+                                &nbsp;L4-5</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.alt2l45">
+                        <div class="margin-left-3">
+                            <label>
+                                &nbsp;Is translation of one vertebral body on the other AT LEAST 4.5 mm or greater?                                 
+                                (millimeters of translation)</label><br />
+                            <label>
+                                <input type="radio" value="Yes" ng-model="todo.alt2l45translate" />&nbsp;Yes</label>
+                            <label>
+                                <input type="radio" value="No" ng-model="todo.alt2l45translate" />&nbsp;No</label>
+                        </div>
+                        <div class="margin-left-3">
+                            <label>
+                                &nbsp;Is angular motion GREATER THAN 15&deg; at each ADJACENT LEVEL                                 
+                                (angular motion in degrees)?</label><br />
+                            <label>
+                                <input type="radio" value="Yes" ng-model="todo.alt2l45angular" />&nbsp;Yes</label>
+                            <label>
+                                <input type="radio" value="No" ng-model="todo.alt2l45angular" />&nbsp;No</label>
+                        </div>
+                        <div class="margin-left-3">
+                            <label>
+                                &nbsp;Is there COMPLETE LOSS OF MOTION (or near complete loss) of a motion segment due to a developmental fusion and/or arthrodesis?
+                            </label>
+                            <br />
+                            <label>
+                                <input type="radio" value="Yes" ng-model="todo.alt2l45lossmotion" />&nbsp;Yes</label>
+                            <label>
+                                <input type="radio" value="No" ng-model="todo.alt2l45lossmotion" />&nbsp;No</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="margin-left-2">
+                            <label>
+                                <input type="checkbox" ng-model="todo.alt2l5s1" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].alt2l5s1translate = false', '$scope.todos[{{todo.indexValue}}].alt2l5s1angular = false', '$scope.todos[{{todo.indexValue}}].alt2l5s1lossmotion = false'])" />
+                                &nbsp;L5-S1</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.alt2l5s1">
+                        <div class="margin-left-3">
+                            <label>
+                               &nbsp;Is translation of one vertebral body on the other AT LEAST 4.5 mm or greater?                                 
+                                (millimeters of translation)</label><br />
+                            <label>
+                                <input type="radio" value="Yes" ng-model="todo.alt2l5s1translate" />&nbsp;Yes</label>
+                            <label>
+                                <input type="radio" value="No" ng-model="todo.alt2l5s1translate" />&nbsp;No</label>
+                        </div>
+                        <div class="margin-left-3">
+                            <label>
+                                &nbsp;Is angular motion GREATER THAN 15&deg; at each ADJACENT LEVEL                                 
+                                (angular motion in degrees)?</label><br />
+                            <label>
+                                <input type="radio" value="Yes" ng-model="todo.alt2l5s1angular" />&nbsp;Yes</label>
+                            <label>
+                                <input type="radio" value="No" ng-model="todo.alt2l5s1angular" />&nbsp;No</label>
+                        </div>
+                        <div class="margin-left-3">
+                            <label>
+                                &nbsp;Is there COMPLETE LOSS OF MOTION (or near complete loss) of a motion segment due to a developmental fusion and/or arthrodesis?
+                            </label>
+                            <br />
+                            <label>
+                                <input type="radio" value="Yes" ng-model="todo.alt2l5s1lossmotion" />&nbsp;Yes</label>
+                            <label>
+                                <input type="radio" value="No" ng-model="todo.alt2l5s1lossmotion" />&nbsp;No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!------- Other ------->
+            <!--<div class="col-sm-12">
+                <label>
+                    <input type="checkbox" id="other{{$index}}" name="other{{$index}}" ng-model="todo.other" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].othertexteditor = \'\'', '$scope.todos[{{todo.indexValue}}].arthritisternoptsedit = false'])" />
+                    &nbsp;Other</label>
+            </div>-->
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-info btn-xs" ng-click="othertexteditorCondition=true">
+                    Text
+                </button>
+                <div class="clearer"></div>
+                <div ng-hide="othertexteditorCondition"><span dynamic="todo.othertexteditor" class="textEditorTextColor col-sm-10"></span></div>
+                <div class="col-sm-10" ng-if="othertexteditorCondition">
+                    <textarea ui-tinymce ng-model="todo.othertexteditor"></textarea>
+                </div>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>

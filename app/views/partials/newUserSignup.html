@@ -1,0 +1,350 @@
+<div class="bright">
+    <div class="container" ng-init="checkUserLevel()">
+        <div ng-if="isLoad">
+            <div class="overlayBackground"></div>
+            <div class="overlayContent" style="top: 60%">
+                <img src="/images/spinner.gif"><span>&nbsp;&nbsp;Loading</span>
+            </div>
+        </div>
+        <div class="row" ng-show="isSucess">
+            <form class="form col-sm-12" name='myform' autocomplete="off">
+                <div ng-hide="isInvitestatus" class="text-center" style="margin-bottom: 12px; height: 350px;" ng-hide="isAllow">
+                    <div class="login-sign">
+                        <a><span class="glyphicon glyphicon-user"></span></a>
+                    </div>
+                    <br />
+                    <h3 ng-hide="errorMessage">Sorry Link Expired...!</h3>
+                    <h3 ng-show="errorMessage">You are already a registered user! Click <a href="login">here</a> to log in into your account.</h3>
+                </div>
+
+                <div ng-show="isInvitestatus">
+                    <div class="login-sign text-center" style="margin-bottom: 12px;">
+                        <h3>Welcome to RateFast!</h3>
+                        <a><span class="glyphicon glyphicon-user"></span></a>
+                    </div>
+                    <div ng-form='step1form' novalidate>
+
+                        <div class="form-group col-sm-2" ng-class="{ 'has-success': step1form.firstname.$valid && submitted,'has-error': step1form.lastname.$invalid && submitted }">
+                            First Name
+                            <input type="text" name="firstname" class="form-control" ng-model="practice.firstname" placeholder="First Name" required capitalize-first max-length="50" />
+
+                            <p class="help-block" ng-show="step1form.firstname.$error.required && submitted">
+                                First Name is required
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-2" ng-class="{ 'has-success': step1form.lastname.$valid && submitted,'has-error': step1form.lastname.$invalid && submitted }">
+                            Last Name
+                            <input type="text" name="lastname" class="form-control" ng-model="practice.lastname" placeholder="Last Name" required capitalize-first max-length="50" />
+
+                            <p class="help-block" ng-show="step1form.lastname.$error.required && submitted">
+                                Last Name is required
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step1form.practicename.$valid && submitted, 'has-error': step1form.practicename.$invalid && submitted}">
+                            Practice Name
+                            <input type="text" name="practicename" class="form-control" ng-model="practice.practicename"
+                                placeholder="Practice Name" ng-blur="UniquePracticeName(practice.practicename)"
+                                disabled
+                                required />
+
+                            <p class="help-block" ng-show="step1form.practicename.$error.required && submitted">
+                                Practice name is required
+                            </p>
+
+                            <p class="help-block" ng-show="uniquePracticename">
+                                Practice name is already in use
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step1form.email.$valid && submitted,'has-error': step1form.email.$invalid && submitted }">
+                            Email
+                            <input type="email" name="email" class="form-control" ng-model="practice.email"
+                                placeholder="Email"
+                                ng-blur="UniqueEmail(practice.email)" disabled />
+
+                            <p class="help-block" ng-show="step1form.email.$error.required && submitted">
+                                Email is required
+                            </p>
+
+                            <p class="help-block" ng-show="step1form.email.$error.email && submitted">
+                                This email doesn't look quite right.
+                            </p>
+
+                            <p class="help-block" ng-show="UniqueemailId">
+                                Email id is in use.
+                            </p>
+                        </div>
+                        <div style="clear: both;"></div>
+
+
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step1form.username.$valid && submitted,'has-error': step1form.username.$invalid && submitted }">
+                            Username
+                            <input type="text" name="username" class="form-control"
+                                ng-model="practice.username"
+                                placeholder="What do you want your username to be?" ng-blur="UniqueUsername(practice.username)" required lowercase maxlength="40" />
+
+                            <p class="help-block" ng-show="step1form.username.$error.required && submitted">
+                                Username is required
+                            </p>
+
+                            <p class="help-block" ng-show="Uniqueuser" style="color: #ff0000;">
+                                Username is already in use.
+                            </p>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            Password <a popover="Minimum 8 character with a capital letter,a special character and a number."
+                                popover-trigger="mouseenter" class="btn"
+                                style="padding: 0px; font-size: 11px; color: red;">Password
+                            Rules</a>
+                            <input id="usernewpassword" type="{{inputType}}" class="form-control" ng-minlength="8"
+                                ng-pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-!$^&*()_|~=`{}\[\]:/<>?,.@#]+)[-\w!$^&*()|~=`{}\[\]:/<>?,.@#]+$/" name="password" required
+                                ng-model="practice.password" placeholder="Type your desired password here" autocomplete="off">							
+							<input type="checkbox" id="checkbox" ng-model="passwordCheckbox" ng-click="hideShowPassword()" />
+							<label for="checkbox" ng-if="passwordCheckbox">Hide password</label>
+							<label for="checkbox" ng-if="!passwordCheckbox">Show password</label>								
+                            <span class="help-block" style="color: red" ng-show='step1form.password.$error.pattern'>This password isn't strong enough!</span>
+                            <span class="help-block" style="color: red" ng-show='step1form.password.$error.minlength'>Password should be of minimum 8 characters.</span>
+                            <span class="help-block" style="color: red" ng-show="step1form.password.$error.required && submitted">Password Required*</span>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            Confirm Password
+                            <input type="password" class="form-control" name="confirm_password" required
+                                ng-model="practice.confirmpassword" ui-validate=" '$value==practice.password' "
+                                ui-validate-watch=" 'practice.password' " placeholder="Type your password again" autocomplete="off" ng-disabled="setConfirmPassword()">
+                            <span style="color: red" ng-show='practice.password!=practice.confirmpassword && practice.confirmpassword.length>0'>Passwords do not match!</span>
+                        </div>
+                        <div style="clear: both;"></div>
+						<div class="form-group col-sm-4">
+                            Phone Number <span ng-click="openPopup(6)" style="color: #14A4DC; cursor: pointer; font-weight: bold;">(i)</span>                                 			
+                            <input name="step1phonenumber" ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" placeholder="Phone number optional"
+                                ng-model="practice.userphonenumber" class="form-control" numbers-only="numbers-only" maxlength="10"/>
+                        </div>						 
+                        <div class="form-group col-sm-4" ng-show="practice.userphonenumber.length==10">
+                            Extension
+                            <input name="step1extension"  ng-model="practice.userextension" class="form-control" numbers-only="numbers-only"
+                             maxlength="7" />
+                        </div>
+                        <div style="clear: both;"></div>
+                        <div class="form-group col-sm-5">
+                            <section data-ng-init="questionsList()">
+                                Security Question
+                                <select ng-model="practice.question" class="form-control" name="question" ng-change="securityAns(practice.question)" required>
+                                    <option value="" selected="selected">-- Select --</option>
+                                    <option ng-repeat="question in questions" value="{{question._id}}">{{question.question}}</option>
+                                </select>
+
+                            </section>
+                            <p class="help-block" ng-show="step1form.question.$error.required && submitted">
+                                Security Question is required.
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step1form.answer.$valid && submitted,'has-error': step1form.answer.$invalid && submitted }">
+                            <div ng-if="practice.question">
+                                Answer
+                                <input type="text" name="answer" class="form-control" ng-model="practice.answer" placeholder="Answer" required />
+                                <p class="help-block" ng-show="step1form.answer.$error.required && submitted">
+                                    Answer is required
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-3" ng-class="{ 'has-success': step1form.licensenumber.$valid && submitted,'has-error': step1form.licensenumber.$invalid && submitted }"
+                            ng-show="isLevel34">
+                            Medical License Number
+                            <input type="text" name="licensenumber" ng-blur="Uniquelicensenumber(practice.licensenumber)" class="form-control"
+                                ng-model="practice.licensenumber"  maxlength="10" placeholder="License Number" />
+
+                          <!--  <p class="help-block" ng-show="step1form.licensenumber.$error.required && submitted">
+                                License Number is required.
+                            </p>
+                            <p class="help-block" ng-show="step1form.licensenumber.$error.pattern && submitted">
+                                License Number is incorrect format.
+                            </p>
+                            <p class="help-block" ng-show="step1form.licensenumber.$error.minlength && submitted">
+                                License Number is incorrect length.
+                            </p> -->
+                            <p ng-show="UniqueLicenseNumber">License Number is already in use.</p>
+                        </div>
+                        <div style="clear: both;"></div>
+
+                        <div class="form-group col-sm-10" ng-if="level!='level1' && (isLevel4 || isLevel2 || isLevel3)">
+                            <label>Select Professional degree</label>
+                            <hr />
+                            <div class="col-sm-4" ng-show="isLevel4">
+                                <label class="normalFont">
+                                    <input type="checkbox" name="profession" ng-model="practice.profession.md" value="md"
+                                        ng-true-value="add" ng-false-value="remove"
+                                        ng-change="addProfession('md',practice.profession.md)" />&nbsp;M.D.</label><br />
+                                <label class="normalFont">
+                                    <input type="checkbox" name="profession" value="do" ng-model="practice.profession.do"
+                                        ng-true-value="add" ng-false-value="remove"
+                                        ng-change="addProfession('do',practice.profession.do)" />&nbsp;D.O.</label><br />
+                                <label class="normalFont">
+                                    <input type="checkbox" name="profession" value="dc" ng-model="practice.profession.dc"
+                                        ng-true-value="add" ng-false-value="remove"
+                                        ng-change="addProfession('dc',practice.profession.dc)" />&nbsp;D.C.</label><br />
+                                <label class="normalFont">
+                                    <input type="checkbox" name="profession" value="dpm" ng-model="practice.profession.dpm"
+                                        ng-true-value="add" ng-false-value="remove"
+                                        ng-change="addProfession('dpm',practice.profession.dpm)" />&nbsp;D.P.M.</label><br />
+                                <label class="normalFont">
+                                    <input type="checkbox" name="profession" value="lac" ng-model="practice.profession.lac"
+                                        ng-true-value="add" ng-false-value="remove"
+                                        ng-change="addProfession('lac',practice.profession.lac)" />&nbsp;LAc.</label>
+                            </div>
+
+                            <div class="col-sm-4" ng-show="isLevel4">
+                                <label class="normalFont">
+                                    <input type="checkbox" name="profession" value="phd" ng-model="practice.profession.phd"
+                                        ng-true-value="add" ng-false-value="remove"
+                                        ng-change="addProfession('phd',practice.profession.phd)" />&nbsp;Ph.D.</label><br />
+                                <label class="normalFont">
+                                    <input type="checkbox" name="profession" value="dds" ng-model="practice.profession.dds"
+                                        ng-true-value="add" ng-false-value="remove"
+                                        ng-change="addProfession('dds',practice.profession.dds)" />&nbsp;D.D.S.</label><br />
+                                <label class="normalFont">
+                                    <input type="checkbox" name="profession" value="dmd" ng-model="practice.profession.dmd"
+                                        ng-true-value="add" ng-false-value="remove"
+                                        ng-change="addProfession('dmd',practice.profession.dmd)" />&nbsp;D.M.D.</label><br />
+                                <label class="normalFont">
+                                    <input type="checkbox" name="profession" value="od" ng-model="practice.profession.od"
+                                        ng-true-value="add" ng-false-value="remove"
+                                        ng-change="addProfession('od',practice.profession.od)" />&nbsp;O.D.</label><br />
+                                <label class="normalFont">
+                                    <input type="checkbox" name="profession" value="pharm"
+                                        ng-model="practice.profession.pharm" ng-true-value="add" ng-false-value="remove"
+                                        ng-change="addProfession('pharm',practice.profession.pharm)" />&nbsp;Pharm.D.</label>
+                            </div>
+
+                            <div class="col-sm-4" ng-if="isLevel4">
+                                <label class="normalFont">
+                                    <input type="checkbox" name="profession" value="mph" ng-model="practice.profession.mph"
+                                        ng-true-value="add" ng-false-value="remove"
+                                        ng-change="addProfession('mph',practice.profession.mph)" />&nbsp;M.P.H.</label><br />
+                                <label class="normalFont">
+                                    <label class="normalFont">
+                                        <input type="checkbox" name="profession" value="other" ng-model="practice.profession.other" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('other',practice.profession.other)" ng-checked="isChecked('other')" ng-disabled="usernameMatch" />&nbsp;Other</label><br />
+                            </div>
+
+                            <div class="col-sm-4" ng-if="isLevel2">
+                                <label class="normalFont">
+                                    <input type="checkbox" name="profession" ng-model="practice.profession.nurse" value="nurse" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('nurse',practice.profession.nurse)" ng-checked="isChecked('nurse')" />&nbsp;Nurse</label><br />
+                                <label class="normalFont">
+                                    <input type="checkbox" name="profession" value="ma" ng-model="practice.profession.ma" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('ma',practice.profession.ma)" ng-checked="isChecked('ma')" />&nbsp;Medical Assistant</label><br />
+                                <label class="normalFont">
+                                    <input type="checkbox" name="profession" value="other" ng-model="practice.profession.other" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('other',practice.profession.other)" ng-checked="isChecked('other')" />&nbsp;Other</label><br />
+                            </div>
+
+                            <div class="col-sm-4" ng-if="isLevel3">
+                                <label class="normalFont">
+                                    <input type="checkbox" name="profession" ng-model="practice.profession.np" value="np" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('np',practice.profession.np)" ng-checked="isChecked('np')" />&nbsp;N.P.</label><br />
+                                <label class="normalFont">
+                                    <input type="checkbox" name="profession" value="pa" ng-model="practice.profession.pa" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('pa',practice.profession.pa)" ng-checked="isChecked('pa')" />&nbsp;P.A.</label><br />
+                                <label class="normalFont">
+                                    <input type="checkbox" name="profession" value="other" ng-model="practice.profession.other" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('other',practice.profession.other)" ng-checked="isChecked('other')" ng-disabled="usernameMatch" />&nbsp;Other</label><br />
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control col-sm-2" placeholder="Enter Profession"
+                                    ng-model="practice.professionothertext"
+                                    ng-show="practice.profession.other=='add'"
+                                    ng-required="practice.profession.other=='add'">
+                            </div>
+
+                        </div>
+                        <div style="clear: both;"></div>
+                       <div class="form-group col-sm-10">                        
+	                        <p class="help-block" style="color: #a94442" ng-show="updateuser.profession.length==0 && submitted && isLevel4">
+	                            Please select your degree(s)
+	                        </p>
+	                        <p class="help-block clearer"  ng-show="isDisabledOnProfession" style="color: #a94442; margin-left: 10px">
+								Please limit yourself to four degrees!
+							</p>
+							   <hr>
+						</div>
+                     
+                        <!-- Speciality-->
+                        <div class="form-group col-sm-12" ng-show="isLevel4">
+                            <label>
+                                &nbsp;&nbsp;&nbsp; Are you board certified and/or board eligible in any specialties
+                                ?</label><br />
+
+                            <div class="col-sm-12">
+                                <input type="radio" name="boardcertified" id="boardcertified_yes" value="1"
+                                    ng-model="boardcertified1" />
+                                <label for="boardcertified_yes">Yes</label>
+                                &nbsp;&nbsp;
+                                <input type="radio" name="boardcertified" id="boardcertified_no" value="0"
+                                    ng-model="boardcertified1" ng-checked="isLevel4==true" />
+                                <label for="boardcertified_no">No</label>
+                            </div>
+                            <div class="maindiv" ng-show="boardcertified1==1">
+                                <div class="col-sm-12" ng-repeat="p in updateuser.speciality">
+                                    <div class="col-sm-4">
+                                        <select ng-model="p.name" class="form-control"
+                                            ng-required="boardcertified1==true">
+                                            <option value="">--Select Speciality--</option>
+                                            <option ng-repeat="speciality in specialities" value="{{speciality.title}}">{{speciality.title}}
+                                            </option>
+                                        </select>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <p class="help-block" ng-show="step1form.p.name.$error.required && submitted">
+                                            please select speciality
+                                        </p>
+                                    </div>
+                                    <label><input type="radio" name="{{$index}}boardcertified" id="boardcertificate_yes"
+                                        value="1" ng-model="p.boardcertified" />
+                                    Board Certificate</label>
+
+                                    <label><input type="radio" name="{{$index}}boardcertified" id="boardeligible_yes" value="0"
+                                        ng-model="p.boardcertified" />
+                                    Board Eligible</label>
+                                    &nbsp;&nbsp;
+
+                                    <button ng-click="removespeciality(p)" class="btn btn-md btn-warning">Remove</button>
+
+                                    <div style="clear: both"></div>
+                                </div>
+                                &nbsp;&nbsp;&nbsp;
+                                <button ng-click="addSpeciality()" class="btn btn-md btn-primary">
+                                    Add Another
+                                    Speciality
+                                </button>
+                            </div>
+                            <br>
+                        </div>
+                        <!-- Speciality-->
+                        <div class="form-group col-sm-9">
+
+                            <button ng-disabled="practice.password!=practice.confirmpassword || isDisabledOnProfession" ng-click="registerinviteuser(step1form)"
+                                class="btn btn-md btn-primary">
+                                Sign Up
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="row" ng-hide="isSucess" style="text-align: center">
+            <div class="login-sign">
+                <h1 style="color: #0E80C7">Welcome to RateFast!</h1>
+                <a><span class="glyphicon glyphicon-user"></span></a>
+            </div>
+            <h4>You have registered successfully.</h4>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+var banned = ['ratefast','RateFast','Ratefast','RATEFAST','rate-fast','Rate-Fast','Rate-fast','RATE-FAST'];
+document.getElementById('usernewpassword').addEventListener('keyup', function(e) {
+   var text = document.getElementById('usernewpassword').value;
+   for (var x=0;x<banned.length;x++) {
+       if (text.search(banned[x]) !== -1) {
+           alert('You cannot include the phrase "'+banned[x]+'" in your password!');
+       }
+       var regExp = new RegExp(banned[x]);
+       text = text.replace(regExp,'');
+   }
+   document.getElementById('usernewpassword').value = text;
+},false);
+</script>

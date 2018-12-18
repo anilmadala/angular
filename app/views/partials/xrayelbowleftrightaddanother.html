@@ -1,0 +1,121 @@
+<div ng-controller="XrayElbowLeftRightAddAnotherCtrl">
+    <div class="col-sm-12">
+        <label class="{{labelclass}}">{{label}}</label>
+        <button type="button" ng-click="addControl()" class="btn btn-default btn-circle btn-success">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+    <div ng-repeat="todo in todos.slice().reverse()" class="col-sm-12 checkbox addAnotherBottomBorder" style="padding: 5px;">
+        <input type="hidden" ng-model="todo.indexValue" ng-init="todo.indexValue = todos.length - ($index+1)" />
+        <div class="col-sm-12">
+            <div class="col-sm-1" style="margin-top: 7px; padding-left: 0;">
+                <label>Date:</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="tel" ui-date="dateOptions" my-date ng-model="todo.dateOfSurgery" class="form-control" placeholder="MM/DD/YYYY">
+            </div>
+            <div class="col-sm-1" style="margin-top: 7px;">
+                <button type="button" class="btn btn-info btn-xs" ng-click="clearbodypart($index+1,todos.length)">Clear</button>
+            </div>
+            <div class="col-sm-6" style="margin-top: 7px;">
+                <button type="button" class="btn btn-danger btn-xs" ng-click="deletebodypart($index+1,todos.length)">Delete</button>
+            </div>
+            <!------- Normal ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.normal" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].fracture = false',
+                        '$scope.todos[{{todo.indexValue}}].arthritis = false','$scope.todos[{{todo.indexValue}}].effusion = false','$scope.todos[{{todo.indexValue}}].amputation = false','$scope.todos[{{todo.indexValue}}].subluxation = false'],todo.normal,'$scope.todos[{{todo.indexValue}}].normal',true)" />
+                    &nbsp;Normal</label>
+            </div>
+            <!------- Fracture ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.fracture" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Fracture</label>
+            </div>
+            <!------- Arthritis/degenerative joint changes ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.arthritis" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false','$scope.todos[{{todo.indexValue}}].arthritisterno = false', '$scope.todos[{{todo.indexValue}}].arthritisternopts = false','$scope.todos[{{todo.indexValue}}].arthritisternoptsedittext=\'\''],todo.arthritis,'$scope.todos[{{todo.indexValue}}].arthritis')" />
+                    &nbsp;Arthritis/degenerative joint changes</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.arthritis">
+                <div class="col-sm-12" ng-if="todo.arthritis">
+                    <label>
+                        <input type="radio" value="Mild" ng-model="todo.arthritisternopts" />&nbsp;Mild</label><br />
+                    <label>
+                        <input type="radio" value="Moderate" ng-model="todo.arthritisternopts" />&nbsp;Moderate</label><br />
+                    <label>
+                        <input type="radio" value="Severe" ng-model="todo.arthritisternopts" />&nbsp;Severe</label><br />
+                    <label>
+                        <input type="checkbox" value="Postoperative" ng-model="todo.arthritisternoptschk" style="margin-left: 0;" />&nbsp;Postoperative changes</label><br />
+                    <div class="col-sm-12  checkbox">
+                        <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                        <div class="clearer"></div>
+                        <div ng-hide="isEdit"><span dynamic="todo.arthritisternoptsedittext" class="textEditorTextColor col-sm-10"></span></div>
+                        <div class="col-sm-10" ng-if="isEdit">
+                            <textarea ui-tinymce="tinymceOptions" ng-model="todo.arthritisternoptsedittext"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!------- Subluxation/dislocation ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.subluxation" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Subluxation/dislocation</label>
+            </div>
+            <!------- Effusion ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.effusion" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false'])" />
+                    &nbsp;Effusion</label>
+            </div>
+            <!------- Amputation ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.amputation" ng-change="todo.Amputationoptn='';todo.AmputationtextA=''" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false','$scope.todos[{{todo.indexValue}}].amputationopts = false'])" />
+                    &nbsp;Amputation</label>
+            </div>
+            <div class="col-sm-12 margin-left-1" ng-if="todo.amputation">
+                <div class="col-sm-8">
+                    <select ng-model="todo.Amputationoptn" class="form-control">
+                        <option value="" selected>-- Select --</option>
+                        <option value="At/or above the deltoid tubercle">At/or above the deltoid tubercle</option>
+                        <option value="At/or above the bicep tubercle">At/or above the bicep tubercle</option>
+                        <option value="Below the bicepital tubercle (above transmetacarpophalangeal level)">Below the bicepital tubercle (above transmetacarpophalangeal level)</option>
+                        <option value="At transmetacarpophalangeal level (includes all digits)">At transmetacarpophalangeal level (includes all digits)</option>
+                    </select>
+                </div>
+                <div class="clearer"></div>
+                <br />
+                <div class="col-sm-12">
+                    <button type="button" class="btn btn-info btn-xs" ng-click="isEdit=true">Text</button>
+                </div>
+
+                <div class="clearer"></div>
+                <div class="col-sm-12  checkbox">
+                    <div ng-hide="isEdit"><span dynamic="todo.AmputationtextA" class="textEditorTextColor col-sm-10"></span></div>
+                    <div class="col-sm-10" ng-if="isEdit">
+                        <textarea ui-tinymce="tinymceOptions" ng-model="todo.AmputationtextA"></textarea>
+                    </div>
+                </div>
+            </div>
+            <!------- Other ------->
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-info btn-xs" ng-click="othertexteditorCondition=true">
+                    Text
+                </button>
+
+            </div>
+            <div class="col-sm-12">
+
+                <div ng-hide="othertexteditorCondition"><span dynamic="todo.othertexteditor" class="textEditorTextColor col-sm-10"></span></div>
+                <div class="col-sm-10" ng-if="othertexteditorCondition">
+                    <textarea ui-tinymce ng-model="todo.othertexteditor"></textarea>
+                </div>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>

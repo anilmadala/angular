@@ -1,0 +1,23 @@
+﻿<div ng-if="isLoad">
+    <div class="overlayBackground"></div>
+    <div class="overlayContent" style="top: 60%">
+        <img src="/images/spinner.gif"><span>&nbsp;&nbsp;Loading</span>
+    </div>
+</div>
+<div class="modal-header" ng-init="sendfeedbackctrl">
+    <h3>Send Feedback</h3>
+</div>
+<div class="modal-body">
+    
+    <div class="login-sign">
+        <div class="form-group">
+            <label>Feedback :</label><br />
+            <textarea class="form-control" rows="5" ng-model="feedback"></textarea>
+        </div>
+    </div>
+    <div class="alert alert-danger" role="alert" ng-if="iserror">An Error Occured while sending the mail. Please try again!</div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="send(feedback)">Send</button>
+    <button class="btn btn-danger" ng-click="leave()">Cancel</button>
+</div>

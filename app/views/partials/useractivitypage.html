@@ -1,0 +1,250 @@
+﻿<div class="practise">
+    <div class="bright">
+        <section id="header-title" style="margin-bottom: 0;">
+            <div class="container">
+                <div class="row">
+                    <h2 style="text-align: left;">User Activity</h2>
+                </div>
+            </div>
+        </section>
+        <section ng-if="currentuserrole != 'siteadmin' || fullPractice">
+            <div class="container">
+                <br />
+                <div class="row">
+                    <tabset> 
+                        <tab heading="Sign In / Sign Out Activity" ng-hide="$parent.hideme" ng-click="blanckdata()">
+                            <br />
+                            <div class="row">
+                            <div class="col-sm-12">
+                                <section>
+                                    <div class="container">
+                                        <div class="form-horizontal">
+                                            <div class="row" style="margin-left: 15px">
+                                                <div class="form-group col-sm-12 col-md-12">
+                                                    <form class="form-inline" name="chargereportForm" novalidate>
+                                                        <div class="form-group col-sm-4 col-md-3" ng-class="{ 'has-error' : chargereportForm.fromdate.$invalid && submited }">
+                                                            <label for="exampleInputName2">Date From:   &nbsp;</label>
+                                                            <input type="text" ng-model="formd.startdate"  class="form-control" id="Text3" name="fromdate" date-options="dateOptions" custom-datepicker date-format="dd-MM-yy" style="width: 50%" required>
+                                                            <p class="help-block" ng-show="chargereportForm.fromdate.$invalid && submited" style="padding-left: 29%; color: #a94442">Required</p>
+                                                        </div>
+                                                        <div class="form-group col-sm-4  col-md-3" ng-class="{ 'has-error' : chargereportForm.todate.$invalid && submited }">
+                                                            <label for="exampleInputEmail2">Date To:   &nbsp;</label>
+                                                            <input type="text" ng-model="formd.enddate" class="form-control" id="Text4" name="todate" date-options="dateOptions" custom-datepicker date-format="dd-MM-yy"  style="width: 50%" required>
+                                                            <p class="help-block" ng-show="chargereportForm.todate.$invalid && submited" style="padding-left: 24%; color: #a94442">Required</p>
+                                                        </div>
+                                                        
+                                                        <div class="form-group col-sm-5  col-md-4" ng-class="{ 'has-error' : chargereportForm.practicename.$invalid && submited }" ng-init="getpracticesList()">
+                                                            <label for="exampleInputEmail2">Practice Name:   &nbsp;</label>
+
+                                                            <select ng-model="formd.practicename" name="practicename" class="form-control" ng-options="color.practicename for color in practiceList  | orderBy:'practicename'" style="width: 50%" required>
+                                                                <option value="">-- Select --</option>
+                                                                <option value="item.practicename">{{item.practicename}}</option>
+                                                            </select>
+                                                            <!--<select ui-select2="select2Options" ng-model="formd.practicename" name="practicename"  validator="/^.+$/" style="width: 50%"  required>
+                                                                <option value="">-- Select --</option>
+                                                                <option ng-repeat="item in practiceList" value="{{item.practicename}}">{{item.practicename}}</option>
+                                                            </select>-->
+                                                            <p class="help-block" ng-show="chargereportForm.practicename.$invalid && submited" style="padding-left: 30%; color: #a94442">Required</p>
+                                                        </div>
+                                                        <div class="form-group col-sm-2  col-md-2">
+                                                            
+                                                            <button type="submit" class="btn btn-info btn-sm" ng-click="create(chargereportForm.$valid,formd)" title="Create">Create</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div ng-if="isLoad">
+                                                <div class="overlayBackground"></div>
+                                                <div class="overlayContent3">
+                                                    <img src="/images/spinner.gif">
+                                                </div>
+                                            </div>
+                                            <div ng-if="displayedCollection.length<1 && submited">
+                                               <div class="alert alert-danger" role="alert">No Record Found!</div>
+                                            </div>
+                                            <div class="row" ng-if="showfirsttable">
+                                                <div class="col-sm-12">
+                                                    <div class="col-sm-8 removePadding">
+                                                        <h4>User Activity Detail</h4>
+                                                    </div>
+                                                    <div ng-if="showfirsttable" class="col-sm-4 removePadding">
+                                                        <button type="button" class="btn btn-success btn-sm pull-right" title="Create" ng-click="createuserCSV()" style="margin: 4px 0;">Save to CSV</button>
+                                                    </div>
+                                                </div>
+                                                
+                                                    <table ng-if="showfirsttable" st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped table-bordered table-hover table-condensed">
+                                                        <thead>
+                                                            <tr>
+                                                                <th st-sort="username">User</th>
+                                                                <th st-sort="signindate">Sign in date</th>
+                                                                <th st-sort="signindate">Sign in time</th>
+                                                                <th st-sort="signoutdate">Sign out date</th>
+                                                                <th st-sort="signoutdate">Sign out time</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th colspan="5">
+                                                                    <input st-search="" class="form-control input-sm" placeholder="Search..." type="text"  />
+                                                                </th>
+                                                            </tr>
+                                                            <tr ng-repeat="row in displayedCollection">
+                                                                <td>{{row.username}}</td>
+                                                                <td>{{row.signindate | date:'MM/dd/yyyy'}}</td>
+                                                                <td>{{row.signindate | date:'HH:mm:ss'}} <span ng-if="row.signindate">PST</span></td>
+                                                                <td>{{row.signoutdate| date:'MM/dd/yyyy'}}</td>
+                                                                <td>{{row.signoutdate | date:'HH:mm:ss'}} <span ng-if="row.signoutdate">PST</span></td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="5" class="text-center">
+                                                                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="9"></div>
+                                                                </td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                
+                                                
+                                            </div>
+                                            <br />
+                                            <div class="text-center">
+                                                <div class="label label-success" data-ng-show="$parent.updateStatus">
+                                                    <span class="glyphicon glyphicon-thumbs-up icon-white"></span>&nbsp;&nbsp;updated!                   
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                           
+                        </div>
+                         </tab>
+
+                        <tab heading="Report Open / Exit Activity" ng-hide="$parent.hideme" ng-click="blanckdata()">
+                            <br />
+                            <div class="stampEdit">
+                        <div class="form-horizontal">
+                            <div class="row">
+                                <!--<pre> {{practice|json}}</pre>-->
+                                <div class="row">
+                                    <section class="col-sm-12">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="practiceEdit">
+                                                    <div class="form-horizontal">
+                                                        <div class="row" style="margin-left: 15px">
+                                                            <div class="form-group col-sm-12 col-md-12">
+                                                                <form class="form-inline" name="reportactivityform" ng-submit="createreport(reportactivityform.$valid,form)" novalidate>
+                                                                    <div class="form-group col-sm-4 col-md-3" ng-class="{ 'has-error' : reportactivityform.fromdate.$invalid && submited }">
+                                                                        <label for="exampleInputName2">Date From:   &nbsp;</label>
+                                                                        <input type="text" class="form-control" id="Text1" name="fromdate" date-options="dateOptions" custom-datepicker date-format="dd-MM-yy" ng-model="form.startdate" style="width: 50%" required>
+                                                                        <p class="help-block" ng-show="reportactivityform.fromdate.$invalid && submited" style="padding-left: 29%; color: #a94442">Required</p>
+                                                                    </div>
+                                                                    <div class="form-group col-sm-4 col-md-3" ng-class="{ 'has-error' : reportactivityform.todate.$invalid && submited }">
+                                                                        <label for="exampleInputEmail2">Date To:   &nbsp;</label>
+                                                                        <input type="text" class="form-control" id="Text2" name="todate" date-options="dateOptions" custom-datepicker date-format="dd-MM-yy" ng-model="form.enddate" style="width: 50%" required>
+                                                                        <p class="help-block" ng-show="reportactivityform.todate.$invalid && submited" style="padding-left: 24%; color: #a94442">Required</p>
+                                                                    </div>
+                                                                    <div class="form-group col-sm-5 col-md-4" ng-class="{ 'has-error' : reportactivityform.practicename.$invalid && submited }" ng-init="getpracticesList()">
+                                                                        <label for="exampleInputEmail2">Practice Name:   &nbsp;</label>
+
+                                                                        <select ng-model="form.practicename" name="practicename" class="form-control" ng-options="color.practicename for color in practiceList | orderBy:'practicename'" style="width: 50%" required>
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="item.practicename">{{item.practicename}}</option>
+                                                                        </select>
+
+                                                                        <p class="help-block" ng-show="reportactivityform.practicename.$invalid && submited" style="padding-left: 30%; color: #a94442">Required</p>
+                                                                    </div>
+                                                                    <div class="form-group col-sm-2 col-md-2">
+                                                                        <button type="submit" class="btn btn-info btn-sm" title="Create" ng-click="createreport(reportactivityform.$valid,form)">Create</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <div ng-if="isLoad">
+                                                            <div class="overlayBackground"></div>
+                                                            <div class="overlayContent3">
+                                                                <img src="/images/spinner.gif">
+                                                            </div>
+                                                        </div>
+                                                        <div ng-if="displayedCollection.length<1 && submited">
+                                                            <div class="alert alert-danger" role="alert">No Record Found!</div>
+                                                        </div>
+                                                        <div class="row" ng-if="showsecondtable">
+                                                            <div class="col-sm-12">
+                                                                <div class="col-sm-8 removePadding">
+                                                                    <h4>Report Activity Information</h4> 
+                                                                </div>
+                                                                <div ng-if="showsecondtable" class="col-sm-4 removePadding">
+                                                                        <button type="button" class="btn btn-success btn-sm pull-right" title="Create" ng-click="createreportuserCSV()" style="margin: 4px 0;">Save to CSV</button>                                                       
+                                                                </div>
+                                                            </div>                                                         
+                                                            <div class="col-sm-12">                                                                
+                                                                
+                                                                <table ng-if="showsecondtable" st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped table-bordered table-hover table-condensed">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th st-sort="">Report ID</th>
+                                                                            <th st-sort="">Opened by</th>
+                                                                            <th st-sort="">Level</th>
+                                                                            <th st-sort="">Admin</th>
+                                                                            <th st-sort="">Open date</th>
+                                                                            <th st-sort="">Open time</th>
+                                                                            <th st-sort="">Close date</th>
+                                                                            <th st-sort="">Close time</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th colspan="8">
+                                                                                <input st-search="" class="form-control input-sm" placeholder="Search..." type="text"  />
+                                                                            </th>
+                                                                        </tr>
+                                                                        <tr ng-repeat="row in displayedCollection">
+                                                                            <td>{{row.reportid}}</td>
+                                                                            <td>{{row.username}}</td>
+                                                                            <td>{{row.level}}</td>
+                                                                            <td>{{row.rolename}}</td>                                                                            
+                                                                            <td>{{row.opendate | date:'MM/dd/yyyy'}}</td>
+                                                                            <td>{{row.opendate | date:'HH:mm:ss'}} <span ng-if="row.opendate">PST</span></td>
+                                                                            <td>{{row.closedate| date:'MM/dd/yyyy'}}</td>
+                                                                            <td>{{row.closedate | date:'HH:mm:ss'}} <span ng-if="row.closedate">PST</span></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                    <tfoot>
+                                                                        <tr>
+                                                                            <td colspan="8" class="text-center">
+                                                                                <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="9"></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tfoot>
+                                                                </table>
+
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div class="text-center">
+                                                            <div class="label label-success" data-ng-show="$parent.updateStatus">
+                                                                <span class="glyphicon glyphicon-thumbs-up icon-white"></span>&nbsp;&nbsp;updated!                   
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                         </tab>
+                    </tabset>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

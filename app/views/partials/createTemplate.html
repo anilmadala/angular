@@ -1,0 +1,48 @@
+<div ng-init="getData()">
+    <section id="header-title" style="margin-bottom: 0;">
+        <div class="container">
+            <div class="row">
+                <h2 style="text-align: left;">Template Designer - {{ templatename }}</h2>
+            </div>
+        </div>
+    </section>
+    <br>
+    <div class="container">
+        <div class="col-sm-12">
+            <div class="col-sm-4" style="float:right">
+                <div class="col-sm-8">
+                    <input type="button" ng-click="preview()" class="btn btn-default" value="Preview"/>
+
+                    <input type="button" ng-click="saveformData()" class="btn btn-success" value="Save Form"/>
+                </div>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+        <br/>
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">Builder</h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        <span ng-repeat="s in report.sections | filter:currentsection">
+                            <div fb-builder="{{s.sectiondataid}}"></div>
+                        </span>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="checkbox">
+                            <label><input type="checkbox" ng-model="isShowScope"/>
+                                Show scope
+                            </label>
+                        </div>
+                        <pre ng-if="isShowScope">{{template | json}}</pre>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div fb-components></div>
+            </div>
+        </div>
+    </div>
+</div>

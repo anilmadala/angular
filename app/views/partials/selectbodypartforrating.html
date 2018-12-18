@@ -1,0 +1,68 @@
+<style>
+	.rateBodyClass{
+    	border: 1px solid red !important;
+	}
+</style>
+
+
+<div ng-controller="SelectBodyPartForRatingCtrl" style="margin-left: -25px">	
+	<div ng-show="formtype=='pr4'">
+		<div ng-class="getRedBorder()" ng-if="report.data.selectinjuries.sibodypart.length>0">
+			<div class="clearer divHeading" >
+			     <span style="font-weight: bolder; font-size:x-large;">Which body parts have reached MMI?      
+   				 <a ng-click="popupMessage(1)" class="ng-scope ng-binding">(i)</a></span>  
+			</div>
+				<br />			     
+					
+				<!--<div ng-show="bodyPartSelected();" class="col-sm-12 clearer divHeading"> -->
+				<div  class="col-sm-12 clearer divHeading">
+			     <div style="color: red; font-weight: bold;">
+			   		  <p>To proceed with this PR-4 report, please select the body parts that have reached MMI. Then, select which body parts you want to have rated in this PR-4 report.</p>
+			     	  <p>Body parts that have not reached MMI will not be included in this report and will not receive an impairment rating.</p>
+			     	  <p>You cannot continue with this report unless "Do you want an impairment rating today for this body part?" is set to "Yes" for one or more body parts.</p>
+			     </div><br />
+			</div>
+			<div ng-repeat="currbodypart in report.data.selectinjuries.sibodypart" class="col-sm-12 checkbox addAnotherBottomBorder">			    			  
+			    <div class="col-sm-12">
+			        <div>
+			            <label>
+			                <input type="checkbox" ng-change="currbodypart.dateOfRating=''; currbodypart.ratebodyYesNoRadio='No'" ng-checked="currbodypart.ratebodypart" class="chkSelPart" id="chkSelPart{{currbodypart.text == 'Other' ? currbodypart.bdpartother : currbodypart.text | capitalize}}{{currbodypart.bdsides =='none'? '': currbodypart.bdsides | capitalize}}" ng-model="currbodypart.ratebodypart" />
+			           			{{currbodypart.bodysystem == 'Other' ? currbodypart.bdsystemother : currbodypart.bodysystem | capitalize}} - {{currbodypart.text == 'Other' ? currbodypart.bdpartother : currbodypart.text | capitalize}} {{currbodypart.bdsides =='none' || currbodypart.bdsides =='n/a'? '': '- ' +currbodypart.bdsides | capitalize}}
+			            </label>			            
+			        </div>
+			    </div>
+			    <div class="col-sm-12 clearer">
+			    	&nbsp;
+			    </div>
+			    <div class="col-sm-12" ng-show="currbodypart.ratebodypart">           	       
+		           <div class="col-sm-12 margin-left-1">
+		           		<label>Date of MMI/permanent or stationary <a ng-click="popupMessage(2)" class="ng-scope ng-binding">(i)</a>:</label>
+		           </div>
+		        </div>
+		        <div class="col-sm-12" ng-show="currbodypart.ratebodypart">
+		        	<div class="col-sm-3 margin-left-1">
+		           		<input type="tel" ui-date="dateOptions" my-date ng-model="currbodypart.dateOfRating" class="form-control" placeholder="MM/DD/YYYY" ng-style="currbodypart.dateOfRating =='' || currbodypart.dateOfRating ==null || currbodypart.dateOfRating ==undefined  ? { 'border': '1px solid red' } : { 'border': '1px solid' }">
+		            </div>
+		        </div>
+			         
+			    <div class="col-sm-12 clearer" ng-show="currbodypart.ratebodypart && currbodypart.dateOfRating">
+			        <div class="margin-left-2">
+			            <label>Do you want an impairment rating today for this body part? <a ng-click="popupMessage(3)" class="ng-scope ng-binding">(i)</a>:</label><br />	            
+			            <label>
+			                <input type="radio" class="ratingready" name="impairmentratingRD{{$index}}" value="Yes" ng-model="currbodypart.ratebodyYesNoRadio" />&nbsp;Yes</label>
+			            <label>
+			                <input type="radio" class="ratingready" name="impairmentratingRD{{$index}}" value="No" ng-change="changeRateBody($index)" ng-model="currbodypart.ratebodyYesNoRadio" />&nbsp;No</label>
+			        </div>
+			    </div>  
+			    <div class="col-sm-12 clearer">
+			    	&nbsp;
+			    </div>
+			</div>		     
+		</div>
+		<div class="col-sm-12">
+			&nbsp;
+		</div> 
+	</div>
+</div>
+
+

@@ -1,0 +1,195 @@
+﻿<div ng-controller="XrayPelvisHipLeftRightAddAnotherCtrl">
+    <div class="col-sm-12">
+        <label class="{{labelclass}}">{{label}}</label>
+        <button type="button" ng-click="addControl()" class="btn btn-default btn-circle btn-success">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+    <div ng-repeat="todo in todos.slice().reverse()" class="col-sm-12 checkbox addAnotherBottomBorder" style="padding: 5px;">
+        <input type="hidden" ng-model="todo.indexValue" ng-init="todo.indexValue = todos.length - ($index+1)" />
+        <div class="col-sm-12">
+            <div class="col-sm-1" style="margin-top: 7px; padding-left: 0;">
+                <label>Date:</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="tel" ui-date="dateOptions" my-date ng-model="todo.dateOfSurgery" class="form-control" placeholder="MM/DD/YYYY">
+            </div>
+            <div class="col-sm-1" style="margin-top: 7px;">
+                <button type="button" class="btn btn-info btn-xs" ng-click="clearbodypart($index+1,todos.length)"> Clear</button>
+            </div>
+            <div class="col-sm-6" style="margin-top: 7px;">
+                <button type="button" class="btn btn-danger btn-xs" ng-click="deletebodypart($index+1,todos.length)"> Delete</button>
+            </div>
+            <!------- Normal ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.normal" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].fracture = false','$scope.todos[{{todo.indexValue}}].arthritis = false','$scope.todos[{{todo.indexValue}}].amputation = false'],todo.normal,'$scope.todos[{{todo.indexValue}}].normal',todo.normal,'$scope.todos[{{todo.indexValue}}].normal',true)"/>
+                    &nbsp;Normal</label>
+            </div>
+            <!------- Fracture ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.fracture" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false','$scope.todos[{{todo.indexValue}}].pelvis = false','$scope.todos[{{todo.indexValue}}].hip = false','$scope.todos[{{todo.indexValue}}].sacraliliac = \'\'','$scope.todos[{{todo.indexValue}}].displacementopts = \'\'','$scope.todos[{{todo.indexValue}}].femoraneck = false','$scope.todos[{{todo.indexValue}}].femoraneckopts = \'\'','$scope.todos[{{todo.indexValue}}].femorashaft = false','$scope.todos[{{todo.indexValue}}].femorashaftopts = \'\''],todo.fracture,'$scope.todos[{{todo.indexValue}}].fracture')" />
+                    &nbsp;Fracture</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.fracture">
+                <!------- Fracture Pelvis ------->
+                <div class="col-sm-12">
+                    <div class="col-sm-12">
+                        <label>
+                            <input type="checkbox" ng-model="todo.pelvis" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].sacraliliac = \'\'','$scope.todos[{{todo.indexValue}}].displacementopts = \'\''])" />
+                            &nbsp;Pelvis</label>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.pelvis">
+                        <div class="col-sm-12 margin-left-1">
+                            <label>
+                                <input type="checkbox" ng-model="todo.sacraliliac" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].displacementopts = \'\''])" />
+                                &nbsp;Sacraliliac joint fracture</label>
+                        </div>
+                        <div class="col-sm-12 margin-left-2" ng-if="todo.sacraliliac">
+                            <label>
+                                &nbsp;Displacement</label>
+                            <select ng-model="todo.displacementopts" class="form-control" style="width: 200px;">
+                                <option value="">Choose</option>
+                                <option value="1909">Non displaced</option>
+                                <option value="1910">Partially displaced</option>
+                                <option value="1911">Totally displaced</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!------- Fracture Hip ------->
+                <div class="col-sm-12">
+                    <div class="col-sm-12">
+                        <label>
+                            <input type="checkbox" ng-model="todo.hip" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].femoraneck = false','$scope.todos[{{todo.indexValue}}].femoraneckopts = \'\'','$scope.todos[{{todo.indexValue}}].femorashaft = false','$scope.todos[{{todo.indexValue}}].femorashaftopts = \'\''])" />
+                            &nbsp;Hip                            
+                        </label>
+                    </div>
+                    <div class="col-sm-12" ng-if="todo.hip">
+                        <div class="col-sm-12 margin-left-1">
+                            <label>
+                                <input type="checkbox" ng-model="todo.femoraneck" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].femoraneckopts = \'\''])" />
+                                &nbsp;Femoral neck fracture</label>
+                        </div>
+                        <div class="col-sm-12 margin-left-2" ng-if="todo.femoraneck">
+                            <label>
+                                &nbsp;Position</label>
+                            <select ng-model="todo.femoraneckopts" class="form-control" style="width: 200px;">
+                                <option value="">Choose</option>
+                                <option value="1912">Good</option>
+                                <option value="1913">Malunion</option>
+                                <option value="1914">Nonunion</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 margin-left-1">
+                            <label>
+                                <input type="checkbox" ng-model="todo.femorashaft" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].femorashaftopts = \'\''])" />
+                                &nbsp;Femoral shaft fracture</label>
+                        </div>
+                        <div class="col-sm-12 margin-left-2" ng-if="todo.femorashaft">
+                            <label>
+                                &nbsp;Degrees of angulation</label>
+                            <select ng-model="todo.femorashaftopts" class="form-control" style="width: 200px;">
+                                <option value="">Choose</option>
+                                <option value="1915">0-9 degrees</option>
+                                <option value="1916">10-14 degrees</option>
+                                <option value="1917">15-19 degrees</option>
+                                <option value="1918">20 degrees</option>
+                                <option value="1919">21 degrees</option>
+                                <option value="1920">22 degrees</option>
+                                <option value="1921">23 degrees</option>
+                                <option value="1922">24 degrees</option>
+                                <option value="1923">25 degrees</option>
+                                <option value="1924">&ge;26 degrees</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!------- Arthritis/degenerative joint changes ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.arthritis" ng-change="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false','$scope.todos[{{todo.indexValue}}].arthpelvis = false', '$scope.todos[{{todo.indexValue}}].arthhip = false', '$scope.todos[{{todo.indexValue}}].arthpelvisopts = \'\'', '$scope.todos[{{todo.indexValue}}].arthhipopts = \'\''],todo.arthritis,'$scope.todos[{{todo.indexValue}}].arthritis')" />
+                    &nbsp;Arthritis/degenerative joint changes</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.arthritis">
+                <!------- Arthritis Pelvis ------->
+                <div class="col-sm-12">
+                    <div class="col-sm-12">
+                        <label>
+                            <input type="checkbox" ng-model="todo.arthpelvis" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthpelvisopts = \'\''])" />
+                            &nbsp;Pelvis</label>
+                    </div>
+                    <div class="col-sm-12 margin-left-1" ng-if="todo.arthpelvis">
+                        <label>
+                            &nbsp;Sacral joint space cartilage interval</label>
+                        <select ng-model="todo.arthpelvisopts" class="form-control" style="width: 100px;">
+                            <option value="">Choose</option>
+                            <option value="1262">≥ 3 mm</option>
+                            <option value="1263">2 mm</option>
+                            <option value="1264">1 mm</option>
+                            <option value="1265">0 mm</option>
+                        </select>
+                    </div>
+                </div>
+                <!------- Arthritis Hip ------->
+                <div class="col-sm-12">
+                    <div class="col-sm-12">
+                        <label>
+                            <input type="checkbox" ng-model="todo.arthhip" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].arthhipopts = \'\''])" />
+                            &nbsp;Hip
+                            <a ng-click="setpopup('X-rays of the hip are performed in the standing position, neutral position.')" class="ng-scope ng-binding"><strong>(i)</strong></a>
+                        </label>
+                    </div>
+                    <div class="col-sm-12 margin-left-1" ng-if="todo.arthhip">
+                        <label>
+                            &nbsp;Hip joint space cartilage interval</label>
+                        <select ng-model="todo.arthhipopts" class="form-control" style="width: 100px;">
+                            <option value="">Choose</option>
+                            <option value="1266">≥ 4 mm</option>
+                            <option value="1267">3 mm</option>
+                            <option value="1268">2 mm</option>
+                            <option value="1269">1 mm</option>
+                            <option value="1270">0 mm</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!------- Amputation ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.amputation" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].normal = false','$scope.todos[{{todo.indexValue}}].amputationopts = false'])" />
+                    &nbsp;Amputation</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.amputation">
+                <div class="col-sm-12">
+                    <!--<label>
+                        <input type="radio" value="Femoralneck" ng-model="todo.amputationopts" />&nbsp;Femoral neck fracture</label><br />-->
+                    <label>
+                        <input type="radio" value="Hemipelvectomy" ng-model="todo.amputationopts" />&nbsp;Hemipelvectomy</label><br />
+                    <label>
+                        <input type="radio" value="Hipdisarticulation" ng-model="todo.amputationopts" />&nbsp;Hip disarticulation</label><br />
+                    <label>
+                        <input type="radio" value="Proximalthigh" ng-model="todo.amputationopts" />&nbsp;Proximal (thigh)</label><br />
+                    <label>
+                        <input type="radio" value="Midthigh" ng-model="todo.amputationopts" />&nbsp;Midthigh</label><br />
+                    <label>
+                        <input type="radio" value="Distalthigh" ng-model="todo.amputationopts" />&nbsp;Distal (thigh)</label>
+                </div>
+            </div>
+            <!------- Other ------->
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-info btn-xs" ng-click="othertexteditorCondition=true">
+                    Text
+                </button>
+                <div class="clearer"></div>
+                <div ng-hide="othertexteditorCondition"><span dynamic="todo.othertexteditor" class="textEditorTextColor col-sm-10"></span></div>
+                <div class="col-sm-10" ng-if="othertexteditorCondition">
+                    <textarea ui-tinymce ng-model="todo.othertexteditor"></textarea>
+                </div>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>

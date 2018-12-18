@@ -1,0 +1,40 @@
+<div class="blogs">
+    <div class="bright">
+        <section id="header-title">
+            <div class="container">
+                <div class="row">
+                    <h2>Testimonials</h2>
+                </div>
+            </div>
+        </section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-10">
+                    <div class="col-sm-11" data-ng-controller="TestimonialController">
+
+                        <ul class="thumbnails" data-ng-init="findPaged(1)">
+                            <li data-ng-repeat="testimonial in testimonials" class="span9">
+                                <div class="testimonial-content">
+                                    <blockquote>
+                                        {{testimonial.content}}                                                                            
+                                        <h4 class="testimonialh2">-{{testimonial.author}}</h4>
+                                    </blockquote>
+                                </div>
+                                <br />
+                            </li>
+                        </ul>
+                        <h3 data-ng-hide="!testimonials || testimonials.length" class="alert alert-dismissable alert-warning">No testimonials yet.
+                        <br />
+                            Please visit next time to view our testimonials.
+                        </h3>
+                        <div>
+                        <pagination total-items="totalItems" page="currentPage" items-per-page="itemsperpage" max-size="maxsize" on-select-page="findPaged(page)" class="pagination-sm" boundary-links="true"></pagination> 
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

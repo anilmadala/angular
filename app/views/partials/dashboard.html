@@ -1,0 +1,402 @@
+<!--<div class="bright" data-ng-controller="PatientCtrl" ng-show="currentState" ng-init="listPatients(1)">-->
+<div class="bright" ng-show="currentState"><!--data-ng-controller="PatientCtrl" -->
+    <section id="header-title" style="margin-bottom: 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+					<h2 style="text-align: left;vertical-align: middle;">Home
+                    <!--<img src="/images/menu-search.png" alt="Search" title="Search Patients" ng-click="searchBox=!searchBox" style="cursor: pointer; margin-left: 20px;" />-->
+					</h2>
+				</div>
+				<div class="col-sm-6">
+					<button class="btn-header btn btn-info btn-sm ng-binding pull-right" style="margin: 14px !important;" ng-if="OnlyDevStaging()" ng-click="downloadDFRDiscovery()" ng-if="currentUser.rolename.indexOf('rater')!=0">
+					DFR Discovery</button>
+				</div>
+            </div>
+        </div>
+    </section>    
+    
+    <!----    Recent Patients    ---->
+    <section class="recent" style="margin: 20px 0;">
+        <div class="container">
+            <div class="row">
+                <!--<div class="col-sm-12 col-sm-offset alert alert-dismissable alert-danger text-center" ng-show="patientEmpty" ng-hide="noreport">No Patient Found!</div>-->
+				<div ng-show="patientEmpty">
+					<p ng-bind-html="trustAsHtml(noRecordsFoundMsg)"></p>  
+				</div>   
+                <div class="col-sm-12 col-md-12 text-center" ng-hide="patientEmpty" data-ng-init="recentPatients(1)">
+					<h3 style="text-align: center; font-weight: bold;">Recently Viewed Patients</h3><br />
+                    <a data-ng-repeat="patient in recentpatients" ng-style="patient.confirmed == undefined || patient.confirmed == true  ? { 'border': 'none' } : { 'border': '1px solid red' }" ng-click="openPatientLibrary(patient._id)" class="rc-buttons custom-titlewhite" href="/patient/createinjury">{{patient.basicinformation[0].firstname}} {{patient.basicinformation[0].lastname}}
+                    </a>
+                    <pager style="margin-top: -28px;" total-items="recenttotalItems" page="currentPage" items-per-page="recentitemsperpage" max-size="maxsize" on-select-page="recentPatients(page)" ng-swipe-left="recentPatientsLeft()" ng-swipe-right="recentPatientsRight()" class="pagination-sm"
+                        previous-text="<<" next-text=">>"></pager>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!----   start search section   ---->
+     <div class="container">
+            <div class="row">
+			     <div class="col-sm-12">
+					<h3 style="text-align: center; font-weight: bold;">Patients in this Practice</h3>	               
+					<button id="myPatientButton" class="btn btn-info ng-scope"  ng-click="listPatientsBySigningPhysician(1)" style="height: 40px; font-weight: bolder;">My Patients</button>
+					<button id="searchButton" class="toggleClass changeHight" ng-click="searchBox=!searchBox;" style="font-weight: bolder;">Search
+						<img src="/images/menu-search.png" alt="Search" title="Search Patients" style="cursor: pointer; margin-left: 10px;" />
+					</button>				           
+			    </div>
+		     </div>
+      </div>        
+     
+    <section ng-show="searchBox">
+        <div class="container">
+            <div class="row search bar2" style="margin-left:15px; margin-top:2px; border: 3px solid rgb(57,179,215)">               
+                    <form ng-submit="listPatients(1)" class="searchPatient form-horizontal" id="searchPatient">
+                     <div class="col-sm-12 col-md-12" style="margin-bottom: 20px;">
+                        <table>
+							<tr>
+								<td style="font-weight: bold; font-size: medium;">Search for: &nbsp;</td>
+								<td>
+									<div class="control-group">
+										<input type="radio" id="rdoPatient" name="rdosearch" ng-model="searchType" value="patient"> Patients 										
+									</div>
+								</td>
+								<td>
+									<div class="control-group">
+										<input type="radio" id="rdoReport" name="rdosearch" ng-model="searchType" value="report"
+											style="margin-left: 10px;"> Reports
+									</div>
+								</td>								                                
+                                <td>
+                                    <div style="margin-left: 50px">
+                                        <button id="Button1" type="submit" class="btn btn-success btn-xs">Search</button>
+                                        <button id="resetSearch" type="button" ng-click="resetSearch()"  class="btn btn-success btn-xs">Clear</button>                                        
+                                    </div>
+                                </td>
+                            </tr>	                            					
+						</table>
+						</div>
+                            
+                     <div class="col-sm-12 col-md-12" >
+                        <div class="col-sm-4" >                                  
+	                        <table>                                                
+	                            <tr>
+	                                <td>Last Name  </td>
+	                                <td>
+	                                    <div class="control-group">
+	                                        <input name="lastname" id="lastname" type="text" ng-model="search.lastname">
+	                                    </div>
+	                                </td>
+	                            </tr>
+	                            <tr>
+	                                <td>First Name  </td>
+	
+	                                <td>
+	                                    <input name="firstname" id="firstname" type="text" ng-model="search.firstname"></td>
+	                            </tr>
+	                             <tr>
+	                                <td>Biological Gender &nbsp; </td>
+	                                <td>
+	                                    <div class="control-group">											
+											<input type="checkbox" id="chkFemale" name="chkFemale" ng-model="search.Female" value="female"> Female
+											<input type="checkbox" id="chkMale" name="chkMale" ng-model="search.Male" value="male"> Male 										
+										</div>
+									</td>
+	                            </tr>
+	                            <tr>
+	                                <td>Date of Birth  </td>
+	
+	                                <td>
+	                                    <input name="dateofbirth" id="dateofbirth" type="text" ng-model="search.dateofbirth" date-options="dateOptions" custom-datepicker />
+	                                </td>
+	                            </tr>
+	                            <tr>
+	                                <td>Social Security  </td>
+	                                <td>
+	                                    <input name="socialsecurityno" id="socialsecurityno" type="text" ng-model="search.socialsecurityno"
+	                                        maxlength="8"
+	                                        numbers-only="numbers-only"
+	                                        ui-mask="{{'999-99-9999'}}">
+	                                </td>
+	                            </tr>                            
+	                        </table>
+                        </div>
+                        <div class="col-sm-6" >
+							 <table ng-show="searchType=='patient'">
+                        		<tr>
+	                                <td> </td>
+	                                <td>
+	                                    <div class="control-group" ng-show="kickstartEnable==true">
+	                                        <input type="checkbox" id="chkconfirmedpatient" name="chkconfirmedpatient" ng-model="search.confirmed" value="confirmed"> Show only unconfirmed patients
+                                        </div>
+	                                </td>
+	                            </tr>
+                        	 </table>
+                        	 <table ng-show="searchType=='report'">                                                
+	                            <tr>
+	                                <td>Date of injury  </td>
+	                                <td>
+	                                    <div class="control-group">
+	                                        <input style="width: 40%" id="frominjury" type="text" ng-model="searchReport.frominjurydate" ui-date="dateOptions2" ui-date-format="mm/dd/yy">
+                                         to <input style="width: 40%" id="toinjury" type="text" ng-model="searchReport.toinjurydate" ui-date="dateOptions2" ui-date-format="mm/dd/yy">
+	                                    </div>
+	                                </td>
+	                            </tr>
+	                            <tr>
+	                                <td>Date of service  </td>	
+	                                <td>
+	                                     <input style="width: 40%" id="fromservice" type="text" ng-model="searchReport.fromservicedate" ui-date="dateOptions2" ui-date-format="mm/dd/yy">
+                                      to <input style="width: 40%" id="toservice" type="text" ng-model="searchReport.toservicedate" ui-date="dateOptions2" ui-date-format="mm/dd/yy">
+	                            </tr>
+	                             <tr>
+	                                <td>Date submitted &nbsp; </td>
+									<td>
+									 	 <input style="width: 40%" id="fromsubmit" type="text" ng-model="searchReport.fromsubmitdate" ui-date="dateOptions2" ui-date-format="mm/dd/yy">
+                                      to <input style="width: 40%" id="tosubmit" type="text" ng-model="searchReport.tosubmitdate" ui-date="dateOptions2" ui-date-format="mm/dd/yy"> 
+	                                 </td>
+	                            </tr>	 
+	                              <tr>
+	                                <td>Report type </td>
+	                                <td>
+	                                    <div class="control-group">
+											<input type="checkbox" id="chkdfr" name="chkdfr" ng-model="searchReport.dfr" value="dfr"> Doctor's First
+											<input type="checkbox" id="chkpr2" name="chkpr2" ng-model="searchReport.pr2" value="pr2" style="margin-left: 20px"> PR-2
+											<input type="checkbox" id="chkpr4" name="chkpr4" ng-model="searchReport.pr4" value="pr4" style="margin-left: 20px"> PR-4 										
+										</div>
+									</td>
+	                            </tr>   
+	                             <tr>
+	                                <td>Status </td>
+	                                <td>
+	                                   <div class="control-group">
+											<input type="checkbox" id="chkopen" name="chkopen" ng-model="searchReport.open" value="open"> Open
+											<input type="checkbox" id="chkclosed" name="chkclosed" ng-model="searchReport.closed" value="closed" style="margin-left: 65px"> Closed
+											<input type="checkbox" id="chkinrating" name="chkinrating" ng-model="searchReport.inrating" value="inrating" style="margin-left: 10px"> In-rating (PR-4) 										
+									   </div>
+									</td>
+	                            </tr> 
+	                        </table>
+                        </div>
+                    </div>
+                    </form>
+                
+            </div>
+        </div>
+    </section>
+    <!----   end search section   ---->
+    
+    <!----    List of Patients    ---->
+    <section>
+        <div class="container">
+            <div class="row" style="margin-top: 10px">
+                <!----    No records    ---->
+                <div class="col-sm-2 col-sm-offset-5 alert alert-dismissable alert-danger" ng-hide="patientYes">No Records Found !</div>
+				 <div ng-if="isLoadDashboard">
+					<div class="overlayContent" style="margin-top:15%">
+						<img src="/images/spinner.gif" /><span>&nbsp;&nbsp;Loading</span>
+					</div>
+				</div>
+                <!----    List View    ---->
+               
+                <div class="col-sm-12" data-ng-show="listView">                      
+                    <table st-table="patients" st-safe-src="patientsSafe" class="table table-striped table-condensed" ng-show="patientYes && searchType=='patient'"> <!--st-table="patients" st-safe-src="patients" -->
+                        <thead>
+                            <tr>
+                                <th style="width: 28%;"><a href="" ng-click="orderByField='basicinformation[0].firstname'; reverseSort = !reverseSort">Patient Name</a>
+									<div ng-class="getSortClass('basicinformation[0].firstname')"></div>
+								</th>
+                                <th style="width: 10%;"><a href="" ng-click="orderByField='basicinformation[0].gender'; reverseSort = !reverseSort">Gender</a>
+									<div ng-class="getSortClass('basicinformation[0].gender')"></div>
+								</th>
+                                <th style="width: 12%;"><a href="" ng-click="orderByField='basicinformation[0].dateofbirth'; reverseSort = !reverseSort">Date of Birth</a>
+									<div ng-class="getSortClass('basicinformation[0].dateofbirth')"></div>
+								</th>
+                                <th style="width: 5%;"><a href=""  ng-click="orderByField='basicinformation[0].dateofbirth'; reverseSort = !reverseSort">Age</a>
+									<div ng-class="getSortClass('basicinformation[0].dateofbirth')"></div>
+								</th>
+                                <th style="width: 10%;"><a href="" ng-click="orderByField='contactinformation[0].homephone'; reverseSort = !reverseSort">Home Phone</a>
+									<div ng-class="getSortClass('contactinformation[0].homephone')"></div>
+								</th>
+                                <th style="width: 10%;"><a href="" ng-click="orderByField='basicinformation[0].socialsecurityno'; reverseSort = !reverseSort">SSN</a>
+									<div ng-class="getSortClass('basicinformation[0].socialsecurityno')"></div>
+								</th>
+                                <th style="width: 25%;"><a href="" ng-click="orderByField='address[0].addressline1'; reverseSort = !reverseSort">Address</a>
+									<div ng-class="getSortClass('address[0].addressline1')"></div>
+								</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+							<tr>
+								<th colspan="7">
+									<input st-search="" class="form-control input-sm" placeholder="Search..." type="text"  />
+								</th>
+							</tr>
+                            <tr data-ng-repeat="patient in patients | orderBy:orderByField:reverseSort track by $index">
+                                <td style="width: 28%;"><a href="" ng-click="openPatientLibrary(patient._id)" ng-style="patient.confirmed == undefined || patient.confirmed == true  ? { 'color': '' } : { 'color': 'red' }">{{patient.basicinformation[0].firstname  | capitalize}} {{patient.basicinformation[0].lastname  | capitalize}}</a></td>
+                                <td style="width: 10%;">{{patient.basicinformation[0].gender | capitalize}}</td>
+                                <td style="width: 12%;">{{patient.basicinformation[0].dateofbirth| date:'MM-dd-yyyy'}}</td>
+                                <td style="width: 5%;">{{getAge(patient.basicinformation[0].dateofbirth)}}</td>
+                                <td style="width: 10%;">{{patient.contactinformation[0].homephone| phonenumberFormat }}</td>
+                                <td style="width: 10%;"><span>{{patient.basicinformation[0].socialsecurityno | socialSecurityFormat}}</span></td>
+                                <td style="width: 25%;" ng-bind="commaseperateArray(patient.address[0])"></td>
+                            </tr>
+                        </tbody>
+						<tfoot>
+							<tr>
+								<td colspan="7" class="text-center">
+									<div st-pagination="" st-items-by-page="10" st-displayed-pages="10"></div>
+								</td>
+							</tr>
+						</tfoot>
+                    </table>
+                    <table st-table="patients" st-safe-src="patientsSafe" class="table table-striped table-condensed" ng-show="patientYes && searchType=='report'">    
+						<thead>
+                            <tr>
+                                <th style="width: 24%;"><a href="" ng-click="orderByField='data.bginfo.firstname'; reverseSort = !reverseSort">Patient Name</a>
+									<div ng-class="getSortClass('data.bginfo.firstname')"></div>
+								</th>
+                                <th style="width: 5%;"><a href="" ng-click="orderByField='formtype'; reverseSort = !reverseSort">Type</a>
+									<div ng-class="getSortClass('formtype')"></div>
+								</th>
+                                <th style="width: 11%;"><a href="" ng-click="orderByField='data.selectinjuries.dateofinjury'; reverseSort = !reverseSort">Date of Injury</a>
+									<div ng-class="getSortClass('data.selectinjuries.dateofinjury')"></div>
+								</th>
+                                <th style="width: 11%;"><a href="" ng-click="orderByField='data.patientcomplaints.currentexamdate'; reverseSort = !reverseSort">Date of Service</a>
+									<div ng-class="getSortClass('data.patientcomplaints.currentexamdate')"></div>
+								</th>
+                                <th style="width: 11%;"><a href="" ng-click="orderByField='submittedDate'; reverseSort = !reverseSort">Date Submitted</a>
+									<div ng-class="getSortClass('submittedDate')"></div>
+								</th>
+                                <th style="width: 23%;"><a href="" ng-click="orderByField='data.signDoctor.level4.firstname'; reverseSort = !reverseSort">Signing Physician</a>
+									<div ng-class="getSortClass('data.signDoctor.level4.firstname')"></div>
+								</th>
+                                <th style="width: 6%;"><a href="" ng-click="orderByField='status'; reverseSort = !reverseSort">Status</a>
+									<div ng-class="getSortClass('status')"></div>
+								</th>
+								<th style="width: 9%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>     
+							<tr>
+								<th colspan="7">
+									<input st-search="" class="form-control input-sm" placeholder="Search..." type="text"  />
+								</th>
+							</tr>
+                            <tr data-ng-repeat="patient in patients | orderBy:orderByField:reverseSort track by $index">
+                                <td style="width: 24%;"><a href="" ng-click="openPatientLibrary(patient.patientid)">{{patient.data.bginfo.firstname | capitalize}} {{patient.data.bginfo.lastname | capitalize}}</a></td>
+                                <td style="width: 5%;">
+									<div ng-switch="patient.formtype">
+										<div ng-switch-when="dfr">DFR</div>
+										<div ng-switch-when="pr2">PR-2</div>
+										<div ng-switch-when="pr4">PR-4</div>
+									</div>
+								</td>
+                                <td style="width: 11%;">{{patient.data.selectinjuries.dateofinjury| date:'MM-dd-yyyy'}}</td>
+                                <td style="width: 11%;">{{patient.data.patientcomplaints.currentexamdate| date:'MM-dd-yyyy'}}</td>
+                                <td style="width: 11%;">{{patient.submittedDate| date:'MM-dd-yyyy'}}</td>
+                                <td style="width: 23%;">
+									<div ng-switch="patient.status">
+										<div ng-switch-when="open"></div>										
+										<div ng-switch-default>{{patient.data.signDoctor.level4.firstname | capitalize}} {{patient.data.signDoctor.level4.lastname | capitalize}}</div>
+									</div>									
+								</td>
+                                <td style="width: 6%;">
+									<div ng-switch="patient.status">
+										<div ng-switch-when="level1">In-rating</div>
+										<div ng-switch-when="level2">In-rating</div>
+										<div ng-switch-default>{{patient.status | capitalize}}</div>										
+									</div>
+								</td>
+								<td style="width: 9%;" ng-controller="injuryCtrl"><a  ng-click="reportConfirmation(patient._id, patient.patientid, 'existing', patient.formtype, patient.version, patient.formid, patient.injuryid)">Open report</a></td>
+                            </tr>
+                        </tbody>
+						<tfoot>
+							<tr>
+								<td colspan="7" class="text-center">
+									<div st-pagination="" st-items-by-page="10" st-displayed-pages="10"></div>
+								</td>
+							</tr>
+						</tfoot>
+                    </table>
+                </div>				
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    $(function () {
+        $('#ui-datepicker-div').click(function (e) {
+            e.stopPropagation();
+        });
+    });
+
+    // Setup drop down menu   
+    $('.dropdown-toggle').dropdown();
+
+    // Fix input element click problem
+    $('.dropdown input, .dropdown #resetSearch, .dropdown #dateofbirth, select').click(function (e) {
+        e.stopPropagation();
+    });
+	
+	$('.toggleClass').click(function() { 
+        $('.changeHight').css('height', function(_, height) {        	
+        	var h = parseInt( height.replace('px',''), 10);
+            console.log(h);
+            return (h === 40 ? 50 : 40) + 'px';
+        });
+        $('.changeHight').css('margin-bottom', function(_, bottom) {
+            var b = parseInt( bottom.replace('px',''), 10);
+            return (b === 0 ? -3 : 0) + 'px';
+        });
+    });
+    
+    $('#myPatientButton').click(function() { 
+        $('#searchButton').css('height', function() {           
+            return 40 + 'px';
+        });		
+        $('#searchButton').css('margin-bottom', function() {           
+            return 0 + 'px';
+        });		
+    });
+
+</script>
+<style>
+	.changeHight {	    
+	    height: 40px;
+	    width: 125px;
+	    position: relative;
+	    background-color: #5bc0de;
+	    border-color: #46b8da;
+	    color: #ffffff;
+	    -moz-user-select: none;
+	    background-image: none;
+	    border: 1px solid transparent;
+	    border-radius: 4px;
+	    cursor: pointer;
+	    display: inline-block;
+	    font-size: 14px;
+	    font-weight: normal;
+	    line-height: 1.42857;
+	    margin-bottom: 0;
+	    padding: 6px 12px;
+	    text-align: center;
+	    vertical-align: middle;
+	    white-space: nowrap;
+	}
+.arrow-up {
+     width: 0;
+     height: 0;
+     border-left: 5px solid transparent;
+     border-right: 5px solid transparent;
+     border-bottom: 10px solid rgb(57,179,215);
+     display:inline-block;
+}
+.arrow-down {
+     width: 0;
+     height: 0;
+     border-left: 5px solid transparent;
+     border-right: 5px solid transparent;
+     border-top: 10px solid rgb(57,179,215);
+     display:inline-block;
+}
+</style>

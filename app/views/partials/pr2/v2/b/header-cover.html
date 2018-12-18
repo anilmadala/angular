@@ -1,0 +1,246 @@
+	<!-- 
+	<div id="docReportHeading" style="font-size: 14px; text-align: center; display: none;">
+        <span ng-if="report.data['patientcomplaints'].cliniclocationobj.location">{{report.data['patientcomplaints'].cliniclocationobj.location}},</span>
+        <span ng-if="report.data['patientcomplaints'].cliniclocationobj.street">{{report.data['patientcomplaints'].cliniclocationobj.street}},</span>
+        <span ng-if="report.data['patientcomplaints'].cliniclocationobj.city">{{report.data['patientcomplaints'].cliniclocationobj.city}},</span>
+        <span ng-if="report.data['patientcomplaints'].cliniclocationobj.zipcode">{{report.data['patientcomplaints'].cliniclocationobj.zipcode}},</span>
+        <span ng-if="report.data['patientcomplaints'].cliniclocationobj.state">{{report.data['patientcomplaints'].cliniclocationobj.state}},</span>
+        <span ng-if="report.data['patientcomplaints'].cliniclocationobj.country">{{report.data['patientcomplaints'].cliniclocationobj.country}}</span>
+        <div>&nbsp;</div>
+    </div> -->
+    <table align="center" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td style="width: 33%">&nbsp;</td>
+            <td style="width: 33%" align="center">State of California</td>
+            <td style="width: 33%">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>Additional pages attached&nbsp;</td>
+                        <td><span style="text-decoration:underline">&nbsp;X&nbsp;</span></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="width: 100%; text-align: center">Division of Workers' Compensation</td>
+        </tr>
+        <tr>
+            <td colspan="3" style="width: 100%; text-align: center">
+                <h3 style="margin: 10px 0 0 0;">PRIMARY TREATING PHYSICIAN'S PROGRESS REPORT (PR-2)</h3>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="width: 100%; text-align: center; font-size: 11px;">Check the boxes which indicate why you are submitting a report at this time. If the patient is "Permanent and Stationary"
+			<br />
+                (i.e., has reached maximum medical improvement), do not use this form. You may use DWC Forms PR-3 or PR-4.
+            </td>
+        </tr>
+    </table>
+    <table border="0" width="100%" align="center" cellpadding="0" cellspacing="0" style="font-size: 12px;border: 2px solid black; ">
+        <tr>
+            <td style="width: 100%;">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size: 12px;">
+                    <tr>
+                        <td style="width: 2%;">
+                            <!-- <input type="checkbox" id="chk10" disabled="disabled" ng-checked="checkDaysDifference(report.data['otherforminfo'].previousclosereportdateofinjury, report.data['patientcomplaints'].currentexamdate)" /> -->
+                        </td>
+                        <td style="width: 48%;">
+                            <span ng-if="!checkDaysDifference(report.data['otherforminfo'].previousclosereportdateofinjury, report.data['patientcomplaints'].currentexamdate)">___</span>
+                            <span style="text-decoration: underline; font-size: medium;" ng-if="checkDaysDifference(report.data['otherforminfo'].previousclosereportdateofinjury, report.data['patientcomplaints'].currentexamdate)">&nbsp;X&nbsp;</span>
+                            <label>&nbsp;Periodic Report (required 45 days after last report)</label>
+                        </td>
+                        <td style="width: 2%; padding-left: 10px">
+                            <!-- <input type="checkbox" id="Checkbox11" disabled="disabled" ng-checked="checkTreatmentIndicated('treatment')" /> -->
+                        </td>
+                        <td style="width: 23%">
+                            <span ng-if="!checkTreatmentIndicated('treatment')">___</span>
+                            <span style="text-decoration: underline; font-size: medium;" ng-if="checkTreatmentIndicated('treatment')">&nbsp;X&nbsp;</span>
+                            <label>Change in treatment plan</label>
+                        </td>
+                        <td style="width: 2%">
+                            <!--<input type="checkbox" id="Checkbox2" disabled="disabled" /> -->
+                        </td>
+                        <td style="width: 23%; padding-left: 10px;">
+                            <span>___</span>
+                            <label>&nbsp;Released from care</label>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 100%;">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size: 12px;">
+                    <tr>
+                        <td align="left" style="width: 2%;">
+                            <!--<input type="checkbox" id="Checkbox3" disabled="disabled" ng-checked="{{report.data['workrestriction'].disableradio == 'Yes' ? true : false}}" /> -->
+                        </td>
+                        <td align="left" style="width: 26%;">
+                            <span ng-if="report.data['workrestriction'].disableradio != 'Yes'">___</span>
+                            <span style="text-decoration: underline; font-size: medium;" ng-if="report.data['workrestriction'].disableradio == 'Yes'">&nbsp;X&nbsp;</span>
+                            <label>&nbsp;Change in work status</label>
+                        </td>
+                        <td align="left" style="width: 2%;">
+                            <!-- <input type="checkbox" id="Checkbox4" disabled="disabled" ng-checked="checkReferral('treatment')" /> -->
+                        </td>
+                        <td align="left" style="width: 36%;">
+                            <span ng-if="!checkReferral('treatment')">___</span>
+                            <span style="text-decoration: underline; font-size: medium;" ng-if="checkReferral('treatment')">&nbsp;X&nbsp;</span>
+                            <label>&nbsp;Need for referral or consultation</label>
+                        </td>
+                        <td align="left" style="width: 2%;">
+                            <!--<input type="checkbox" id="Checkbox5" disabled="disabled" /> -->
+                        </td>
+                        <td align="left" style="width: 32%;">
+                            <span>___</span>
+                            <label>&nbsp;Response to request for information</label>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 100%;">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size: 12px;">
+                    <tr>
+                        <td style="width: 2%;">
+                            <!-- <input type="checkbox" id="Checkbox6" disabled="disabled" ng-checked="checkWholeBDPartExist('patientcomplaints') && checkWholeBDPartExist('patientcomplaints')" /> -->
+                        </td>
+                        <td style="width: 26%;">
+                            <span ng-if="!checkWholeBDPartExistPr2('patientcomplaints')">___</span>
+                            <span style="text-decoration: underline; font-size: medium;" ng-if="checkWholeBDPartExistPr2('patientcomplaints')">&nbsp;X&nbsp;</span>
+                            <label>&nbsp;Change in patient&apos;s condition</label>
+                        </td>
+                        <td style="width: 2%">
+                            <!--<input type="checkbox" id="Checkbox7" disabled="disabled" /> -->
+                        </td>
+                        <td style="width: 36%">
+                            <span>___</span>
+                            <label>&nbsp;Need for surgery or hospitalization</label>
+                        </td>
+                        <td style="width: 2%">
+                            <!--<input type="checkbox" id="Checkbox8" disabled="disabled" ng-checked="checkNeedForSurgery('treatment')" /> -->
+                        </td>
+                        <td style="width: 32%; margin-top: 4px;">
+                            <span ng-if="!checkNeedForSurgery('treatment')">___</span>
+                            <span style="text-decoration: underline; font-size: medium;" ng-if="checkNeedForSurgery('treatment')">&nbsp;X&nbsp;</span>
+                            <label>&nbsp;Request for authorization</label>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 100%; margin-left: 0px; padding-left: 0px">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size: 12px;">
+                    <tr>
+                        <td style="width: 2%; text-align: left">
+                            <!--<input type="checkbox" id="Checkbox9" disabled="disabled" /> -->
+                        </td>
+                        <td style="width: 98%; text-align: left">
+                            <span>___</span>
+                            <label>&nbsp;Other:</label>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table align="center" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td colspan="4" style="width: 100%; text-align: left"><span class="DFRReportHeadingFontSize"><strong>Patient:</strong></span></td>
+        </tr>
+        <tr>
+            <td style="width: 30%">Last:&nbsp;{{report.data['bginfo'].lastname}}</td>
+            <td style="width: 30%">First:&nbsp;{{report.data['bginfo'].firstname}}</td>
+            <td style="width: 30%">M.I.:&nbsp;{{report.data['bginfo'].middlename}}</td>
+            <td style="width: 10%">Sex:&nbsp;{{report.data['bginfo'].gender}}</td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <table align="center" width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td style="width: 40%">Address:&nbsp;{{report.data['bginfo'].addressline1}} {{report.data['bginfo'].addressline2? ', ' +report.data['bginfo'].addressline2 : ''}}</td>
+                        <td style="width: 20%">City:&nbsp;{{report.data['bginfo'].city}}</td>
+                        <td style="width: 20%">State:&nbsp;{{report.data['bginfo'].state}}</td>
+                        <td style="width: 20%">Zip:&nbsp;{{report.data['bginfo'].zipcode}}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 30%">Date of Injury:&nbsp;{{report.data['bginfo'].dateofinjury | date:'MM/dd/yyyy'}}</td>
+            <td style="width: 30%">Date of Birth:&nbsp;{{report.data['bginfo'].dateofbirth | date:'MM/dd/yyyy'}}</td>
+            <td style="width: 20%">&nbsp;</td>
+            <td style="width: 20%">&nbsp;</td>
+        </tr>
+        <tr>
+            <td style="width: 33%">Occupation:&nbsp;{{report.data['bginfo'].currentoccupation=='Other'?report.data['bginfo'].currentoccupationother:report.data['bginfo'].currentoccupation}}</td>
+            <td style="width: 33%">SS#:&nbsp;{{report.data['bginfo'].socialsecurityno | socialSecurityFormat}}</td>
+            <td style="width: 33%">Phone:&nbsp;<span ng-if="report.data['bginfo'].homephone">Home: {{report.data['bginfo'].homephone | phonenumberFormat}}</span><span ng-if="report.data['bginfo'].cellphone"> Cell: {{report.data['bginfo'].cellphone | phonenumberFormat}}</span><span ng-if="report.data['bginfo'].workphone"> Work: {{report.data['bginfo'].workphone | phonenumberFormat}} <span ng-if="report.data['bginfo'].extension">ext. {{report.data['bginfo'].extension}}</span></span></td>
+            <td style="width: 1%">&nbsp;</td>
+        </tr>
+    </table>
+    <table align="center" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td style="width: 100%; text-align: left"><span class="DFRReportHeadingFontSize"><strong>Claims Administrator:</strong></span></td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td colspan="2" style="width: 60%">Name:&nbsp;{{report.data['bginfo'].claimsadjuster_firstname}} {{report.data['bginfo'].claimsadjuster_lastname}}{{report.data['bginfo'].insurance_claimsadministrator ? ', '+ report.data['bginfo'].insurance_claimsadministrator : ''}}</td>
+                        <td colspan="2" style="width: 40%">Claim Number:&nbsp;{{report.data['bginfo'].insurance_claimsnumber}}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td style="width: 40%;">Address:&nbsp;{{report.data['bginfo'].insuranceaddressline1}} {{report.data['bginfo'].insuranceaddressline2 ? ', '+report.data['bginfo'].insuranceaddressline2 : ''}}</td>
+                        <td style="width: 20%">City:&nbsp;{{report.data['bginfo'].insurancecity}}</td>
+                        <td style="width: 20%">State:&nbsp;{{report.data['bginfo'].insurancestate}}</td>
+                        <td style="width: 20%">Zip:&nbsp;{{report.data['bginfo'].insurancezipcode}}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td style="width: 60%">Phone:&nbsp;<span ng-if="report.data['bginfo'].claimsadjuster_telephoneno">{{report.data['bginfo'].claimsadjuster_telephoneno | phonenumberFormat}} <span ng-if="report.data['bginfo'].claimsadjuster_extension">ext.&nbsp;{{report.data['bginfo'].claimsadjuster_extension}}</span></span></td>
+                        <td style="width: 20%">Fax:&nbsp;{{report.data['bginfo'].claimsadjuster_fax | phonenumberFormat}}</td>
+                        <td colspan="2" style="width: 20%">&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td style="width: 60%">Email:&nbsp;{{report.data['bginfo'].claimsadjuster_email}}</td>
+                        <td colspan="3" style="width: 40%">&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td style="width: 60%"><strong>Employer name:&nbsp;</strong>{{report.data['bginfo'].company}}</td>
+                        <td colspan="3" style="width: 40%;">Employer phone:&nbsp;<span ng-if="report.data['bginfo'].emp_telephone">{{report.data['bginfo'].emp_telephone | phonenumberFormat}} <span ng-if="report.data['bginfo'].emp_extension">ext.&nbsp;{{report.data['bginfo'].emp_extension}}</span></span></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" style="width: 100%; text-align: right">
+                <hr />
+            </td>
+        </tr>
+    </table>

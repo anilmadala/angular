@@ -1,0 +1,1081 @@
+<!-- ########################################*****RFA*****######################################################### -->
+<!-- RFA new code starts -->
+<!--<div ng-include src="getRfaFilePath(version,formtype)"></div>-->
+<!--<ng-include src="'partials/reports/' + formtype + '/v' + version + '/rfa.html'"></ng-include>-->
+<!-- RFA new code ends -->
+
+<!-- ########################################*****RFA*****######################################################### -->
+<!-- RFA new code starts -->
+<div>
+    <!--  ng-if="currentReportStatus=='open' || currentReportStatus=='closed' || currentReportStatus=='level1' || currentReportStatus=='level2'"> -->
+    <div ng-repeat="(concatKey, concatValue) in report.data['selectinjuries'].concatedbodypart track by concatKey">      				
+		<div ng-if="concatValue.dateOfRating!='' && concatValue.ratebodyYesNoRadio=='Yes'">
+        <div ng-repeat="(medi, mediValue) in ['treatmentnsaids','treatmentmsrelaxants','treatmentopioids','treatmentnonopioids', 'treatmentcortisone', 'treatmentnerve','treatmentantimicrobial','treatmentimmunizations','treatmenttherapy','treatmentinjections','treatmentreferral','treatmentdiagnostic','durabletensunit', 'durablehwaveunit', 'durablewheelchair', 'durablecane', 'durableCrutch', 'durableAFO', 'durableKAFO', 'durabletenniselbowstrap', 'durableneoprenesleeve', 'durablesplints', 'durablewristsupport', 'durablelumbarsupport', 'durableother', 'treatmentother']">           
+            <div ng-repeat="(medicationKey, medication) in report.data['treatment' + concatValue.concateId][mediValue]">              
+                <div ng-if="(mediValue=='treatmenttherapy' || mediValue=='treatmentinjections' || mediValue== 'treatmentdiagnostic' || mediValue== 'treatmentreferral' || mediValue== 'durabletensunit' || mediValue== 'durablehwaveunit' || mediValue== 'durablewheelchair' || mediValue== 'durablecane' || mediValue== 'durableCrutch' || mediValue== 'durableAFO' || mediValue== 'durableKAFO' || mediValue== 'durabletenniselbowstrap' || mediValue== 'durableneoprenesleeve' || mediValue== 'durablesplints' || mediValue== 'durablewristsupport' || mediValue== 'durablelumbarsupport' || mediValue== 'durableother')? isTreatmentInputted(concatValue.concateId , mediValue, report.data['treatment' + concatValue.concateId][mediValue]) : true">                   
+                <!-- Header text Value here-->
+           		<div style="max-height:0; display:none; mso-hide:all; overflow:hidden;visibility: hidden !important;"><input type="hidden" id="{{'bodysystem_' + concatKey+'_'+medi+'_'+medicationKey}}" value="{{concatValue.bodysystem}}"/></div>
+           		<div style="max-height:0; display:none; mso-hide:all; overflow:hidden;visibility: hidden !important;"><input type="hidden" id="{{'bdsides_' + concatKey+'_'+medi+'_'+medicationKey}}" value="{{concatValue.bdsides}}"/></div>
+           		<div style="max-height:0; display:none; mso-hide:all; overflow:hidden;visibility: hidden !important;"><input type="hidden" id="{{'bdtext_' + concatKey+'_'+medi+'_'+medicationKey}}" value="{{concatValue.text}}"/></div>
+				<div style="max-height:0; display:none; mso-hide:all; overflow:hidden;visibility: hidden !important;"><input type="hidden" id="{{'bdsystemother_' + concatKey+'_'+medi+'_'+medicationKey}}" value="{{concatValue.bdsystemother}}"/></div>
+           		<div style="max-height:0; display:none; mso-hide:all; overflow:hidden;visibility: hidden !important;"><input type="hidden" id="{{'bdpartother_' + concatKey+'_'+medi+'_'+medicationKey}}" value="{{concatValue.bdpartother}}"/></div>
+           		<div style="max-height:0; display:none; mso-hide:all; overflow:hidden;visibility: hidden !important;"><input type="hidden" id="{{'selectnsaids_' + concatKey+'_'+medi+'_'+medicationKey}}" value="{{medication.selectnsaids}}"/></div>
+           		<div style="max-height:0; display:none; mso-hide:all; overflow:hidden;visibility: hidden !important;" id="{{treatingPhysician+'_' + concatKey+'_'+medi+'_'+medicationKey}}" > </div> 
+           		<div style="max-height:0; display:none; mso-hide:all; overflow:hidden;visibility: hidden !important;" id="{{signingPhysician+'_' + concatKey+'_'+medi+'_'+medicationKey}}" >{{report.data.signDoctor.level4.firstname | capitalize}} {{report.data.signDoctor.level4.lastname | capitalize}}<span ng-if="report.data.signDoctor.level4.profession">, <span ng-bind-html="getProfession(report.data.signDoctor.level4.profession,report.data.signDoctor.level4.otherprofessiontext)"></span></span> </div> 
+           		<!--  header text Value Ends here -->
+                    <!-- New Rfa Form-->
+                    <div style="max-width: 816px;"  ng-if="isTreatmentSelected(medication,mediValue)">
+                        <table align="left" cellpadding="0" cellspacing="0" border="0" style="line-height: 10px; width: 100%">
+                            <tr>
+                                <td class="wdcen" align="center">
+                                    <h5 style="page-break-before: always; margin: 10px 0 0 0;"><strong>State of California, Division of Workers' Compensation</strong></h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="wdcen" align="center">
+                                    <h4 style="margin: 0px 0 0 0;"><strong>REQUEST FOR AUTHORIZATION</strong></h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="wdcen" align="center">
+                                    <h5 style="margin: 0px 0 0 0;"><strong>DWC Form RFA </strong></h5>
+                                    <br />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="wdcen">
+                                    <h5 style="margin: 4px 0 0 10px; text-align: center;">
+                                        <strong>Attach the Doctor&apos;s First Report of Occupational Injury or Illness, Form DLSR 5021, a Treating Physician&apos;s
+                                        </strong>
+                                    </h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 100%; text-align: center;">
+                                    <h5 style="margin: 4px 0 0 10px;">
+                                        <strong>Progress Report, DWC Form PR-2, or equivalent narrative report substantiating the requested treatment.
+                                        </strong>
+                                    </h5>
+                                    <br />
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- Top checkbox area -->
+                        <table border="0" width="100%" align="center" cellpadding="0" cellspacing="0" style="clear: both; border: 2px solid black; font-size: 12px;">
+                            <tr>
+                                <td style="width: 100%;">
+                                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size: 12px;">
+                                        <tr>
+                                            <td style="width: 2%;">
+                                                <input type="checkbox" name="chkRfaNewReq" id="chkRfaNewReq" checked="checked" disabled="disabled" />
+                                            </td>
+                                            <td style="width: 28%;">
+                                                <label>&nbsp;New Request</label>
+                                            </td>
+                                            <td style="width: 2%; padding-left: 10px">
+                                                <input type="checkbox" name="chkRfaSubChange" id="chkRfaSubChange" disabled="disabled" />
+                                            </td>
+                                            <td style="width: 68%">
+                                                <label>&nbsp;Resubmission - Change in Material Facts</label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 100%; margin-left: 0px; padding-left: 0px">
+                                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size: 12px;">
+                                        <tr>
+                                            <td style="width: 2%; text-align: left">
+                                                <input type="checkbox" name="chkRfaExpedRev" id="chkRfaExpedRev" disabled="disabled" />
+                                            </td>
+                                            <td style="width: 98%; text-align: left">
+                                                <label>&nbsp;Expedited Review: Check box if employee faces an imminent and serious threat to his or her health</label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 100%; margin-left: 0px; padding-left: 0px">
+                                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size: 12px;">
+                                        <tr>
+                                            <td style="width: 2%; text-align: left">
+                                                <input type="checkbox" iname="chkRfaWrittenConf" id="chkRfaWrittenConf" disabled="disabled" />
+                                            </td>
+                                            <td style="width: 98%; text-align: left">
+                                                <label>&nbsp;Check box if request is a written confirmation of a prior oral request.</label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- End of top checkbox area -->
+                        <table align="left" width="100%" cellpadding="0" cellspacing="0" border="1" style="width: 100%; font-size: 12px;">
+                            <!-- Top checkbox area -->
+                            <!--<tr>
+								<td colspan="6">
+									<div class="row" style="text-align: left;" style="font-size: 8px;">
+										<div class="col-md-5">
+											<input type="checkbox" name="chkRfaNewReq" id="chkRfaNewReq" checked="checked" />
+											&nbsp;New Request               
+										</div>
+										<div class="col-md-7">
+											<input type="checkbox" name="chkRfaSubChange" id="chkRfaSubChange" />
+											&nbsp;Resubmission - Change in Material Facts
+										</div>
+									</div>
+									<div class="row" style="text-align: left;" style="font-size: 8px;">
+										<div class="col-md-12">
+											<input type="checkbox" name="chkRfaExpedRev" id="chkRfaExpedRev" />
+											&nbsp;Expedited Review: Check box if employee faces an imminent and serious threat to his or her health
+										</div>
+									</div>
+									<div class="row" style="text-align: left;" style="font-size: 8px;">
+										<div class="col-md-12">
+											<input type="checkbox" iname="chkRfaWrittenConf" id="chkRfaWrittenConf" />&nbsp; Check box if request is a written confirmation of a prior oral request. 
+										</div>
+									</div>
+									<hr />
+								</td>
+							</tr>-->
+
+                            <!-- Top checkbox area ends here -->
+
+                            <!--Employee Information area starts here -->
+                            <tr>
+                                <td colspan="6" class="cell-pad" style="width: 100%; text-align: left; background-color: #C5D9F0">
+                                    <span class="DFRReportHeadingFontSize" style="padding: 3px"><strong>Employee Information</strong></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="cell-pad">Name (Last, First, Middle):&nbsp;{{report.data['bginfo'].lastname}},&nbsp;{{report.data['bginfo'].firstname}}{{report.data['bginfo'].middlename?',&nbsp;' + report.data['bginfo'].middlename : ''}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="cell-pad ">Date of Injury (MM/DD/YYYY):&nbsp;{{report.data['bginfo'].dateofinjury | date:'MM/dd/yyyy'}}</td>
+                                <td colspan="3" class="cell-pad ">Date of Birth (MM/DD/YYYY):&nbsp;{{report.data['bginfo'].dateofbirth | date:'MM/dd/yyyy'}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="cell-pad ">Claim Number:&nbsp;<span ng-if="report.data['bginfo'].insurance_claimsnumber">{{report.data['bginfo'].insurance_claimsnumber}}</span></td>
+                                <td colspan="3" class="cell-pad ">Employer:&nbsp;{{report.data['bginfo'].company}}</td>
+                            </tr>
+                            <!--Employee Information area ends here -->
+
+                            <!--Requesting Physician area starts here -->
+                            <tr>
+                                <td colspan="6" class="cell-pad" style="width: 100%; text-align: left; background-color: #C5D9F0">
+                                    <span class="DFRReportHeadingFontSize" style="padding: 3px"><strong>Requesting Physician Information </strong></span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="cell-pad">Name:&nbsp;{{report.data.signDoctor.level4.firstname}}{{report.data.signDoctor.level4.lastname? ' ' + report.data.signDoctor.level4.lastname : ''}}</td>
+                            </tr>
+                            <tr>
+                                <!--<td colspan="3" class="cell-pad ">Practice Name:&nbsp;{{mypracticename | capitalize}}</td>-->
+                                <!-- <td colspan="3" class="cell-pad ">Practice Name:&nbsp;{{report.data['patientcomplaints'].cliniclocationobj.location | capitalize}}</td> -->
+								<td colspan="3" class="cell-pad ">Practice Name:&nbsp;{{report.data['patientcomplaints'].cliniclocationobj.location}}</td>
+                                <td colspan="3" class="cell-pad ">Contact Name:&nbsp;{{report.data.rfadetails.firstname}}&nbsp;{{report.data.rfadetails.lastname}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="cell-pad ">Address:&nbsp;{{report.data['patientcomplaints'].cliniclocationobj.street}}{{report.data['patientcomplaints'].cliniclocationobj.county? ', ' + report.data['patientcomplaints'].cliniclocationobj.city : ''}}
+                                </td>
+                                <td align="left" class="cell-pad">City:&nbsp;{{report.data['patientcomplaints'].cliniclocationobj.city}}
+                                </td>
+                                <td align="left" colspan="2" class="cell-pad">State:&nbsp;{{report.data['patientcomplaints'].cliniclocationobj.state}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" class="cell-pad">Zip Code:&nbsp;{{report.data['patientcomplaints'].cliniclocationobj.zipcode}}
+
+                                </td>
+                                <td align="left" colspan="2" class="cell-pad">Phone:&nbsp;{{report.data['patientcomplaints'].subjectivecomplaints_contactphonenumber | phonenumberFormat}}&nbsp;<span ng-if="report.data['patientcomplaints'].subjectivecomplaints_extension && report.data['patientcomplaints'].subjectivecomplaints_contactphonenumber">ext. {{report.data['patientcomplaints'].subjectivecomplaints_extension}}</span>
+                                </td>
+                                <td colspan="3" class="cell-pad ">Fax Number:&nbsp;{{report.data['patientcomplaints'].subjectivecomplaints_fax | phonenumberFormat}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="cell-pad  ">Specialty:
+							  <span data-ng-repeat="specialities in report.data.signDoctor.level4.speciality">{{specialities.name }}
+                              </span>
+                                </td>
+                                <td colspan="3" class="cell-pad ">NPI Number:&nbsp;{{report.data.usernpinumber}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="cell-pad">E-mail Address:&nbsp;{{report.data.rfadetails.email}}
+                                </td>
+                            </tr>
+                            <!--Requesting Physician area ends  here -->
+                            <!--Claims Administrator area start  here -->
+                            <tr>
+                                <td colspan="6" class="cell-pad" style="width: 100%; text-align: left; background-color: #C5D9F0">
+                                    <span class="DFRReportHeadingFontSize" style="padding: 3px">
+                                        <strong>Claims Administrator Information
+                                        </strong>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class=" ">Company Name:&nbsp;{{report.data['bginfo'].insurance_claimsadministrator}}
+                                </td>
+                                <td colspan="3" class="cell-pad ">Contact Name:&nbsp;{{report.data['bginfo'].claimsadjuster_firstname}}{{report.data['bginfo'].claimsadjuster_lastname? ' ' + report.data['bginfo'].claimsadjuster_lastname : ''}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="cell-pad ">Address: &nbsp;{{report.data['bginfo'].insuranceaddressline1}}{{report.data['bginfo'].insuranceaddressline2 ? ', '+report.data['bginfo'].insuranceaddressline2 : ''}}
+                                </td>
+                                <td align="left" class="cell-pad">City:&nbsp;{{report.data['bginfo'].insurancecity}}
+                                </td>
+                                <td align="left" colspan="2" class="cell-pad">State:&nbsp;{{report.data['bginfo'].insurancestate}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" class="cell-pad">Zip Code:&nbsp;{{report.data['bginfo'].insurancezipcode}}
+                                </td>
+                                <td align="left" colspan="2" class="cell-pad">Phone: <span ng-if="report.data['bginfo'].claimsadjuster_telephoneno">{{report.data['bginfo'].claimsadjuster_telephoneno | phonenumberFormat}} <span ng-if="report.data['bginfo'].claimsadjuster_extension">ext.&nbsp;{{report.data['bginfo'].claimsadjuster_extension}}</span></span>
+                                </td>
+                                <td colspan="3" class="cell-pad ">Fax Number:&nbsp;{{report.data['bginfo'].claimsadjuster_fax}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="cell-pad">E-mail Address:&nbsp;{{report.data['bginfo'].claimsadjuster_email}}
+                                </td>
+                            </tr>
+                            <!--Claims Administrator area ends  here -->
+                            <tr>
+                                <td colspan="6" class="cell-pad" style="width: 100%; text-align: left; background-color: #C5D9F0">
+                                    <span class="DFRReportHeadingFontSize" style="padding: 3px">
+                                        <strong>Requested Treatment (see instructions for guidance; attached additional pages if necessary)
+											
+                                        </strong>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="cell-pad">List each specific requested medical services, goods, or items in the below space or indicate the specific page number(s)
+				  of the attached medical report on which the requested treatment can be found. Up to five (5) procedures may be entered;
+				  list additional requests on a separate sheet if the space below is insufficient.
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td align="left" class="cell-pad">Diagnosis<br />
+                                    (Required)
+
+                                </td>
+
+                                <td align="left" class="cell-pad">ICD-Code<br />
+                                    (Required)
+                                </td>
+                                <td align="left" colspan="2" class="cell-pad">Service/Good Requested<br />
+                                    (Required)
+
+                                </td>
+                                <td align="left" class="cell-pad">CPT/HCPCS<br />
+                                    Code (If known)
+
+                                </td>
+                                <td align="left" class="cell-pad">Other Information:<br />
+                                    (Frequency, Duration,<br />
+                                    Quantity, etc.)
+
+                                </td>
+                            </tr>
+                            <tr id="{{'servicetext_' + concatKey+'_'+medi+'_'+medicationKey}}">
+                                <td align="left" class="cell-pad" style="height: 20px;">
+                                    <div ng-if="version=='1'">
+                                        <div ng-if="concatValue.id!='other'">
+                                            <div ng-if="concatValue.id=='fingerindex' || concatValue.id=='fingermiddle' || concatValue.id=='fingerring' || concatValue.id=='fingerlittle' || concatValue.id=='thumb'">
+                                                <div ng-if="concatValue.bdsides=='left'">
+                                                    <div ng-if="report.data['diagnoseshandleft']" ng-bind-html="getDiagnosesText(report.data['diagnoseshandleft'])">
+                                                    </div>
+                                                </div>
+                                                <div ng-if="concatValue.bdsides=='right'">
+                                                    <div ng-if="report.data['diagnoseshandright']" ng-bind-html="getDiagnosesText(report.data['diagnoseshandright'])">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-if="concatValue.id!='fingerindex' && concatValue.id!='fingermiddle' && concatValue.id!='fingerring' && concatValue.id!='fingerlittle' && concatValue.id!='thumb'">
+                                                <div ng-if="concatValue.bodysystem=='Skin'">
+                                                    <div ng-if="report.data['diagnoses' + concatValue.concateId]" ng-bind-html="getDiagnosesTextSkin(report.data['diagnoses' + concatValue.concateId])">
+                                                    </div>
+                                                </div>
+                                                <div ng-if="concatValue.bodysystem!='Skin'">
+                                                    <div ng-if="report.data['diagnoses' + concatValue.concateId]" ng-bind-html="getDiagnosesText(report.data['diagnoses' + concatValue.concateId])">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div ng-if="concatValue.id=='other'">
+                                            {{report.data['diagnoses'+ concatValue.concateId].otherDiangosesName}}
+                                        </div>
+                                    </div>
+                                    <div ng-if="version=='2' || version=='3' || version=='4'">
+                                        <div ng-if="concatValue.id!='other'">
+                                            <div ng-if="concatValue.id=='fingerindex' || concatValue.id=='fingermiddle' || concatValue.id=='fingerring' || concatValue.id=='fingerlittle' || concatValue.id=='thumb'">
+                                                <div ng-if="concatValue.bdsides=='left'">
+                                                    <div ng-if="report.data['diagnoseshandleft']" ng-bind-html="getDiagnosesTextV2(report.data['diagnoseshandleft'])">
+                                                    </div>
+                                                </div>
+                                                <div ng-if="concatValue.bdsides=='right'">
+                                                    <div ng-if="report.data['diagnoseshandright']" ng-bind-html="getDiagnosesTextV2(report.data['diagnoseshandright'])">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-if="concatValue.id!='fingerindex' && concatValue.id!='fingermiddle' && concatValue.id!='fingerring' && concatValue.id!='fingerlittle' && concatValue.id!='thumb'">
+                                                <div ng-if="concatValue.bodysystem=='Skin'">
+                                                    <div ng-if="report.data['diagnoses' + concatValue.concateId]" ng-bind-html="getDiagnosesTextSkin(report.data['diagnoses' + concatValue.concateId])">
+                                                    </div>
+                                                </div>
+                                                <div ng-if="concatValue.bodysystem!='Skin'">
+                                                    <div ng-if="report.data['diagnoses' + concatValue.concateId]" ng-bind-html="getDiagnosesTextV2(report.data['diagnoses' + concatValue.concateId])">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div ng-if="concatValue.id=='other'">
+                                            {{report.data['diagnoses'+ concatValue.concateId].otherDiangosesName}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td align="left" class="cell-pad">
+                                    <div ng-if="version=='1'">
+                                        <div ng-if="concatValue.id!='other'">
+                                            <div ng-if="concatValue.id=='fingerindex' || concatValue.id=='fingermiddle' || concatValue.id=='fingerring' || concatValue.id=='fingerlittle' || concatValue.id=='thumb'">
+                                                <div ng-if="concatValue.bdsides=='left'">
+                                                    <div ng-if="report.data['diagnoseshandleft']" ng-bind-html="getDiagnosesICDCode(report.data['diagnoseshandleft'])">
+                                                    </div>
+                                                </div>
+                                                <div ng-if="concatValue.bdsides=='right'">
+                                                    <div ng-if="report.data['diagnoseshandright']" ng-bind-html="getDiagnosesICDCode(report.data['diagnoseshandright'])">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-if="concatValue.id!='fingerindex' && concatValue.id!='fingermiddle' && concatValue.id!='fingerring' && concatValue.id!='fingerlittle' && concatValue.id!='thumb'">
+                                                <div ng-if="concatValue.bodysystem=='Skin'">
+                                                    <div ng-if="report.data['diagnoses' + concatValue.concateId]" ng-bind-html="getDiagnosesICDCodeSkin(report.data['diagnoses' + concatValue.concateId])">
+                                                    </div>
+                                                </div>
+                                                <div ng-if="concatValue.bodysystem!='Skin'">
+                                                    <div ng-if="report.data['diagnoses' + concatValue.concateId]" ng-bind-html="getDiagnosesICDCode(report.data['diagnoses' + concatValue.concateId])">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div ng-if="concatValue.id=='other'">
+                                            {{report.data['diagnoses'+ concatValue.concateId].otherICD9Code}}
+											<span ng-if="report.data['diagnoses'+ concatValue.concateId].otherICD10Code"><span ng-if="report.data['diagnoses'+ concatValue.concateId].otherICD9Code">/</span><span ng-if="!report.data['diagnoses'+ concatValue.concateId].otherICD9Code"></span></span> {{report.data['diagnoses'+ concatValue.concateId].otherICD10Code}}
+                                        </div>
+                                    </div>
+                                    <div ng-if="version=='2' || version=='3' || version=='4'">
+                                        <div ng-if="concatValue.id!='other'">
+                                            <div ng-if="concatValue.id=='fingerindex' || concatValue.id=='fingermiddle' || concatValue.id=='fingerring' || concatValue.id=='fingerlittle' || concatValue.id=='thumb'">
+                                                <div ng-if="concatValue.bdsides=='left'">
+                                                    <div ng-if="report.data['diagnoseshandleft']" ng-bind-html="getDiagnosesICDCodeV2(report.data['diagnoseshandleft'])">
+                                                    </div>
+                                                </div>
+                                                <div ng-if="concatValue.bdsides=='right'">
+                                                    <div ng-if="report.data['diagnoseshandright']" ng-bind-html="getDiagnosesICDCodeV2(report.data['diagnoseshandright'])">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-if="concatValue.id!='fingerindex' && concatValue.id!='fingermiddle' && concatValue.id!='fingerring' && concatValue.id!='fingerlittle' && concatValue.id!='thumb'">
+                                                <div ng-if="concatValue.bodysystem=='Skin'">
+                                                    <div ng-if="report.data['diagnoses' + concatValue.concateId]" ng-bind-html="getDiagnosesICDCodeSkin(report.data['diagnoses' + concatValue.concateId])">
+                                                    </div>
+                                                </div>
+                                                <div ng-if="concatValue.bodysystem!='Skin'">
+                                                    <div ng-if="report.data['diagnoses' + concatValue.concateId]" ng-bind-html="getDiagnosesICDCodeV2(report.data['diagnoses' + concatValue.concateId])">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div ng-if="concatValue.id=='other'">
+                                            {{report.data['diagnoses'+ concatValue.concateId].otherICD9Code}}
+											<span ng-if="report.data['diagnoses'+ concatValue.concateId].otherICD10Code"><span ng-if="report.data['diagnoses'+ concatValue.concateId].otherICD9Code">/</span><span ng-if="!report.data['diagnoses'+ concatValue.concateId].otherICD9Code"></span></span> {{report.data['diagnoses'+ concatValue.concateId].otherICD10Code}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td align="left" colspan="2" class="cell-pad">
+                                    <div ng-if="mediValue == 'treatmentnsaids' || mediValue == 'treatmentmsrelaxants' || mediValue == 'treatmentopioids' || mediValue == 'treatmentnonopioids' || mediValue == 'treatmentnerve' || mediValue == 'treatmentantimicrobial' || mediValue == 'treatmentimmunizations' ">
+                                        <div ng-if="medication.selectnsaids!=''">
+                                            <div ng-if="medication.selectnsaids=='Other'">
+                                                <div ng-if="mediValue != 'treatmentimmunizations'">
+                                                    <div ng-if="mediValue == 'treatmentnsaids'">
+                                                        NSAIDs&nbsp;-&nbsp;{{medication.selectnsaidstext|capitalize}}
+                                                    </div>
+                                                    <div ng-if="mediValue == 'treatmentmsrelaxants'">
+                                                        Muscle Relaxants&nbsp;-&nbsp;{{medication.selectnsaidstext|capitalize}}
+                                                    </div>
+                                                    <div ng-if="mediValue == 'treatmentopioids'">
+                                                        Opioids&nbsp;-&nbsp;{{medication.selectnsaidstext|capitalize}}
+                                                    </div>
+                                                    <div ng-if="mediValue == 'treatmentnonopioids'">
+                                                        Non-opioids&nbsp;-&nbsp;{{medication.selectnsaidstext|capitalize}}
+                                                    </div>
+                                                    <div ng-if="mediValue == 'treatmentnerve'">
+                                                        Nerve stabilizers&nbsp;-&nbsp;{{medication.selectnsaidstext|capitalize}}
+                                                    </div>
+                                                    <div ng-if="mediValue == 'treatmentantimicrobial'">
+                                                        Antimicrobials&nbsp;-&nbsp;{{medication.selectnsaidstext|capitalize}}
+                                                    </div>
+                                                </div>
+                                                <div ng-if="mediValue == 'treatmentimmunizations'">
+                                                    Immunizations&nbsp;-&nbsp;<span ng-bind-html="appendPeriod(medication.othertextfortextarea)"></span>
+                                                </div>
+                                            </div>
+                                            <div ng-if="medication.selectnsaids!='Other'">
+                                                {{medication.selectnsaids}}                                        
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'treatmentcortisone'">
+                                        Cortisone
+                                    </div>
+                                    <div ng-if="mediValue == 'treatmenttherapy'">
+                                        <div ng-if="medication.selectnsaids">
+                                            <div ng-if="medication.selectnsaids!='Other'">
+                                                {{medication.selectnsaids}}                                       
+                                            </div>
+                                            <div ng-if="medication.selectnsaids=='Other'">
+                                                <div ng-if="medication.therapyinputother">
+                                                    Therapy&nbsp;-&nbsp;{{medication.therapyinputother|capitalize}}                                           
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'treatmentinjections'">
+                                        <div ng-if="medication.selectnsaids">
+                                            <div ng-if="medication.selectnsaids!='Other'">
+                                                Injections&nbsp;-&nbsp;{{medication.selectnsaids}} 											
+                                            </div>
+                                            <div ng-if="medication.selectnsaids=='Other'">
+                                                <div ng-if="medication.injectionstextinput">Injections&nbsp;-&nbsp;{{medication.injectionstextinput|capitalize}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'treatmentreferral'">
+                                        <div ng-if="medication.selectnsaids">
+                                            <div class="divMain" ng-if="medication.selectnsaids=='Dental' || medication.selectnsaids=='Dermatology' || medication.selectnsaids=='Neurology' || medication.selectnsaids=='Ophthalmology' || medication.selectnsaids=='Physical medicine' || medication.selectnsaids=='Psychiatry' || medication.selectnsaids=='Podiatry'">
+                                                {{medication.selectnsaids}} 											
+											<div ng-if="medication.selectreferraldropdown=='Other'">
+                                                <div ng-bind-html="appendPeriod(medication.selectreferraldropdownforother)"></div>
+                                            </div>
+                                            </div>
+                                            <div ng-if="medication.selectnsaids=='Internal medicine specialty'" class="divMain">
+                                                <span ng-if="medication.treatmentinternalmedicineselectoption!='' && medication.treatmentinternalmedicineselectoption!='Choose' && medication.treatmentinternalmedicineselectoption!='Other'">
+                                                    <span ng-if="medication.treatmentinternalmedicineselectoption">{{medication.selectnsaids}} - {{medication.treatmentinternalmedicineselectoption}}</span>
+                                                </span>
+                                                <span ng-if="medication.treatmentinternalmedicineselectoption!='' && medication.treatmentinternalmedicineselectoption=='Other'">
+                                                    <span ng-if="medication.treatmentinternalmedicineselectoptionothertext!=''">{{medication.selectnsaids}} - {{medication.treatmentinternalmedicineselectoptionothertext|capitalize}}
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div ng-if="medication.selectnsaids=='Pain management'" class="divMain">
+                                                <span ng-if="medication.selectpainmanagmentradio.length>0">{{medication.selectnsaids}} - {{medication.selectpainmanagmentradio}}</span>
+                                            </div>
+                                            <div ng-if="medication.selectnsaids=='Surgery'" class="divMain">
+                                                <div ng-if="medication.surgeryselectoptions">
+                                                    <div ng-if="medication.surgeryselectoptions!='' && medication.surgeryselectoptions!='Choose'">
+                                                        <div ng-if="medication.surgeryselectoptions!='Orthopedics'">
+                                                            <div ng-if="medication.surgeryselectoptions=='Other'">
+                                                                <div ng-if="medication.surgeryselectoptionsothertext">{{medication.selectnsaids}} - {{medication.surgeryselectoptionsothertext|capitalize}}</div>
+                                                            </div>
+                                                            <div ng-if="medication.surgeryselectoptions!='Other'">
+                                                                {{medication.selectnsaids}} - {{medication.surgeryselectoptions}}
+                                                            </div>
+                                                        </div>
+                                                        <div ng-if="medication.surgeryselectoptions=='Orthopedics'">
+                                                            <div ng-if="medication.surgeryorthopedicselectoptions">
+                                                                <div ng-if="medication.surgeryorthopedicselectoptions!='' && medication.surgeryorthopedicselectoptions!='Choose'">
+                                                                    <div ng-if="medication.surgeryorthopedicselectoptions!='Other'">
+                                                                        {{medication.selectnsaids}} - {{medication.surgeryselectoptions}} - {{medication.surgeryorthopedicselectoptions}}
+                                                                    </div>
+                                                                    <div ng-if="medication.surgeryorthopedicselectoptions=='Other'">
+                                                                        <div ng-if="medication.surgeryorthopedicselectoptionstext.length>0">
+                                                                            {{medication.selectnsaids}} - {{medication.surgeryselectoptions}} - {{medication.surgeryorthopedicselectoptionstext|capitalize}}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div ng-if="!medication.surgeryorthopedicselectoptions">
+                                                                    {{medication.selectnsaids}} - Orthopedics
+                                                                </div>
+                                                            </div>
+                                                            <div ng-if="medication.surgeryselectoptions!='' && medication.surgeryselectoptions!='Choose' && medication.surgeryselectoptions=='Other'">
+                                                                <div ng-if="medication.surgeryselectoptionsothertext.length>0">
+                                                                    {{medication.selectnsaids}} - {{medication.surgeryselectoptionsothertext|capitalize}}                                                           
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-if="medication.selectnsaids=='Other'" class="divMain">
+                                                <div ng-if="medication.referralinputother">
+                                                    Internal Medicine Speciality&nbsp;-&nbsp;{{medication.referralinputother|capitalize}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'treatmentdiagnostic'">
+                                        <div ng-if="medication.selectnsaids || medication.othertextfortextarea">
+                                            <div class="divMain">
+                                                <div ng-if="medication.selectnsaids!='Other' && medication.selectnsaids!=''">
+                                                    {{medication.selectnsaids}}
+                                                </div>
+                                                <div ng-if="medication.selectnsaids=='Other' && medication.diagnosticinputother.length>0">
+                                                    {{medication.diagnosticinputother|capitalize}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'treatmentother'">
+                                        <div class="divMain">
+                                            <div ng-if="medication.selectnsaids">
+                                                {{medication.selectnsaids}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'durabletensunit'">
+                                        <div ng-if="report.data['treatment' + concatValue.concateId].durabletensunit.length>0">
+                                            {{report.data['treatment' + concatValue.concateId].durabletensunit[0]}}                                            
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'durablehwaveunit'">
+                                        <div ng-if="report.data['treatment' + concatValue.concateId].durablehwaveunit.length>0">
+                                            {{report.data['treatment' + concatValue.concateId].durablehwaveunit[0]}}                                            
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'durablewheelchair'">
+                                        <div ng-if="report.data['treatment' + concatValue.concateId].durablewheelchair.length>0">
+                                            {{report.data['treatment' + concatValue.concateId].durablewheelchair[0]}}                                            
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'durablecane'">
+                                        <div ng-if="report.data['treatment' + concatValue.concateId].durablecane.length>0">
+                                            {{report.data['treatment' + concatValue.concateId].durablecane[0]}}                                            
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'durableCrutch'">
+                                        <div ng-if="report.data['treatment' + concatValue.concateId].durableCrutch.length>0">
+                                            {{report.data['treatment' + concatValue.concateId].durableCrutch[0]}}                                            
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'durableAFO'">
+                                        <div ng-if="report.data['treatment' + concatValue.concateId].durableAFO.length>0">
+                                            {{report.data['treatment' + concatValue.concateId].durableAFO[0]}}                                            
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'durableKAFO'">
+                                        <div ng-if="report.data['treatment' + concatValue.concateId].durableKAFO.length>0">
+                                            {{report.data['treatment' + concatValue.concateId].durableKAFO[0]}}                                            
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'durabletenniselbowstrap'">
+                                        <div ng-if="report.data['treatment' + concatValue.concateId].durabletenniselbowstrap.length>0">
+                                            {{report.data['treatment' + concatValue.concateId].durabletenniselbowstrap[0]}}                                            
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'durableneoprenesleeve'">
+                                        <div ng-if="report.data['treatment' + concatValue.concateId].durableneoprenesleeve.length>0">
+                                            {{report.data['treatment' + concatValue.concateId].durableneoprenesleeve[0]}}                                            
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'durablewristsupport'">
+                                        <div ng-if="report.data['treatment' + concatValue.concateId].durablewristsupport.length>0">
+                                            {{report.data['treatment' + concatValue.concateId].durablewristsupport[0]}}                                            
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'durablesplints'">
+                                        <div ng-if="report.data['treatment' + concatValue.concateId].durablesplints.length>0">
+                                            {{report.data['treatment' + concatValue.concateId].durablesplints[0]}}                                            
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'durablelumbarsupport'">
+                                        <div ng-if="report.data['treatment' + concatValue.concateId].durablelumbarsupport.length>0">
+                                            {{report.data['treatment' + concatValue.concateId].durablelumbarsupport[0]}}                                            
+                                        </div>
+                                    </div>
+                                    <div ng-if="mediValue == 'durableother'">
+                                        <div ng-if="report.data['treatment' + concatValue.concateId].txtEquipmentName.length>0">
+                                            {{report.data['treatment' + concatValue.concateId].txtEquipmentName}}                                            
+                                        </div>
+                                    </div>
+                                </td>
+                                <td align="left" class="cell-pad"></td>
+                                <td align="left" class="cell-pad"></td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="6" class="cell-pad" style="height: 40px;">
+                                    <!-- RFA treatment publish text code starts here -->
+                                    <div id="{{'treatmentData'+'_' + concatKey+'_'+medi+'_'+medicationKey}}" class="divMain">
+                                        <div ng-if="mediValue == 'treatmentnsaids' || mediValue == 'treatmentmsrelaxants' || mediValue == 'treatmentopioids' || mediValue == 'treatmentnonopioids' || mediValue == 'treatmentnerve' || mediValue == 'treatmentantimicrobial' || mediValue == 'treatmentimmunizations' ">
+                                            <div ng-if="medication.selectnsaids!=''">
+                                                <div ng-if="medication.selectnsaids=='Other'">
+                                                    <div ng-if="mediValue != 'treatmentimmunizations'">
+                                                        {{medication.selectnsaidstext}} <span ng-if="medication.selectnsaids!='Other'"><span ng-if="medication.selectnsaidDosage">({{medication.selectnsaidDosage}}mg)</span> is prescribed.</span>
+                                                    </div>
+                                                    <div ng-if="mediValue == 'treatmentimmunizations'">
+                                                        <span ng-bind-html="appendPeriod(medication.othertextfortextarea)"></span>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="medication.selectnsaids!='Other'">
+                                                    <div ng-if="mediValue == 'treatmentnonopioids'">
+                                                        <span ng-if="medication.selectnsaids=='Tramadol (Ultram)'">Tramadol (Ultram)&nbsp;<span ng-if="medication.selectnsaidDosage.length>0 && medication.selectnsaidDosage!=false && medication.selectnsaidDosage!=true">({{medication.selectnsaidDosage}} mg) </span>is prescribed.
+                                                        </span>
+                                                        <span ng-if="medication.selectnsaids=='Tramadol + acetaminophen (Ultracet)'">Tramadol + acetaminophen (Ultracet)&nbsp;<span ng-if="medication.selectnsaidDosage==true">(37.5 mg/325 mg) </span>is prescribed.
+                                                        </span>
+                                                    </div>
+                                                    <div ng-if="mediValue != 'treatmentnonopioids'">
+                                                        <div ng-if="medication.selectnsaidDosage">
+                                                            <div ng-if="medication.selectnsaidDosage=='IM' || medication.selectnsaidDosage=='IV'">
+                                                                {{medication.selectnsaids}} <span ng-if="medication.selectnsaidDosage">({{medication.selectnsaidDosage}})</span> is prescribed.
+						 
+                                                            </div>
+                                                            <div ng-if="medication.selectnsaidDosage!='IM' && medication.selectnsaidDosage!='IV'">
+                                                                <div ng-if="medication.selectnsaids=='Percocet (oxycodone + acetaminophen)'">
+							                                    {{medication.selectnsaids}} <span ng-if="medication.selectnsaidDosage">
+							                                    (<span ng-switch="medication.selectnsaidDosage">
+																		<span ng-switch-when="5/325">5/325</span>
+																		<span ng-switch-when="7.5/500">7.5/325</span>
+																		<span ng-switch-when="10/650">10/325</span>
+																	</span>
+							                                    mg)</span> is prescribed.
+							                                </div>
+							                                <div ng-if="medication.selectnsaids!='Percocet (oxycodone + acetaminophen)'">
+							                                	{{medication.selectnsaids}} <span ng-if="medication.selectnsaidDosage">({{medication.selectnsaidDosage}} mg)</span> is prescribed.
+							                                </div>	
+                                                            </div>
+                                                        </div>
+                                                        <div ng-if="!medication.selectnsaidDosage && medication.selectnsaids">{{medication.selectnsaids}} is prescribed.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-if="medication.commondirectionstext">Directions for usage:&nbsp;<span ng-bind-html="appendPeriod(medication.commondirectionstext)"></span></div>
+                                            <div ng-if="medication.selectnumberdispensecommon">
+                                                <div ng-if="medication.selectnumberdispensecommon!='Other'">
+                                                    Dispense total number:&nbsp;{{medication.selectnumberdispensecommon}}.
+				 
+                                                </div>
+                                                <div ng-if="medication.selectnumberdispensecommon=='Other'">
+                                                    <div ng-if="medication.selectnumberdispensecommontext">
+                                                        Dispense total number:&nbsp;{{medication.selectnumberdispensecommontext}}.
+				   
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-if="medication.selectcommonrefills=='0' || medication.selectrefills == '0'">No refills.</div>
+                                            <div ng-if="medication.selectcommonrefills || medication.selectrefills">
+                                                <div ng-if="medication.selectcommonrefills=='1' || medication.selectrefills == '1'">1 refill.</div>
+                                                <div ng-if="medication.selectcommonrefills > '1' || medication.selectrefills > '1'">Total number of <span ng-if="medication.selectcommonrefills">{{medication.selectcommonrefills}}</span><span ng-if="medication.selectrefills">{{medication.selectrefills}}</span> refills are provided.</div>
+                                            </div>
+                                            <div ng-if="mediValue != 'treatmentimmunizations'">
+                                                <div ng-if="medication.othertextfortextarea!=''" ng-bind-html="appendPeriod(medication.othertextfortextarea)"></div>
+                                            </div>
+                                        </div>
+                                        <div ng-if="mediValue == 'treatmentcortisone'">
+                                            <div ng-if="medication.nsaidsdirectiontext!=''" ng-bind-html="appendPeriod(medication.nsaidsdirectiontext)"></div>
+                                        </div>
+                                        <div ng-if="mediValue == 'treatmenttherapy'">
+                                            <div ng-if="medication.selectnsaids">
+                                                <div ng-if="medication.selectnsaids!='Other'">
+                                                    <div ng-if="medication.selectnsaids != '' && (!medication.selecttimesfortherapy || !medication.selectweeksfortherapy)">The employee requires {{medication.selectnsaids}}.</div>
+                                                    <div ng-if="medication.selecttimesfortherapy==1 && medication.selectweeksfortherapy==1">The employee requires one {{medication.selectnsaids|lowercase}} session.</div>
+                                                    <div ng-if="medication.selecttimesfortherapy>1 && medication.selectweeksfortherapy==1">The employee requires {{medication.selecttimesfortherapy}} {{medication.selectnsaids|lowercase}} sessions.</div>
+                                                    <div ng-if="medication.selecttimesfortherapy>=1 && medication.selectweeksfortherapy>1">
+                                                        The employee requires {{medication.selectnsaids.split(' ')[0]|lowercase}} therapy {{medication.selecttimesfortherapy}}
+				   
+													<ng-pluralize count="medication.selecttimesfortherapy" when="{'1': 'time','other': 'times'}"></ng-pluralize>
+                                                        per week for {{medication.selectweeksfortherapy}} weeks.
+				 
+                                                    </div>
+                                                </div>
+                                                <div ng-if="medication.selectnsaids=='Other'">
+                                                    <div ng-if="medication.therapyinputother">
+                                                        <div ng-if="medication.therapyinputother && (!medication.selectweeksfortherapyother || !medication.selecttimesfortherapyother)">The employee requires {{medication.therapyinputother|lowercase}}.</div>
+                                                        <div ng-if="medication.selecttimesfortherapyother==1 && medication.selectweeksfortherapyother==1"><span ng-bind-html="medication.therapyinputother"></span>: one session.</div>
+                                                        <div ng-if="medication.selecttimesfortherapyother>1 && medication.selectweeksfortherapyother==1"><span ng-bind-html="medication.therapyinputother"></span>: {{medication.selecttimesfortherapyother}} sessions in one week.</div>
+                                                        <div ng-if="medication.selecttimesfortherapyother>=1 && medication.selectweeksfortherapyother>1">
+                                                            <span ng-bind-html="medication.therapyinputother"></span>: {{medication.selecttimesfortherapyother}}
+					 
+														<ng-pluralize count="medication.selecttimesfortherapyother" when="{'1': 'time','other': 'times'}"></ng-pluralize>
+                                                            per week for {{medication.selectweeksfortherapyother}} weeks.
+				   
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-if="medication.othertextareaTherapytext!=''" ng-bind-html="appendPeriod(medication.othertextareaTherapytext)"></div>
+                                        </div>
+                                        <div ng-if="mediValue == 'treatmentinjections'">
+                                            <div ng-if="medication.selectnsaids">
+                                                <div ng-if="medication.selectnsaids!='Other'">
+                                                    Employee requires a {{medication.selectnsaids|lowercase}} injection.												
+                                                </div>
+                                                <div ng-if="medication.selectnsaids=='Other'">
+                                                    <div ng-if="medication.injectionstextinput">Employee requires injection:&nbsp;<span ng-bind-html="medication.injectionstextinput"></span>.</div>
+                                                </div>
+                                            </div>
+                                            <span ng-bind-html="appendPeriod(medication.othertextareainjectionstext)"></span>
+                                        </div>
+                                        <div ng-if="mediValue == 'treatmentreferral'">
+                                            <div ng-if="medication.selectnsaids">
+                                                <div class="divMain" ng-if="medication.selectnsaids=='Dental' || medication.selectnsaids=='Dermatology' || medication.selectnsaids=='Neurology' || medication.selectnsaids=='Ophthalmology' || medication.selectnsaids=='Physical medicine' || medication.selectnsaids=='Psychiatry' || medication.selectnsaids=='Podiatry'">
+                                                    Employee requires access to {{medication.selectnsaids|lowercase}} specialty.
+												<div ng-if="medication.selectreferraldropdown=='One time consult'">A one time consult is requested for authorization.</div>
+                                                    <div ng-if="medication.selectreferraldropdown=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                                    <div ng-if="medication.selectreferraldropdown=='Other'">
+                                                        <div ng-bind-html="appendPeriod(medication.selectreferraldropdownforother)"></div>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="medication.selectnsaids=='Internal medicine specialty'" class="divMain">
+                                                    <span ng-if="medication.treatmentinternalmedicineselectoption!='' && medication.treatmentinternalmedicineselectoption!='Choose' && medication.treatmentinternalmedicineselectoption!='Other'">Referral to internal medicine specialty is indicated.
+													Employee requires access to {{medication.treatmentinternalmedicineselectoption|lowercase}} specialty. 
+                                                    </span>
+                                                    <span ng-if="medication.treatmentinternalmedicineselectoption=='Other'">Referral to internal medicine specialty is indicated.
+													<span ng-bind-html="appendPeriod(medication.internalmedicineselectedoptionothertext)"></span>
+                                                    </span>
+                                                    <span ng-if="medication.internalmedicineselectedoption=='One time consult'">A one time consult is requested for authorization.</span>
+                                                    <span ng-if="medication.internalmedicineselectedoption=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</span>
+                                                    <span ng-if="medication.internalmedicineselectedoption=='Other'">
+                                                        <span ng-bind-html="appendPeriod(medication.internalmedicineselectedoptionothertext)"></span>
+                                                    </span>
+                                                </div>
+                                                <div ng-if="medication.selectnsaids=='Pain management'" class="divMain">
+                                                    <span ng-if="!medication.selectpainmanagmentradio || medication.selectpainmanagmentradio==false">Employee requires access to pain management specialty. </span><span ng-if="medication.selectpainmanagmentradio.length>0">Employee requires access to pain management specialty for {{medication.selectpainmanagmentradio|lowercase}}. </span>
+                                                    <div ng-if="medication.selectpainmanagmentoptions=='One time consult'">A one time consult is requested for authorization.</div>
+                                                    <div ng-if="medication.selectpainmanagmentoptions=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                                    <div ng-if="medication.selectpainmanagmentoptions=='Other'">
+                                                        <div ng-bind-html="appendPeriod(medication.selectpainmanagmentoptionstext)"></div>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="medication.selectnsaids=='Surgery'" class="divMain">
+                                                    <div ng-if="!medication.surgeryselectoptions">
+                                                        Surgery consultation is indicated.
+                                                    </div>
+                                                    <div ng-if="medication.surgeryselectoptions">
+                                                        <div ng-if="medication.surgeryselectoptions!='' && medication.surgeryselectoptions!='Choose'">
+                                                            <div ng-if="medication.surgeryselectoptions!='Orthopedics'">
+                                                                <div ng-if="medication.surgeryselectoptions=='Other'">
+                                                                    <div ng-if="medication.surgeryselectoptionsothertext.length>0">
+                                                                        Employee requires consultation with {{medication.surgeryselectoptionsothertext|lowercase}}. 
+                                                                    </div>
+                                                                </div>
+                                                                <div ng-if="medication.surgeryselectoptions!='Other'">
+                                                                    Employee requires consultation for {{medication.surgeryselectoptions|lowercase}}.
+                                                                </div>
+                                                            </div>
+                                                            <div ng-if="medication.surgeryselectoptions=='Orthopedics'">
+                                                                <div ng-if="medication.surgeryorthopedicselectoptions">
+                                                                    <div ng-if="medication.surgeryorthopedicselectoptions!='' && medication.surgeryorthopedicselectoptions!='Other' && medication.surgeryorthopedicselectoptions!='Choose'">
+                                                                        <div ng-if="medication.surgeryorthopedicselectoptions=='General'">
+                                                                            Employee requires consultation for orthopedics surgery.
+                                                                        </div>
+                                                                        <div ng-if="medication.surgeryorthopedicselectoptions=='Upper extremity/hand'">
+                                                                            Employee requires consultation for orthopedics surgery for the upper extremity.
+                                                                        </div>
+                                                                        <div ng-if="medication.surgeryorthopedicselectoptions=='Major joint (shoulder, hip, knee)'">
+                                                                            Employee requires consultation for orthopedics surgery for a major joint.
+                                                                        </div>
+                                                                        <div ng-if="medication.surgeryorthopedicselectoptions=='Spine'">
+                                                                            Employee requires access to orthopedics surgery for the spine.
+                                                                        </div>
+                                                                        <div ng-if="medication.surgeryorthopedicselectoptionselection=='One time consult'">A one time consult is requested for authorization.</div>
+                                                                        <div ng-if="medication.surgeryorthopedicselectoptionselection=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                                                        <div ng-if="medication.surgeryorthopedicselectoptionselection=='Other'">
+                                                                            <div ng-if="medication.surgeryorthopedicselectoptionselectionothertext.length>0">{{medication.surgeryorthopedicselectoptionselectionothertext|capitalize}} is requested for authorization.</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div ng-if="medication.surgeryorthopedicselectoptions=='Other'">
+                                                                        <div ng-if="medication.surgeryorthopedicselectoptionstext.length>0">
+                                                                            Employee requires consultation with orthopedics. <span ng-bind-html="appendPeriod(medication.surgeryorthopedicselectoptionstext)"></span>
+                                                                        </div>
+                                                                        <div ng-if="!medication.surgeryorthopedicselectoptionstext.length>0">Employee requires consultation with orthopedics.</div>
+                                                                        <div ng-if="medication.surgeryorthopedicselectoptionsselectionoption=='One time consult'">A one time consult is requested for authorization.</div>
+                                                                        <div ng-if="medication.surgeryorthopedicselectoptionsselectionoption=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                                                        <div ng-if="medication.surgeryorthopedicselectoptionsselectionoption=='Other'">
+                                                                            <div ng-if="medication.surgeryorthopedicselectoptionsselectionoptionothertext.length>0">{{medication.surgeryorthopedicselectoptionsselectionoptionothertext|capitalize}} is requested for authorization.</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div ng-if="!medication.surgeryorthopedicselectoptions">
+                                                                        Employee requires consultation with orthopedics.
+                                                                    </div>
+                                                                </div>
+                                                                <div ng-if="medication.surgeryselectoptions!='Orthopedics'">
+                                                                    <div ng-if="medication.surgeryselectoptionsselection=='One time consult'">A one time consult is requested for authorization.</div>
+                                                                    <div ng-if="medication.surgeryselectoptionsselection=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                                                    <div ng-if="medication.surgeryselectoptionsselection=='Other'">
+                                                                        <div ng-bind-html="appendPeriod(medication.surgeryselectoptionsselectionothertext)"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div ng-if="medication.surgeryselectoptions!='' && medication.surgeryselectoptions!='Choose' && medication.surgeryselectoptions=='Other'">
+                                                                    <div ng-if="medication.surgeryselectoptionsothertext.length>0">
+                                                                        Employee requires consultation with {{medication.surgeryselectoptionsothertext|lowercase}}.
+													<div ng-if="medication.surgeryselectoptionsotherselectionoptions">
+                                                        <div ng-if="medication.surgeryselectoptionsotherselectionoptions=='One time consult'">A one time consult is requested for authorization.</div>
+                                                        <div ng-if="medication.surgeryselectoptionsotherselectionoptions=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                                        <div ng-if="medication.surgeryselectoptionsotherselectionoptions=='Other'">
+                                                            <div ng-if="medication.surgeryselectoptionsotherselectionoptionsothertext.length>0">{{medication.surgeryselectoptionsotherselectionoptionsothertext|capitalize}} is requested for authorization.</div>
+                                                        </div>
+                                                    </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div ng-if="medication.surgeryselectoptionsotherselectionoptions=='One time consult'">A one time consult is requested for authorization.</div>
+                                                            <div ng-if="medication.surgeryselectoptionsotherselectionoptions=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                                            <div ng-if="medication.surgeryselectoptionsotherselectionoptions=='Other'">
+                                                                <div ng-bind-html="appendPeriod(medication.surgeryselectoptionsotherselectionoptionsothertext)"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="medication.selectnsaids=='Other'" class="divMain">
+                                                    <div ng-bind-html="appendPeriod(medication.referralinputother)"></div>
+                                                    <div ng-if="medication.selectreferralforreferralother=='One time consult'">A one time consult is requested for authorization.</div>
+                                                    <div ng-if="medication.selectreferralforreferralother=='Evaluate and treat'">Evaluation and treatment are requested for authorization.</div>
+                                                    <div ng-if="medication.selectreferralforreferralother=='Other'">
+                                                        <div ng-bind-html="appendPeriod(medication.othertextforreferralother)"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span ng-bind-html="appendPeriod(medication.othertextfortextarea)"></span>
+                                        </div>
+                                        <div ng-if="mediValue == 'treatmentdiagnostic'">
+                                            <div ng-if="medication.selectnsaids || medication.othertextfortextarea">
+                                                <div class="divMain">
+                                                    <div ng-if="medication.selectnsaids!='Other' && medication.selectnsaids!=''">
+                                                        {{medication.selectnsaids}} is required.
+                                                    </div>
+                                                    <div ng-if="medication.selectnsaids=='Other' && medication.diagnosticinputother.length>0">
+                                                        {{medication.diagnosticinputother|capitalize}} is required.
+                                                    </div>
+                                                    <div ng-bind-html="appendPeriod(medication.othertextfortextarea)"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div ng-if="mediValue == 'treatmentother'">
+                                            <div class="divMain">
+                                                <div ng-if="medication.selectnsaids">
+                                                    {{medication.selectnsaids|capitalize}} is required.
+                                                </div>
+                                                <div ng-bind-html="appendPeriod(medication.othertextfortextarea)"></div>
+                                            </div>
+                                        </div>
+                                        <div ng-if="mediValue == 'durabletensunit' || mediValue == 'durablehwaveunit' || mediValue == 'durablewheelchair' || mediValue == 'durablesplints' || mediValue == 'durablelumbarsupport' || mediValue=='durablecane' || mediValue=='durableCrutch' || mediValue=='durableAFO' || mediValue=='durableKAFO' || mediValue=='durabletenniselbowstrap' || mediValue=='durableneoprenesleeve' || mediValue=='durablewristsupport' || mediValue=='durableother'">
+                                            <div ng-if="concatValue.bdsides=='none'" class="divMain">
+                                                <div ng-if="concatValue.bodysystem!='Skin'">
+                                                    <div ng-if="concatValue.id=='cervical' || concatValue.id=='thoracic'">
+                                                        <div ng-if="report.data['treatment' + concatValue.concateId].durabletensunit.length>0 || report.data['treatment' + concatValue.concateId].durablehwaveunit.length>0 || report.data['treatment' + concatValue.concateId].durablewheelchair.length>0 || report.data['treatment' + concatValue.concateId].durablesplints.length>0 || report.data['treatment' + concatValue.concateId].txtEquipmentName.length>0">
+                                                            Durable medical equipment is indicated. Employee requires access to:
+														<span ng-bind-html="makeSentence(report.data['treatment' + concatValue.concateId].durabletensunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablewheelchair[0] + '~' + report.data['treatment' + concatValue.concateId].durablesplints[0] + '~' + report.data['treatment' + concatValue.concateId].txtEquipmentName)"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-if="concatValue.id=='other'">
+                                                        <div ng-if="report.data['treatment' + concatValue.concateId].durabletensunit.length>0 || report.data['treatment' + concatValue.concateId].durablehwaveunit.length>0 || report.data['treatment' + concatValue.concateId].durablewheelchair.length>0 || report.data['treatment' + concatValue.concateId].durablesplints.length>0 || report.data['treatment' + concatValue.concateId].txtEquipmentName.length>0">
+                                                            Durable medical equipment is indicated. Employee requires access to:
+														<span ng-bind-html="makeSentence(report.data['treatment' + concatValue.concateId].durabletensunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablewheelchair[0] + '~' + report.data['treatment' + concatValue.concateId].durablesplints[0] + '~' + report.data['treatment' + concatValue.concateId].txtEquipmentName)"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-if="concatValue.id=='lumbar'">
+                                                        <div ng-if="report.data['treatment' + concatValue.concateId].durabletensunit.length>0 || report.data['treatment' + concatValue.concateId].durablehwaveunit.length>0 || report.data['treatment' + concatValue.concateId].durablewheelchair.length>0 || report.data['treatment' + concatValue.concateId].durablelumbarsupport.length>0 || report.data['treatment' + concatValue.concateId].durablesplints.length>0 || report.data['treatment' + concatValue.concateId].txtEquipmentName.length>0">
+                                                            Durable medical equipment is indicated. Employee requires access to:
+														<span ng-bind-html="makeSentence(report.data['treatment' + concatValue.concateId].durabletensunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablewheelchair[0] + '~' + report.data['treatment' + concatValue.concateId].durablelumbarsupport[0] + '~' + report.data['treatment' + concatValue.concateId].durablesplints[0] + '~' + report.data['treatment' + concatValue.concateId].txtEquipmentName)"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="concatValue.bodysystem=='Skin'">
+                                                    <div ng-if="concatValue.id=='neck' || concatValue.id=='groingenitalia' || concatValue.id=='trunk'">
+                                                        <div ng-if="report.data['treatment' + concatValue.concateId].durabletensunit.length>0 || report.data['treatment' + concatValue.concateId].durablehwaveunit.length>0 || report.data['treatment' + concatValue.concateId].durablewheelchair.length>0 || report.data['treatment' + concatValue.concateId].txtEquipmentName.length>0">
+                                                            Durable medical equipment is indicated. Employee requires access to:
+														<span ng-bind-html="makeSentence(report.data['treatment' + concatValue.concateId].durabletensunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablewheelchair[0] + '~' + report.data['treatment' + concatValue.concateId].txtEquipmentName)"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-if="concatValue.bdsides!='none'" class="divMain">
+                                                <div ng-if="concatValue.bodysystem!='Skin'">
+                                                    <div ng-if="concatValue.id=='other'">
+                                                        <div ng-if="report.data['treatment' + concatValue.concateId].durabletensunit.length>0 || report.data['treatment' + concatValue.concateId].durablehwaveunit.length>0 || report.data['treatment' + concatValue.concateId].durablewheelchair.length>0 || report.data['treatment' + concatValue.concateId].durablesplints.length>0 || report.data['treatment' + concatValue.concateId].txtEquipmentName.length>0">
+                                                            Durable medical equipment is indicated. Employee requires access to:
+															<span ng-bind-html="makeSentence(report.data['treatment' + concatValue.concateId].durabletensunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablewheelchair[0] + '~' + report.data['treatment' + concatValue.concateId].durablesplints[0] + '~' + report.data['treatment' + concatValue.concateId].txtEquipmentName)"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-if="concatValue.id=='shoulder' || concatValue.id=='thumb' || concatValue.id=='fingerindex' || concatValue.id=='fingermiddle' || concatValue.id=='fingerring' || concatValue.id=='fingerlittle'">
+                                                        <div ng-if="report.data['treatment' + concatValue.concateId].durabletensunit.length>0 || report.data['treatment' + concatValue.concateId].durablehwaveunit.length>0 || report.data['treatment' + concatValue.concateId].durablesplints.length>0 || report.data['treatment' + concatValue.concateId].txtEquipmentName.length>0">
+                                                            Durable medical equipment is indicated. Employee requires access to:
+															<span ng-bind-html="makeSentence(report.data['treatment' + concatValue.concateId].durabletensunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablesplints[0] + '~' + report.data['treatment' + concatValue.concateId].txtEquipmentName)"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-if="concatValue.id=='elbow'">
+                                                        <div ng-if="report.data['treatment' + concatValue.concateId].durabletensunit.length>0 || report.data['treatment' + concatValue.concateId].durablehwaveunit.length>0 || report.data['treatment' + concatValue.concateId].durabletenniselbowstrap.length>0 || report.data['treatment' + concatValue.concateId].durableneoprenesleeve.length>0 || report.data['treatment' + concatValue.concateId].durablesplints.length>0 || report.data['treatment' + concatValue.concateId].txtEquipmentName.length>0">
+                                                            Durable medical equipment is indicated. Employee requires access to:
+															<span ng-bind-html="makeSentence(report.data['treatment' + concatValue.concateId].durabletensunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + concatValue.concateId].durabletenniselbowstrap[0] + '~' + report.data['treatment' + concatValue.concateId].durableneoprenesleeve[0] + '~' + report.data['treatment' + concatValue.concateId].durablesplints[0] + '~' + report.data['treatment' + concatValue.concateId].txtEquipmentName)"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-if="concatValue.id=='wrist'">
+                                                        <div ng-if="report.data['treatment' + concatValue.concateId].durabletensunit.length>0 || report.data['treatment' + concatValue.concateId].durablehwaveunit.length>0 || report.data['treatment' + concatValue.concateId].durablewristsupport.length>0 || report.data['treatment' + concatValue.concateId].durableneoprenesleeve.length>0 || report.data['treatment' + concatValue.concateId].durablesplints.length>0 || report.data['treatment' + concatValue.concateId].txtEquipmentName.length>0">
+                                                            Durable medical equipment is indicated. Employee requires access to:
+															<span ng-bind-html="makeSentence(report.data['treatment' + concatValue.concateId].durabletensunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablewristsupport[0] + '~' + report.data['treatment' + concatValue.concateId].durableneoprenesleeve[0] + '~' + report.data['treatment' + concatValue.concateId].durablesplints[0] + '~' + report.data['treatment' + concatValue.concateId].txtEquipmentName)"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-if="concatValue.id=='pelviship' || concatValue.id=='knee' || concatValue.id=='anklefoot' || concatValue.id=='toe'">
+                                                        <div ng-if="report.data['treatment' + concatValue.concateId].durabletensunit.length>0 || report.data['treatment' + concatValue.concateId].durablehwaveunit.length>0 || report.data['treatment' + concatValue.concateId].durablewheelchair.length>0 || report.data['treatment' + concatValue.concateId].durablecane.length>0 || report.data['treatment' + concatValue.concateId].durableCrutch.length>0 || report.data['treatment' + concatValue.concateId].durableAFO.length>0 || report.data['treatment' + concatValue.concateId].durableKAFO.length>0 || report.data['treatment' + concatValue.concateId].durablesplints.length>0 || report.data['treatment' + concatValue.concateId].txtEquipmentName.length>0">
+                                                            Durable medical equipment is indicated. Employee requires access to:
+															<span ng-bind-html="makeSentence(report.data['treatment' + concatValue.concateId].durabletensunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablewheelchair[0] + '~' + report.data['treatment' + concatValue.concateId].durablecane[0] + '~' + report.data['treatment' + concatValue.concateId].durableCrutch[0] + '~' + report.data['treatment' + concatValue.concateId].durableAFO[0] + '~' + report.data['treatment' + concatValue.concateId].durableKAFO[0] + '~' + report.data['treatment' + concatValue.concateId].durablesplints[0] + '~' + report.data['treatment' + concatValue.concateId].txtEquipmentName)"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="concatValue.bodysystem=='Skin'">
+                                                    <div ng-if="concatValue.id=='upperextremity' || concatValue.id=='lowerextremity'">
+                                                        <div ng-if="report.data['treatment' + concatValue.concateId].durabletensunit.length>0 || report.data['treatment' + concatValue.concateId].durablehwaveunit.length>0 || report.data['treatment' + concatValue.concateId].durablewheelchair.length>0 || report.data['treatment' + concatValue.concateId].txtEquipmentName.length>0">
+                                                            Durable medical equipment is indicated. Employee requires access to:
+															<span ng-bind-html="makeSentence(report.data['treatment' + concatValue.concateId].durabletensunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablehwaveunit[0] + '~' + report.data['treatment' + concatValue.concateId].durablewheelchair[0] + '~' + report.data['treatment' + concatValue.concateId].txtEquipmentName)"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-if="mediValue == 'durableother' && report.data['treatment' + concatValue.concateId].durableother.length>0">
+                                                <div ng-bind-html="appendPeriod(report.data['treatment' + concatValue.concateId].durableothertextarea)"></div>
+                                            </div>
+                                            <span ng-bind-html="appendPeriod(report.data['treatment' + concatValue.concateId].durabletextarea)"></span>
+                                        </div>
+                                    </div>
+                                    <!-- RFA treatment publish text code ends here -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="cell-pad">Requesting Physician Signature:&nbsp;<span ng-if="report.data.signDoctor.level4">e-signed by&nbsp;</span>{{report.data.signDoctor.level4.firstname | capitalize}} {{report.data.signDoctor.level4.lastname | capitalize}}<span ng-if="report.data.signDoctor.level4.profession">, <span ng-bind-html="getProfession(report.data.signDoctor.level4.profession,report.data.signDoctor.level4.otherprofessiontext)"></span></span>
+                                </td>
+                                <td colspan="3" class="cell-pad">Date:&nbsp;<span ng-if="report.data.signDoctor.level4"><span ng-bind-html="(submittedDate | date:'MM/dd/yy')"></span><span ng-if="submittedDate">,&nbsp;</span><span ng-bind="(submittedDate | date:'h:mma').replace('PM',' p.m.').replace('AM',' a.m.')"></span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="tdheading cell-pad">
+                                    <span class="DFRReportHeadingFontSize" style="padding: 3px">
+                                        <strong>Claims Administrator/Utilization Review Organization (URO) Response
+                                        </strong>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                        <!--<tr>
+								<td colspan="6">
+									<div class="row" style="text-align: left;" style="font-size: 8px;">
+										<div class="col-md-5">
+											<input type="checkbox" id="chkRfaNewRequest" disabled="disabled" />
+											&nbsp;Denied or Modified (See separate decision letter)
+										</div>
+										<div class="col-md-2">
+											<input type="checkbox" id="Checkbox2" disabled="disabled" />
+											&nbsp;Approved
+										</div>
+										<div class="col-md-5">
+											<input type="checkbox" id="Checkbox1" disabled="disabled" />
+											&nbsp;Delay (See separate notification of delay)
+										</div>
+									</div>
+									<div class="row" style="text-align: left;" style="font-size: 8px;">
+										<div class="col-md-6">
+											<input type="checkbox" id="Checkbox3" disabled="disabled" />
+											&nbsp; Requested treatment has been previously denied
+										</div>
+										<div class="col-md-6">
+											<input type="checkbox" id="Checkbox4" disabled="disabled" />
+											&nbsp;Liability for treatment is disputed (See separate letter)
+										</div>
+									</div>
+								</td>
+							</tr>-->
+                        <!--Adding above checkboxes in a new table-->
+                        <table border="0" width="100%" align="center" cellpadding="0" cellspacing="0" style="border: 2px solid black; font-size: 12px;">
+                            <tr>
+                                <td style="width: 100%;">
+                                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size: 12px;">
+                                        <tr>
+                                            <td align="left" style="width: 2%;">
+                                                <input type="checkbox" id="Checkbox1" disabled="disabled" />
+                                            </td>
+                                            <td style="width: 15%">
+                                                <label>&nbsp;Approved</label>
+                                            </td>
+                                            <td style="width: 2%;">
+                                                <input type="checkbox" id="chkRfaNewRequest" disabled="disabled" />
+                                            </td>
+                                            <td style="width: 41%;">
+                                                <label>&nbsp;Denied or Modified (See separate decision letter)</label>
+                                            </td>
+
+                                            <td style="width: 2%">
+                                                <input type="checkbox" id="Checkbox10" disabled="disabled" />
+                                            </td>
+                                            <td style="width: 38%; padding-left: 10px;">
+                                                <label>&nbsp;Delay (See separate notification of delay)</label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 100%;">
+                                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size: 12px;">
+                                        <tr>
+                                            <td align="left" style="width: 2%;">
+                                                <input type="checkbox" id="Checkbox12" disabled="disabled" />
+                                            </td>
+                                            <td align="left" style="width: 48%;">
+                                                <label>&nbsp;Requested treatment has been previously denied</label>
+                                            </td>
+                                            <td align="left" style="width: 2%;">
+                                                <input type="checkbox" id="Checkbox13" disabled="disabled" />
+                                            </td>
+                                            <td align="left" style="width: 48%;">
+                                                <label>&nbsp;Liability for treatment is disputed (See separate letter)</label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table align="left" width="100%" cellpadding="0" cellspacing="0" border="1" style="width: 100%; font-size: 12px;">
+                            <tr>
+                                <td colspan="3" class=" cell-pad">Authorization Number (if assigned):
+                                </td>
+                                <td colspan="3" class="cell-pad ">Date:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class=" cell-pad">Authorized Agent Name:
+                                </td>
+                                <td colspan="3" class="cell-pad ">Signature:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" class="cell-pad">Zip Code:
+                                </td>
+                                <td colspan="2" align="left" class="cell-pad">Phone:
+                                </td>
+                                <td colspan="3" class="cell-pad ">Fax Number:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class=" cell-pad">Comments:
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="row" style="text-align: left;" style="font-size: 11px">
+                            <div class="col-md-12">
+                                <div style="width: 100%; text-align: center">
+                                    &nbsp;
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- New RFA form End's Here -->
+                </div>
+            </div>
+        </div>
+		</div>
+	</div>
+</div>
+<!-- RFA new code ends -->

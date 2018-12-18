@@ -1,0 +1,178 @@
+<div><strong>Section 18. </strong><span class="DFRReportHeadingFontSize"><strong>Subjective Complaints</strong></span></div>
+<div ng-if="report.data['patientcomplaints'].disableradio!=1 && report.data['patientcomplaints'].disableradio!='No'" class="divMain">
+    <div>{{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}} {{report.data['bginfo'].lastname}} and I discuss {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} current complaints.</div>
+</div>
+
+<!-- Start Patient Complaints body part-->
+<div ng-repeat="item in report.data['selectinjuries'].concatedbodypart | orderBy : 'sequence' | lowercase " class="divMain">
+    <div ng-if="checkExist(item,'patientcomplaints') && (report.data['patientcomplaints' + item.concateId].disableradio!=1 && report.data['patientcomplaints' + item.concateId].disableradio!='No')">
+        <br />
+        <span class="DFRReportSubHeadingFontSize"><strong>{{displayBodyPartName(item)}}</strong></span>
+        <br />
+        <div ng-if="item.id == 'cervical'">
+            <div ng-if="report.data['patientcomplaintscervical'].rdoCurrentPainYesNo == 'No'">
+                The cervical spine injury does not currently cause symptoms in the arms.
+            </div>
+            <div ng-if="report.data['patientcomplaintscervical'].rdoCurrentPainYesNo == 'Yes'">
+                The patient currently experiences arm pain.
+                    <div ng-if="report.data['patientcomplaintscervical'].rdoWhichArm!='Both'">
+                        <div ng-if="report.data['patientcomplaintscervical'].rdoWhichArm=='Left'">
+                            The symptoms are in the left arm.
+                     <div ng-if="report.data['patientcomplaintscervical'].rdoPastLeftArm=='Above the elbow'">Pain occurs above the left elbow.</div>
+                            <div ng-if="report.data['patientcomplaintscervical'].rdoPastLeftArm=='Below the elbow'">Pain occurs below the left elbow.</div>
+                            <div ng-if="report.data['patientcomplaintscervical'].rdoPastLeftArm=='Above and below the elbow'">Pain occurs both above and below the left elbow.</div>
+                            <div ng-if="report.data['patientcomplaintscervical'].rdoHasLeft=='Yes'">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} reports that the pain in the left arm has improved. </div>
+                        </div>
+                        <div ng-if="report.data['patientcomplaintscervical'].rdoWhichArm=='Right'">
+                            The symptoms are in the right arm.
+                        <div ng-if="report.data['patientcomplaintscervical'].rdoPastRightArm=='Above the elbow'">Pain occurs above the right elbow.</div>
+                            <div ng-if="report.data['patientcomplaintscervical'].rdoPastRightArm=='Below the elbow'">Pain occurs below the right elbow.</div>
+                            <div ng-if="report.data['patientcomplaintscervical'].rdoPastRightArm=='Above and below the elbow'">Pain occurs both above and below the right elbow.</div>
+                            <div ng-if="report.data['patientcomplaintscervical'].rdoHasRight=='Yes'">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} reports that the pain in the right arm has improved. </div>
+                        </div>
+                    </div>
+                <div ng-if="report.data['patientcomplaintscervical'].rdoWhichArm=='Both'">
+                    The symptoms are in both arms.
+                        <div ng-if="report.data['patientcomplaintscervical'].rdoPastRightArm=='Above the elbow'">Pain occurs above the right elbow.</div>
+                    <div ng-if="report.data['patientcomplaintscervical'].rdoPastRightArm=='Below the elbow'">Pain occurs below the right elbow.</div>
+                    <div ng-if="report.data['patientcomplaintscervical'].rdoPastRightArm=='Above and below the elbow'">Pain occurs both above and below the right elbow.</div>
+                    <div ng-if="report.data['patientcomplaintscervical'].rdoHasRight=='Yes' && (report.data['patientcomplaintscervical'].rdoHasLeft=='No'|| report.data['patientcomplaintscervical'].rdoHasLeft.length==0)">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} reports that the pain in the right arm has improved.</div>
+                    <div ng-if="report.data['patientcomplaintscervical'].rdoPastLeftArm=='Above the elbow'">Pain occurs above the left elbow.</div>
+                    <div ng-if="report.data['patientcomplaintscervical'].rdoPastLeftArm=='Below the elbow'">Pain occurs below the left elbow.</div>
+                    <div ng-if="report.data['patientcomplaintscervical'].rdoPastLeftArm=='Above and below the elbow'">Pain occurs both above and below the left elbow.</div>
+                    <div ng-if="report.data['patientcomplaintscervical'].rdoHasLeft=='Yes' && (report.data['patientcomplaintscervical'].rdoHasRight=='No'|| report.data['patientcomplaintscervical'].rdoHasRight.length==0)">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} reports that the pain in the left arm has improved.</div>
+                    <div ng-if="report.data['patientcomplaintscervical'].rdoHasRight=='Yes' && report.data['patientcomplaintscervical'].rdoHasLeft=='Yes'">{{report.data['bginfo'].gender=='Male'? 'He' : 'She'}} reports that the pain in the right and left arm has improved.</div>
+                </div>
+            </div>
+            <div ng-if="report.data['patientcomplaintscervical'].rdoDid2=='No'">
+                The cervical spine injury did not cause symptoms in the arms in the past.
+            </div>
+            <div ng-if="report.data['patientcomplaintscervical'].rdoDid2=='Yes'">
+                The employee had arm pain/symptoms in the past.
+                     <div ng-if="report.data['patientcomplaintscervical'].rdoWhichArm2!=''">
+                         <div ng-if="report.data['patientcomplaintscervical'].rdoWhichArm2!='Both'">
+                             <div ng-if="report.data['patientcomplaintscervical'].rdoWhichArm2=='Left'">
+                                 The symptoms were in the {{report.data['patientcomplaintscervical'].rdoWhichArm2|lowercase}} arm.
+                                    <div ng-if="report.data['patientcomplaintscervical'].rdoPastLeftArm2=='Above the elbow'">Pain occurred above the left elbow.</div>
+                                 <div ng-if="report.data['patientcomplaintscervical'].rdoPastLeftArm2=='Below the elbow'">Pain occurred below the left elbow.</div>
+                                 <div ng-if="report.data['patientcomplaintscervical'].rdoPastLeftArm2=='Above and below the elbow'">Pain occurred above and below the left elbow.</div>
+                             </div>
+                             <div ng-if="report.data['patientcomplaintscervical'].rdoWhichArm2=='Right'">
+                                 The symptoms were in the {{report.data['patientcomplaintscervical'].rdoWhichArm2|lowercase}} arm.
+                                    <div ng-if="report.data['patientcomplaintscervical'].rdoPastRightArm2=='Above the elbow'">Pain occurred above the right elbow.</div>
+                                 <div ng-if="report.data['patientcomplaintscervical'].rdoPastRightArm2=='Below the elbow'">Pain occurred below the right elbow.</div>
+                                 <div ng-if="report.data['patientcomplaintscervical'].rdoPastRightArm2=='Above and below the elbow'">Pain occurred both above and below the right elbow.</div>
+                             </div>
+                         </div>
+                         <div ng-if="report.data['patientcomplaintscervical'].rdoWhichArm2=='Both'">
+                             The symptoms were in {{report.data['patientcomplaintscervical'].rdoWhichArm2|lowercase}} arms.
+                              <div ng-if="report.data['patientcomplaintscervical'].rdoPastRightArm2=='Above the elbow'">Pain occurred above the right elbow.</div>
+                             <div ng-if="report.data['patientcomplaintscervical'].rdoPastRightArm2=='Below the elbow'">Pain occurred below the right elbow.</div>
+                             <div ng-if="report.data['patientcomplaintscervical'].rdoPastRightArm2=='Above and below the elbow'">Pain occurred both above and below the right elbow.</div>
+                             <div ng-if="report.data['patientcomplaintscervical'].rdoPastLeftArm2=='Above the elbow'">Pain occurred above the left elbow.</div>
+                             <div ng-if="report.data['patientcomplaintscervical'].rdoPastLeftArm2=='Below the elbow'">Pain occurred below the left elbow.</div>
+                             <div ng-if="report.data['patientcomplaintscervical'].rdoPastLeftArm2=='Above and below the elbow'">Pain occurred above and below the left elbow.</div>
+                         </div>
+                     </div>
+                <div ng-if="report.data['patientcomplaintscervical'].rdoHas2=='Yes'">The past pain/symptoms from this injury limited activities at home.</div>
+            </div>
+        </div>
+        <div ng-if="item.id == 'thoracic'">
+            <div ng-if="report.data['patientcomplaintsthoracic'].rdoCurrentPainYesNo == 'No'">The thoracic spine injury does not currently cause symptoms that travel to the front of the chest, trunk or groin.</div>
+            <div ng-if="report.data['patientcomplaintsthoracic'].rdoCurrentPainYesNo == 'Yes'">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} tells me that the {{item.text=='Other'?item.bdpartother:item.text|lowercase}} {{item.bodysystem=='Spine'?'spine':''}} currently has pain or symptoms which travel to the front of the chest, trunk or groin.
+                     <div ng-if="report.data['patientcomplaintsthoracic'].rdoCurrentWhichArm!='Both Side' && report.data['patientcomplaintsthoracic'].rdoCurrentWhichArm.length>0">
+                         The employee reports the pain/symptoms are present on the {{report.data['patientcomplaintsthoracic'].rdoCurrentWhichArm|lowercase}}.
+                            <div ng-if="report.data['patientcomplaintsthoracic'].rdoCurrentWhichArm=='Left Side'">
+                                <div ng-if="report.data['patientcomplaintsthoracic'].chkCurrentLeftArm.length>0">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} left symptoms are located {{report.data['patientcomplaintsthoracic'].chkCurrentLeftArm|map|lowercase}}.</div>
+                                <div ng-if="report.data['patientcomplaintsthoracic'].rdoCurrentHasLeft=='Yes' && report.data['patientcomplaintsthoracic'].rdoCurrentWhichArm">The current pain on the left side has improved since the time of injury.</div>
+                            </div>
+                         <div ng-if="report.data['patientcomplaintsthoracic'].rdoCurrentWhichArm=='Right Side'">
+                             <div ng-if="report.data['patientcomplaintsthoracic'].chkCurrentRightArm.length==1">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} right symptoms are located {{report.data['patientcomplaintsthoracic'].chkCurrentRightArm[0]|lowercase}}.</div>
+                             <div ng-if="report.data['patientcomplaintsthoracic'].chkCurrentRightArm.length==2">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} right symptoms are located {{report.data['patientcomplaintsthoracic'].chkCurrentRightArm[0]|lowercase}} and {{report.data['patientcomplaintsthoracic'].chkCurrentRightArm[1]|lowercase}}.</div>
+                             <div ng-if="report.data['patientcomplaintsthoracic'].chkCurrentRightArm.length>2">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} right symptoms are located <span ng-repeat="chkitem in report.data['patientcomplaintsthoracic'].chkCurrentRightArm"><span ng-if="$index==report.data['patientcomplaintsthoracic'].chkCurrentRightArm.length-1">and {{report.data['patientcomplaintsthoracic'].chkCurrentRightArm[$index]|lowercase}}. </span><span ng-if="$index!=report.data['patientcomplaintsthoracic'].chkCurrentRightArm.length-1">{{report.data['patientcomplaintsthoracic'].chkCurrentRightArm[$index]|lowercase}}, </span></span></div>
+                             <div ng-if="report.data['patientcomplaintsthoracic'].rdoCurrentHasRight=='Yes' && report.data['patientcomplaintsthoracic'].rdoCurrentWhichArm">The current pain on the right side has improved since the time of injury.</div>
+                         </div>
+                     </div>
+                <div ng-if="report.data['patientcomplaintsthoracic'].rdoCurrentWhichArm=='Both Side'">
+                    The patient reports bilateral pain/symptoms.
+                        <div ng-if="report.data['patientcomplaintsthoracic'].chkCurrentLeftArm.length>0">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} left symptoms are located {{report.data['patientcomplaintsthoracic'].chkCurrentLeftArm|map|lowercase}}.</div>
+                    <div ng-if="report.data['patientcomplaintsthoracic'].rdoCurrentHasLeft=='Yes' && report.data['patientcomplaintsthoracic'].rdoCurrentWhichArm.length>0">The current pain on the left side has improved since the time of injury.</div>
+                    <div ng-if="report.data['patientcomplaintsthoracic'].chkCurrentRightArm.length>0">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} right symptoms are located {{report.data['patientcomplaintsthoracic'].chkCurrentRightArm|map|lowercase}}.</div>
+                    <div ng-if="report.data['patientcomplaintsthoracic'].rdoCurrentHasRight=='Yes' && report.data['patientcomplaintsthoracic'].rdoCurrentWhichArm.length>0">The current pain on the right side has improved since the time of injury.</div>
+                </div>
+            </div>
+            <div ng-if="report.data['patientcomplaintsthoracic'].rdoDid2 == 'No'">The thoracic spine injury did not cause symptoms that travelled to the front of the chest, trunk or groin in the past.</div>
+            <div ng-if="report.data['patientcomplaintsthoracic'].rdoDid2 == 'Yes'">
+                The patient reports that in the past, {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} {{item.text=='Other'?item.bdpartother:item.text|lowercase}} {{item.bodysystem=='Spine'?'spine':''}} had pain and symptoms that travelled to the front of the chest, trunk or groin.
+                     <div ng-if="report.data['patientcomplaintsthoracic'].rdoPastWhichArm!='Both Side' && report.data['patientcomplaintsthoracic'].rdoPastWhichArm.length>0">
+                         The patient reports the pain/symptoms were present on the {{report.data['patientcomplaintsthoracic'].rdoPastWhichArm|lowercase}}.
+                     </div>
+                <div ng-if="report.data['patientcomplaintsthoracic'].rdoPastWhichArm=='Both Side'">The patient reports {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} pain/symptoms occurred bilaterally.</div>
+                <div ng-if="report.data['patientcomplaintsthoracic'].chkPastRightArm.length==1">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} right symptoms were located {{report.data['patientcomplaintsthoracic'].chkPastRightArm[0]|lowercase}}.</div>
+                <div ng-if="report.data['patientcomplaintsthoracic'].chkPastRightArm.length==2">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} right symptoms were located {{report.data['patientcomplaintsthoracic'].chkPastRightArm[0]|lowercase}} and {{report.data['patientcomplaintsthoracic'].chkPastRightArm[1]|lowercase}}.</div>
+                <div ng-if="report.data['patientcomplaintsthoracic'].chkPastRightArm.length>2">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} right symptoms were located <span ng-repeat="chkitem in report.data['patientcomplaintsthoracic'].chkPastRightArm"><span ng-if="$index==report.data['patientcomplaintsthoracic'].chkPastRightArm.length-1">and {{report.data['patientcomplaintsthoracic'].chkPastRightArm[$index]|lowercase}}. </span><span ng-if="$index!=report.data['patientcomplaintsthoracic'].chkPastRightArm.length-1">{{report.data['patientcomplaintsthoracic'].chkPastRightArm[$index]|lowercase}}, </span></span></div>
+                <div ng-if="report.data['patientcomplaintsthoracic'].chkPastLeftArm.length==1">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} left symptoms were located {{report.data['patientcomplaintsthoracic'].chkPastLeftArm[0]|lowercase}}.</div>
+                <div ng-if="report.data['patientcomplaintsthoracic'].chkPastLeftArm.length==2">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} left symptoms were located {{report.data['patientcomplaintsthoracic'].chkPastLeftArm[0]|lowercase}} and {{report.data['patientcomplaintsthoracic'].chkPastLeftArm[1]|lowercase}}.</div>
+                <div ng-if="report.data['patientcomplaintsthoracic'].chkPastLeftArm.length>2">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} left symptoms were located <span ng-repeat="chkitem in report.data['patientcomplaintsthoracic'].chkPastLeftArm"><span ng-if="$index==report.data['patientcomplaintsthoracic'].chkPastLeftArm.length-1">and {{report.data['patientcomplaintsthoracic'].chkPastLeftArm[$index]|lowercase}}. </span><span ng-if="$index!=report.data['patientcomplaintsthoracic'].chkPastLeftArm.length-1">{{report.data['patientcomplaintsthoracic'].chkPastLeftArm[$index]|lowercase}}, </span></span></div>
+                <div ng-if="report.data['patientcomplaintsthoracic'].rdoHasPast=='Yes'">The past pain/symptoms from this injury limited activities at home.</div>
+            </div>
+        </div>
+        <div ng-if="item.id =='lumbar'">
+
+            <div ng-if="report.data['patientcomplaintslumbar'].rdoCurrentPainYesNo == 'No'">The lumbar spine injury does not currently cause symptoms in the legs.</div>
+            <div ng-if="report.data['patientcomplaintslumbar'].rdoCurrentPainYesNo == 'Yes'">
+                The employee currently experiences leg pain.
+                    <div ng-if="report.data['patientcomplaintslumbar'].rdoWhichArm">
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoWhichArm != 'Both'">The symptoms are in the {{report.data['patientcomplaintslumbar'].rdoWhichArm|lowercase}} leg.</div>
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoWhichArm == 'Both'">The symptoms are in both legs.</div>
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoPastRightArm=='Above the knee'">Pain occurs above the right knee.</div>
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoPastRightArm=='Below the knee'">Pain occurs below the right knee.</div>
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoPastRightArm=='Above and below the knee'">Pain occurs above and below the right knee.</div>
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoHasRight=='Yes'">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} reports that the pain in the right leg has improved.</div>
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoPastLeftArm=='Above the knee'">Pain occurs above the left knee.</div>
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoPastLeftArm=='Below the knee'">Pain occurs below the left knee.</div>
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoPastLeftArm=='Above and below the knee'">Pain occurs above and below the left knee.</div>
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoHasLeft=='Yes'">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} reports that the pain in the left leg has improved.</div>
+                    </div>
+                <div ng-if="report.data['patientcomplaintslumbar'].rdoCurrentWhichLeg=='Both'">{{report.data['patientcomplaintslumbar'].rdoWhichArm|capitalize}} legs are in pain.</div>
+            </div>
+
+            <div ng-if="report.data['patientcomplaintslumbar'].rdoDid2 == 'No'">The lumbar spine injury did not cause symptoms in the legs in the past.</div>
+            <div ng-if="report.data['patientcomplaintslumbar'].rdoDid2 == 'Yes'">
+                The employee had leg pain/symptoms in the past.
+                    <div ng-if="report.data['patientcomplaintslumbar'].rdoWhichArm2">
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoWhichArm2!='Both'">The symptoms were in the {{report.data['patientcomplaintslumbar'].rdoWhichArm2|lowercase}} leg.</div>
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoWhichArm2=='Both'">The symptoms were in both legs.</div>
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoPastRightArm2=='Above the knee'">Pain occurred above the right knee.</div>
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoPastRightArm2=='Below the knee'">Pain occurred below the right knee.</div>
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoPastRightArm2=='Above and below the knee'">Pain occurred both above and below the right knee.</div>
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoPastLeftArm2=='Above the knee'">Pain occurred above the left knee.</div>
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoPastLeftArm2=='Below the knee'">Pain occurred below the left knee.</div>
+                        <div ng-if="report.data['patientcomplaintslumbar'].rdoPastLeftArm2=='Above and below the knee'">Pain occurred above and below the left knee.</div>
+                    </div>
+                <div ng-if="report.data['patientcomplaintslumbar'].rdoHasPast=='Yes'">The past pain/symptoms from this injury limited activities at home.</div>
+            </div>
+            <div ng-if="report.data['patientcomplaintslumbar'].rdoHas2=='Yes'">The past pain/symptoms from this injury limited activities at home.</div>
+        </div>
+        <div ng-if="report.data['patientcomplaints' + item.concateId]">
+            <div ng-if="report.data['patientcomplaints' + item.concateId].chkCurrentPainQualityNoPain">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} reports that {{report.data['bginfo'].gender == 'Male' ? 'he' : 'she'}} has no symptoms associated with this injury and is not experiencing any pain.&nbsp;<span ng-bind-html="appendPeriod(report.data['patientcomplaints' + item.concateId].chkCurrentPainQualityOtherTextarea)"></span></div>
+            <div ng-if="report.data['patientcomplaints' + item.concateId].chkCurrentPainQualityOptions.length>0">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} describes {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} pain quality as {{report.data['patientcomplaints' + item.concateId].chkCurrentPainQualityOptions | map}}.&nbsp;<span ng-bind-html="appendPeriod(report.data['patientcomplaints' + item.concateId].chkCurrentPainQualityOtherTextarea)"></span></div>
+            <div ng-if="report.data['patientcomplaints' + item.concateId].chkCurrentPainQualityNoPain==0 && report.data['patientcomplaints' + item.concateId].chkCurrentPainQualityOptions.length==0"><span ng-if="report.data['patientcomplaints' + item.concateId].chkCurrentPainQualityOtherTextarea">We discuss current quality of pain/symptoms.&nbsp;<span ng-bind-html="appendPeriod(report.data['patientcomplaints' + item.concateId].chkCurrentPainQualityOtherTextarea)"></span></span></div>
+            <div ng-if="report.data['patientcomplaints' + item.concateId].ddlPainIntensity">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} describes the intensity of {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} pain as {{ report.data['patientcomplaints' + item.concateId].ddlPainIntensity }} out of 10.</div>
+            <div ng-if="report.data['patientcomplaints' + item.concateId].ddlPainFrequency">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} rates the frequency of {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} pain as occurring {{report.data['patientcomplaints'+ item.concateId].ddlPainFrequency.split('(')[1].replace(')','')}} of the time.</div>
+            <span ng-if="report.data['patientcomplaints' + item.concateId]['chkMakesPainBetterOptions'].length==0 && report.data['patientcomplaints'+item.concateId]['chkMakesPainBetterElectrical'].length==0"><span ng-if="report.data['patientcomplaints' + item.concateId].chkMakesPainBetterElectricalOptionsOtherTextarea">We discuss ways of making pain/symptoms better.&nbsp;<span ng-bind-html="appendPeriod(report.data['patientcomplaints' + item.concateId].chkMakesPainBetterElectricalOptionsOtherTextarea)"></span></span></span>
+            <span ng-if="report.data['patientcomplaints' + item.concateId]['chkMakesPainBetterOptions'].length>0 && report.data['patientcomplaints'+item.concateId]['chkMakesPainBetterElectrical'].length==0"><span ng-bind="report.data['patientcomplaints' + item.concateId]['chkMakesPainBetterOptions'] | map | lowercase | capitalize"></span><span ng-bind="report.data['patientcomplaints' + item.concateId]['chkMakesPainBetterOptions'].length>1?' make ':' makes '"></span>the pain better.&nbsp;<span ng-bind-html="appendPeriod(report.data['patientcomplaints' + item.concateId].chkMakesPainBetterElectricalOptionsOtherTextarea)"></span></span>
+            <span ng-if="report.data['patientcomplaints'+item.concateId]['chkMakesPainBetterElectrical']"><span ng-bind="report.data['patientcomplaints' + item.concateId]['chkMakesPainBetterOptions'] | onlyCommaSeparated | lowercase | capitalize"></span><span ng-if="report.data['patientcomplaints' + item.concateId]['chkMakesPainBetterOptions']">&nbsp;and electrical stimulation devices </span><span ng-if="report.data['patientcomplaints' + item.concateId]['chkMakesPainBetterOptions'] == ''">Electrical stimulation devices </span><span ng-repeat="ptelectricoption in report.data['patientcomplaints' + item.concateId]['chkMakesPainBetterElectricalOptions']"><span ng-if="$first">(</span>{{ptelectricoption}}<span ng-if="!$last">, </span><span ng-if="$last">)</span></span> {{report.data['patientcomplaints' + item.concateId]['chkMakesPainBetterOptions'].length==0?' makes':' make'}} the pain better.&nbsp;<span ng-bind-html="appendPeriod(report.data['patientcomplaints' + item.concateId].chkMakesPainBetterElectricalOptionsOtherTextarea)"></span></span>
+            <div ng-if="report.data['patientcomplaints' + item.concateId].chkMakesPainWorseOptions.length">{{report.data['patientcomplaints' + item.concateId].chkMakesPainWorseOptions | map | capitalize}} <span ng-bind="report.data['patientcomplaints' + item.concateId].chkMakesPainWorseOptions.length > 1 ? 'make ' : 'makes '"></span>the pain worse.&nbsp;<span ng-bind-html="appendPeriod(report.data['patientcomplaints' + item.concateId].chkMakesPainWorseOtherTextarea)"></span></div>
+            <div ng-if="report.data['patientcomplaints' + item.concateId].chkMakesPainWorseOptions.length==0 && report.data['patientcomplaints' + item.concateId].chkMakesPainWorseOtherTextarea">Symptoms can be made worse.&nbsp;<span ng-bind-html="appendPeriod(report.data['patientcomplaints' + item.concateId].chkMakesPainWorseOtherTextarea)"></span></div>
+            <div ng-if="report.data['patientcomplaints' + item.concateId].chkCurrentMedicationNone.length==0 && report.data['patientcomplaints' + item.concateId].chkCurrentMedicationOptions.length==0"><span ng-if="report.data['patientcomplaints' + item.concateId].chkCurrentMedicationOtherTextarea!=''">We discuss current medications used for treatment of symptoms.&nbsp;<span ng-bind-html="appendPeriod(report.data['patientcomplaints' + item.concateId].chkCurrentMedicationOtherTextarea)"></span></span></div>
+            <div ng-if="report.data['patientcomplaints' + item.concateId].chkCurrentMedicationNone.length>0 || report.data['patientcomplaints' + item.concateId].chkCurrentMedicationOptions.length>0">
+                <div ng-if="report.data['patientcomplaints' + item.concateId].chkCurrentMedicationNone == 'None'">{{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}} {{report.data['bginfo'].lastname | capitalize}} currently does not take any pain medication.</div>
+                <div ng-if="report.data['patientcomplaints' + item.concateId].chkCurrentMedicationOptions.length>0">For pain medication, {{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}} {{report.data['bginfo'].lastname}} currently takes {{report.data['patientcomplaints' + item.concateId].chkCurrentMedicationOptions | map}}.</div>
+                <span ng-bind-html="appendPeriod(report.data['patientcomplaints' + item.concateId].chkCurrentMedicationOtherTextarea)"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Patient Complaints body part-->

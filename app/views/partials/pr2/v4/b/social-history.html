@@ -1,0 +1,569 @@
+<!-- Start Social History Section-->
+<div class="divMain">
+    <!--  ng-if="report.data['sh'].disableradio!=1 && report.data['sh'].disableradio!='No'"> -->
+    <div class="divMain" ng-if="checkOnlySectionExist('sh')">
+        <br />
+        <div class="DFRReportHeadingFontSize"><strong>Social History:</strong></div>
+        <br />
+        <div ng-if="report.data.sh.chkHobbies.length>0||report.data.sh.chkHobbiesNone ||report.data.sh.SHrdoMaritalStatus || report.data.sh.SHrdoEmploymentStatus || report.data.sh.SHchkOccupationalHistory.length>0">{{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}} {{report.data ['bginfo'].lastname}} and I talk about {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} social history.</div>
+        <div><span ng-if="report.data.sh.SHrdoMaritalStatus">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} tells me that {{report.data['bginfo'].gender == 'Male' ? 'he' : 'she'}}&apos;s {{report.data.sh.SHrdoMaritalStatus|lowercase}}.</span></div>
+        <div ng-if="report.data.sh.SHrdoEmploymentStatus=='Full Time'">At present, {{report.data['bginfo'].gender == 'Male' ? 'he' : 'she'}} is employed full time.</div>
+        <div ng-if="report.data.sh.SHrdoEmploymentStatus=='Part Time'">At present, {{report.data['bginfo'].gender == 'Male' ? 'he' : 'she'}} is employed part time.</div>
+        <div ng-if="report.data.sh.SHrdoEmploymentStatus=='Not working due to restrictions'">At present, {{report.data['bginfo'].gender == 'Male' ? 'he' : 'she'}} is not working due to restrictions.</div>
+        <div ng-if="report.data.sh.SHrdoEmploymentStatus=='Unemployed'">At present, {{report.data['bginfo'].gender == 'Male' ? 'he' : 'she'}} is unemployed.</div>
+        <div ng-if="report.data.sh.SHchkOccupationalHistory.length>0">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} occupational history is remarkable for {{report.data.sh.SHchkOccupationalHistory|map}}.<span ng-if="report.data.sh.chkOccupationalHistoryOtherTextarea">&nbsp;<span class="divMain" ng-bind-html="appendPeriod(report.data.sh.chkOccupationalHistoryOtherTextarea)"></span></span></div>
+        <div ng-if="report.data.sh.SHchkOccupationalHistory.length==0 && report.data.sh.chkOccupationalHistoryOtherTextarea">We discussed {{report.data['bginfo'].gender == 'Male' ? 'his' : 'her'}} occupational history.&nbsp;<span class="divMain" ng-bind-html="appendPeriod(report.data.sh.chkOccupationalHistoryOtherTextarea)"></span></div>
+        <div ng-if="report.data.sh.chkCaffeineNegative=='Negative'">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} does not use caffeine, alcohol, drugs or tobacco.</div>
+        <div ng-if="report.data.sh.chkCaffeine=='Positive for caffeine'">Caffeine usage history is remarked as positive. <span ng-if="report.data.sh.txtCaffeine" ng-bind="appendPeriod(report.data.sh.txtCaffeine)"></span></div>
+        <div ng-if="report.data.sh.chkStreetDrug=='Positive for street drug'">Street drug(s) usage history is remarked as positive. <span ng-if="report.data.sh.txtStreetDrug" ng-bind="appendPeriod(report.data.sh.txtStreetDrug)"></span></div>
+        <span ng-if="report.data.sh.chkTobacco=='Positive for tobacco'">Tobacco usage history is remarked as positive. <span ng-if="report.data.sh.txtTobacco" ng-bind="appendPeriod(report.data.sh.txtTobacco)"></span></span>
+        <span ng-if="report.data.sh.chkAlcohol=='Positive for alcohol'">Alcohol usage history is remarked as positive. <span ng-if="report.data.sh.txtAlcohol" ng-bind="appendPeriod(report.data.sh.txtAlcohol)"></span></span>
+        <span class="divMain" ng-if="report.data.sh.shfreedataentry" ng-bind-html="appendPeriod(report.data.sh.shfreedataentry)"></span>
+        <span ng-if="report.data.sh.SHrdoLevelOfEducation">{{report.data['bginfo'].gender == 'Male' ? 'Mr.' : 'Ms.'}} {{report.data ['bginfo'].lastname}}&apos;s level of education is at the {{report.data.sh.SHrdoLevelOfEducation!='GED'?report.data.sh.SHrdoLevelOfEducation.replace('Degree','').replace('Graduate School','graduate'):''|lowercase}} {{report.data.sh.SHrdoLevelOfEducation=='GED'?'GED':''}} level.</span>
+        <span ng-bind-html="appendPeriod(report.data.sh.SHrdoLevelOfEducationtextA)"></span>
+        <div ng-if="report.data.sh.rdoSecondJobs=='None'">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} does not have a second job.</div>
+        <div ng-if="report.data.sh.rdoSecondJobs=='Free Data Entry'">We discussed second jobs. <span class="divMain" ng-bind-html="appendPeriod(report.data.sh.rdoSecondJobsTextarea)"></span></div>
+        <div ng-if="report.data.sh.rdoSelfEmployment=='None'">Employee is not self-employed.</div>
+        <div ng-if="report.data.sh.rdoSelfEmployment=='Free Data Entry' && report.data.sh.rdoSelfEmploymentTextarea">We discussed self-employment. <span ng-bind-html="appendPeriod(report.data.sh.rdoSelfEmploymentTextarea)"></span></div>
+        <div ng-if="report.data.sh.rdoMilitaryService=='None'">Employee has no history of military service.</div>
+        <div ng-if="report.data.sh.rdoMilitaryService=='Free Data Entry' && report.data.sh.rdoMilitaryServiceTextarea">Military service is remarkable. <span ng-bind-html="appendPeriod(report.data.sh.rdoMilitaryServiceTextarea)"></span></div>
+
+        <div ng-if="report.data.sh.SHhistOutdoor=='No'">
+            No history of outdoor recreation. 
+        </div>
+        <div ng-if="report.data.sh.SHhistOutdoor=='Yes'">
+            {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of outdoor recreation.
+ 
+
+         <div ng-if="report.data.sh.SHhistSwimming[0]=='Swimming'">
+
+             <div ng-if="report.data.sh.SHhistSwimmingYearsOpts.length==0 && report.data.sh.SHhistSwimmingOpts.length>0">
+                 {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of swimming {{report.data.sh.SHhistSwimmingOpts}} hours per week.
+             </div>
+             <div ng-if="report.data.sh.SHhistSwimmingYearsOpts.length>0 && report.data.sh.SHhistSwimmingOpts.length>0">
+                 {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of swimming {{report.data.sh.SHhistSwimmingOpts}} hours per week for {{report.data.sh.SHhistSwimmingYearsOpts}} years.
+             </div>
+
+             <div ng-if="report.data.sh.SHhistSwimmingYearsOpts.length==0">
+                 {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of swimming recreationally.
+             </div>
+             <div ng-if="report.data.sh.SHhistSwimmingYearsOpts">
+                 {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of swimming for {{report.data.sh.SHhistSwimmingYearsOpts}} years.
+             </div>
+         </div>
+
+
+
+            <div ng-if="report.data.sh.SHhistSwimmingText">
+                <div ng-bind-html="appendPeriod(report.data.sh.SHhistSwimmingText)"></div>
+            </div>
+
+            <div ng-if="report.data.sh.SHhistTennis[0]=='Tennis'">
+                <div ng-if="report.data.sh.SHhistTennisHoursOpts">
+                    <div ng-if="!report.data.sh.SHhistTennisYearsOpts">
+                        {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of playing tennis {{report.data.sh.SHhistTennisHoursOpts}} hours per week.
+                    </div>
+                    <div ng-if="report.data.sh.SHhistTennisYearsOpts">
+                        {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of playing tennis {{report.data.sh.SHhistTennisHoursOpts}} hours per week for {{report.data.sh.SHhistTennisYearsOpts}} years.
+                    </div>
+                </div>
+                <div ng-if="!report.data.sh.SHhistTennisHoursOpts">
+                    <div ng-if="!report.data.sh.SHhistTennisYearsOpts">
+                        {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of playing tennis recreationally.
+                    </div>
+                    <div ng-if="report.data.sh.SHhistTennisYearsOpts">
+                        {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of playing tennis for {{report.data.sh.SHhistTennisYearsOpts}} years.
+                    </div>
+                </div>
+            </div>
+            <div ng-if="report.data.sh.SHhistTennisText">
+                <div ng-bind-html="appendPeriod(report.data.sh.SHhistTennisText)"></div>
+            </div>
+
+            <div ng-if="report.data.sh.SHhistGolf[0]=='Golf'">
+                <div ng-if="report.data.sh.SHhistGolfYearsOpts.length==0 && report.data.sh.SHhistGolfHoursOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of playing golf {{report.data.sh.SHhistGolfHoursOpts}} hours per week.
+                </div>
+                <div ng-if="report.data.sh.SHhistGolfYearsOpts.length>0 && report.data.sh.SHhistGolfHoursOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of playing golf {{report.data.sh.SHhistGolfHoursOpts}} hours per week for {{report.data.sh.SHhistGolfYearsOpts}} years.
+                </div>
+
+                <div ng-if="report.data.sh.SHhistGolfYearsOpts.length==0 && report.data.sh.SHhistGolfHoursOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of playing golf recreationally.
+                </div>
+                <div ng-if="report.data.sh.SHhistGolfYearsOpts.length>0 && report.data.sh.SHhistGolfHoursOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of playing golf for {{report.data.sh.SHhistGolfYearsOpts}} years.
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="report.data.sh.SHhistGolfText">
+            <div ng-bind-html="appendPeriod(report.data.sh.SHhistGolfText)"></div>
+        </div>
+
+        <div ng-if="report.data.sh.SHhistBicycling[0]=='Bicycling'">
+
+            <div ng-if="report.data.sh.SHhistBicyclingYearsOpts.length==0 && report.data.sh.SHhistBicyclingHoursOpts.length>0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of bicycling {{report.data.sh.SHhistBicyclingHoursOpts}} hours per week.
+            </div>
+            <div ng-if="report.data.sh.SHhistBicyclingYearsOpts.length>0  && report.data.sh.SHhistBicyclingHoursOpts.length>0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of bicycling {{report.data.sh.SHhistBicyclingHoursOpts}} hours per week for {{report.data.sh.SHhistBicyclingYearsOpts}} years.
+            </div>
+
+            <div ng-if="report.data.sh.SHhistBicyclingYearsOpts.length==0 && report.data.sh.SHhistBicyclingHoursOpts.length==0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of bicycling recreationally.
+            </div>
+            <div ng-if="report.data.sh.SHhistBicyclingYearsOpts.length>0 && report.data.sh.SHhistBicyclingHoursOpts.length==0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of bicycling for {{report.data.sh.SHhistBicyclingYearsOpts}} years.
+            </div>
+        </div>
+
+        <div ng-if="report.data.sh.SHhistBicyclingText">
+            <div ng-bind-html="appendPeriod(report.data.sh.SHhistBicyclingText)"></div>
+        </div>
+
+        <div ng-if="report.data.sh.SHhistHiking[0]=='Hiking'">
+            <div ng-if="report.data.sh.SHhistHikingYearsOpts.length==0 && report.data.sh.SHhistHikingHoursOpts.length>0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of hiking {{report.data.sh.SHhistHikingHoursOpts}} hours per week.
+            </div>
+            <div ng-if="report.data.sh.SHhistHikingYearsOpts.length>0 && report.data.sh.SHhistHikingHoursOpts.length>0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of hiking {{report.data.sh.SHhistHikingHoursOpts}} hours per week for {{report.data.sh.SHhistHikingYearsOpts}} years.
+            </div>
+
+            <div ng-if="report.data.sh.SHhistHikingYearsOpts.length==0 && report.data.sh.SHhistHikingHoursOpts.length==0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of hiking recreationally.
+            </div>
+            <div ng-if="report.data.sh.SHhistHikingYearsOpts.length>0 && report.data.sh.SHhistHikingHoursOpts.length==0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of hiking for {{report.data.sh.SHhistHikingYearsOpts}} years.
+            </div>
+        </div>
+
+    </div>
+
+    <div class="divMain">
+        <div ng-if="report.data.sh.SHhistHikingText">
+            <div ng-bind-html="appendPeriod(report.data.sh.SHhistHikingText)"></div>
+        </div>
+
+        <div ng-if="report.data.sh.SHhistFishing[0]=='Fishing'">
+
+            <div ng-if="report.data.sh.SHhistFishingYearsOpts.length==0 && report.data.sh.SHhistFishingHoursOpts.length>0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of fishing {{report.data.sh.SHhistFishingHoursOpts}} hours per week.
+            </div>
+            <div ng-if="report.data.sh.SHhistFishingYearsOpts.length>0 && report.data.sh.SHhistFishingHoursOpts.length>0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of fishing {{report.data.sh.SHhistFishingHoursOpts}} hours per week for {{report.data.sh.SHhistFishingYearsOpts}} years.
+            </div>
+
+            <div ng-if="report.data.sh.SHhistFishingYearsOpts.length==0 && report.data.sh.SHhistFishingHoursOpts.length==0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of fishing recreationally.
+            </div>
+            <div ng-if="report.data.sh.SHhistFishingYearsOpts.length>0 && report.data.sh.SHhistFishingHoursOpts.length==0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of fishing for {{report.data.sh.SHhistFishingYearsOpts}} years.
+            </div>
+
+        </div>
+        <div ng-if="report.data.sh.SHhistFishingText">
+            <div ng-bind-html="appendPeriod(report.data.sh.SHhistFishingText)"></div>
+        </div>
+
+        <div ng-if="report.data.sh.SHhistGardening[0]=='Gardening'">
+            <div ng-if="report.data.sh.SHhistGardeningYearsOpts.length==0 && report.data.sh.SHhistGardeningHoursOpts.length>0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of gardening {{report.data.sh.SHhistGardeningHoursOpts}} hours per week.
+            </div>
+            <div ng-if="report.data.sh.SHhistGardeningYearsOpts.length>0 && report.data.sh.SHhistGardeningHoursOpts.length>0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of gardening {{report.data.sh.SHhistGardeningHoursOpts}} hours per week for {{report.data.sh.SHhistGardeningYearsOpts}} years.
+            </div>
+
+            <div ng-if="report.data.sh.SHhistGardeningYearsOpts.length==0 && report.data.sh.SHhistGardeningHoursOpts.length==0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of gardening recreationally.
+            </div>
+            <div ng-if="report.data.sh.SHhistGardeningYearsOpts.length>0 && report.data.sh.SHhistGardeningHoursOpts.length==0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} has a history of gardening for {{report.data.sh.SHhistGardeningYearsOpts}} years.
+            </div>
+        </div>
+        <div ng-if="report.data.sh.SHhistGardeningText">
+            <div ng-bind-html="appendPeriod(report.data.sh.SHhistGardeningText)"></div>
+        </div>
+        <div ng-if="report.data.sh.SHhistGardeningTextarea">
+            <div ng-bind-html="appendPeriod(report.data.sh.SHhistGardeningTextarea)"></div>
+        </div>
+
+
+        <div ng-if="report.data.sh.SHprotectiveClothing=='No'">
+            {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} reports that {{report.data['bginfo'].gender == 'Male' ? 'he' : 'she'}} did not use protective clothing during exposure to the sun.
+        </div>
+        <div ng-if="report.data.sh.SHprotectiveClothing=='Yes'">
+
+            <div ng-if="report.data.sh.SHclothHatWorn=='No'">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} did not wear hats while exposed to the sun.
+            </div>
+            <div ng-if="report.data.sh.SHclothHatWorn=='Yes'">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} wore hats while exposed to the sun.
+ 
+ <div ng-if="report.data.sh.SHhatWide.length>0">
+     <div ng-if="report.data.sh.SHclothHatBrimHoursOpts.length==0">
+         <div ng-if="report.data.sh.SHclothHatBrimYearsOpts.length==0">
+             While exposed to the sun, {{report.data['bginfo'].gender == 'Male' ? 'he' : 'she'}} would wear a wide brim hat (4 inches or greater).
+         </div>
+         <div ng-if="report.data.sh.SHclothHatBrimYearsOpts.length>0">
+             {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} wore a wide brim hat (4 inches or greater) for {{report.data.sh.SHclothHatBrimYearsOpts}} years.
+         </div>
+     </div>
+     <div ng-if="report.data.sh.SHclothHatBrimHoursOpts.length>0">
+         <div ng-if="report.data.sh.SHclothHatBrimYearsOpts.length==0">
+             While exposed to the sun, {{report.data['bginfo'].gender == 'Male' ? 'he' : 'she'}} would wear a wide brim hat (4 inches or greater) for {{report.data.sh.SHclothHatBrimHoursOpts}} hours per week.
+         </div>
+         <div ng-if="report.data.sh.SHclothHatBrimYearsOpts.length>0">
+             While exposed to the sun, {{report.data['bginfo'].gender == 'Male' ? 'he' : 'she'}} would wear a wide brim hat (4 inches or greater) for {{report.data.sh.SHclothHatBrimHoursOpts}} hours per week for {{report.data.sh.SHclothHatBrimYearsOpts}} years.
+         </div>
+     </div>
+     <div ng-if="report.data.sh.SHclothHatBrimText">
+         <div ng-bind-html="appendPeriod(report.data.sh.SHclothHatBrimText)"></div>
+     </div>
+ </div>
+
+                <div ng-if="report.data.sh.SHclothHatBaseball.length>0">
+                    <div ng-if="report.data.sh.SHclothHatBaseballHoursOpts.length==0">
+                        <div ng-if="report.data.sh.SHclothHatBaseballYearsOpts.length==0">
+                            While exposed to the sun, {{report.data['bginfo'].gender == 'Male' ? 'he' : 'she'}} would wear a baseball hat.
+                        </div>
+                        <div ng-if="report.data.sh.SHclothHatBaseballYearsOpts.length>0">
+                            {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} wore a baseball hat for {{report.data.sh.SHclothHatBaseballYearsOpts}} years.
+                        </div>
+                    </div>
+                    <div ng-if="report.data.sh.SHclothHatBaseballHoursOpts.length>0">
+                        <div ng-if="report.data.sh.SHclothHatBaseballYearsOpts.length==0">
+                            {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} would wear a baseball hat while exposed to the sun during {{report.data.sh.SHclothHatBaseballHoursOpts}} hours of the week.
+                        </div>
+                        <div ng-if="report.data.sh.SHclothHatBaseballYearsOpts.length>0">
+                            For {{report.data.sh.SHclothHatBaseballYearsOpts}} years, {{report.data['bginfo'].gender == 'Male' ? 'he' : 'she'}} would wear a baseball hat while exposed to the sun during {{report.data.sh.SHclothHatBaseballHoursOpts}} hours of the week.
+                        </div>
+                    </div>
+                    <div ng-if="report.data.sh.SHclothHatBaseballText">
+                        <div ng-bind-html="appendPeriod(report.data.sh.SHclothHatBaseballText)">
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="report.data.sh.SHclothHatText">
+                    <div ng-bind-html="appendPeriod(report.data.sh.SHclothHatText)"></div>
+                </div>
+            </div>
+
+            <div ng-if="report.data.sh.SHclothGlasses=='No'">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} did not wear sunglasses while exposed to the sun.
+            </div>
+            <div ng-if="report.data.sh.SHclothGlasses=='Yes'">
+                Sunglasses were worn.
+
+                <div ng-if="report.data.sh.SHclothGlassesHoursOpts.length>0">
+                    <div ng-if="report.data.sh.SHclothGlassesYearsOpts.length==0">
+                        Sunglasses were worn during {{report.data.sh.SHclothGlassesHoursOpts|lowercase}} hours of the week.
+                    </div>
+                    <div>
+                    </div>
+                    <div ng-if="report.data.sh.SHclothGlassesYearsOpts.length>0">
+                        For {{report.data.sh.SHclothGlassesYearsOpts}} years, sunglasses were worn during {{report.data.sh.SHclothGlassesHoursOpts}} hours of the week.
+                    </div>
+                </div>
+
+
+                <div ng-if="report.data.sh.SHclothGlassesText">
+                    <div ng-bind-html="appendPeriod(report.data.sh.SHclothGlassesText)">
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="report.data.sh.SHclothShirt=='No'">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} did not wear long sleeved shirts while exposed to the sun.
+            </div>
+            <div ng-if="report.data.sh.SHclothShirt=='Yes'">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} wore long sleeve shirts while exposed to the sun.
+ <div ng-if="report.data.sh.SHclothShirtHoursOpts.length==0">
+     <div ng-if="report.data.sh.SHclothShirtYearsOpts.length>0">
+         {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} reports that {{report.data['bginfo'].gender == 'Male' ? 'he' : 'she'}} wore long sleeve shirts for {{report.data.sh.SHclothShirtYearsOpts}} years.
+     </div>
+ </div>
+                <div ng-if="report.data.sh.SHclothShirtHoursOpts.length>0">
+                    <div ng-if="report.data.sh.SHclothShirtYearsOpts.length==0">
+                        {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} habitually wore long sleeve shirts while in the sun for {{report.data.sh.SHclothShirtHoursOpts}} hours per week.
+                    </div>
+                    <div ng-if="report.data.sh.SHclothShirtYearsOpts.length>0">
+                        {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} habitually wore long sleeve shirts while in the sun {{report.data.sh.SHclothShirtHoursOpts}} hours per week for {{report.data.sh.SHclothShirtYearsOpts}} years.
+                    </div>
+                </div>
+                <div ng-if="report.data.sh.SHclothShirtText">
+                    <div ng-bind-html="appendPeriod(report.data.sh.SHclothShirtText)">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="report.data.sh.SHsunBlock=='No'">
+            {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} did not use sunblock while exposed to the sun.
+        </div>
+        <div ng-if="report.data.sh.SHsunBlock=='Yes'">
+            <span ng-if="report.data.sh.SHsunBlockStrength.length==0">{{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} uses sunblock while exposed to the sun.</span>
+            <div ng-if="report.data.sh.SHsunBlockAge!='' && report.data.sh.SHsunBlockStrength.length==0">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} started using sunblock at the age of {{report.data.sh.SHsunBlockAge}}.
+            </div>
+            <div ng-if="report.data.sh.SHsunBlockStrength!=''">
+                <div ng-if="report.data.sh.SHsunBlockAge!=''">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} began using SPF {{report.data.sh.SHsunBlockStrength}} sunblock at the age of {{report.data.sh.SHsunBlockAge}}.
+                </div>
+                <div ng-if="report.data.sh.SHsunBlockAge==''">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} began using SPF {{report.data.sh.SHsunBlockStrength}} sunblock.
+                </div>
+            </div>
+            <div ng-if="report.data.sh.SHsunBlockFrequency!=''">
+                {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} used sun block {{report.data.sh.SHsunBlockFrequency|lowercase}} of the time.
+            </div>
+            <span ng-bind-html="appendPeriod(report.data.sh.SHsunBlockText)"></span>
+        </div>
+
+
+        <div ng-if="report.data.sh.SHoccupSwimming[0]=='Swimming instructor'">
+            <div ng-if="report.data.sh.SHoccupSwimmingHoursOpts.length>0">
+                <div ng-if="report.data.sh.SHoccupSwimmingYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a swimming instructor for {{report.data.sh.SHoccupSwimmingHoursOpts}} hours per week.
+                </div>
+                <div ng-if="report.data.sh.SHoccupSwimmingYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a swimming instructor for {{report.data.sh.SHoccupSwimmingHoursOpts}} hours per week for {{report.data.sh.SHoccupSwimmingYearsOpts}} years.
+                </div>
+            </div>
+            <div ng-if="report.data.sh.SHoccupSwimmingHoursOpts.length==0">
+                <div ng-if="report.data.sh.SHoccupSwimmingYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a swimming instructor.
+                </div>
+                <div ng-if="report.data.sh.SHoccupSwimmingYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a swimming instructor for {{report.data.sh.SHoccupSwimmingYearsOpts}} years.
+                </div>
+            </div>
+        </div>
+        <div ng-if="report.data.sh.SHoccupSwimmingText">
+            <div ng-bind-html="appendPeriod(report.data.sh.SHoccupSwimmingText)"></div>
+        </div>
+
+        <div ng-if="report.data.sh.SHoccupSnow[0]=='Snow sport instructor'">
+            <div ng-if="report.data.sh.SHoccupSnowHoursOpts.length>0">
+                <div ng-if="report.data.sh.SHoccupWaterYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a snow sport instructor for {{report.data.sh.SHoccupSnowHoursOpts}} hours per week.
+                </div>
+                <div ng-if="report.data.sh.SHoccupWaterYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a snow sport instructor for {{report.data.sh.SHoccupSnowHoursOpts}} hours per week for {{report.data.sh.SHoccupWaterYearsOpts}} years.
+                </div>
+            </div>
+            <div ng-if="report.data.sh.SHoccupSnowHoursOpts.length==0">
+                <div ng-if="report.data.sh.SHoccupWaterYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a snow sport instructor.
+                </div>
+                <div ng-if="report.data.sh.SHoccupWaterYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a snow sport instructor for {{report.data.sh.SHoccupWaterYearsOpts}} years.
+                </div>
+            </div>
+        </div>
+        <div ng-if="report.data.sh.SHoccupWaterText">
+            <div ng-bind-html="appendPeriod(report.data.sh.SHoccupWaterText)"></div>
+        </div>
+
+        <div ng-if="report.data.sh.SHoccupLaw[0]=='Law enforcement/Peace officer'">
+            <div ng-if="report.data.sh.SHoccupLawHoursOpts.length>0">
+                <div ng-if="report.data.sh.SHoccupLawYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in law enforcement for {{report.data.sh.SHoccupLawHoursOpts}} hours per week.
+                </div>
+                <div ng-if="report.data.sh.SHoccupLawYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in law enforcement for {{report.data.sh.SHoccupLawHoursOpts}} hours per week for {{report.data.sh.SHoccupLawYearsOpts}} years.
+                </div>
+            </div>
+            <div ng-if="report.data.sh.SHoccupLawHoursOpts.length==0">
+                <div ng-if="report.data.sh.SHoccupLawYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in law enforcement.
+                </div>
+                <div ng-if="report.data.sh.SHoccupLawYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in law enforcement for {{report.data.sh.SHoccupLawYearsOpts}} years.
+                </div>
+            </div>
+        </div>
+        <div ng-if="report.data.sh.SHoccupLawText">
+            <div ng-bind-html="appendPeriod(report.data.sh.SHoccupLawText)"></div>
+        </div>
+
+        <div ng-if="report.data.sh.SHoccupFire[0]=='Firefighter'">
+            <div ng-if="report.data.sh.SHoccupFireHoursOpts.length>0">
+                <div ng-if="report.data.sh.SHoccupFireYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a firefighter for {{report.data.sh.SHoccupFireHoursOpts}} hours per week.
+                </div>
+                <div ng-if="report.data.sh.SHoccupFireYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a firefighter for {{report.data.sh.SHoccupFireHoursOpts}} hours per week for {{report.data.sh.SHoccupFireYearsOpts}} years.
+                </div>
+            </div>
+            <div ng-if="report.data.sh.SHoccupFireHoursOpts.length==0">
+                <div ng-if="report.data.sh.SHoccupFireYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a firefighter.
+                </div>
+                <div ng-if="report.data.sh.SHoccupFireYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a firefighter for {{report.data.sh.SHoccupFireYearsOpts}} years.
+                </div>
+            </div>
+        </div>
+        <div ng-if="report.data.sh.SHoccupFireText">
+            <div ng-bind-html="appendPeriod(report.data.sh.SHoccupFireText)"></div>
+        </div>
+
+        <div ng-if="report.data.sh.SHoccupPark[0]=='Park or Forest Ranger'">
+            <div ng-if="report.data.sh.SHoccupParkHoursOpts.length>0">
+                <div ng-if="report.data.sh.SHoccupParkYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a park/forest ranger for {{report.data.sh.SHoccupParkHoursOpts}} hours per week.
+                </div>
+                <div ng-if="report.data.sh.SHoccupParkYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a park/forest ranger for {{report.data.sh.SHoccupParkHoursOpts}} hours per week for {{report.data.sh.SHoccupParkYearsOpts}} years.
+                </div>
+            </div>
+            <div ng-if="report.data.sh.SHoccupParkHoursOpts.length==0">
+                <div ng-if="report.data.sh.SHoccupParkYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a park/forest ranger.
+                </div>
+                <div ng-if="report.data.sh.SHoccupParkYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a park/forest ranger for {{report.data.sh.SHoccupParkYearsOpts}} years.
+                </div>
+            </div>
+        </div>
+        <div ng-if="report.data.sh.SHoccupParkText">
+            <div ng-bind-html="appendPeriod(report.data.sh.SHoccupParkText)"></div>
+        </div>
+
+        <div ng-if="report.data.sh.SHoccupConstruction[0]=='Construction'">
+            <div ng-if="report.data.sh.SHoccupConstructionHoursOpts.length>0">
+                <div ng-if="report.data.sh.SHoccupConstructionYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in construction for {{report.data.sh.SHoccupConstructionHoursOpts}} hours per week.
+                </div>
+                <div ng-if="report.data.sh.SHoccupConstructionYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in construction for {{report.data.sh.SHoccupConstructionHoursOpts}} hours per week for {{report.data.sh.SHoccupConstructionYearsOpts}} years.
+                </div>
+            </div>
+            <div ng-if="report.data.sh.SHoccupConstructionHoursOpts.length==0">
+                <div ng-if="report.data.sh.SHoccupConstructionYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in construction.
+                </div>
+                <div ng-if="report.data.sh.SHoccupConstructionYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in construction for {{report.data.sh.SHoccupConstructionYearsOpts}} years.
+                </div>
+            </div>
+        </div>
+        <div ng-if="report.data.sh.SHoccupConstructionText">
+            <div ng-bind-html="appendPeriod(report.data.sh.SHoccupConstructionText)"></div>
+        </div>
+
+        <div ng-if="report.data.sh.SHoccupLandscaping[0]=='Landscaping'">
+            <div ng-if="report.data.sh.SHoccupLandscapingHoursOpts.length>0">
+                <div ng-if="report.data.sh.SHoccupLandscapingYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in landscaping for {{report.data.sh.SHoccupLandscapingHoursOpts}} hours per week.
+                </div>
+                <div ng-if="report.data.sh.SHoccupLandscapingYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in landscaping for {{report.data.sh.SHoccupLandscapingHoursOpts}} hours per week for {{report.data.sh.SHoccupLandscapingYearsOpts}} years.
+                </div>
+            </div>
+            <div ng-if="report.data.sh.SHoccupLandscapingHoursOpts.length==0">
+                <div ng-if="report.data.sh.SHoccupLandscapingYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in landscaping.
+                </div>
+                <div ng-if="report.data.sh.SHoccupLandscapingYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in landscaping for {{report.data.sh.SHoccupLandscapingYearsOpts}} years.
+                </div>
+            </div>
+        </div>
+        <div ng-if="report.data.sh.SHoccupLandscapingText">
+            <div ng-bind-html="appendPeriod(report.data.sh.SHoccupLandscapingText)"></div>
+        </div>
+
+        <div ng-if="report.data.sh.SHoccupSeaman[0]=='Seaman'">
+            <div ng-if="report.data.sh.SHoccupSeamanHoursOpts.length>0">
+                <div ng-if="report.data.sh.SHoccupSeamanYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a seaman for {{report.data.sh.SHoccupSeamanHoursOpts}} hours per week.
+                </div>
+                <div ng-if="report.data.sh.SHoccupSeamanYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a seaman for {{report.data.sh.SHoccupSeamanHoursOpts}} hours per week for {{report.data.sh.SHoccupSeamanYearsOpts}} years.
+                </div>
+            </div>
+            <div ng-if="report.data.sh.SHoccupSeamanHoursOpts.length==0">
+                <div ng-if="report.data.sh.SHoccupSeamanYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a seaman.
+                </div>
+                <div ng-if="report.data.sh.SHoccupSeamanYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a seaman for {{report.data.sh.SHoccupSeamanYearsOpts}} years.
+                </div>
+            </div>
+        </div>
+        <div ng-if="report.data.sh.SHoccupSeamanText">
+            <div ng-bind-html="appendPeriod(report.data.sh.SHoccupSeamanText)"></div>
+        </div>
+
+        <div ng-if="report.data.sh.SHoccupAquaculture[0]=='Aquaculture'">
+            <div ng-if="report.data.sh.SHoccupAquacultureHoursOpts.length>0">
+                <div ng-if="report.data.sh.SHoccupAquacultureYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in aquaculture for {{report.data.sh.SHoccupAquacultureHoursOpts}} hours per week.
+                </div>
+                <div ng-if="report.data.sh.SHoccupAquacultureYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in aquaculture for {{report.data.sh.SHoccupAquacultureHoursOpts}} hours per week for {{report.data.sh.SHoccupAquacultureYearsOpts}} years.
+                </div>
+            </div>
+            <div ng-if="report.data.sh.SHoccupAquacultureHoursOpts.length==0">
+                <div ng-if="report.data.sh.SHoccupAquacultureYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in aquaculture.
+                </div>
+                <div ng-if="report.data.sh.SHoccupAquacultureYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in aquaculture for {{report.data.sh.SHoccupAquacultureYearsOpts}} years.
+                </div>
+            </div>
+        </div>
+        <div ng-if="report.data.sh.SHoccupAquacultureText">
+            <div ng-bind-html="appendPeriod(report.data.sh.SHoccupAquacultureText)"></div>
+        </div>
+
+        <div ng-if="report.data.sh.SHoccupAgriculture[0]=='Agriculture'">
+            <div ng-if="report.data.sh.SHoccupAgricultureHoursOpts.length>0">
+                <div ng-if="report.data.sh.SHoccupAgricultureYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in agriculture for {{report.data.sh.SHoccupAgricultureHoursOpts}} hours per week.
+                </div>
+                <div ng-if="report.data.sh.SHoccupAgricultureYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in agriculture for {{report.data.sh.SHoccupAgricultureHoursOpts}} hours per week for {{report.data.sh.SHoccupAgricultureYearsOpts}} years.
+                </div>
+            </div>
+            <div ng-if="report.data.sh.SHoccupAgricultureHoursOpts.length==0">
+                <div ng-if="report.data.sh.SHoccupAgricultureYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in agriculture.
+                </div>
+                <div ng-if="report.data.sh.SHoccupAgricultureYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked in agriculture for {{report.data.sh.SHoccupAgricultureYearsOpts}} years.
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="report.data.sh.SHoccupRetail[0]=='Retail tour guide'">
+            <div ng-if="report.data.sh.SHoccupRetailHoursOpts.length>0">
+                <div ng-if="report.data.sh.SHoccupRetailYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a retail tour guide for {{report.data.sh.SHoccupRetailHoursOpts}} hours per week.
+                </div>
+                <div ng-if="report.data.sh.SHoccupRetailYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a retail tour guide for {{report.data.sh.SHoccupRetailHoursOpts}} hours per week for {{report.data.sh.SHoccupRetailYearsOpts}} years.
+                </div>
+            </div>
+            <div ng-if="report.data.sh.SHoccupRetailHoursOpts.length==0">
+                <div ng-if="report.data.sh.SHoccupRetailYearsOpts.length==0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a retail tour guide.
+                </div>
+                <div ng-if="report.data.sh.SHoccupRetailYearsOpts.length>0">
+                    {{report.data['bginfo'].gender == 'Male' ? 'He' : 'She'}} worked as a retail tour guide for {{report.data.sh.SHoccupRetailYearsOpts}} years.
+                </div>
+            </div>
+            <span ng-bind-html="appendPeriod(report.data.sh.SHoccupoutdoorText)"></span>
+        </div>
+        <div ng-if="report.data.sh.SHoccupAgricultureText">
+            <div ng-bind-html="appendPeriod(report.data.sh.SHoccupAgricultureText)"></div>
+        </div>
+        <div ng-if="report.data.sh.chkHobbiesNone=='None'">Employee reports no hobbies.</div>
+        <div ng-if="report.data.sh.chkHobbies.length>0">{{report.data['bginfo'].gender == 'Male' ? 'His' : 'Her'}} hobbies include {{report.data.sh.chkHobbies|map}}.</div>
+        <span class="spanInline" ng-bind-html="appendPeriod(report.data.sh.chkHobbiesOtherTextarea)"></span>
+
+    </div>
+</div>
+<!-- End Social History Section-->

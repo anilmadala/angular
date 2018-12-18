@@ -1,0 +1,249 @@
+﻿<div ng-controller="SkinOfficeBasedAddAnotherCtrl">
+    <div class="col-sm-12">
+        <label class="{{labelclass}}">{{label}}</label>
+        <button type="button" ng-click="addControl()" class="btn btn-default btn-circle btn-success">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+    <div ng-repeat="todo in todos.slice().reverse()" class="col-sm-12 checkbox" style="padding: 5px;">
+        <hr />
+        <input type="hidden" ng-model="todo.indexValue" ng-init="todo.indexValue = todos.length - ($index+1)" />
+        <div class="col-sm-12">
+            <div class="col-sm-3" style="margin-top: 7px; padding-left: 0;">
+                <label>Date of office based report:</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="tel" ui-date="dateOptions" my-date ng-model="todo.dateOfPathology" class="form-control" placeholder="MM/DD/YYYY">
+            </div>
+            <div class="col-sm-1" style="margin-top: 7px;">
+                <button type="button" class="btn btn-info btn-xs" ng-click="clearbodypart($index+1,todos.length)">Clear</button>
+            </div>
+            <div class="col-sm-5" style="margin-top: 7px;">
+                <button type="button" class="btn btn-danger btn-xs" ng-click="deletebodypart($index+1,todos.length)">Delete</button>
+            </div>
+            <!------- Potassium hydroxide (KOH) preparation ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.potassiumhydroxide" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].potassiumhydroxidetexteditordata = \'\''])" />
+                    &nbsp;Potassium hydroxide (KOH) preparation</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.potassiumhydroxide">
+                <div class="col-sm-12 margin-left-1" style="padding-left: 0; margin: 7px 0;">
+                    <input type="button" value="Text" ng-click="showhideeditor = true" class="btn btn-info btn-xs" />
+                </div>
+                <div ng-hide="showhideeditor" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.potassiumhydroxidetexteditordata"></span>
+                </div>
+                <div ng-show="showhideeditor" class="col-sm-12">
+                    <textarea ui-tinymce ng-model="todo.potassiumhydroxidetexteditordata"></textarea>
+                </div>
+            </div>
+            <!------- Skin scraping ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.skinscraping" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].skinscrapingtexteditordata = \'\''])" />
+                    &nbsp;Skin scraping</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.skinscraping">
+                <div class="col-sm-12 margin-left-1" style="padding-left: 0; margin: 7px 0;">
+                    <input type="button" value="Text" ng-click="showhideeditor = true" class="btn btn-info btn-xs" />
+                </div>
+                <div ng-hide="showhideeditor" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.skinscrapingtexteditordata"></span>
+                </div>
+                <div ng-show="showhideeditor" class="col-sm-12">
+                    <textarea ui-tinymce ng-model="todo.skinscrapingtexteditordata"></textarea>
+                </div>
+            </div>
+            <!------- Fungal cultures ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.fungalcultures" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].fungalculturestexteditordata = \'\''])" />
+                    &nbsp;Fungal cultures</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.fungalcultures">
+                <div class="col-sm-12 margin-left-1" style="padding-left: 0; margin: 7px 0;">
+                    <input type="button" value="Text" ng-click="showhideeditor = true" class="btn btn-info btn-xs" />
+                </div>
+                <div ng-hide="showhideeditor" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.fungalculturestexteditordata"></span>
+                </div>
+                <div ng-show="showhideeditor" class="col-sm-12">
+                    <textarea ui-tinymce ng-model="todo.fungalculturestexteditordata"></textarea>
+                </div>
+            </div>
+            <!------- Bacterial cultures ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.bacterialcultures" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].bacterialculturestexteditordata = \'\''])" />
+                    &nbsp;Bacterial cultures</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.bacterialcultures">
+                <div class="col-sm-12 margin-left-1" style="padding-left: 0; margin: 7px 0;">
+                    <input type="button" value="Text" ng-click="showhideeditor = true" class="btn btn-info btn-xs" />
+                </div>
+                <div ng-hide="showhideeditor" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.bacterialculturestexteditordata"></span>
+                </div>
+                <div ng-show="showhideeditor" class="col-sm-12">
+                    <textarea ui-tinymce ng-model="todo.bacterialculturestexteditordata"></textarea>
+                </div>
+            </div>
+            <!------- Tzanck preparation (Cutaneous cytology) ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.tzanckpreparation" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].tzanckpreparationtexteditordata = \'\''])" />
+                    &nbsp;Tzanck preparation (Cutaneous cytology)</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.tzanckpreparation">
+                <div class="col-sm-12 margin-left-1" style="padding-left: 0; margin: 7px 0;">
+                    <input type="button" value="Text" ng-click="showhideeditor = true" class="btn btn-info btn-xs" />
+                </div>
+                <div ng-hide="showhideeditor" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.tzanckpreparationtexteditordata"></span>
+                </div>
+                <div ng-show="showhideeditor" class="col-sm-12">
+                    <textarea ui-tinymce ng-model="todo.tzanckpreparationtexteditordata"></textarea>
+                </div>
+            </div>
+            <!------- Viral Cultures ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.viralcultures" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].viralculturestexteditordata = \'\''])" />
+                    &nbsp;Viral Cultures</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.viralcultures">
+                <div class="col-sm-12 margin-left-1" style="padding-left: 0; margin: 7px 0;">
+                    <input type="button" value="Text" ng-click="showhideeditor = true" class="btn btn-info btn-xs" />
+                </div>
+                <div ng-hide="showhideeditor" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.viralculturestexteditordata"></span>
+                </div>
+                <div ng-show="showhideeditor" class="col-sm-12">
+                    <textarea ui-tinymce ng-model="todo.viralculturestexteditordata"></textarea>
+                </div>
+            </div>
+            <!------- Flourescent light (Wood’s Lamp) examination ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.flourescentlight" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].flourescentlighttexteditordata = \'\''])" />
+                    &nbsp;Flourescent light (Wood’s Lamp) examination</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.flourescentlight">
+                <div class="col-sm-12 margin-left-1" style="padding-left: 0; margin: 7px 0;">
+                    <input type="button" value="Text" ng-click="showhideeditor = true" class="btn btn-info btn-xs" />
+                </div>
+                <div ng-hide="showhideeditor" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.flourescentlighttexteditordata"></span>
+                </div>
+                <div ng-show="showhideeditor" class="col-sm-12">
+                    <textarea ui-tinymce ng-model="todo.flourescentlighttexteditordata"></textarea>
+                </div>
+            </div>
+            <!------- Patch testing ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.patchtesting" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].patchtestingtexteditordata = \'\''])" />
+                    &nbsp;Patch testing</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.patchtesting">
+                <div class="col-sm-12 margin-left-1" style="padding-left: 0; margin: 7px 0;">
+                    <input type="button" value="Text" ng-click="showhideeditor = true" class="btn btn-info btn-xs" />
+                </div>
+                <div ng-hide="showhideeditor" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.patchtestingtexteditordata"></span>
+                </div>
+                <div ng-show="showhideeditor" class="col-sm-12">
+                    <textarea ui-tinymce ng-model="todo.patchtestingtexteditordata"></textarea>
+                </div>
+            </div>
+            <!------- Light testing for photosensitivity ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.lighttesting" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].lighttestingtexteditordata = \'\''])" />
+                    &nbsp;Light testing for photosensitivity</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.lighttesting">
+                <div class="col-sm-12 margin-left-1" style="padding-left: 0; margin: 7px 0;">
+                    <input type="button" value="Text" ng-click="showhideeditor = true" class="btn btn-info btn-xs" />
+                </div>
+                <div ng-hide="showhideeditor" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.lighttestingtexteditordata"></span>
+                </div>
+                <div ng-show="showhideeditor" class="col-sm-12">
+                    <textarea ui-tinymce ng-model="todo.lighttestingtexteditordata"></textarea>
+                </div>
+            </div>
+            <!------- Serological testing ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.serologicaltesting" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].serologicaltestingtexteditordata = \'\''])" />
+                    &nbsp;Serological testing</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.serologicaltesting">
+                <div class="col-sm-12 margin-left-1" style="padding-left: 0; margin: 7px 0;">
+                    <input type="button" value="Text" ng-click="showhideeditor = true" class="btn btn-info btn-xs" />
+                </div>
+                <div ng-hide="showhideeditor" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.serologicaltestingtexteditordata"></span>
+                </div>
+                <div ng-show="showhideeditor" class="col-sm-12">
+                    <textarea ui-tinymce ng-model="todo.serologicaltestingtexteditordata"></textarea>
+                </div>
+            </div>
+            <!------- Immunofluroscent techniques ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.immunofluroscenttechniques" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].immunofluroscenttechniquestexteditordata = \'\''])" />
+                    &nbsp;Immunofluroscent techniques</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.immunofluroscenttechniques">
+                <div class="col-sm-12 margin-left-1" style="padding-left: 0; margin: 7px 0;">
+                    <input type="button" value="Text" ng-click="showhideeditor = true" class="btn btn-info btn-xs" />
+                </div>
+                <div ng-hide="showhideeditor" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.immunofluroscenttechniquestexteditordata"></span>
+                </div>
+                <div ng-show="showhideeditor" class="col-sm-12">
+                    <textarea ui-tinymce ng-model="todo.immunofluroscenttechniquestexteditordata"></textarea>
+                </div>
+            </div>
+            <!------- Tissue dermatopathology/biopsy ------->
+            <div class="col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="todo.tissuedermatopathology" ng-click="hideAll(['$scope.todos[{{todo.indexValue}}].tissuedermatopathologyopts = \'\'', '$scope.todos[{{todo.indexValue}}].tissuedermatopathologytexteditordata = \'\''])" />
+                    &nbsp;Tissue dermatopathology/biopsy</label>
+            </div>
+            <div class="col-sm-12" ng-if="todo.tissuedermatopathology">
+                <div class="col-sm-12">
+                    <select ng-model="todo.tissuedermatopathologyopts" class="form-control" style="width: 150px;">
+                        <option value="">Choose</option>
+                        <option value="Shave">Shave</option>
+                        <option value="Punch">Punch</option>
+                        <option value="Excision">Excision</option>
+                        <option value="Mohs ">Mohs</option>
+                    </select>
+                </div>
+                <div class="col-sm-12 margin-left-1" style="padding-left: 16px; margin: 7px 0;">
+                    <input type="button" value="Text" ng-click="showhideeditor = true" class="btn btn-info btn-xs" />
+                </div>
+                <div ng-hide="showhideeditor" class="col-sm-12 textEditorTextColor">
+                    <span ng-bind-html="todo.tissuedermatopathologytexteditordata"></span>
+                </div>
+                <div ng-show="showhideeditor" class="col-sm-12">
+                    <textarea ui-tinymce ng-model="todo.tissuedermatopathologytexteditordata"></textarea>
+                </div>
+            </div>
+            <div class="col-sm-12" style="padding-left: 0; margin: 7px 0;">
+                <input type="button" value="Text" ng-click="showhideeditor = true" class="btn btn-info btn-xs" />
+            </div>
+            <div ng-hide="showhideeditor" class="col-sm-12 textEditorTextColor">
+                <span ng-bind-html="todo.maintexteditordata"></span>
+            </div>
+            <div ng-show="showhideeditor" class="col-sm-12">
+                <textarea ui-tinymce ng-model="todo.maintexteditordata"></textarea>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>

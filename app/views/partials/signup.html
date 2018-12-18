@@ -1,0 +1,778 @@
+<div class="bright">
+    <div class="container">
+        <div ng-if="isLoad">
+            <div class="overlayBackground"></div>
+            <div class="overlayContent" style="top: 60%">
+                <img src="/images/spinner.gif"><span>&nbsp;&nbsp;Loading</span>
+            </div>
+        </div>
+        <div class="row">
+            <form class="form col-sm-12" name="myform" ng-init="step = 1" ng-hide="regMaindiv" novalidate>
+                <div class="login-sign text-center" style="margin-bottom: 12px">
+                    <h3>To join RateFast, just fill out the form below.</h3>
+                    <!-- <a><span class="glyphicon glyphicon-user"></span></a> -->
+                </div>
+                <div class="page">
+                    <ul id="mf25" class="status">
+                        <li id="mf26" class="first active">
+                            <div id="mf27" class="circle first" ng-class="{'stepbackground' : step == 1}">
+                                <span id="mf28">1</span>
+                            </div>
+                        </li>
+                        <li id="mf26" class="first active">
+                            <div id="mf27" class="circle first" ng-class="{'stepbackground' : step == 2}">
+                                <span id="mf28">2</span>
+                            </div>
+                        </li>
+                        <li id="mf26" class="first active">
+                            <div id="mf27" class="circle first" ng-class="{'stepbackground' : step == 3}">
+                                <span id="mf28">3</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div ng-show="step==1" ng-init="disable = false">
+                    <div ng-form="step1form" novalidate="">
+                        <div class="form-group col-sm-4">
+                            <label>RateFast Account Type <span ng-click="open(1)" style="color: #14A4DC; cursor: pointer">(i)</span></label>
+
+                            <select class="form-control" name="accounttype" ng-model="practice.accounttype">
+                                <option value="provider">Provider</option>
+                                <option value="attorney">Attorney</option>
+                                <option value="cadmin">Claims Administrator</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-4" ng-show="practice.accounttype=='attorney'" ng-class="{ 'has-success': step1form.lawfirm.$valid && submitted,
+                                                    'has-error': step1form.lawfirm.$invalid && submitted }">
+                            <label>Law Firm</label>
+                            <input class="form-control" type="text" ng-model="practice.otheraccounttype" name="lawfirm" placeholder="Law Firm" ng-required="practice.accounttype=='attorney'" maxlength="50">
+
+                            <p class="help-block" ng-show="step1form.lawfirm.$error.required && submitted">
+                                required*
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-4" ng-show="practice.accounttype=='cadmin'" ng-class="{ 'has-success': step1form.insurence.$valid && submitted,
+                                                    'has-error': step1form.insurence.$invalid && submitted }">
+                            <label>Insurance Company</label>
+                            <input class="form-control" type="text" ng-model="practice.otheraccounttype" name="insurence" placeholder="Enter Insurance Company" ng-required="practice.accounttype=='cadmin'" maxlength="100">
+
+                            <p class="help-block" ng-show="step1form.insurence.$error.required && submitted">
+                                Insurance Company is required
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-4" ng-show="practice.accounttype=='other'" ng-class="{ 'has-success': step1form.other.$valid && submitted,
+                                                    'has-error': step1form.other.$invalid && submitted }">
+                            <label>Other</label>
+                            <input class="form-control" type="text" ng-model="practice.otheraccounttype" name="other" placeholder="Other" ng-required="practice.accounttype=='other'" maxlength="100">
+
+                            <p class="help-block" ng-show="step1form.other.$error.required && submitted">
+                                required*
+                            </p>
+                        </div>
+                        <div style="clear: both"></div>
+                        <div class="form-group col-sm-2" ng-class="{ 'has-success': step1form.firstname.$valid && submitted,
+                                                    'has-error': step1form.firstname.$invalid && submitted }">
+                            First Name
+
+                            <input type="text" name="firstname" class="form-control capitalize" ng-model="practice.firstname" placeholder="First Name" ng-required="true" max-length="50">
+
+                            <p class="help-block" ng-show="step1form.firstname.$error.required && submitted">
+                                Name is required
+
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-2" ng-class="{ 'has-success': step1form.lastname.$valid && submitted,
+                                                    'has-error': step1form.lastname.$invalid && submitted }">
+                            Last Name
+
+                            <input type="text" name="lastname" class="form-control capitalize" ng-model="practice.lastname" placeholder="Last Name" required="" max-length="50">
+
+                            <p class="help-block" ng-show="step1form.lastname.$error.required && submitted">
+                                Name is required
+
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step1form.practicename.$valid && submitted, 'has-error': step1form.practicename.$invalid && submitted}">
+                            Practice Account&nbsp;<span ng-click="open(13)" style="color: #14A4DC; cursor: pointer; font-weight: bold">(i)</span>
+
+                            <input type="text" name="practicename" class="form-control" ng-model="practice.practicename" placeholder="Practice Account" numberchar-only="numberchar-only" ng-blur="UniquePracticeName(practice.practicename)" required="" lowercase="" maxlength="40">
+
+                            <p style="color: #a94442" class="help-block" ng-show="step1form.practicename.$error.required && submitted">
+                                Practice name is required
+
+                            </p>
+
+                            <p style="color: #a94442" class="help-block" ng-show="uniquePracticename">
+                                Practice name is already in use
+
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step1form.email.$valid && submitted,
+                                                    'has-error': step1form.email.$invalid && submitted }">
+                            Email
+
+                            <input type="email" name="email" class="form-control" ng-model="practice.email" placeholder="Email" ng-blur="UniqueEmail(practice.email)" required="">
+
+                            <p style="color: #a94442" class="help-block" ng-show="step1form.email.$error.required && submitted">
+                                Email is required
+
+                            </p>
+
+                            <p class="help-block" ng-show="step1form.email.$error.email && submitted">
+                                Doesn't look like a valid email.
+
+                            </p>
+
+                            <p class="help-block" ng-show="UniqueemailId && step1form.email.$valid" style="color: #a94442">
+                                Email id is already in use.
+
+                            </p>
+                        </div>
+                        <div style="clear: both"></div>
+
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step1form.username.$valid && submitted,
+                                                    'has-error': step1form.username.$invalid && submitted }">
+                            Username
+
+                            <input type="text" name="username" class="form-control" ng-model="practice.username" placeholder="What do you want your username to be?" numberchar-only="numberchar-only" ng-blur="UniqueUsername(practice.username)" required="" lowercase="" maxlength="40" autocomplete="off">
+
+                            <p style="color: #a94442" class="help-block" ng-show="step1form.username.$error.required && submitted">
+                                Username is required
+
+                            </p>
+
+                            <p style="color: #a94442" class="help-block" ng-show="Uniqueuser">
+                                Username is already in use.
+
+                            </p>
+                        </div>
+
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step1form.password.$valid && submitted,
+                                                    'has-error': step1form.username.$invalid && submitted }">
+                            Password <a popover="Minimum of 8 characters, with at least one capital letter, special character and number." popover-trigger="mouseenter" class="btn" style="padding: 0px; font-size: 11px; color: red">Password
+                                Rules
+                            </a>
+                            <input id="usernewpassword" type="{{inputType}}" class="form-control" ng-minlength="8" ng-pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-!$^&*()_|~=`{}\[\]:/<>?,.@#]+)[-\w!$^&*()|~=`{}\[\]:/<>?,.@#]+$/" name="password" ng-model="practice.password" placeholder="Type your desired password here" autocomplete="off" required="">
+                            <input type="checkbox" id="checkbox" ng-model="passwordCheckbox" ng-click="hideShowPassword()" />
+							<label for="checkbox" ng-if="passwordCheckbox">Hide password</label>
+							<label for="checkbox" ng-if="!passwordCheckbox">Show password</label>
+                            <span class="help-block" style="color: red" ng-show="step1form.password.$error.pattern">This password isn't strong enough!</span>
+                            <span class="help-block" style="color: red" ng-show="step1form.password.$error.minlength">Password should be of minimum 8 characters.</span>
+                            <span class="help-block" style="color: red" ng-show="step1form.password.$error.required && submitted">Password Required*</span>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            Confirm Password
+                            <input type="password" class="form-control" name="confirm_password" required="" ng-model="practice.confirmpassword" ui-validate=" '$value==practice.password' " ui-validate-watch=" 'practice.password' " placeholder="Type your password again" ng-disabled="setConfirmPassword()" autocomplete="off">
+                            <!--<span style="color: red" ng-show='step1form.confirm_password.$error.validator'>Passwords do not match!</span>-->
+                            <span style="color: red" ng-show="practice.password!=practice.confirmpassword && practice.confirmpassword.length>0">Passwords do not match!</span>
+                        </div>
+						<!-- Code for Phone num field by Shridhar -->
+						<div style="clear: both"></div>
+
+						<div class="form-group col-sm-4">
+                            Phone Number <span ng-click="open(6)" style="color: #14A4DC; cursor: pointer; font-weight: bold">(i)</span>
+                            <input name="step1phonenumber" ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" placeholder="Phone number optional" ng-model="practice.userphonenumber" class="form-control" numbers-only="numbers-only" maxlength="10">
+                        </div>
+
+                        <div class="form-group col-sm-4" ng-show="practice.userphonenumber.length==10">
+                            Extension
+                            <input name="step1extension" ng-model="practice.userextension" class="form-control" numbers-only="numbers-only" maxlength="7">
+                        </div>
+
+						<div style="clear: both"></div>
+						<!-- End of code for Phone num field by Shridhar -->
+
+                        <div class="form-group col-sm-12" ng-class="{ 'has-success': step1form.salesperson.$valid && submitted,
+                                                    'has-error': step1form.salesperson.$invalid && submitted }">
+                            <label>Did a field sales person introduced you to RateFast?</label><br>
+
+                            <div class="col-sm-4">
+                                <input type="radio" name="salesperson" id="salesperson_yes" value="1" ng-model="salesperson" ng-click="practice.salesperson=''" required="">
+                                <label for="salesperson_yes">Yes</label>
+                                &nbsp;&nbsp;
+
+                                <input type="radio" name="salesperson" id="salesperson_no" value="0" ng-model="salesperson" ng-click="salesperson_selected = '';practice.salesperson='No'" required="">
+                                <label for="salesperson_no">No</label>
+
+                                <p class="help-block" ng-show="step1form.salesperson.$error.required && submitted">
+                                    Salesperson is required
+
+                                </p>
+                            </div>
+                            <div ng-hide="salesperson != '1'" class="col-sm-4" ng-class="{ 'has-success': step1form.salesperson_selected.$valid && submitted,'has-error': step1form.salesperson_selected.$invalid && submitted }">
+                                <section data-ng-init="salespersonList()">
+                                    <select ng-model="practice.salesperson" name="salesperson_selected" class="form-control" ng-required="salesperson == '1'">
+                                        <option value="" selected="selected">--Choose Salesperson--</option>
+                                        <option ng-repeat="salesperson in salespersons | filter:{status:'!inactive'}" value="{{salesperson._id}}">{{salesperson.salesperson}}
+                                        </option>
+                                        <option value="Other">Other</option>
+                                    </select>
+
+                                    <p style="color: #a94442" class="help-block has-error" ng-show="step1form.salesperson_selected.$error.required && submitted">
+                                        Select atleast one from the dropdown.
+
+                                    </p>
+                                </section>
+
+                            </div>
+                            <div class="col-sm-4" ng-if="practice.salesperson == 'Other'" ng-hide="salesperson != '1'" ng-class="{ 'has-success': step1form.other_salesperson.$valid && submitted,'has-error': step1form.salesperson_selected.$invalid && submitted }">
+                                <input type="text" name="other_salesperson" class="form-control capitalize" ng-model="practice.other_salesperson" placeholder="Salesperson Name" ng-if="practice.salesperson == 'Other'" maxlength="50" required="">
+
+                                <p style="color: #a94442" class="help-block has-error" ng-show="step1form.other_salesperson.$error.required && submitted">
+                                    Field is required.
+
+                                </p>
+                            </div>
+                        </div>
+                        <div style="clear: both"></div>
+                        <div id="practiceaddress">
+                            <div class="form-group">
+                                <label><span ng-show="practice.accounttype=='provider'">Practice </span>Locations:</label>
+                            </div>
+                            <table class="table table-striped table-condensed" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>Street Address</th>
+                                        <th>County</th>
+                                        <th>City</th>
+                                        <th>State<span ng-hide="isUS">/Province</span></th>
+                                        <th>Zip/Postal Code</th>
+                                        <th>Country</th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-init="countriesList()">
+                                    <tr ng-repeat="p in practice.practiceaddress" ng-form="subForm" novalidate>
+
+
+
+                                        <td style="width: 25%">
+
+                                            <div ng-class="{ 'has-success': subForm.StreetAddress.$valid && submitted,'has-error': subForm.StreetAddress.$invalid && submitted }">
+                                                <input type="text" name="StreetAddress" class="form-control" ng-model="p.street" placeholder="Street Address" maxlength="50" ng-keyup="validationMessage('street', p.StreetAddress)" ng-change="checkAddressValidation()" required>
+
+                                                <p style="color: #a94442" class="help-block has-error" ng-show="subForm.StreetAddress.$error.required && submitted">
+                                                    Street Address is required.
+                                                </p>
+                                            </div>
+
+                                        </td>
+
+                                        <td style="width: 15%">
+                                            <div ng-class="{ 'has-success': subForm.county.$valid && submitted,'has-error': subForm.county.$invalid && submitted }">
+                                                <input type="text" name="county" class="form-control" ng-model="p.county" placeholder="County" maxlength="35" ng-keyup="validationMessage('county', p.county)" ng-change="checkAddressValidation()" required>
+
+                                                <p style="color: #a94442" class="help-block" ng-show="subForm.county.$error.required && submitted">
+                                                    County is required.
+
+                                                </p>
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 15%">
+                                            <div ng-class="{ 'has-success': subForm.city.$valid && submitted,'has-error': subForm.city.$invalid && submitted }">
+                                                <input type="text" name="city" class="form-control" ng-model="p.city" placeholder="City" maxlength="35" ng-keyup="validationMessage('city', p.city)" ng-change="checkAddressValidation()" required>
+                                                <p style="color: #a94442" class="help-block" ng-show="subForm.city.$error.required && submitted">
+                                                    City is required
+
+                                                </p>
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 10%">
+                                            <div ng-class="{ 'has-success': subForm.state.$valid && submitted,'has-error': subForm.state.$invalid && submitted }">
+                                                <section>
+                                                    <select ng-model="p.state" name="state2" class="form-control capitalize" ng-show="p.isUS" ng-required="p.country=='US'" ng-change="checkAddressValidation(); showstatemessage=p.state?false:true" >
+                                                        <option value="" selected="selected">--State--</option>
+                                                        <option ng-repeat="state in states" value="{{state.state}}">{{state.state}}</option>
+                                                    </select>
+                                                    <input type="text" name="state" ng-model="p.state" ng-change="checkAddressValidation();" ng-hide="p.isUS" class="form-control capitalize" ng-required="p.country!='US'">
+                                                </section>
+
+                                                <p style="color: #a94442" class="help-block" ng-show="((subForm.state.$error.required || subForm.state2.$error.required)  && submitted) ">
+                                                    State is required.
+                                                </p>
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 15%">
+                                            <div ng-class="{ 'has-success': subForm.zipcode.$valid && submitted,'has-error': subForm.zipcode.$invalid && submitted }">
+                                                <input name="zipcode" class="form-control"  ng-model="p.zipcode" placeholder="Zip/Postal Code" minlength="5" pattern="[0-9]*" numbers-only="numbers-only" ng-change="setzipcodePracticeaddress($index)" ng-blur="setzipcodePracticeaddressafterchange($index)" ng-required="true">
+                                                <p style="color: #a94442" class="help-block" ng-show="subForm.zipcode.$error.required && submitted">
+                                                    Zip/Postal Code is required.
+                                                </p>
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 20%">
+
+                                            <select ng-model="p.country" name="country" class="form-control capitalize" ng-change="p.state=''; changecountry(p); checkAddressValidation();" ng-init="p.country='US'">
+                                                <option ng-repeat="c in countries" value="{{c.code}}" ng-selected="c.code=='US'">{{c.name}}</option>
+                                            </select>
+                                        </td>
+
+                                        <td>
+                                            <a class="btn btn-md btn-warning" ng-hide="$index == 0" ng-click="removeAddress(p)">Remove</a>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- The "main" form directive is the outer form tag. -->
+                            <div>
+                                <a class="btn btn-md btn-info" ng-click="addToAddress()" ng-disabled="!practiceaddressValidation">Add Another Location</a>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div style="clear: both"></div>
+                        <div class="text-center">
+                            <button ng-disabled="disable" ng-click="validateform1(step1form)" class="btn btn-md btn-default">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-show="step == 2">
+                    <div ng-form="step2form" novalidate="">
+                        <label>Billing Address:</label>
+
+                        <div style="clear: both"></div>
+                        <hr>
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step2form.billingaddress.$valid && submitted,
+                                                    'has-error': step2form.billingaddress.$invalid && submitted }">
+                            Billing Address
+
+                            <input type="text" name="billingaddress" class="form-control" ng-model="practice.billingaddress.billingaddres" placeholder="Billing Address" maxlength="50" required="">
+
+                            <p class="help-block" ng-show="step2form.billingaddress.$error.required && submitted">
+                                Billing Address is required
+
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-3" ng-class="{ 'has-success': step2form.county.$valid && submitted,
+                                                    'has-error': step2form.county.$invalid && submitted }">
+                            County
+
+                            <input type="text" name="county" class="form-control" ng-model="practice.billingaddress.county" placeholder="County" maxlength="35" required="">
+
+                            <p class="help-block" ng-show="step2form.county.$error.required && submitted">
+                                County is required
+
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-2" ng-class="{ 'has-success': step2form.city.$valid && submitted, 'has-error': step2form.city.$invalid && submitted }">
+                            City
+
+                            <input type="text" name="city" class="form-control" ng-model="practice.billingaddress.city" placeholder="City" maxlength="35" required="">
+
+                            <p class="help-block" ng-show="step2form.city.$error.required && submitted">
+                                City is required
+
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-3" ng-class="{ 'has-success': step2form.state.$valid && submitted, 'has-error': step2form.state.$invalid && submitted }">
+                            State
+
+                            <section data-ng-init="statesList()">
+                                <select ng-model="practice.billingaddress.state" class="form-control capitalize" name="state" required="">
+                                    <option value="" selected="selected">-- Choose --</option>
+                                    <option ng-repeat="state in states" value="{{state.state}}">{{state.state}}</option>
+                                </select>
+                            </section>
+                            <p class="help-block" ng-show="step2form.state.$error.required && submitted">
+                                State is required
+
+                            </p>
+                        </div>
+                        <!-- <div class="form-group col-sm-4" ng-class="{ 'has-success': step2form.zipcode.$valid && submitted, 'has-error': step2form.zipcode.$invalid && submitted }">
+                            Zip/Postal Code
+
+                            <input type="tel" name="zipcode" class="form-control" ng-model="practice.billingaddress.zipcode" placeholder="Zip/Postal Code" ng-keyup="formatBillingZip()" ng-blur="formatBillingZip()" numbers-only="numbers-only" ng-required="true" minlength="5" maxlength="10">
+                            <span class="error" ng-show="step2form.zipcode.$error.maxlength">Are you sure about this Zip/Postal Code?</span>
+                            <p class="help-block" ng-show="step2form.zipcode.$error.required && submitted">
+                                Zip/Postal Code is required
+                            </p>
+                        </div> -->
+						  <div class="form-group col-sm-4" ng-class="{ 'has-success': practice.billingaddress.zipcode.$valid && submitted, 'has-error': practice.billingaddress.zipcode.$invalid && submitted }">
+                            Zip/Postal Code
+							<input type="tel" pattern="[0-9]*" name="zipcode" class="form-control" ng-change="setzipcode()" ng-blur="setzipcodeafterchange()"  ng-model="practice.billingaddress.zipcode" placeholder="Zip/Postal Code" numbers-only="numbers-only" ng-required="true" minlength="5">
+                            <p class="error" ng-show="step2form.zipcode.$error.required && submitted">
+                                Zip/Postal Code is required
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step2form.billingemail.$valid && submitted,
+                                                    'has-error': step2form.billingemail.$invalid && submitted }">
+                            Billing Email
+
+                            <input type="email" name="billingemail" class="form-control" ng-model="practice.billingaddress.billingemail" placeholder="Billing E-mail" required="">
+
+                            <p class="help-block" ng-show="step2form.billingemail.$error.required && submitted">
+                                Billing Email is required
+
+                            </p>
+
+                            <p class="help-block" ng-show="step2form.billingemail.$error.email && submitted">
+                                This email doesn't look quite right.
+
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-2" ng-class="{ 'has-success': step2form.phonenumber.$valid && submitted, 'has-error': step2form.phonenumber.$invalid && submitted }">
+                            Billing Phone Number
+
+                            <input name="phonenumber" ui-mask="{{y}}" ng-blur="y='(999) 999-9999'" placeholder="Enter your phone number here" ng-model="practice.billingaddress.phonenumber" class="form-control" numbers-only="numbers-only" maxlength="14" required="">
+
+                            <p class="help-block" ng-show="step2form.phonenumber.$error.required && submitted">
+                                Phone number is required
+
+                            </p>
+                        </div>
+						 <div class="form-group col-sm-2">
+                            Extension
+                            <input name="billingextension" ng-model="practice.billingaddress.billingextension" class="form-control" numbers-only="numbers-only" maxlength="7">
+                        </div>
+
+                        <div style="clear: both"></div>
+                        <a popover="" popover-trigger="mouseenter" ng-click="open(3)" class="btn">Why do I have to provide my credit card information?</a>
+                        <hr>
+
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step2form.ccname.$valid && submitted, 'has-error': step2form.ccname.$invalid && submitted }">
+                            Credit Card Name
+
+                            <input type="text" name="ccname" ng-model="practice.creditcardname" placeholder="Credit Card Name" class="form-control capitalize" required="">
+
+                            <p class="help-block" ng-show="step2form.ccname.$error.required && submitted">
+                                Please type the name as it appears on the credit card.
+
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step2form.ccnumber.$valid && submitted, 'has-error': step2form.ccnumber.$invalid && submitted}">
+                            Credit Card Number
+
+                            <input type="text" ng-model="practice.creditcardnumber" placeholder="Credit Card Number" ng-blur="valid_credit_card(practice.creditcardnumber)" ng-keyup="valid_credit_card(practice.creditcardnumber)" ng-minlength="13" class="form-control" name="ccnumber" numbers-only="numbers-only" ng-maxlength="16" maxlength="16" required="">
+                            <!--<input type="text" ng-model="practice.creditcardnumber" placeholder="Credit Card Number" class="input-lg"/><br/>
+                                <span>{{ practice.creditcardnumber | validate }}</span>-->
+                            <p class="help-block" ng-show="step2form.ccnumber.$error.required && submitted">
+                                Credit card number is required.
+                            </p>
+                            <p class="help-block" ng-show="step2form.ccnumber.$error.minlength && submitted">
+                                Invalid Credit card number.
+                            </p>
+                            <p class="help-block" ng-show="step2form.ccnumber.$error.validate && submitted && !step2form.ccnumber.$error.required && !step2form.ccnumber.$error.minlength">
+                                Invalid Credit card information.
+
+                            </p>
+                        </div>
+                        <div style="clear: both"></div>
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step2form.month.$valid && submitted, 'has-error': step2form.month.$invalid && submitted }">
+                            <select ng-model="practice.month" name="month" class="form-control capitalize" data-card-expiration="" required="">
+                                <option disabled="disabled" selected="selected" value="">Month</option>
+                                <option ng-repeat="month in months" value="{{$index+1}}">{{month}}</option>
+                            </select>
+
+                            <p class="help-block" ng-show="step2form.month.$error.required && submitted">
+                                Month is required.
+
+                            </p>
+                        </div>
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step2form.year.$valid && submitted, 'has-error': step2form.year.$invalid && submitted }">
+                            <ul ng-show="step2form.submitAttempt && !step2form.$valid">
+                                <li ng-show="step2form.month.$error.required">Expiration month required</li>
+                            </ul>
+                            <select ng-model="practice.year" name="year" class="form-control" required="">
+                                <option disabled="disabled" selected="selected" value="">Year</option>
+                                <option ng-repeat="year in [] | range:currentYear:currentYear+13">{{year}}</option>
+                            </select>
+
+                            <p class="help-block" ng-show="step2form.year.$error.required && submitted">
+                                Year is required.
+
+                            </p>
+                        </div>
+                        <br>
+                        <ul ng-show="step2form.submitAttempt && !step2form.$valid">
+                            <li ng-show="step2form.year.$error.required">Expiration year required</li>
+                            <li ng-show="step2form.month.$error.invalid">Provided expiration date is invalid</li>
+                        </ul>
+                        <div style="clear: both"></div>
+                        <div class="text-center">
+                            <button ng-click="step = 1" class="btn btn-md btn-default">Previous</button>
+                            <button ng-click="validateform2(step2form)" class="btn btn-md btn-default">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-show="step == 3" style="min-height: 400px">
+                    <div ng-form="step3form" novalidate="">
+
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step3form.licensenumber.$valid && submitted,
+                                                    'has-error': step3form.licensenumber.$invalid && submitted }" ng-if="practice.accounttype=='provider'">
+                            <label>License Number</label>
+                            <input type="text" name="licensenumber" ng-blur="Uniquelicensenumber(practice.licensenumber)" class="form-control" ng-model="practice.licensenumber" placeholder="License Number" maxlength="10" title="">
+
+                            <!--<p class="help-block" ng-show="step3form.licensenumber.$error.required && submitted">
+                                License Number is required.
+                            </p>
+                            <p class="help-block" ng-show="step3form.licensenumber.$error.pattern && submitted">
+                                License Number is in incorrect format.
+                            </p>
+                            <p class="help-block" ng-show="step3form.licensenumber.$error.minlength && submitted">
+                                License Number is has incorrect length.
+                            </p>-->
+                            <p ng-show="UniqueLicenseNumber">License Number is already in use.</p>
+                        </div>
+
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step3form.question.$valid && submitted,
+                                                    'has-error': step3form.question.$invalid && submitted }">
+                            <section data-ng-init="questionsList()">
+                                <label>Security Question</label>
+
+                                <select ng-model="practice.question" class="form-control" name="question" ng-change="securityAns(practice.question)" required="">
+                                    <option value="">-- Security Question --</option>
+                                    <option ng-repeat="question in questions" value="{{question._id}}">{{question.question}}</option>
+                                </select>
+
+                                <p class="help-block" ng-show="step3form.question.$error.required && submitted">
+                                    Security question is required.
+
+                                </p>
+                            </section>
+                        </div>
+
+                        <div class="form-group col-sm-4" ng-class="{ 'has-success': step3form.answer.$valid && submitted,
+                                                    'has-error': step3form.answer.$invalid && submitted }">
+                            <div ng-if="practice.question">
+                                <label>Answer</label>
+
+                                <input type="text" name="answer" class="form-control" ng-model="practice.answer" placeholder="Answer" required="">
+
+                                <p class="help-block" ng-show="step3form.answer.$error.required && submitted">
+                                    Answer is required
+
+                                </p>
+                            </div>
+                        </div>
+                        <div style="clear: both"></div>
+                        <!--<div class="form-group col-sm-12" ng-show="practice.accounttype=='provider'">
+                            <label>Certify Ratings? <span ng-click="open(2)" style="color: #14A4DC; cursor: pointer">(i)</span></label>
+                            <br />
+
+                            <input type="radio" value="publish" id="yes_certifyrating" name="certifyrating" ng-model="practice.stampapproval" />
+                            <label for="yes_certifyrating">Yes &nbsp;&nbsp;</label>
+                            <input type="radio" value="never" name="certifyrating" id="no_certifyrating" ng-model="practice.stampapproval" />
+                            <label for="no_certifyrating">No &nbsp;&nbsp;</label>
+                        </div>-->
+                        <div style="clear: both"></div>
+
+                        <div class="form-group col-sm-9" ng-if="practice.accounttype=='provider'">
+                            <section ng-model="practice.profession" name="profession">
+                            <label>Select your professional degree(s):</label>
+                            <hr>
+                            {{updateuser.profession}}
+                            <div class="col-sm-4">
+                                <label style="cursor: pointer">
+                                    <input type="checkbox" name="profession" ng-model="practice.profession.md" value="md" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('md',practice.profession.md)">&nbsp;M.D.
+                                </label>
+                                <br>
+
+                                <label style="cursor: pointer">
+                                    <input type="checkbox" name="profession" value="do" ng-model="practice.profession.do" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('do',practice.profession.do)">&nbsp;D.O.
+                                </label>
+                                <br>
+                                <label style="cursor: pointer">
+                                    <input type="checkbox" name="profession" value="dc" ng-model="practice.profession.dc" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('dc',practice.profession.dc)">&nbsp;D.C.
+                                </label>
+                                <br>
+                                <label style="cursor: pointer">
+                                    <input type="checkbox" name="profession" value="dpm" ng-model="practice.profession.dpm" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('dpm',practice.profession.dpm)">&nbsp;D.P.M.
+                                </label>
+                                <br>
+                                <label style="cursor: pointer">
+                                    <input type="checkbox" name="profession" value="lac" ng-model="practice.profession.lac" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('lac',practice.profession.lac)">&nbsp;LAc.
+                                </label>
+
+
+                            </div>
+                            <div class="col-sm-4">
+                                <label style="cursor: pointer">
+                                    <input type="checkbox" name="profession" value="phd" ng-model="practice.profession.phd" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('phd',practice.profession.phd)">&nbsp;Ph.D.
+                                </label>
+                                <br>
+                                <label style="cursor: pointer">
+                                    <input type="checkbox" name="profession" value="dds" ng-model="practice.profession.dds" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('dds',practice.profession.dds)">&nbsp;D.D.S.
+                                </label>
+                                <br>
+                                <label style="cursor: pointer">
+                                    <input type="checkbox" name="profession" value="dmd" ng-model="practice.profession.dmd" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('dmd',practice.profession.dmd)">&nbsp;D.M.D.
+                                </label>
+                                <br>
+                                <label style="cursor: pointer">
+                                    <input type="checkbox" name="profession" value="od" ng-model="practice.profession.od" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('od',practice.profession.od)">&nbsp;O.D.
+                                </label>
+                                <br>
+                                <label style="cursor: pointer">
+                                    <input type="checkbox" name="profession" value="pharm" ng-model="practice.profession.pharm" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('pharm',practice.profession.pharm)">&nbsp;Pharm.D.
+                                </label>
+
+
+                            </div>
+                            <div class="col-sm-4">
+                                <label style="cursor: pointer">
+                                    <input type="checkbox" name="profession" value="mph" ng-model="practice.profession.mph" ng-true-value="add" ng-false-value="remove" ng-change="addProfession('mph',practice.profession.mph)">&nbsp;M.P.H.
+                                </label>
+                                <br>
+                                <label style="cursor: pointer">
+                                    <input type="checkbox" name="profession" value="other" ng-model="practice.profession.other" ng-change="checkProfessiononOtherCheckbox()">&nbsp;Other</label>
+                                <br>
+                                <input type="text" class="form-control" placeholder="Enter Profession" ng-model="practice.otherprofessiontext" ng-show="practice.profession.other==true" ng-required="practice.profession.other==true">
+                            </div>
+
+                            <div class="form-group col-sm-10">
+		                        <p class="help-block" style="color: #a94442" ng-show="practice.profession.length==0 && submitted ">
+		                            Please select your degree(s)
+		                        </p>
+		                        <p class="help-block clearer"  ng-show="isDisabledOnProfession" style="color: #a94442; margin-left: 10px">
+									Please limit yourself to four degrees!
+								</p>
+							</div>
+                        </div>
+                        <!-- Speciality-->
+                        <div class="form-group" ng-if="practice.accounttype=='provider'">
+                            <label>&nbsp;&nbsp;&nbsp; Are you board certified and/or board eligible in any specialties?</label><br>
+
+                            <div class="col-sm-12">
+                                <input type="radio" name="boardcertified" id="boardcertified_yes" value="1" ng-model="boardcertified1" ng-required="true && boardcertified1 !='0'">
+                                <label for="boardcertified_yes">Yes</label>
+                                &nbsp;
+
+                                <input type="radio" name="boardcertified" id="boardcertified_no" value="0" ng-model="boardcertified1" ng-required="true && boardcertified1 !='1'">
+                                <label for="boardcertified_no">No</label>
+
+                                 <p class="help-block clearer"  ng-show="step3form.boardcertified.$error.required && submitted " style="color: #a94442;">
+									Please indicate if you are board certified. You can change this later.
+								</p>
+                            </div>
+                            <div class="maindiv" ng-if="boardcertified1==1">
+                                <div class="col-sm-12" ng-repeat="p in practice.speciality" ng-form="specialityform">
+                                    <div class="col-sm-4">
+                                        <select name="specialityname" ng-model="p.name" class="form-control" required="">
+                                            <option value="">--Select Speciality--</option>
+                                            <option ng-repeat="speciality in specialities|filter:{accounttype:practice.accounttype} | orderBy:'title'" value="{{speciality.title}}">{{speciality.title}}
+                                            </option>
+                                        </select>
+                                        &nbsp;&nbsp;&nbsp;
+
+                                        <p class="help-block" ng-show="specialityform.specialityname.$error.required && submitted" style="color: #a94442; margin-left: 10px">
+                                            Please select your speciality.
+                                        </p>
+                                    </div>
+                                    <label>
+                                        <input type="radio" name="boardcertificateyes" id="{{$index}}boardcertificate_yes" value="1" ng-model="p.boardcertified" required="">
+                                        <label for="{{$index}}boardcertificate_yes">Board Certificate</label>
+                                    </label>
+
+                                    <label>
+                                        <input type="radio" name="boardcertificateyes" id="{{$index}}boardeligible_yes" value="0" ng-model="p.boardcertified" required="">
+                                        <label for="{{$index}}boardeligible_yes">Board Eligible</label>
+                                    </label>
+                                    &nbsp;&nbsp;
+
+
+
+                                    <button class="btn btn-warning" ng-click="removespeciality(p)">Remove</button>
+                                      <p class="help-block" ng-show="specialityform.boardcertificateyes.$error.required && submitted" style="color: #a94442; margin-left: 10px">
+                                            Please indicate your board status.
+                                        </p>
+                                    <div style="clear: both"></div>
+                                </div>
+                                &nbsp;&nbsp;&nbsp;
+                                <button ng-click="addSpeciality(step3form)" class="btn btn-md btn-primary">Add Another Speciality</button>
+                            </div>
+							<br/>
+                        </div>
+
+                        <!-- Speciality-->
+                        <div class="col-sm-8" ng-if="practice.accounttype=='provider'">
+                            <label>PR-4 Report (OMFS) Automatic Billing Calculator <span ng-click="open(4)" style="color: #14A4DC; cursor: pointer">(i)</span></label>
+                            <br>
+                            <input type="radio" name="billingCalc" ng-model="practice.billingcalculatoromfs" id="billingCalc_yes" value="on" ng-required="practice.accounttype=='provider'"><label for="billingCalc_yes">&nbsp;On</label>
+                            &nbsp;
+                            <input type="radio" name="billingCalc" ng-model="practice.billingcalculatoromfs" id="billingCalc_no" value="off" ng-required="practice.accounttype=='provider'" ng-checked="true"><label for="billingCalc_no">&nbsp;Off</label>
+
+                            <p class="help-block" ng-show="step3form.billingCalc.$error.required && submitted" style="color: #a94442;">
+                                Please indicate if you would like to use the billing calculator. You can change this later.
+                            </p>
+
+                        </div>
+
+                        <div class="col-sm-8">
+                            <label>Please select the edition of the AMA Guides to use for impairment ratings</label><br>
+                            <input type="radio" ng-model="practice.editionama" name="amaguides" id="amaguides_4" value="AMA Guides 4th Edition" required=""><label for="amaguides_4">
+                                &nbsp;4th Edition
+                            </label>
+                            &nbsp;&nbsp;&nbsp;
+                            <input type="radio" ng-model="practice.editionama" name="amaguides" id="amaguides_5" value="AMA Guides 5th Edition" required=""><label for="amaguides_5">
+                                &nbsp;5th Edition
+                            </label>
+                            &nbsp;&nbsp;&nbsp;
+                            <input type="radio" ng-model="practice.editionama" name="amaguides" id="amaguides_6" value="AMA Guides 6th Edition" required=""><label for="amaguides_6">
+                                &nbsp;6th Edition
+                            </label>
+
+                            <p class="help-block" ng-show="step3form.amaguides.$error.required && submitted" style="color: #a94442">
+                                Please indicate your default AMA Guides edition. You can change this later.
+                            </p>
+                        </div>
+
+                        <div class="form-group col-sm-8">
+                            <label style="cursor: pointer">
+                                <input type="checkbox" name="agreebutton" ng-model="$parent.agreechecked" required="">&nbsp; Agree to <a href="/files/RateFast_Services_Agreement.pdf" target="_blank">RateFast Services Agreement</a>
+                            </label>
+                            <p class="help-block" ng-show="step3form.agreebutton.$error.required && submitted" style="color: #a94442">
+                                To join, you must agree with our terms and conditions.
+                            </p>
+                        </div>
+
+                        <div style="clear: both"></div>
+                        <br>
+                        <div class="text-center">
+                            <button ng-click="step = 2" class="btn btn-md btn-default">Previous</button>
+                            <button ng-click="validateform3(step3form, practice.profession)" ng-disabled="isDisabledOnProfession" class="btn btn-md btn-info">
+                                Sign Up
+                            </button>
+                        </div>
+                    </div>
+                    <!-- <button  ng-click="register(myform)"  ng-disabled="isDisabled" class="btn btn-md btn-primary">Sign Up</button>-->
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<div class="text-center" ng-show="step == 4" style="min-height: 400px">
+    <div class="login-sign">
+        <h1 style="color: #0E80C7">Welcome to RateFast!</h1>
+        <a><span class="glyphicon glyphicon-user"></span></a>
+    </div>
+    <h3>You have registered successfully. Please check your email to activate your account.</h3>
+</div>
+
+
+<div ng-show="haserror" class="has-error" style="text-align: center">
+    <span style="color: #ff0000">{{errors.err}}</span>
+</div>
+
+<script type="text/javascript">
+var banned = ['ratefast','RateFast','Ratefast','RATEFAST','rate-fast','Rate-Fast','Rate-fast','RATE-FAST'];
+document.getElementById('usernewpassword').addEventListener('keyup', function(e) {
+   var text = document.getElementById('usernewpassword').value;
+   for (var x=0;x<banned.length;x++) {
+       if (text.search(banned[x]) !== -1) {
+           alert('You cannot include the phrase "'+banned[x]+'" in your password!');
+       }
+       var regExp = new RegExp(banned[x]);
+       text = text.replace(regExp,'');
+   }
+   document.getElementById('usernewpassword').value = text;
+},false);
+</script>
